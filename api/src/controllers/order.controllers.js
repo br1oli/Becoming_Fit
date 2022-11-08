@@ -1,13 +1,13 @@
 const { response, request } = require('express');
 
-const getClients = (req = request, res = response) => {
+const getOrders = (req = request, res = response) => {
   try {
     res.json('test');
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
 module.exports = {
-  getClients,
+  getOrders,
 };
