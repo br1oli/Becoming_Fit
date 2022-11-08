@@ -1,3 +1,4 @@
+
 const { response, request } = require("express");
 const { getProductsByJson } = require("../helpers/getProductsByJson");
 const getProducts = (req = request, res = response) => {
