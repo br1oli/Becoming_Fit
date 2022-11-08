@@ -16,7 +16,7 @@ const Footer = () => {
     <div className="container-fluid text-center text-md-left">
         <div className='row'>
             <div className='col-md-5 mt-md-0 mt-2'>
-                <p>Henry Becoming Fit</p>
+                <p>Henry Becoming-Fit</p>
             </div>
 
             <hr className='clearfix w-100 d-md-none pb-0'/>
@@ -68,7 +68,7 @@ const Footer = () => {
             </div>
 
             <div className='footer-copyright text-center py-3' >
-            Copyright © 2022: <a href="asd" className='text-secondary text-decoration-none'>Henry Becoming Fit SRL</a>
+            Copyright © 2022: <a href="asd" className='text-secondary text-decoration-none'>Henry Becoming-Fit SRL</a>
             </div>
 
         </div>
