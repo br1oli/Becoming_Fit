@@ -16,9 +16,11 @@ const Footer = () => {
     <div className="container-fluid text-center text-md-left">
         <div className='row'>
             <div className='col-md-5 mt-md-0 mt-2'>
-                <p>Henry Fitness Clothing</p>
+                <p>Henry Becoming Fit</p>
             </div>
+
             <hr className='clearfix w-100 d-md-none pb-0'/>
+
             <div className="col-md-2 mb-md-0 mb-2">
 
                  <h5 id="info" className="text-uppercase">Company</h5>
@@ -60,6 +62,15 @@ const Footer = () => {
                     <li><a href="" className='text-secondary text-decoration-none mx-1'><BsWhatsapp /></a></li>
                 </ul>
             </div>
+
+            <div>
+                <hr style={{margin: "0 0 0 0"}}/>
+            </div>
+
+            <div className='footer-copyright text-center py-3' >
+            Copyright © 2022: <a href="asd" className='text-secondary text-decoration-none'>Henry Becoming Fit SRL</a>
+            </div>
+
         </div>
     </div>
     </footer>
