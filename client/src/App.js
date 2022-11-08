@@ -1,10 +1,19 @@
 import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+
+import Footer from './COMPONENTS/Footer/Footer';
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Videogames</h1>
-    </div>
+<BrowserRouter>
+  <div className='App'>
+     <Switch>
+        <Route path='/' component={Footer} />
+     </Switch>
+  </div>
+</BrowserRouter>
   );
 }
 
