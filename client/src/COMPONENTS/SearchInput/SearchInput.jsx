@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-//import { connect } from "react-redux";
-import style from "../../styleSheets/Search.module.css";
+import style from "./SearchInput.module.css";
 
 const SearchInput = (props) => {
     const [input, setInput] = useState("");
@@ -11,11 +10,9 @@ const SearchInput = (props) => {
     };
 
     const handleSubmit = (e) => {
-        //debugger
         e.preventDefault(e);
         console.log(input)
         setInput("")
-        //debugger
     }
 
     return(
