@@ -168,8 +168,8 @@ export default function LandingPage() {
                                 <div className="col">
                                     <img
                                         alt="gif"
-                                        width="85%"
-                                        height="90%"
+                                        width="100%"
+                                        height="100%"
                                         src="https://cdn.grupoelcorteingles.es/statics/manager/contents/images/uploads/2022/08/rye5OnVys.gif"
                                         className="imgRedonda"
                                     />

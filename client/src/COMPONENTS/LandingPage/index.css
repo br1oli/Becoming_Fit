@@ -31,7 +31,8 @@
 }
 
 body {
-    background: url(https://fondosmil.com/fondo/5787.jpg);
+    background: rgb(215,215,215);
+    background: linear-gradient(270deg, rgba(215,215,215,1) 0%, rgba(255,255,255,1) 50%, rgba(215,215,215,1) 100%);;
     background-size: 100% 100%;
     background-attachment: fixed;
     margin: 0;
