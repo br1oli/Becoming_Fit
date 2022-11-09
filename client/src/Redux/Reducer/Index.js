@@ -3,6 +3,7 @@ const initialState = {
   allProducts: [],
   details: [],
 };
+console.log(initialState);
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
