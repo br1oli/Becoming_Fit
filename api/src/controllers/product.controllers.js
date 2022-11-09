@@ -1,11 +1,10 @@
-const { response, request } = require("express");
-const { getProductsByJson } = require("../helpers/getProductsByJson");
+const { response, request } = require('express');
+
 const getProducts = (req = request, res = response) => {
   try {
-    const products = getProductsByJson();
-    res.status(200).send(products);
+    res.json('test');
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
