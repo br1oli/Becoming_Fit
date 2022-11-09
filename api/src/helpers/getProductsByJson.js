@@ -1,7 +1,11 @@
-const data = require('../data.json');
+const data = require("../data.json");
 
 const getProductsByJson = () => {
-  console.log(data);
+  try {
+    return data;
+  } catch (error) {
+    return error;
+  }
 };
 
 module.exports = { getProductsByJson };
