@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    'product',
+    'user',
     {
       id: {
         type: DataTypes.UUID,
@@ -13,47 +13,47 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
-      name: {
+      userName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allownull: false,
       },
-      type: {
+      firstName: {
         type: DataTypes.STRING,
+        allownull: false,
       },
-      category: {
+      lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allownull: false,
       },
-      color: {
+      email: {
         type: DataTypes.STRING,
-      },
-      gender: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        allownull: false,
         unique: true,
       },
-      size: {
+      address: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      brand: {
+      zipCode: {
+        type: DataTypes.INTERGER,
+        allowNull: false,
+      },
+      telephone: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
-      rating: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      price: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      description: {
+      password: {
         type: DataTypes.STRING,
+        allownull: false,
+      },
+      adminPermissions: {
+        type: DataTypes.BOOLEAN,
+        allownull: false,
+        defaultValue: false,
       },
       image: {
         type: DataTypes.STRING,
-        allownull: false,
+        defaultValue:
+          'https://png.pngtree.com/png-vector/20190909/ourmid/pngtree-outline-user-icon-png-image_1727916.jpg',
       },
     },
     {

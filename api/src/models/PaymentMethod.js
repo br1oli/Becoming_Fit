@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    'order',
+    'paymentMethod',
     {
       id: {
         type: DataTypes.UUID,
@@ -13,28 +13,13 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
-      amount: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       type: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      address: {
+      detail: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      status: {
-        type: DataType.STRING,
-        allowNull: false,
-        defaultValue: 'Pending',
-      },
-      shippingDate: {
-        type: {
-          type: DataType.STRING,
-          allowNull: false,
-        },
       },
     },
     {
