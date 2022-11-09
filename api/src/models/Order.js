@@ -10,7 +10,6 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
-        unique: true,
         allowNull: false,
       },
       amount: {
@@ -26,15 +25,13 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       status: {
-        type: DataType.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         defaultValue: 'Pending',
       },
       shippingDate: {
-        type: {
-          type: DataType.STRING,
-          allowNull: false,
-        },
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {

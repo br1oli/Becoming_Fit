@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     rating: {
-      type: DataTypes.FlOAT,
+      type: DataTypes.FLOAT,
     },
   });
 };

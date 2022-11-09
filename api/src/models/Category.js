@@ -6,15 +6,9 @@ module.exports = (sequelize) => {
   sequelize.define(
     'category',
     {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-      },
-
       name: {
         type: DataTypes.STRING,
+        primaryKey: true,
         allowNull: false,
       },
     },

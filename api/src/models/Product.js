@@ -20,10 +20,10 @@ module.exports = (sequelize) => {
       type: {
         type: DataTypes.STRING,
       },
-      category: {
+      /*  category: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
+      }, */
       color: {
         type: DataTypes.STRING,
       },
@@ -36,10 +36,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      brand: {
+      /*  brand: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
+      }, */
       rating: {
         type: DataTypes.INTEGER,
         allowNull: false,

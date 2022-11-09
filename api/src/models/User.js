@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       zipCode: {
-        type: DataTypes.INTERGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       telephone: {
