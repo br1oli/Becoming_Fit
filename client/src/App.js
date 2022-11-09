@@ -11,8 +11,8 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route path='/' component={Footer} />
         <Route exact path="/home" component={Search} />
-         <Route path='/' component={Footer} />
       </Switch>
     </BrowserRouter>
   );
