@@ -1,7 +1,7 @@
 const { response, request } = require('express');
-const { Client } = require('../db');
+const { User } = require('../db');
 
-const getClients = (req = request, res = response) => {
+const getUsers = (req = request, res = response) => {
   // traigo todos los clientes de la db y los envio:
   try {
     res.json('test');
@@ -10,7 +10,7 @@ const getClients = (req = request, res = response) => {
   }
 };
 
-const createClient = async (req = request, res = response) => {
+const createUser = async (req = request, res = response) => {
   const {
     userName,
     firstName,
@@ -30,7 +30,7 @@ const createClient = async (req = request, res = response) => {
     return res.status(400).send('missing data!');
   }
   try {
-    const newClient = await Client.create({
+    const newUser = await User.create({
       userName,
       firstName,
       lastName,
@@ -41,13 +41,13 @@ const createClient = async (req = request, res = response) => {
       adminPermissions,
       image,
     });
-    res.send(newClient);
+    res.send(newUser);
   } catch (error) {
     res.status(500).json(error.message);
   }
 };
 
-const updateClient = async (req = request, res = response) => {
+const updateUser = async (req = request, res = response) => {
   const { id } = req.params;
   // pensar que queremos que se modifique del client: hay que restringir a que vengan si o si los datos, si no, hacetr una funcion que me divida los que si existen y los que no existen!
   const {
@@ -62,28 +62,28 @@ const updateClient = async (req = request, res = response) => {
     image,
   } = req.body;
   try {
-    const client = await Client.findByPk(id);
-    client.userName = userName;
-    client.address = address;
-    client.firstName = firstName;
-    client.lastName = lastName;
-    client.telephone = telephone;
-    client.email = email;
-    client.password = password;
-    client.adminPermissions = adminPermissions;
+    const user = await User.findByPk(id);
+    user.userName = userName;
+    user.address = address;
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.telephone = telephone;
+    user.email = email;
+    user.password = password;
+    user.adminPermissions = adminPermissions;
     // pensar si viene una img, si no existe, por default se carga una con sequelize!
-    client.image = image;
-    client.save();
-    res.json(client);
+    user.image = image;
+    user.save();
+    res.json(user);
   } catch (error) {
     res.status(500).json(error.message);
   }
 };
 
-const deleteClient = async (req = request, res = response) => {
+const deleteUser = async (req = request, res = response) => {
   const { id } = req.params;
   try {
-    await Client.destroy({
+    await User.destroy({
       where: {
         id,
       },
@@ -95,8 +95,8 @@ const deleteClient = async (req = request, res = response) => {
 };
 
 module.exports = {
-  getClients,
-  createClient,
-  updateClient,
-  deleteClient,
+  getUsers,
+  createUser,
+  deleteUser,
+  updateUser,
 };
