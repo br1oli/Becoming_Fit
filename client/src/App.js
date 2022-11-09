@@ -16,7 +16,7 @@ function App() {
        <Route path='/' component={Footer} />
     </Switch>
   </BrowserRouter>
-  );
+ );
 }
 
 
