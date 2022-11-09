@@ -1,17 +1,17 @@
 const {
-  createClient,
-  getClients,
-  updateClient,
-  deleteClient,
-} = require('./client.controllers');
+  getUsers,
+  createUser,
+  deleteUser,
+  updateUser,
+} = require('./users.controllers');
 const { getOrders } = require('./order.controllers');
 const { getProducts } = require('./product.controllers');
 
 module.exports = {
-  getClients,
+  getUsers,
+  createUser,
+  deleteUser,
+  updateUser,
   getOrders,
   getProducts,
-  createClient,
-  updateClient,
-  deleteClient,
 };
