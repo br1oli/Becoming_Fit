@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       }, */
       rating: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       price: {
@@ -53,7 +53,7 @@ module.exports = (sequelize) => {
       },
       image: {
         type: DataTypes.STRING,
-        allownull: false,
+        allowNull: false,
       },
     },
     {
