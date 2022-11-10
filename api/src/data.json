@@ -214,7 +214,7 @@
       "sizeM": "M",
       "sizeL": "L",
       "sizeXL": "XL"
-    },  
+    },
     "color": {
       "color1": "black"
     },
@@ -236,7 +236,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "darkblue"
     },
@@ -399,7 +399,7 @@
       "sizeM": "M",
       "sizeL": "L",
       "sizeXL": "XL"
-    },  
+    },
     "color": {
       "color1": "black"
     },
@@ -418,7 +418,7 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },  
+    },
     "color": {
       "color1": "dark-grey"
     },
@@ -438,14 +438,14 @@
       "sizeM": "M",
       "sizeL": "L",
       "sizeXL": "XL"
-    },  
+    },
     "color": {
       "color1": "grey-fuchsia",
       "color2": "pink",
       "color3": "violet"
     },
     "brand": "New Balance",
-    "rating": 4.2,   
+    "rating": 4.2,
     "description": "New Balance 411 Women's Shoes. The NB 411v2 helps you move comfortably to face the day. Featuring a Ground Contact Eva outsole, these women's shoes deliver incredibly lightweight cushioning, abrasion resistance and durability with every step. A sublimated print on the vamp completes this sneaker with a sleek look to perfectly combine function and fashion.",
     "price": "59",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_910152-MLA51756298219_092022-F.webp"
@@ -462,12 +462,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black-fuchsia"
     },
     "brand": "New Balance",
-    "rating": 4.5,   
+    "rating": 4.5,
     "description": "New Balance WKOZELP1 shoes excellent running style model, ideal for your physical training or simply to wear comfortable shoes during the day!",
     "price": "51",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_785933-MLA31037345754_062019-F.webp"
@@ -485,12 +485,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "coral"
     },
     "brand": "New Balance",
-    "rating": 4.1,    
+    "rating": 4.1,
     "description": "Featuring trail-leading technology and a sleek, modern look, the Women's NITREL FuelCore offers a winning combination of speed, traction and style. The lightweight, protective upper features breathable materials with seamless overlays sitting atop an ultralight REVlite midsole. The AT TREAD hybrid outsole is designed for road and trail use, while the Toe Protect feature offers additional protection between harsh environments.",
     "price": "73",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_854308-MLA31602599679_072019-F.webp"
@@ -508,14 +508,14 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "aqua",
       "color2": "red",
       "color3": "moss-green"
     },
     "brand": "New Balance",
-    "rating": 5.0,    
+    "rating": 5.0,
     "description": "Built with a plush Fresh Foam technology midsole, this running shoe is designed based on objective data in real tests to offer comfort and response with a light weight and a smooth ride for both long distances and on the treadmill. And to provide fit at strategic points from heel to toe, this women's running shoe has a low-profile upper made of stylish breathable mesh and synthetic materials.",
     "price": "134",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_834057-MLA50613168757_072022-F.webp"
@@ -524,7 +524,7 @@
     "name": "New Balance Fitness Training M411v2",
     "category": "Shoes",
     "type": "Training",
-    "gender": "Male",    
+    "gender": "Male",
     "size": {
       "sizeXS": "XS",
       "sizeS": "S",
@@ -532,13 +532,13 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black-red",
       "color2": "blue"
     },
     "brand": "New Balance",
-    "rating": 4.9,    
+    "rating": 4.9,
     "description": "The NB 411v2 helps you move comfortably to face the day. Featuring a Ground Contact Eva outsole, these men's shoes deliver incredibly lightweight cushioning, abrasion resistance and durability with every step. A sublimated print on the vamp completes this sneaker with a sleek look to seamlessly blend functionality and fashion.",
     "price": "59",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_693423-MLA51754248187_092022-F.webp"
@@ -556,13 +556,13 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black",
       "color2": "green-yellow"
     },
     "brand": "New Balance",
-    "rating": 5.0,    
+    "rating": 5.0,
     "description": "Don't miss a beat on the run in our Fresh Foam Tempo running shoes. Constructed with a super-soft Fresh Foam midsole, this shoe is designed based on real-world testing data to provide lightweight comfort and response with a smooth ride for both long-distance and treadmill running. And to provide fit at strategic points from the heel to the forefoot. It also has a low-profile upper made with elegant breathable mesh and synthetic materials.",
     "price": "124",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_658383-MLA50513820972_062022-F.webp"
@@ -572,7 +572,7 @@
     "name": "New Balance Fresh Foam Cruz V2 Sport Kb",
     "category": "Shoes",
     "type": "Running",
-    "gender": "Male",    
+    "gender": "Male",
     "size": {
       "sizeXS": "XS",
       "sizeS": "S",
@@ -580,12 +580,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black"
     },
     "brand": "New Balance",
-    "rating": 4.4,    
+    "rating": 4.4,
     "description": "Improve your performance with the New Balance Fresh Foam Cruz v2 Sport running shoes. It features a comfortable bootie construction and an elastic heel for easy slip-on. A reflective fit in the midfoot provides support while Fresh Foam technology gives you soft cushioning.",
     "price": "88",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_969346-MLA49987664196_052022-F.webp"
@@ -603,12 +603,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "blue"
     },
     "brand": "New Balance",
-    "rating": 4.4,    
+    "rating": 4.4,
     "description": "MESH UPPER, ADJUSTMENT SYSTEM WITH LACES, RUBBER SOLE, DETAILS IN SYNTHETIC MATERIAL.",
     "price": "65",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_862818-MLA51388850996_092022-F.webp"
@@ -626,12 +626,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black-orange"
     },
     "brand": "New Balance",
-    "rating": 4.6,    
+    "rating": 4.6,
     "description": "Feel light and fast with the Fresh Foam Arishiv3. These men's deluxe running shoes include innovative features like a cored outsole for superior flexibility and a comfortable feel that take you from your morning run to your daily errands with ease. A knit upper keeps these shoes light, while a Fresh Foam midsole provides rebound and cushioning to keep you moving forward.",
     "price": "99",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_612312-MLA51954084504_102022-F.webp"
@@ -754,14 +754,14 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    }, 
+    },
     "color": {
       "color1": "black",
       "color2": "gray",
       "color3": "darkgray",
       "color4": "darkgreen",
       "color5": "white"
-    }, 
+    },
     "brand": "Adidas",
     "rating": 4,
     "description": "comfortable traing shorts made by reclicled plastic bottles",
@@ -780,7 +780,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black",
       "color2": "gray",
@@ -806,7 +806,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black",
       "color2": "gray",
@@ -858,7 +858,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black",
       "color2": "gray",
@@ -882,15 +882,15 @@
       "sizeM": "M",
       "sizeL": "L",
       "sizeXL": "XL"
-    }, 
+    },
     "color": {
       "color1": "black"
-    }, 
+    },
     "brand": "Nike",
     "rating": 3.9,
     "description": "Kids love comfort and looking and feeling great, and these Nike Sportswear Leggings deliver it all. They're so soft and stretchy, you'll never want to take them off.",
     "price": "180",
-    "image": "https://http2.mlstatic.com/D_NQ_NP_927823-MCO52065954067_102022-O.jpg"    
+    "image": "https://http2.mlstatic.com/D_NQ_NP_927823-MCO52065954067_102022-O.jpg"
   },
   {
     "name": "Nike Downshifter 11 - Cw3411-006",
@@ -904,12 +904,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black"
     },
     "brand": "Nike",
-    "rating": 4.5,    
+    "rating": 4.5,
     "description": "The Nike Downshifter 11 Shoes are perfect for your running days, the upper mesh gives you breathable comfort, with flexible grooves in the sole gives you better traction, reaction, and cushioning in each step, plus the metallic swoosh logo adds a sporty touch and original.",
     "price": "72",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_799214-MLA47321513551_092021-F.webp"
@@ -927,12 +927,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "dark-blue"
     },
     "brand": "Puma",
-    "rating": 4.2,    
+    "rating": 4.2,
     "description": "The Puma Resolve Street Shoes keep your feet light throughout the day. They feature a mesh upper part without laces. SOFTFOAM + insole provides the soft cushioning that each step deserves. With rubber sole, adherent to the ground and urban style.",
     "price": "56",
     "image": "https://http2.mlstatic.com/D_NQ_NP_986689-MLA47491523775_092021-O.webp"
@@ -947,7 +947,7 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },  
+    },
     "color": {
       "color1": "black"
     },
@@ -967,12 +967,12 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },  
+    },
     "color": {
       "color1": "pink"
     },
     "brand": "Adidas",
-    "rating": 4.7,   
+    "rating": 4.7,
     "description": "The Adidas Energyfalcon X shoes are designed as the first option for your running days. The cushioned midsole works with a soft sockliner to cushion every step. Add kilometers with the Adiwear sole and the midsole with Cloudfoam cushioning.",
     "price": "64",
     "image": "https://http2.mlstatic.com/D_NQ_NP_907618-MLA49175636827_022022-O.webp"
@@ -990,12 +990,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black"
     },
     "brand": "Puma",
-    "rating": 4.8,    
+    "rating": 4.8,
     "description": "Get ready for the road in the Retaliate 2 running shoe. Lightweight and ergonomic, with a burrito collar construction for a snug fit to the foot, a comfortable and supportive midsole, rubber zoning to improve outsole traction, the bold PUMA branding and a pull tab for easy on and off, you'll have total control over whatever surface you're training on.",
     "price": "86",
     "image": "https://http2.mlstatic.com/D_NQ_NP_941393-MLA51424958797_092022-O.webp"
@@ -1013,13 +1013,13 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black",
       "color2": "blue"
     },
     "brand": "Nike",
-    "rating": 4.3,    
+    "rating": 4.3,
     "description": "The Nike Air Zoom Winflo 8 shoes have EVA foam for comfort and lightness in contact with the surface. The Zoom Air unit raises the level of cushioning for more response with each step and the rubber outsole offers secure traction.",
     "price": "118",
     "image": "https://http2.mlstatic.com/D_NQ_NP_651457-MLA51372827339_092022-O.webp"
@@ -1028,7 +1028,7 @@
   {
     "name": "Terrex Eastrail Hiking",
     "category": "Shoes",
-    "type": "Training",    
+    "type": "Training",
     "gender": "Male",
     "size": {
       "sizeXS": "XS",
@@ -1037,12 +1037,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "lightbrown"
     },
     "brand": "Adidas",
-    "rating": 4,   
+    "rating": 4,
     "description": "Terrex Eastrail shoes. Accumulate. Built for a stable feel and secure traction on wet and uneven terrain, they feature a cushioned midsole for all-day comfort. Mesh and synthetic material upper for lightness and comfort.",
     "price": "92",
     "image": "https://http2.mlstatic.com/D_NQ_NP_824522-MLA51919238198_102022-O.webp"
@@ -1051,7 +1051,7 @@
   {
     "name": "Fortarun Lace Running",
     "category": "Shoes",
-    "type": "Running",    
+    "type": "Running",
     "gender": "Male",
     "size": {
       "sizeXS": "XS",
@@ -1060,12 +1060,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "blue"
     },
     "brand": "Adidas",
-    "rating": 4.9,    
+    "rating": 4.9,
     "description": "The durable, non-marking outsole stands up to the wear and tear of kids. This product is made with Primegreen, a series of high performance recycled materials. 50% of the exterior is made from recycled material.",
     "price": "56",
     "image": "https://http2.mlstatic.com/D_NQ_NP_993646-MLA48258348451_112021-O.webp"
@@ -1074,7 +1074,7 @@
   {
     "name": "Puma Comet 2",
     "category": "Shoes",
-    "type": "Running",    
+    "type": "Running",
     "gender": "Female",
     "size": {
       "sizeXS": "XS",
@@ -1083,12 +1083,12 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "pink"
     },
     "brand": "Puma",
-    "rating": 3.7,    
+    "rating": 3.7,
     "description": "The Puma Comet 2 Alt Beta sneakers are made with lightweight materials for better wear. The Softride foam in the heel gives you the necessary cushioning for your steps, while the SoftFOAM+ insole adds more comfort. The lacing system provides a personalized fit, while their sporty design makes them suitable for all types of training.",
     "price": "49",
     "image": "https://http2.mlstatic.com/D_NQ_NP_783914-MLA52105243060_102022-O.webp"
@@ -1109,7 +1109,7 @@
       "color2": "white"
     },
     "brand": "Adidas",
-    "rating": 3.4,    
+    "rating": 3.4,
     "description": "The breathable mesh upper sits on top of a chunky rubber outsole, so kids can run, jump and play non-stop and always land firmly again. Made from a range of recycled materials, this exterior incorporates at least 50% recycled content.",
     "price": "68",
     "image": "https://http2.mlstatic.com/D_NQ_NP_793024-MLA51603311228_092022-O.webp"
@@ -1254,7 +1254,7 @@
     "category": "Jacket",
     "gender": "Unisex",
     "type": "All-around",
-    "size": { 
+    "size": {
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
@@ -1277,8 +1277,8 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L",
-      "sizeXL": "XL" 
-    },  
+      "sizeXL": "XL"
+    },
     "color": {
       "color1": "blacke",
       "color2": "blue",
@@ -1299,7 +1299,7 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },  
+    },
     "color": {
       "color1": "pink",
       "color2": "white"
@@ -1314,7 +1314,7 @@
     "name": "Topper Unisex To 165095 Jacket",
     "category": "Jacket",
     "type": "All-around",
-    "gender": "Unisex",    
+    "gender": "Unisex",
     "size": {
       "sizeXS": "XS",
       "sizeS": "S",
@@ -1322,7 +1322,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "black",
       "color2": "white"
@@ -1334,7 +1334,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_851404-MLA49889308216_052022-F.webp"
   },
   {
-    "name": "T-shirts Puma Home Manchester City",    
+    "name": "T-shirts Puma Home Manchester City",
     "category": "T-shirts",
     "type": "Training",
     "gender": "Unisex",
@@ -1343,7 +1343,7 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },   
+    },
     "color": {
       "color1": "light blue"
     },
@@ -1354,7 +1354,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_731357-MLA51455279110_092022-F.webp"
   },
   {
-    "name": "Topper Basic T-shirt In Petrol Blue | Dexter",    
+    "name": "Topper Basic T-shirt In Petrol Blue | Dexter",
     "category": "T-shirts",
     "type": "All-around",
     "gender": "Unisex",
@@ -1363,7 +1363,7 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },  
+    },
     "color": {
       "color1": "blue france"
     },
@@ -1383,7 +1383,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },    
+    },
     "color": {
       "color1": "pink",
       "color2": "white"
@@ -1391,7 +1391,7 @@
     "brand": "Reebok",
     "rating": 4.8,
     "description": "short sleeve t-shirt for girls; greatness doesn't come from standing still, living an active life allows people to be their best selves",
-    "price": "8.99",    
+    "price": "8.99",
     "image": "https://m.media-amazon.com/images/I/714NOw4-ehL._AC_UX466_.jpg"
   },
   {
@@ -1404,7 +1404,7 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },    
+    },
     "color": {
       "color1": "gray",
       "color2": "white"
@@ -1412,7 +1412,7 @@
     "brand": "Puma",
     "rating": 4.8,
     "description": "Bring an urban style to your outfit with this Puma t-shirt. All this without abandoning the comfort provided by its other garments, such as the dryCELL technology, which dissipates sweat. The original drawing on the front with the brand's logo provides a sporty style.",
-    "price": "11",    
+    "price": "11",
     "image": "https://http2.mlstatic.com/D_NQ_NP_619619-MLA50770830663_072022-O.webp"
   },
   {
@@ -1425,7 +1425,7 @@
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L"
-    },      
+    },
     "color": {
       "color1": "pink",
       "color2": "white",
@@ -1434,18 +1434,18 @@
     "brand": "Puma",
     "rating": 4.4,
     "description": "Give an extra touch to your training days with the Puma Modern Sports T-shirt.",
-    "price": "11",    
+    "price": "11",
     "image": "https://http2.mlstatic.com/D_NQ_NP_913846-MLA51446767632_092022-O.webp"
   },
   {
-    "name": "Reebok Running T-shirt",    
+    "name": "Reebok Running T-shirt",
     "category": "T-shirts",
-    "type":  "Running",
+    "type": "Running",
     "gender": "Female",
     "size": {
       "sizeS": "S",
       "sizeM": "M"
-    },    
+    },
     "color": {
       "color1": "black"
     },
@@ -1456,17 +1456,17 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_654673-MLA41511642109_042020-O.webp"
   },
   {
-    "name": "Puma Modern Sports White Crew Neck T-Shirt For Women",    
+    "name": "Puma Modern Sports White Crew Neck T-Shirt For Women",
     "category": "T-shirts",
     "type": "Running",
-    "gender": "Female",    
+    "gender": "Female",
     "size": {
       "sizeS": "S",
       "sizeM": "M"
-    },   
+    },
     "color": {
       "color1": "lilac"
-    }, 
+    },
     "brand": "Puma",
     "rating": 4.5,
     "description": "T-shirt with a round neckline with the edge made in the Puma brand, it is made of 100% soft and high-performance cotton, it is light, fresh and perfect for physical activities such as running.",
@@ -1474,7 +1474,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_913846-MLA51446767632_092022-O.webp"
   },
   {
-    "name": "Puma Amplified Graphic Cotton T-shirt For Women",    
+    "name": "Puma Amplified Graphic Cotton T-shirt For Women",
     "category": "T-shirts",
     "type": "Running",
     "gender": "Female",
@@ -1485,7 +1485,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },     
+    },
     "color": {
       "color1": "Apricot Blush"
     },
@@ -1505,7 +1505,7 @@
       "sizeM": "M",
       "sizeL": "L",
       "sizeXL": "XL"
-    },    
+    },
     "color": {
       "color1": "black"
     },
@@ -1523,7 +1523,7 @@
     "size": {
       "sizeS": "S",
       "sizeM": "M"
-    },    
+    },
     "color": {
       "color1": "navy",
       "color2": "red"
@@ -1545,7 +1545,7 @@
       "sizeM": "M",
       "sizeL": "L",
       "sizeXL": "XL"
-    },    
+    },
     "color": {
       "color1": "white & grey",
       "color2": "black & red"
@@ -1559,7 +1559,7 @@
   {
     "name": "Argentine 22 Home Jersey",
     "category": "T-shirt",
-    "type": "Training",    
+    "type": "Training",
     "size": {
       "sizeXS": "XS",
       "sizeS": "S",
@@ -1582,7 +1582,7 @@
     "name": "Future Icons Logo Graphic Tee",
     "category": "T-shirt",
     "type": "All-around",
-    "gender": "Unisex",    
+    "gender": "Unisex",
     "size": {
       "sizeXS": "XS",
       "sizeS": "S",
@@ -1590,14 +1590,14 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },   
+    },
     "color": {
       "color1": "white",
       "color2": "black",
       "color3": "red",
       "color4": "green",
       "color5": "grey"
-    }, 
+    },
     "brand": "Adidas",
     "rating": 3.5,
     "description": "There are times to go hard, and then there are moments to give into the stillness. Both are a showcase of strength. Whatever the speed, this adidas t-shirt is down for it. Soft material hangs on the body with a loose, casual shape for total comfort. A logo graphic on the front puts your dedication on full display — not like it wasn't already clear.",
@@ -1607,7 +1607,7 @@
   {
     "name": "Own The Run Tee",
     "category": "T-shirt",
-    "type": "Running",    
+    "type": "Running",
     "size": {
       "sizeXS": "XS",
       "sizeS": "S",
@@ -1631,7 +1631,7 @@
   {
     "name": "Nike Dri-Fit ADV Aura",
     "category": "T-shirt",
-    "type": "Training",    
+    "type": "Training",
     "gender": "Female",
     "size": {
       "sizeS": "S",
@@ -1639,7 +1639,7 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },    
+    },
     "color": {
       "color1": "pink",
       "color2": "black",
@@ -1654,8 +1654,8 @@
   {
     "name": "Jordan Sport",
     "category": "T-shirt",
-    "type": "All-around",   
-    "gender": "Female", 
+    "type": "All-around",
+    "gender": "Female",
     "size": {
       "sizeXS": "XS",
       "sizeS": "S",
@@ -1664,7 +1664,7 @@
       "sizeXL": "XL",
       "size2XL": "2XL",
       "size3XL": "3XL"
-    },    
+    },
     "color": {
       "color1": "dark blue",
       "color2": "black"
@@ -1679,15 +1679,15 @@
   {
     "name": "Nike Dri-Fit Miler",
     "category": "T-shirt",
-    "type": "Running",   
-    "gender": "Male", 
+    "type": "Running",
+    "gender": "Male",
     "size": {
       "sizeS": "S",
       "sizeM": "M",
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },    
+    },
     "color": {
       "color1": "white",
       "color2": "black",
@@ -1714,10 +1714,10 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "white"
-    },   
+    },
     "brand": "Nike",
     "rating": 3.6,
     "description": "When the weather doesn't warrant a sweatshirt, wear this base tee. The long-sleeved, slim-fit design of this adidas Team Base T-Shirt makes it perfect to wear under your football jersey for added protection from the cold. It incorporates AEROREADY absorption technology that keeps your skin dry and is made of elastic fabric that allows you to move with fluidity at all times. This product is made with Primegreen, a series of high performance recycled materials.",
@@ -1737,11 +1737,11 @@
       "sizeL": "L",
       "sizeXL": "XL",
       "size2XL": "2XL"
-    },  
+    },
     "color": {
       "color1": "white",
       "color2": "dark blue"
-    },  
+    },
     "brand": "Nike",
     "rating": 2.9,
     "description": "Short-sleeved shirt glued with cleaning strip. Transfer logos.",
@@ -1756,7 +1756,7 @@
     "size": {
       "sizeM": "M",
       "sizeL": "L"
-    },    
+    },
     "color": {
       "color1": "red"
     },
