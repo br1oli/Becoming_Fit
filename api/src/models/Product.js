@@ -30,7 +30,6 @@ module.exports = (sequelize) => {
       gender: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       },
       size: {
         type: DataTypes.STRING,
@@ -45,7 +44,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       description: {
