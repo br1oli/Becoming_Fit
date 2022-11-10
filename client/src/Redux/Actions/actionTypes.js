@@ -6,7 +6,6 @@ export const GET_DETAIL_PRODUCT = 'get/detail/product';
 //actions types from brands:
 export const GET_BRANDS = 'get/brands';
 
-
 // export const URL_PRODUCTS = "http://localhost:3001/products/";
 // export const URL_PRODUCTS_QUERY = "http://localhost:3001/products?name=${name}";
 // export const GET_PRODUCTS = "GET_PRODUCTS";
