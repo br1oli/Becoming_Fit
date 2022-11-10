@@ -17,7 +17,6 @@ const getProducts = async (req = request, res = response) => {
       if (!foundProductsByName) {
         return res.status(404).send("Please enter a valid name");
       }
-      console.log(foundProductsByName);
 
       return res.status(200).send(foundProductsByName);
     }
