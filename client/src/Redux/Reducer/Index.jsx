@@ -1,6 +1,8 @@
 const initialState = {
   porducts: [],
   allProducts: [],
+  brands: [],
+  allBrands: [],
   details: [],
 };
 
