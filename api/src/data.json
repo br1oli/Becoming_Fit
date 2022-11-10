@@ -20,7 +20,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_750910-MLU51264755911_082022-O.webp"
   },
   {
-    "name": "Jacket New Balance Accelerate Negro",
+    "name": "Jacket Reebok Accelerate Negro",
     "category": "Jacket",
     "type": "All-around",
     "gender": "Male",
@@ -58,7 +58,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_714567-MLU46233272230_062021-F.webp"
   },
   {
-    "name": "Umbro Parka Jacket",
+    "name": "Puma Parka Jacket",
     "category": "Jacket",
     "type": "Running",
     "gender": "Male",
@@ -69,7 +69,7 @@
     "color": {
       "color1": "black"
     },
-    "brand": "Umbro",
+    "brand": "Puma",
     "rating": 4.6,
     "description": "Waterproof nylon jacket, with external pockets and hood, Launching season: Fall/Winter",
     "price": "62",
@@ -141,7 +141,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_633234-MLU47598408161_092021-F.webp"
   },
   {
-    "name": "Jacket New Balance Accelerate Negro",
+    "name": "Jacket Reebok Accelerate Negro",
     "category": "Jacket",
     "type": "Running",
     "gender": "Female",
@@ -156,7 +156,7 @@
     "color": {
       "color1": "black"
     },
-    "brand": "New Balance",
+    "brand": "Reebok",
     "rating": 3.2,
     "description": "100% polyester sports jacket with external pockets. Waterproof: Yes",
     "price": "77",
@@ -238,7 +238,7 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "darkblue"
+      "color1": "blue"
     },
     "brand": "Nike",
     "rating": 4.5,
@@ -258,7 +258,7 @@
       "size2XL": "2XL"
     },
     "color": {
-      "color1": "lightgrey"
+      "color1": "grey"
     },
     "brand": "Topper",
     "rating": 3.5,
@@ -279,7 +279,8 @@
       "sizeXL": "XL"
     },
     "color": {
-      "color1": "grey and white"
+      "color1": "grey",
+      "color2": "white"
     },
     "brand": "Reebok",
     "rating": 4,
@@ -339,7 +340,8 @@
       "sizeXL": "XL"
     },
     "color": {
-      "color1": "black and darkgrey"
+      "color1": "black",
+      "color2": "grey"
     },
     "brand": "Adidas",
     "rating": 4,
@@ -410,7 +412,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_654647-MLA51456667805_092022-O.webp"
   },
   {
-    "name": "New Balance W680lv7",
+    "name": "Reebok W680lv7",
     "category": "Shoes",
     "type": "Running",
     "gender": "Female",
@@ -420,16 +422,16 @@
       "sizeL": "L"
     },  
     "color": {
-      "color1": "dark-grey"
+      "color1": "grey"
     },
-    "brand": "New Balance",
+    "brand": "Reebok",
     "rating": 4,
     "description": "The FreshFoam 680v7 sneaker is ideal for those who want to run in a shoe that is fashionable and comfortable to wear. Featuring a dual-density Fresh Foam technology midsole for comfort, a molded sockliner for support, and optimal rubber coverage for durability, this shoe provides a soft feel with every step. With a smooth technical mesh upper, this women's running shoe gives your feet an experience you'll love.",
     "price": "56",
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_601088-MLA47805427813_102021-F.webp"
   },
   {
-    "name": "New Balance 411 V2 Fitness Training W411",
+    "name": "Reebok 411 V2 Fitness Training W411",
     "category": "Shoes",
     "type": "All-around",
     "gender": "Female",
@@ -440,7 +442,7 @@
       "sizeXL": "XL"
     },  
     "color": {
-      "color1": "grey-fuchsia",
+      "color1": "grey",
       "color2": "pink",
       "color3": "violet"
     },
@@ -451,7 +453,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_910152-MLA51756298219_092022-F.webp"
   },
   {
-    "name": "Running New Balance Wkozelp1",
+    "name": "Running Reebok Wkozelp1",
     "category": "Shoes",
     "type": "Running",
     "gender": "Female",
@@ -464,7 +466,7 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "black-fuchsia"
+      "color1": "black"
     },
     "brand": "New Balance",
     "rating": 4.5,   
@@ -474,7 +476,7 @@
   },
 
   {
-    "name": "New Balance Wtntrrf1 Trail",
+    "name": "Reebok Wtntrrf1 Trail",
     "category": "Shoes",
     "type": "Running",
     "gender": "Female",
@@ -487,7 +489,7 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "coral"
+      "color1": "orange"
     },
     "brand": "New Balance",
     "rating": 4.1,    
@@ -497,7 +499,7 @@
   },
 
   {
-    "name": "New Balance Tempo Fresh Foam",
+    "name": "Reebok Tempo Fresh Foam",
     "category": "Shoes",
     "type": "Running",
     "gender": "Female",
@@ -510,9 +512,9 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "aqua",
+      "color1": "blue",
       "color2": "red",
-      "color3": "moss-green"
+      "color3": "green"
     },
     "brand": "New Balance",
     "rating": 5.0,    
@@ -521,7 +523,7 @@
     "image": "https://http2.mlstatic.com/D_NQ_NP_2X_834057-MLA50613168757_072022-F.webp"
   },
   {
-    "name": "New Balance Fitness Training M411v2",
+    "name": "Reebok Fitness Training M411v2",
     "category": "Shoes",
     "type": "Training",
     "gender": "Male",    
@@ -534,7 +536,7 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "black-red",
+      "color1": "red",
       "color2": "blue"
     },
     "brand": "New Balance",
@@ -545,7 +547,7 @@
   },
 
   {
-    "name": "New Balance Tempo Cr Fresh Foam",
+    "name": "Reebok Tempo Cr Fresh Foam",
     "category": "Shoes",
     "type": "Running",
     "gender": "Male",
@@ -559,7 +561,8 @@
     },  
     "color": {
       "color1": "black",
-      "color2": "green-yellow"
+      "color2": "green",
+      "color3": "yellow"
     },
     "brand": "New Balance",
     "rating": 5.0,    
@@ -569,7 +572,7 @@
   },
 
   {
-    "name": "New Balance Fresh Foam Cruz V2 Sport Kb",
+    "name": "Reebok Fresh Foam Cruz V2 Sport Kb",
     "category": "Shoes",
     "type": "Running",
     "gender": "Male",    
@@ -592,7 +595,7 @@
   },
 
   {
-    "name": "New Balance M413cl1",
+    "name": "Reebok M413cl1",
     "category": "Shoes",
     "type": "Running",
     "gender": "Male",
@@ -615,7 +618,7 @@
   },
 
   {
-    "name": "New Balance Arishi",
+    "name": "Reebok Arishi",
     "category": "Shoes",
     "type": "Running",
     "gender": "Male",
@@ -628,7 +631,7 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "black-orange"
+      "color1": "orange"
     },
     "brand": "New Balance",
     "rating": 4.6,    
@@ -651,11 +654,11 @@
     },
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "yellow",
+      "color4": "green",
       "color5": "white",
-      "color6": "darkblue"
+      "color6": "blue"
     },
     "brand": "Nike",
     "rating": 4.2,
@@ -678,9 +681,9 @@
     },
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "pink",
+      "color4": "green",
       "color5": "white"
     },
     "brand": "Nike",
@@ -704,11 +707,10 @@
     },
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
-      "color5": "white",
-      "color6": "pink"
+      "color2": "grey",
+      "color3": "pink",
+      "color4": "green",
+      "color5": "white"
     },
     "brand": "Nike",
     "rating": 4.8,
@@ -731,9 +733,9 @@
     },
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "pink",
+      "color4": "green",
       "color5": "white"
     },
     "brand": "Adidas",
@@ -757,9 +759,9 @@
     }, 
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "yellow",
+      "color4": "green",
       "color5": "white"
     }, 
     "brand": "Adidas",
@@ -783,9 +785,9 @@
     },  
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "yellow",
+      "color4": "green",
       "color5": "white"
     },
     "brand": "Nike",
@@ -809,12 +811,12 @@
     },  
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "pink",
+      "color4": "green",
       "color5": "white"
     },
-    "brand": "Reebook",
+    "brand": "Reebok",
     "rating": 4.1,
     "description": "These waterproof pants were developed for inshore sailing in stormy weather. These waterproof sailing overpants have a handy pocket and adjustable ankle cuffs. Plus, they are ultra-comfortable and lightweight.",
     "price": "350",
@@ -835,9 +837,9 @@
     },
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "pink",
+      "color4": "green",
       "color5": "white"
     },
     "brand": "Adidas",
@@ -861,9 +863,9 @@
     },  
     "color": {
       "color1": "black",
-      "color2": "gray",
-      "color3": "darkgray",
-      "color4": "darkgreen",
+      "color2": "grey",
+      "color3": "yellow",
+      "color4": "green",
       "color5": "white"
     },
     "brand": "Nike",
@@ -929,7 +931,7 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "dark-blue"
+      "color1": "blue"
     },
     "brand": "Puma",
     "rating": 4.2,    
@@ -1039,7 +1041,7 @@
       "size2XL": "2XL"
     },  
     "color": {
-      "color1": "lightbrown"
+      "color1": "red"
     },
     "brand": "Adidas",
     "rating": 4,   
@@ -1239,7 +1241,7 @@
       "sizeXL": "XL"
     },
     "color": {
-      "color1": "blacke",
+      "color1": "black",
       "color2": "blue",
       "color3": "grey"
     },
@@ -1280,7 +1282,7 @@
       "sizeXL": "XL" 
     },  
     "color": {
-      "color1": "blacke",
+      "color1": "black",
       "color2": "blue",
       "color3": "grey"
     },
@@ -1345,7 +1347,7 @@
       "sizeL": "L"
     },   
     "color": {
-      "color1": "light blue"
+      "color1": "blue"
     },
     "brand": "Puma",
     "rating": 3.5,
@@ -1365,7 +1367,7 @@
       "sizeL": "L"
     },  
     "color": {
-      "color1": "blue france"
+      "color1": "blue"
     },
     "brand": "Topper",
     "rating": 3.2,
@@ -1406,7 +1408,7 @@
       "sizeL": "L"
     },    
     "color": {
-      "color1": "gray",
+      "color1": "grey",
       "color2": "white"
     },
     "brand": "Puma",
@@ -1429,7 +1431,7 @@
     "color": {
       "color1": "pink",
       "color2": "white",
-      "color3": "gray"
+      "color3": "grey"
     },
     "brand": "Puma",
     "rating": 4.4,
@@ -1465,8 +1467,8 @@
       "sizeM": "M"
     },   
     "color": {
-      "color1": "lilac"
-    }, 
+      "color1": "pink"
+    },
     "brand": "Puma",
     "rating": 4.5,
     "description": "T-shirt with a round neckline with the edge made in the Puma brand, it is made of 100% soft and high-performance cotton, it is light, fresh and perfect for physical activities such as running.",
@@ -1487,7 +1489,7 @@
       "size2XL": "2XL"
     },     
     "color": {
-      "color1": "Apricot Blush"
+      "color1": "pink"
     },
     "brand": "Puma",
     "rating": 4.8,
@@ -1525,7 +1527,7 @@
       "sizeM": "M"
     },    
     "color": {
-      "color1": "navy",
+      "color1": "blue",
       "color2": "red"
     },
     "brand": "Reebok",
@@ -1547,8 +1549,8 @@
       "sizeXL": "XL"
     },    
     "color": {
-      "color1": "white & grey",
-      "color2": "black & red"
+      "color1": "white",
+      "color2": "black"
     },
     "brand": "Adidas",
     "rating": 4.2,
@@ -1569,7 +1571,7 @@
       "size2XL": "2XL"
     },
     "color": {
-      "color1": "white and sky blue"
+      "color1": "white"
     },
     "gender": "Unisex",
     "brand": "Adidas",
@@ -1618,8 +1620,8 @@
     "color": {
       "color1": "white",
       "color2": "black",
-      "color3": "sky blue",
-      "color4": " dark grey"
+      "color3": "blue",
+      "color4": "grey"
     },
     "gender": "Female",
     "brand": "Adidas",
@@ -1666,7 +1668,7 @@
       "size3XL": "3XL"
     },    
     "color": {
-      "color1": "dark blue",
+      "color1": "blue",
       "color2": "black"
     },
     "brand": "Nike",
