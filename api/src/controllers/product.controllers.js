@@ -1,5 +1,6 @@
 const { response, request } = require("express");
-const getProductsFromDb  = require("../helpers/getProducts");
+const { getProductsFromDb, saveProductsInDb } = require("../helpers");
+
 const getProducts = (req = request, res = response) => {
   try {
     const products = getProductsFromDb();

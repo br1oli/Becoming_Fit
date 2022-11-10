@@ -1,6 +1,7 @@
 const data = require("../data.json");
 const { Product } = require("../db");
-const saveProducts = async () => {
+
+const saveProductsInDb = async () => {
   try {
     await Product.bulkCreate(data, { validate: true });
   } catch (error) {
@@ -8,4 +9,4 @@ const saveProducts = async () => {
   }
 };
 
-module.exports = saveProducts;
+module.exports = { saveProductsInDb };
