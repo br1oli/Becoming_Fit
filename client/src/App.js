@@ -3,10 +3,10 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import LandingPage from "./COMPONENTS/LandingPage";
+import LandingPage from "./Components/LandingPage";
 import NavBar from './navBar/NavBar';
-import Footer from './COMPONENTS/Footer/Footer';
-import ProductCard from './COMPONENTS/ProductCards/ProductCardsindex';
+import Footer from './Components/Footer/Footer';
+import ProductCard from './Components/ProductCards/ProductCardsindex';
 
 function App() {
   return (
