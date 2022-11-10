@@ -1,5 +1,5 @@
 const initialState = {
-  porducts: [],
+  products: [],
   allProducts: [],
   brands: [],
   allBrands: [],
@@ -12,7 +12,7 @@ function rootReducer(state = initialState, action) {
     case "GET_PRODUCTS":
       return {
         ...state,
-        porducts: action.payload,
+        products: action.payload,
         allProducts: action.payload,
       };
     default:
