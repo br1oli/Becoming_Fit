@@ -42,6 +42,8 @@ module.exports = () => {
       },
     });
 
+    console.log(product)
+
     Category.findOne({
       where: {
         name: p.category,
