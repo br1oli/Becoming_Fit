@@ -1,0 +1,23 @@
+.input{
+    width: 12rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid silver;
+}
+
+.input:hover{
+    background-color:whitesmoke ;
+}
+
+.submit{
+    width: 5rem;
+    height: 1.8rem;
+    border-radius: 0.25rem;
+    border: 1px solid silver;
+    background-color: cornflowerblue;
+    color: whitesmoke;
+}
+
+.submit:hover{
+    background-color: rgb(52, 117, 237);
+}
