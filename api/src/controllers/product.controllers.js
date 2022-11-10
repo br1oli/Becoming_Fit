@@ -1,15 +1,9 @@
 const { response, request } = require("express");
-<<<<<<< HEAD
-const { getProductsFromDb, saveProductsInDb } = require("../helpers");
-
-const getProducts = (req = request, res = response) => {
-=======
 const {
   getProductsFromDb,
   getProductsByName,
 } = require("../helpers/getProducts");
 const getProducts = async (req = request, res = response) => {
->>>>>>> ff7949de82b90a1616735f3cf5ba0b1b1963910b
   try {
     let { name } = req.query;
     const products = await getProductsFromDb();
