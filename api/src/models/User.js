@@ -1,10 +1,10 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "product",
+    'user',
     {
       id: {
         type: DataTypes.UUID,
@@ -13,47 +13,47 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
-      name: {
+      userName: {
+        type: DataTypes.STRING,
+        allownull: false,
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allownull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allownull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allownull: false,
+        unique: true,
+      },
+      address: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      type: {
-        type: DataTypes.STRING,
-      },
-      /*  category: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      }, */
-      color: {
-        type: DataTypes.STRING,
-      },
-      gender: {
-        type: DataTypes.STRING,
+      zipCode: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      size: {
+      telephone: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
-      /*  brand: {
+      password: {
         type: DataTypes.STRING,
-        allowNull: false,
-      }, */
-      rating: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
+        allownull: false,
       },
-      price: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      /* agregue cantidad permitida de caracteres para que no se rompa la db con las descripciones largas, para no tener que tocar el json */
-      description: {
-        type: DataTypes.STRING(2000),
+      adminPermissions: {
+        type: DataTypes.BOOLEAN,
+        allownull: false,
+        defaultValue: false,
       },
       image: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue:
+          'https://png.pngtree.com/png-vector/20190909/ourmid/pngtree-outline-user-icon-png-image_1727916.jpg',
       },
     },
     {
