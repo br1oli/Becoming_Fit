@@ -1,4 +1,4 @@
-const { Product } = require("../db");
+const { Product, Op } = require("../db");
 
 const getProductsFromDb = async () => {
   try {
@@ -10,5 +10,20 @@ const getProductsFromDb = async () => {
     return error;
   }
 };
+const getProductsByName = async (name) => {
+  try {
+    let products = await Product.findAll({
+      where: {
+        name: { [Op.iLike]: `%${name}%` },
+      },
+    });
 
-module.exports = getProductsFromDb;
+    products = products.map((p) => p.dataValues);
+
+    return products;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getProductsFromDb, getProductsByName };
