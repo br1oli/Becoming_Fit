@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    'user',
+    'product',
     {
       id: {
         type: DataTypes.UUID,
@@ -13,47 +13,47 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
-      userName: {
-        type: DataTypes.STRING,
-        allownull: false,
-      },
-      firstName: {
-        type: DataTypes.STRING,
-        allownull: false,
-      },
-      lastName: {
-        type: DataTypes.STRING,
-        allownull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allownull: false,
-        unique: true,
-      },
-      address: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      zipCode: {
+      type: {
+        type: DataTypes.STRING,
+      },
+      /*  category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }, */
+      color: {
+        type: DataTypes.STRING,
+      },
+      gender: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      size: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      /*  brand: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }, */
+      rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      telephone: {
-        type: DataTypes.STRING,
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
-      password: {
+      description: {
         type: DataTypes.STRING,
-        allownull: false,
-      },
-      adminPermissions: {
-        type: DataTypes.BOOLEAN,
-        allownull: false,
-        defaultValue: false,
       },
       image: {
         type: DataTypes.STRING,
-        defaultValue:
-          'https://png.pngtree.com/png-vector/20190909/ourmid/pngtree-outline-user-icon-png-image_1727916.jpg',
+        allownull: false,
       },
     },
     {
