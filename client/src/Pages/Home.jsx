@@ -18,7 +18,6 @@ const Home = () => {
   },[])
   
   const productos = useSelector((state) => state.products.allProducts)
-  console.log(productos, "PRODUCTS HOME")
   
 
   return (
@@ -30,7 +29,6 @@ const Home = () => {
         {/* <div>
           {
             Products?.map((p)=> {
-              console.log(Products, "products home")
               return (
                 <ProductCard id={p.id} image={p.image} brand={p.brand} price={p.price}/>
               )
@@ -38,7 +36,6 @@ const Home = () => {
           }
         </div> */}
         {productos && productos.map((p)=> {
-          console.log(productos, "Products Home")
           return (
             <div>
               <ProductCard name={p.name} id={p.id} image={p.image} brand={p.brandName} price={p.price}/>
