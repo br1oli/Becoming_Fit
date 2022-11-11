@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 //CREAMOS EL ESTADO GLOBAL QUE VA A SER EL INPUT Y VA A TENER TODAS LAS PROPIEDADES QUE NECESITAMOS PARA CREAR EL USUARIO, TRAEMOS EL ESTADO GLOBAL VIDEOGAMES
-export function CreateVideogame() {
+export function RegisterForm() {
     // const history = useHistory();
     // const [errors, setErrors] = useState({});
     // const dispatch = useDispatch();

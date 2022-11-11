@@ -2,7 +2,7 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./Components/LandingPage.jsx";
-import { CreateVideogame } from "./Components/LoginForm";
+import { RegisterForm } from "./Components/RegisterForm";
 import Home from "./Pages/Home";
 import Footer from "./Components/Footer";
 
@@ -15,7 +15,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/home" component={Home} />
-        <Route exact path="/form" component={CreateVideogame} />
+        <Route exact path="/register" component={RegisterForm} />
       </Switch>
     </BrowserRouter>
   );
