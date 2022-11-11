@@ -3,6 +3,7 @@
     grid-gap: 20px;
     grid-template: 
     "navbar" 100px
+    "filters"
     "cards" auto
     "footer" 150px;
 }
@@ -18,3 +19,11 @@
 .cards-container {
     grid-area: cards;
 }
+
+.filters-container {
+    grid-area: filters;
+    display: flex;
+    flex-direction: row;
+    
+}
+
