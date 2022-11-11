@@ -9,7 +9,7 @@ const reducer = combineReducers({
   brands,
 });
 
-export default reducer; */
+export default reducer; 
 
 // const initialState = {
 //   porducts: [],
