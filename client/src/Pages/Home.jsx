@@ -26,15 +26,6 @@ const Home = () => {
         <NavBar />
       </div>
       <div className={Styles.cardsContainer}>
-        {/* <div>
-          {
-            Products?.map((p)=> {
-              return (
-                <ProductCard id={p.id} image={p.image} brand={p.brand} price={p.price}/>
-              )
-            })
-          }
-        </div> */}
         {productos && productos.map((p)=> {
           return (
             <div>
