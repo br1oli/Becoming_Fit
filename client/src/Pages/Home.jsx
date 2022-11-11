@@ -25,19 +25,11 @@ const Home = () => {
       <div className="nav.container">
         <NavBar />
       </div>
-      <div className={Styles.cardsContainer}>
-        {productos && productos.map((p)=> {
-          return (
-            <div>
-              <ProductCard name={p.name} id={p.id} image={p.image} brand={p.brandName} price={p.price}/>
-
-            </div>
-
-          )
-
-        })
-
-        }
+      <div className="filters-container">
+        <Filters />
+      </div>
+      <div className="cards-container">
+        <h2>CARDS</h2>
       </div>
       <div className="footer-container">
         <Footer />
