@@ -1,0 +1,27 @@
+.homeContainer {
+    display: grid;
+    grid-gap: 20px;
+    grid-template: 
+    "navbar" 100px
+    "cards" auto
+    "footer" 150px;
+}
+
+.footerContainer {
+    grid-area: footer;
+}
+
+.navContainer {
+    grid-area: navbar;
+}
+
+.cardsContainer {
+        display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-auto-rows: auto;
+    /* espacio entre cards */
+    grid-gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+
+}

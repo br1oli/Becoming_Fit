@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SET_CURRENT_PAGE_PRODUCTS } from './actionsTypes';
+import { SET_CURRENT_PAGE_PRODUCTS, GET_PRODUCTS } from './actionTypes';
 
 export const setProductsPerPage = (currentPage) => {
     return async (dispatch) => {
@@ -15,11 +15,10 @@ export  function getAllProducts(payload){
         try{
             var json = await axios.get(`http://localhost:3001/products`);
             return dispath({
-                type: "GET_PRODUCTS",
+                type: 'GET_PRODUCTS',
                 payload: json.data
             })
         }catch(error){
-            console.log(error, "error al traer los productos")
             return dispath({
                 type: "ERROR",
                 payload: error

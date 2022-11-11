@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+/* import { combineReducers } from 'redux';
 import { products } from './products';
 import { detailProduct } from './detailProduct';
 import { brands } from './brands';
@@ -9,7 +9,7 @@ const reducer = combineReducers({
   brands,
 });
 
-export default reducer;
+export default reducer; */
 
 // const initialState = {
 //   porducts: [],

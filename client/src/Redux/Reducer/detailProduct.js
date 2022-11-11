@@ -1,4 +1,4 @@
-import { GET_DETAIL_PRODUCT } from '../Actions/actionTypes';
+/* import { GET_DETAIL_PRODUCT } from '../Actions/actionTypes';
 
 const initialState = {
   product: {},
@@ -14,4 +14,4 @@ export const detailProduct = (state = initialState, { type, payload }) => {
     default:
       return state;
   }
-};
+}; */
