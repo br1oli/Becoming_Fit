@@ -1,8 +1,13 @@
-const { Product } = require("../db");
+const { Product, Brand, Category } = require("../db");
 
 const getProductById = async (id) => {
   try {
-    let foundProduct = Product.findByPk(id);
+    let foundProduct = Product.findByPk(id, {
+      include: [
+        { model: Category, attributes: ["name"] },
+        { model: Brand, attributes: ["name"] },
+      ],
+    });
 
     return foundProduct;
   } catch (error) {

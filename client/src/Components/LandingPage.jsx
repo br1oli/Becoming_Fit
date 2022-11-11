@@ -1,7 +1,7 @@
 import React from "react";
 import "./Style/LandingPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Carousel, Nav, Button, Form } from "react-bootstrap";
 
 export default function LandingPage() {
@@ -145,11 +145,11 @@ export default function LandingPage() {
 
         <Nav justify variant="tabs" defaultActiveKey="/home">
           <Nav.Item>
-            <Nav.Link href="/">
+            <NavLink to="/home">
               <Button variant="primary" size="lg">
                 Bienvenido
               </Button>
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           {/* <Nav.Item>
                             <Nav.Link eventKey="link-1"><Button variant="primary" size="lg">Bienvenido</Button></Nav.Link>
