@@ -7,6 +7,7 @@ import {
   orderByName,
   filterByGender,
   filterBySize,
+  filterByBrand,
 } from "../Redux/Actions/UsersActions";
 
 export default function Filters() {
@@ -36,6 +37,11 @@ export default function Filters() {
   function handleFilterGender(e) {
     e.preventDefault();
     dispatch(filterByGender(e.target.value));
+  }
+
+  function handleFilterBrand(e) {
+    e.preventDefault();
+    dispatch(filterByBrand(e.target.value));
   }
 
   function handleFilterSize(e) {
@@ -75,11 +81,23 @@ export default function Filters() {
       <div>
         <select onChange={(e) => handleFilterSize(e)}>
           <option value="all">ALL SIZES</option>
-          <option value="sizeXS">XS</option>
-          <option value="sizeS">S</option>
-          <option value="sizeM">M</option>
-          <option value="sizeL">L</option>
-          <option value="sizeXL">XL</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="2XL">2XL</option>
+        </select>
+      </div>
+
+      <div>
+        <select onChange={(e) => handleFilterBrand(e)}>
+          <option value="all">ALL BRANDS</option>
+          <option value="adidas">ADIDAS</option>
+          <option value="nike">NIKE</option>
+          <option value="puma">PUMA</option>
+          <option value="reebok">REEBOK</option>
+          <option value="topper">TOPPER</option>
         </select>
       </div>
 

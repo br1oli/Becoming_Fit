@@ -1,4 +1,4 @@
-import { GET_BRANDS } from '../Actions/actionTypes';
+/* import { GET_BRANDS } from '../Actions/actionTypes';
 
 const initialState = {
     brands: {},
@@ -14,4 +14,4 @@ export const brands = (state = initialState, { type, payload }) => {
         default:
             return state;
     }
-};
+}; */

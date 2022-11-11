@@ -7,6 +7,7 @@ export const FILTER_PRICES = "FILTER_PRICES";
 export const FILTER_CATEGORIES = "FILTER_CATEGORIES";
 export const FILTER_GENDER = "FILTER_GENDER";
 export const FILTER_SIZE = "FILTER_SIZE";
+export const FILTER_BRAND = "FILTER_BRAND";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICES";
 export const GET_DETAILS = "GET_DETAILS";
