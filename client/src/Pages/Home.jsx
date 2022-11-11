@@ -4,11 +4,10 @@ import Footer from "../Components/Footer";
 import "../Components/Style/Home.css";
 import Filters from "../Components/Filters";
 import Styles from "../Components/Style/Home.module.css";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../Components/ProductCardsindex";
 import { getAllProducts } from "../Redux/Actions/Actions";
 import { products } from "../Redux/Reducer/products";
-
 
 const Home = () => {
   const dispatch = useDispatch();
