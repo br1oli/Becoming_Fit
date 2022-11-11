@@ -42,4 +42,4 @@ export const products = (state = initialState, { type, payload }) => {
         default:
             return state;
     }
-}; */
+}; 
