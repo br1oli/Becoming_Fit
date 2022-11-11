@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { products } from './products';
+import { products }  from './products';
 import { detailProduct } from './detailProduct';
 import { brands } from './brands';
 
