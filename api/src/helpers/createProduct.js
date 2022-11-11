@@ -12,7 +12,6 @@ const createProductInDb = async (
   image
 ) => {
   try {
-    console.log("se llamo funcion db");
     let newProduct = await Product.create({
       name,
       type,

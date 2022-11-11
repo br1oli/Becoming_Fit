@@ -1,7 +1,7 @@
-/* import { combineReducers } from 'redux';
-import { products } from './products';
-import { detailProduct } from './detailProduct';
-import { brands } from './brands';
+import { combineReducers } from "redux";
+import { products } from "./products";
+import { detailProduct } from "./detailProduct";
+import { brands } from "./brands";
 
 const reducer = combineReducers({
   products,

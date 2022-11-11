@@ -5,6 +5,8 @@ const {
 } = require("../helpers/getProductsFromDb");
 const { createProductInDb } = require("../helpers/createProduct");
 const { updateProductInDb } = require("../helpers/updateProduct");
+
+
 const getProducts = async (req = request, res = response) => {
   try {
     let { name } = req.query;

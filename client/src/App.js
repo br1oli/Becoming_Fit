@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./Components/LandingPage.jsx";
 import { CreateVideogame } from "./Components/LoginForm";
 import Home from "./Pages/Home";
+import Footer from "./Components/Footer";
+
 
 
 function App() {
