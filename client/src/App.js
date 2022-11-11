@@ -1,8 +1,8 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LandingPage from "./COMPONENTS/LandingPage.jsx";
-import { CreateVideogame } from "./COMPONENTS/LoginForm";
+import LandingPage from "./Components/LandingPage.jsx";
+import { CreateVideogame } from "./Components/LoginForm";
 import Home from "./Pages/Home";
 
 
