@@ -4,7 +4,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./Components/LandingPage.jsx";
 import Home from "./Pages/Home";
 
+
 function App() {
+
   return (
     <BrowserRouter>
       <Switch>

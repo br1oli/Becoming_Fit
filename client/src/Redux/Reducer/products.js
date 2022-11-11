@@ -1,10 +1,11 @@
+import { bindActionCreators } from 'redux';
 import {
     GET_PRODUCTS,
     SET_CURRENT_PAGE_PRODUCTS,
 } from '../Actions/actionTypes';
 
 const initialState = {
-    porducts: [],
+    products: [],
     allProducts: [],
     currentProducts: [],
     currentPage: 1,
@@ -15,26 +16,29 @@ const initialState = {
 
 export const products = (state = initialState, { type, payload }) => {
     switch (type) {
-        case SET_CURRENT_PAGE_PRODUCTS:
+        case 'SET_CURRENT_PAGE_PRODUCTS':
             state.currentPage = payload;
             state.indexLastProduct = state.currentPage * state.productsPerPage;
             state.indexFirstProduct = state.indexLastProduct - state.productsPerPage;
             return {
                 ...state,
-                currentProducts: state.porducts.slice(
+                currentProducts: state.products.slice(
                     state.indexFirstProduct,
                     state.indexLastProduct
                 ),
             };
-        case GET_PRODUCTS:
+        case "GET_PRODUCTS":
+            console.log("entré al get product")
             return {
+                // ...state,
+                // products: [...payload],
+                // allProducts: [...payload],
+                // currentProducts: [...payload].slice(
+                //     state.indexFirstProduct,
+                //     state.indexLastProduct
+                // ),
                 ...state,
-                porducts: [...payload],
-                allProducts: [...payload],
-                currentProducts: [...payload].slice(
-                    state.indexFirstProduct,
-                    state.indexLastProduct
-                ),
+                allProducts: [...payload]
             };
         default:
             return state;

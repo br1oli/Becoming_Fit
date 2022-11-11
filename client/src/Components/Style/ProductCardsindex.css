@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
-$font: 'Lato', sans-serif;
+/* $font: 'Lato', sans-serif; */
+
 
 .Contenedor {
   margin: auto;
@@ -26,8 +27,10 @@ $font: 'Lato', sans-serif;
   flex-direction: column;
 }
 
-.Imagen {
+.Image {
   border-radius: 6px;
+  height: 200px;
+
 }
 
 .Title {
@@ -35,6 +38,7 @@ $font: 'Lato', sans-serif;
   border: solid rgb(167, 138, 138) 5px;
   border-radius: 4px;
   padding-left: 5px; */
+  font-family: 'Lato', sans-serif;
   font-size: 1.2em;
   color: $dark;
   margin-top: -5px;
@@ -89,7 +93,8 @@ padding-left: 5px; */
 .add:hover {
   background: black;
   color: aliceblue;
-  transition: all .4s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  
 }
 
 .like {
@@ -108,6 +113,6 @@ padding-left: 5px; */
 .like:hover {
   background: black;
   color: aliceblue;
-  transition: all .4s ease-in-out;
+  transition: all 0.5s ease-in-out;
 
 }
