@@ -3,6 +3,8 @@ const { Sequelize, Op } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+// const { DB_USER, DB_PASSWORD, DB_HOST } = require('../.env');
+
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/becomingfit`,
@@ -37,18 +39,106 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Brand, Category, Order, Product, PaymentMethod } =
-  sequelize.models;
+const {
+  Favorites,
+  FavoritesProduct,
+  Brand,
+  CartProduct,
+  Cart,
+  PaymentDetail,
+  PaymentMethod,
+  Category,
+  ProductInventory,
+  Product,
+  PurchaseDetail,
+  PurchasedProduct,
+  UserAdress,
+  User,
+  Review,
+} = sequelize.models;
 
-Brand.hasMany(Product);
+// Aca vendrian las relaciones
+// Product.hasMany(Reviews);
+
+//-------------------------------------Relaciones Producto Marca, Inventario, Categoria-----------------------
+//Asociacion Producto:Marca
+Brand.hasMany(Product /* {foreignKey: 'brandId'} */);
 Product.belongsTo(Brand);
-//
-Category.hasMany(Product);
+//-----------------------Relacion user,Review,Product--------------------------
+
+User.hasMany(Review);
+Review.belongsTo(User);
+
+Product.hasMany(Review);
+Review.belongsTo(Product);
+
+//Asociacion Producto:Categoria
+Category.hasMany(Product /* {foreignKey: 'categoryId'} */);
 Product.belongsTo(Category);
-//
-Order.belongsToMany(Product, { through: "order_product" });
-Product.belongsToMany(Order, { through: "order_product" });
-//
+//Asociacion Producto:ProductoInventario
+Product.hasOne(ProductInventory /* { through: "Product_ProductInventory" } */);
+ProductInventory.belongsTo(
+  Product /* { through: "Product_ProductInventory" } */
+);
+
+//---------------------------------------------Relaciones Favorites-------------------------------------
+
+User.hasOne(Favorites);
+Favorites.belongsTo(User);
+
+Favorites.hasMany(FavoritesProduct);
+FavoritesProduct.belongsTo(Favorites);
+
+Product.hasOne(FavoritesProduct);
+FavoritesProduct.belongsTo(Product);
+
+//---------------------------------------------Relaciones Cart-------------------------------------
+
+User.hasOne(Cart /*  { through: "User_Cart" } */);
+Cart.belongsTo(User /* { through: "User_Cart" } */);
+
+Cart.hasMany(CartProduct /* { through: "Cart_CartProduct" } */);
+CartProduct.belongsTo(Cart /*  { through: "Cart_CartProduct" } */);
+
+Product.hasOne(CartProduct /* { through: "Product_CartProduct" } */);
+CartProduct.belongsTo(Product /* { through: "Product_CartProduct" } */);
+
+//---------------------------------------------Relacion usuario-Payment--------------------
+
+User.hasMany(UserAdress /* { foreignKey: "userIdAdress" } */);
+UserAdress.belongsTo(User);
+
+User.hasMany(PaymentMethod /* { foreignKey: "userIdPayment" } */);
+PaymentMethod.belongsTo(User);
+
+//User.hasMany(CartProduct /* { through: "User_CartProduct" } */);
+//CartProduct.belongsTo(User /* { through: "User_CartProduct" } */);
+
+User.hasMany(PaymentDetail /*  { through: "User_PaymentDetail" } */);
+PaymentDetail.belongsTo(User /* { through: "User_PaymentDetail" } */);
+
+Product.hasMany(PurchasedProduct /* { through: "Product_PurchasedProduct" } */);
+PurchasedProduct.belongsTo(
+  Product /* { through: "Product_PurchasedProduct" } */
+);
+
+//Product_category.hasMany(Product, { through: "ProductCategory_Product" });
+//Product.belongsTo(Product_category, { through: "ProductCategory_Product" });A
+
+PaymentDetail.hasOne(
+  PurchaseDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+);
+PurchaseDetail.belongsTo(
+  PaymentDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+);
+
+PurchaseDetail.hasMany(PurchasedProduct)
+PurchasedProduct.belongsTo(PurchaseDetail)
+
+User.hasMany(PurchaseDetail)
+PurchaseDetail.belongsTo(User)
+
+//-------------------------------------Relacion usuario-Reviews---------------------------------
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

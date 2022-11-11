@@ -17,7 +17,6 @@ const SearchInput = (props) => {
     setInput("");
     //debugger
   };
-  console.log("HOLA");
 
   return (
     <div>

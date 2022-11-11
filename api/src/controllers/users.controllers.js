@@ -1,10 +1,18 @@
-const { response, request } = require('express');
-const { User } = require('../db');
+const { response, request } = require("express");
+const { User } = require("../db");
+const { updateUserInDb } = require("../helpers/updateUser");
 
-const getUsers = (req = request, res = response) => {
+const getUsers = async (req = request, res = response) => {
   // traigo todos los clientes de la db y los envio:
   try {
-    res.json('test');
+    let usersFromDb = await User.findAll();
+
+    if (!usersFromDb.length) {
+      return res.status(404).send("No users found");
+    }
+
+    usersFromDb = usersFromDb.map((user) => user.dataValues);
+    res.status(200).send(usersFromDb);
   } catch (error) {
     res.status(500).json(error.message);
   }
@@ -18,18 +26,32 @@ const createUser = async (req = request, res = response) => {
     email,
     address,
     password,
+    zipCode,
     telephone,
     adminPermissions,
     image,
   } = req.body;
-  // despues hacer una validacion de datos estrictamente necesarios!
+
   const isDataClient =
-    !email && !password && !userName && !address && !telephone;
+    !email ||
+    !password ||
+    !userName ||
+    !address ||
+    !telephone ||
+    !adminPermissions ||
+    !firstName ||
+    !zipCode ||
+    !lastName;
 
   if (isDataClient) {
-    return res.status(400).send('missing data!');
+    return res.status(400).send("missing data!");
   }
   try {
+    const userExists = await User.findOne({ where: { email: email } });
+
+    if (userExists !== null) {
+      return res.status(404).send("That user already exists, try a new one");
+    }
     const newUser = await User.create({
       userName,
       firstName,
@@ -37,17 +59,18 @@ const createUser = async (req = request, res = response) => {
       email,
       address,
       password,
+      zipCode,
       telephone,
       adminPermissions,
       image,
     });
-    res.send(newUser);
+    res.status(201).send(newUser.dataValues && "User succesfully created");
   } catch (error) {
     res.status(500).json(error.message);
   }
 };
 
-const updateUser = async (req = request, res = response) => {
+/* const updateUser = async (req = request, res = response) => {
   const { id } = req.params;
   // pensar que queremos que se modifique del client: hay que restringir a que vengan si o si los datos, si no, hacetr una funcion que me divida los que si existen y los que no existen!
   const {
@@ -77,6 +100,40 @@ const updateUser = async (req = request, res = response) => {
     res.json(user);
   } catch (error) {
     res.status(500).json(error.message);
+  }
+}; */
+
+const updateUser = async (req = request, res = response) => {
+  try {
+    let { id } = req.params;
+    let {
+      userName,
+      firstName,
+      lastName,
+      email,
+      address,
+      password,
+      telephone,
+      adminPermissions,
+      image,
+    } = req.body;
+
+    let update = await updateUserInDb(
+      id,
+      userName,
+      firstName,
+      lastName,
+      email,
+      address,
+      password,
+      telephone,
+      adminPermissions,
+      image
+    );
+
+    res.status(200).send(update);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 };
 
