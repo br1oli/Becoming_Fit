@@ -8,6 +8,7 @@ import {
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
+  FILTER_BRAND,
   FILTER_SIZE,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
@@ -49,6 +50,13 @@ export function filterBySize(payload) {
 export function filterByGender(payload) {
   return {
     type: FILTER_GENDER,
+    payload,
+  };
+}
+
+export function filterByBrand(payload) {
+  return {
+    type: FILTER_BRAND,
     payload,
   };
 }

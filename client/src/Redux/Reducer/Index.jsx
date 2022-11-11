@@ -5,7 +5,8 @@ import {
   GET_BRAND,
   FILTER_PRICES,
   FILTER_CATEGORIES,
-  FILER_GENDER,
+  FILTER_GENDER,
+  FILTER_BRAND,
   FILTER_SIZE,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
@@ -14,7 +15,6 @@ import {
   POST_REVIEW,
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
-  FILTER_GENDER,
 } from "../Actions/Const";
 
 const initialState = {
@@ -109,19 +109,22 @@ function rootReducer(state = initialState, action) {
         ...state,
         products: genderFiltered,
       };
-    /*     case FILTER_SIZE:
+    case FILTER_SIZE:
       const sizeFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.allProducts
-              .map((p) => p.size)
-              .map((e) => Object.values(e))
-              .flat()
-              .filter((p) => p === action.payload);
+          : state.allProducts.filter((p) => p.size.includes(action.payload));
       return {
         ...state,
         products: sizeFiltered,
-      }; */
+      };
+    case FILTER_BRAND:
+      const brandFiltered =
+        action.payload === "all" ? state.allProducts : state.allProducts;
+      return {
+        ...state,
+        products: brandFiltered,
+      };
     default:
       return state;
   }

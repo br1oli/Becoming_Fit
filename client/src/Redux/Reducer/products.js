@@ -1,4 +1,3 @@
-import { bindActionCreators } from 'redux';
 import {
     GET_PRODUCTS,
     SET_CURRENT_PAGE_PRODUCTS,
@@ -43,4 +42,4 @@ export const products = (state = initialState, { type, payload }) => {
         default:
             return state;
     }
-};
+}; */
