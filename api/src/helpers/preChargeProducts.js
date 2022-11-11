@@ -10,7 +10,10 @@ module.exports = () => {
       return acc;
     }, [])
     .forEach(async (ele) => {
-      await Brand.findOrCreate({where:{name: ele}, defaults:{name: ele}});
+      await Brand.findOrCreate({
+        where: { name: ele },
+        defaults: { name: ele },
+      });
     });
 
   const categories = jsonData
@@ -21,24 +24,27 @@ module.exports = () => {
       return acc;
     }, [])
     .forEach(async (ele) => {
-      await Category.findOrCreate({where:{name: ele}, defaults:{name: ele}});
+      await Category.findOrCreate({
+        where: { name: ele },
+        defaults: { name: ele },
+      });
     });
 
   jsonData.forEach(async (p) => {
     let [product, createdProduct] = await Product.findOrCreate({
       where: {
-        name: p.name
+        name: p.name,
       },
       defaults: {
-          name: p.name,
-          type: p.type,
-          gender: p.gender,
-          size: Object.values(p.size).join(", "),
-          color: Object.values(p.color).join(", "),
-          rating: p.rating,
-          description: p.description,
-          price: p.price,
-          image: p.image
+        name: p.name,
+        type: p.type,
+        gender: p.gender,
+        size: p.size.join(", "),
+        color: Object.values(p.color).join(", "),
+        rating: p.rating,
+        description: p.description,
+        price: p.price,
+        image: p.image,
       },
     });
 
