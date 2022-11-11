@@ -4,6 +4,7 @@ const {
   getProductsByName,
 } = require("../helpers/getProductsFromDb");
 const { createProductInDb } = require("../helpers/createProduct");
+const { updateProductInDb } = require("../helpers/updateProduct");
 const getProducts = async (req = request, res = response) => {
   try {
     let { name } = req.query;
@@ -32,7 +33,6 @@ const createProduct = async (req = request, res = response) => {
     let { name, type, color, gender, size, rating, price, description, image } =
       req.body;
 
-    console.log("soy body", req.body);
     let productsFromDb = await getProductsFromDb();
 
     if (
@@ -71,7 +71,44 @@ const createProduct = async (req = request, res = response) => {
   }
 };
 
+const updateProduct = async (req = request, res = response) => {
+  try {
+    let {
+      id,
+      name,
+      type,
+      color,
+      gender,
+      size,
+      rating,
+      price,
+      description,
+      image,
+    } = req.body;
+    if (id.length < 20) {
+      return res.status(404).send("Invalid ID");
+    }
+
+    let update = await updateProductInDb(
+      id,
+      name,
+      type,
+      color,
+      gender,
+      size,
+      rating,
+      price,
+      description,
+      image
+    );
+
+    res.status(200).send(update);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 module.exports = {
   getProducts,
   createProduct,
+  updateProduct,
 };
