@@ -1,5 +1,5 @@
 /* import { bindActionCreators } from 'redux';
-import {
+ import {
     GET_PRODUCTS,
     SET_CURRENT_PAGE_PRODUCTS,
 } from '../Actions/actionTypes';
