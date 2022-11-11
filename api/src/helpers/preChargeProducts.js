@@ -15,8 +15,8 @@ module.exports = () => {
 
   const categories = jsonData
     .reduce((acc, item) => {
-      if (!acc.includes(item.type)) {
-        acc.push(item.type);
+      if (!acc.includes(item.category)) {
+        acc.push(item.category);
       }
       return acc;
     }, [])
@@ -33,7 +33,7 @@ module.exports = () => {
           name: p.name,
           type: p.type,
           gender: p.gender,
-          size: Object.values(p.size).join(" "),
+          size: Object.values(p.size).join(", "),
           color: Object.values(p.color).join(", "),
           rating: p.rating,
           description: p.description,
@@ -41,8 +41,6 @@ module.exports = () => {
           image: p.image
       },
     });
-
-    console.log(product)
 
     Category.findOne({
       where: {
