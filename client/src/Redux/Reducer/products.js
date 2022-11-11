@@ -1,4 +1,4 @@
-import {
+/* import {
     GET_PRODUCTS,
     SET_CURRENT_PAGE_PRODUCTS,
 } from '../Actions/actionTypes';
@@ -42,4 +42,4 @@ export const products = (state = initialState, { type, payload }) => {
         default:
             return state;
     }
-}; */
+};  */

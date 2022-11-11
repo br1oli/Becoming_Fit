@@ -1,8 +1,13 @@
-const { Product, Op } = require("../db");
+const { Product, Op, Brand, Category } = require("../db");
 
 const getProductsFromDb = async () => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+      include: [
+        { model: Category, attributes: ["name"] },
+        { model: Brand, attributes: ["name"] },
+      ],
+    });
     /* organizo la data que devuelve la db */
     let organizedData = products.map((product) => product.dataValues);
     return organizedData;
@@ -16,6 +21,11 @@ const getProductsByName = async (name) => {
       where: {
         name: { [Op.iLike]: `%${name}%` },
       },
+
+      include: [
+        { model: Category, attributes: ["name"] },
+        { model: Brand, attributes: ["name"] },
+      ],
     });
 
     products = products.map((p) => p.dataValues);
