@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./Components/LandingPage.jsx";
 import Home from "./Pages/Home";
+import Footer from "./Components/Footer";
 
 
 function App() {

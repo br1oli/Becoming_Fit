@@ -9,25 +9,25 @@ const ProductCard = (props) => {
 
         return (
             <div className="row" style={{width: '15rem'}}>
-                <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3">
-                    <div  className="Contenedor">
-                        <Card className="Card" style={{ width: '15rem' }}>
-                            <Card.Img className="Image" variant="top" src={props.image} />
-                            <Card.Body className="CardBody">
-                                <Card.Title className="Title">{props.name}</Card.Title>
-                                <Card.Text className="Description">
-                                    {props.brandName}
-                                </Card.Text>
-                                <Card.Text className="Price">
-                                    {props.price}
-                                </Card.Text>
-                                <div className="buttons">
-                                        <button className="add">Add to Cart</button>
-                                        <button className="like"><span>♥</span></button>
-                                    </div>
+            <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3">
+                <div  className="Contenedor">
+                    <Card className="Card" style={{ width: '15rem' }}>
+                        <Card.Img className="Image" variant="top" src={props.image} />
+                        <Card.Body className="CardBody">
+                            <Card.Title className="Title">{props.name}</Card.Title>
+                            <Card.Text className="Description">
+                                {props.brandName}
+                            </Card.Text>
+                            <Card.Text className="Price">
+                                {props.price}
+                            </Card.Text>
+                            <div className="buttons">
+                                    <button className="add">Add to Cart</button>
+                                    <button className="like"><span>♥</span></button>
+                                </div>
 
-                            </Card.Body>
-                        </Card>
+                        </Card.Body>
+                    </Card>
 
                     </div>
                 </div>

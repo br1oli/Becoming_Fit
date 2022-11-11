@@ -16,7 +16,7 @@ const Home = () => {
     dispatch(getAllProducts());
   }, []);
 
-  const productos = useSelector((state) => state.products.allProducts);
+  const productos = useSelector((state) => state.allProducts);
 
   return (
     <div className={Styles.homeContainer}>
@@ -27,11 +27,25 @@ const Home = () => {
         <Filters />
       </div>
       <div className="cards-container">
-        <h2>CARDS</h2>
+      <div className={Styles.cardsContainer}>
+        {productos && productos.map((p)=> {
+          console.log(productos, "Products Home")
+          return (
+            <div>
+              <ProductCard name={p.name} id={p.id} image={p.image} brand={p.brandName} price={p.price}/>
+
+            </div>
+
+          )
+
+        })
+
+        }
+      </div>
       </div>
       <div className="footer-container">
-        <Footer />
       </div>
+        <Footer />
     </div>
   );
 };
