@@ -16,6 +16,8 @@ import {
   CLEAR_DETAILS,
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
+  ERROR,
+  SET_CURRENT_PAGE_PRODUCTS,
 } from "./Const";
 
 export function getProducts() {
@@ -28,17 +30,13 @@ export function getProducts() {
         payload: products.data,
       });
     } catch (error) {
-      return error;
+      return dispatch({
+        type: ERROR,
+        payload: error,
+      });
     }
   };
 }
-
-/* export function filterByPrice(payload) {
-  return {
-    type: FILTER_PRICES,
-    payload,
-  };
-} */
 
 export function filterBySize(payload) {
   return {
@@ -50,6 +48,20 @@ export function filterBySize(payload) {
 export function filterByGender(payload) {
   return {
     type: FILTER_GENDER,
+    payload,
+  };
+}
+
+export function filterByCategory(payload) {
+  return {
+    type: FILTER_CATEGORIES,
+    payload,
+  };
+}
+
+export function filterByPrice(payload) {
+  return {
+    type: FILTER_PRICES,
     payload,
   };
 }
@@ -102,21 +114,21 @@ export function postReview(payload) {
   };
 }
 
-export  function getProductDetail(detailId){
-  return async function(dispatch){
-      try{
-          var json = await axios.get(`http://localhost:3001/products/${detailId}`);
-          return dispatch({
-              type: 'GET_DETAILS',
-              payload: json.data
-          })
-      }catch(error){
-          return dispatch({
-              type: "ERROR",
-              payload: error
-          })
-      }
-  }
+export function getProductDetail(detailId) {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get(`http://localhost:3001/products/${detailId}`);
+      return dispatch({
+        type: GET_DETAILS,
+        payload: json.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
 }
 
 // export  function getAllProducts(payload){
@@ -136,3 +148,13 @@ export  function getProductDetail(detailId){
 //         }
 //     }
 // }
+
+// this action creator works for paging:
+export const setProductsPerPage = (currentPage) => {
+  return async (dispatch) => {
+      if (currentPage) {
+          const data = { type: SET_CURRENT_PAGE_PRODUCTS, payload: currentPage };
+          await dispatch(data);
+      }
+  };
+};
