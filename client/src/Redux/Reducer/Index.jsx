@@ -17,11 +17,19 @@ import {
   EDIT_OWN_REVIEW,
   GET_NAME_PRODUCTS,
   ERROR,
+  SET_CURRENT_PAGE_PRODUCTS
 } from "../Actions/Const";
 
 const initialState = {
   products: [],
   allProducts: [],
+  //pagination:
+  currentProducts: [],
+  currentPage: 1,
+  productsPerPage: 6,
+  indexLastProduct: 6,
+  indexFirsProduct: 0,
+  //
   brands: [],
   allBrands: [],
   details: [],
@@ -30,11 +38,27 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_CURRENT_PAGE_PRODUCTS:
+      state.currentPage = action.payload;
+      state.indexLastProduct = state.currentPage * state.productsPerPage;
+      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+      return {
+        ...state,
+        currentProducts: state.products.slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+      };
     case GET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
         allProducts: action.payload,
+        // logic from pagination:
+        currentProducts: [...action.payload].slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
       };
     case GET_NAME_PRODUCTS:
       return {

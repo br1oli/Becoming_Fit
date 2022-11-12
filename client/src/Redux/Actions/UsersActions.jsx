@@ -17,6 +17,7 @@ import {
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
   ERROR,
+  SET_CURRENT_PAGE_PRODUCTS,
 } from "./Const";
 
 export function getProducts() {
@@ -147,3 +148,13 @@ export function getProductDetail(detailId) {
 //         }
 //     }
 // }
+
+// this action creator works for paging:
+export const setProductsPerPage = (currentPage) => {
+  return async (dispatch) => {
+      if (currentPage) {
+          const data = { type: SET_CURRENT_PAGE_PRODUCTS, payload: currentPage };
+          await dispatch(data);
+      }
+  };
+};
