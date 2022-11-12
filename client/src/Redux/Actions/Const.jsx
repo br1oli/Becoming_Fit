@@ -22,3 +22,6 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const EDIT_PRODUCT = "EDIT PRODUCT";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const ACTION_DE_PRUEBA = "ACTION_DE_PRUEBA";
+
+// const from pagination:
+export const SET_CURRENT_PAGE_PRODUCTS = "get/current/page/products";
