@@ -14,9 +14,9 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, []);
+  }, [dispatch]);
 
-  const productos = useSelector((state) => state.allProducts);
+  const productos = useSelector((state) => state.products);
 
   return (
     <div className={Styles.homeContainer}>
@@ -27,25 +27,25 @@ const Home = () => {
         <Filters />
       </div>
       <div className="cards-container">
-      <div className={Styles.cardsContainer}>
-        {productos && productos.map((p)=> {
-          console.log(productos, "Products Home")
-          return (
-            <div>
-              <ProductCard name={p.name} id={p.id} image={p.image} brand={p.brandName} price={p.price}/>
-
-            </div>
-
-          )
-
-        })
-
-        }
-      </div>
+        <div className={Styles.cardsContainer}>
+          {productos &&
+            productos.map((p) => {
+              return (
+                <ProductCard
+                  key={p.id}
+                  name={p.name}
+                  id={p.id}
+                  image={p.image}
+                  brand={p.brandName}
+                  price={p.price}
+                />
+              );
+            })}
+        </div>
       </div>
       <div className="footer-container">
-      </div>
         <Footer />
+      </div>
     </div>
   );
 };
