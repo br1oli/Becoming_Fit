@@ -15,6 +15,7 @@ import {
   POST_REVIEW,
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
+  GET_NAME_PRODUCTS,
 } from "../Actions/Const";
 
 const initialState = {
@@ -33,6 +34,12 @@ function rootReducer(state = initialState, action) {
         products: action.payload,
         allProducts: action.payload,
       };
+    case GET_NAME_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+      };
+
     /*     case FILTER_PRICES:
       const allProducts = state.products;
       let priceFilter;
@@ -125,6 +132,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         products: brandFiltered,
       };
+      case 'GET_DETAILS':
+        return {
+          ...state,
+          details: action.payload,
+        };
     default:
       return state;
   }

@@ -102,6 +102,23 @@ export function postReview(payload) {
   };
 }
 
+export  function getProductDetail(detailId){
+  return async function(dispatch){
+      try{
+          var json = await axios.get(`http://localhost:3001/products/${detailId}`);
+          return dispatch({
+              type: 'GET_DETAILS',
+              payload: json.data
+          })
+      }catch(error){
+          return dispatch({
+              type: "ERROR",
+              payload: error
+          })
+      }
+  }
+}
+
 // export  function getAllProducts(payload){
 //     return async function(dispath){
 //         try{
