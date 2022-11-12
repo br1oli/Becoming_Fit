@@ -3,7 +3,7 @@ import NavBar from "../Components/NavBar";
 import Footer from "../Components/Footer";
 
 //import "../Components/Style/Home.css";
-import Filters from "../Components/FIlters";
+import Filters from "../Components/Filters";
 import Styles from "../Components/Style/Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../Components/ProductCardsindex";
