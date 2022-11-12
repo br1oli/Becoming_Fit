@@ -17,7 +17,7 @@ const Home = () => {
     dispatch(getAllProducts());
   }, []);
 
-  const productos = useSelector((state) => state.allProducts);
+  const productos = useSelector((state) => state.products);
 
   return (
     <div className={Styles.homeContainer}>
