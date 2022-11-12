@@ -20,9 +20,9 @@ const Home = () => {
 
   return (
     <div className={Styles.homeContainer}>
-      <div className="nav.container">
+      {/* <div className="nav.container">
         <NavBar />
-      </div>
+      </div> */}
       <div className="filters-container">
         <Filters />
       </div>
@@ -32,7 +32,15 @@ const Home = () => {
           console.log(productos, "Products Home")
           return (
             <div>
+             <NavLink
+            //  style={{
+            //     textDecoration: 'none',
+            //     textDecorationColor: "black",
+            //     color: 'black'
+            // }} 
+            to={`/home/${p.id}`}>
               <ProductCard name={p.name} id={p.id} image={p.image} brand={p.brandName} price={p.price}/>
+            </NavLink>
 
             </div>
 
@@ -45,7 +53,7 @@ const Home = () => {
       </div>
       <div className="footer-container">
       </div>
-        <Footer />
+        {/* <Footer /> */}
     </div>
   );
 };

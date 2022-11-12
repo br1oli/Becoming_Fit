@@ -125,6 +125,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         products: brandFiltered,
       };
+      case 'GET_DETAILS':
+        return {
+          ...state,
+          details: action.payload,
+        };
     default:
       return state;
   }
