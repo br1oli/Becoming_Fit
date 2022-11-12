@@ -1925,7 +1925,9 @@ const json = [
   },
 ];
 
-function changeObject(parameter) {
+console.log(json.price);
+
+/* function changeObject(parameter) {
   let sizeObject = parameter.filter((e) => (e.size = Object.values(e.size)));
   return sizeObject;
 }
@@ -1944,3 +1946,4 @@ function brands(parameter) {
 
 console.log(brands(json));
 console.log("HOLA");
+ */

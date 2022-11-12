@@ -16,6 +16,7 @@ import {
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
   GET_NAME_PRODUCTS,
+  ERROR,
 } from "../Actions/Const";
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   brands: [],
   allBrands: [],
   details: [],
+  error: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -40,24 +42,30 @@ function rootReducer(state = initialState, action) {
         products: action.payload,
       };
 
-    /*     case FILTER_PRICES:
-      const allProducts = state.products;
+    // NO RENDERIZA LAS CARDS
+
+    case FILTER_PRICES:
+      const priceFiltered = state.allProducts;
       let priceFilter;
       if (action.payload === "all") {
-        return (priceFilter = allProducts);
+        priceFilter = [...priceFiltered];
+        return priceFilter;
       } else if (action.payload === "<50") {
-        return (priceFilter = allProducts.filter((p) => p.price < 50));
+        priceFilter = [...priceFiltered].filter((p) => p.price < 50);
+        return priceFilter;
       } else if (action.payload === "50 - 100") {
-        return (priceFilter = allProducts.filter(
+        priceFilter = [...priceFiltered].filter(
           (p) => p.price > 50 && p.price < 100
-        ));
+        );
+        return priceFilter;
       } else if (action.payload === ">100") {
-        return (priceFilter = allProducts.filter((p) => p.price > 100));
+        priceFilter = [...priceFiltered].filter((p) => p.price > 100);
+        return priceFilter;
       }
       return {
         ...state,
         products: priceFilter,
-      }; */
+      };
     case ORDER_BY_NAME:
       const sortedArr =
         action.payload === "asc"
@@ -127,16 +135,38 @@ function rootReducer(state = initialState, action) {
       };
     case FILTER_BRAND:
       const brandFiltered =
-        action.payload === "all" ? state.allProducts : state.allProducts;
+        action.payload === "all"
+          ? state.allProducts
+          : state.allProducts.filter(
+              (b) => b.brand.name.toLowerCase() === action.payload.toLowerCase()
+            );
       return {
         ...state,
         products: brandFiltered,
       };
-      case 'GET_DETAILS':
-        return {
-          ...state,
-          details: action.payload,
-        };
+    case GET_DETAILS:
+      return {
+        ...state,
+        details: action.payload,
+      };
+    case FILTER_CATEGORIES:
+      const categoryFiltered =
+        action.payload === "all"
+          ? state.allProducts
+          : state.allProducts.filter(
+              (b) =>
+                b.category.name.toLowerCase() === action.payload.toLowerCase()
+            );
+      return {
+        ...state,
+        products: categoryFiltered,
+      };
+    case ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

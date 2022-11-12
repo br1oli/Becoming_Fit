@@ -8,7 +8,10 @@ import {
   filterByGender,
   filterBySize,
   filterByBrand,
+  filterByCategory,
+  filterByPrice,
 } from "../Redux/Actions/UsersActions";
+import Style from "./Style/Filters.module.css";
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -19,10 +22,10 @@ export default function Filters() {
     dispatch(getProducts());
   }, [dispatch]);
 
-  /*   function handleFilterPrice(e) {
+  function handleFilterPrice(e) {
     e.preventDefault();
-    dispatch(filterByPrice(e.targe.value));
-  } */
+    dispatch(filterByPrice(e.target.value));
+  }
 
   function handleSortName(e) {
     e.preventDefault();
@@ -39,6 +42,11 @@ export default function Filters() {
     dispatch(filterByGender(e.target.value));
   }
 
+  function handleFilterCategory(e) {
+    e.preventDefault();
+    dispatch(filterByCategory(e.target.value));
+  }
+
   function handleFilterBrand(e) {
     e.preventDefault();
     dispatch(filterByBrand(e.target.value));
@@ -50,19 +58,19 @@ export default function Filters() {
   }
 
   return (
-    <div className="filters-container">
+    <div className={Style.filterContainer}>
       <div>
-        <select>
+        <select onChange={(e) => handleFilterCategory(e)}>
           <option value="all">ALL CATEGORIES</option>
-          <option value="jackets">JACKETS</option>
+          <option value="jacket">JACKETS</option>
           <option value="shoes">SHOES</option>
           <option value="pants">PANTS</option>
-          <option value="t-shirts">T-SHIRTS</option>
+          <option value="t-shirt">T-SHIRTS</option>
         </select>
       </div>
 
       <div>
-        <select /* onChange={(e) => handleFilterPrice(e)} */>
+        <select onChange={(e) => handleFilterPrice(e)}>
           <option value="all">ALL PRICES</option>
           <option value="<50"> less than 50 </option>
           <option value="50 - 100"> 50 - 100 </option>
@@ -75,6 +83,7 @@ export default function Filters() {
           <option value="all">ALL GENDERS</option>
           <option value="male">MALE</option>
           <option value="female">FEMALE</option>
+          <option value="unisex">UNISEX</option>
         </select>
       </div>
 
