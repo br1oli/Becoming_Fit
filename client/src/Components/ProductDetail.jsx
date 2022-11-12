@@ -25,7 +25,7 @@ const ProductDetail = (props) => {
 
                 <div className={styles.detail}>
                     {/* <p>{product.gender} {Object.values(product?.category)} • Becoming Fit</p> */}
-                    <p>{product.gender} {product.category.name} • Becoming Fit</p>
+                    <p>{product.gender} {product.category?.name} • Becoming Fit</p>
                     <h2>{product.name}</h2>
                     <p>{product.color}</p>
                     <p>brand</p>
