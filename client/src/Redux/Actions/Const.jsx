@@ -15,6 +15,7 @@ export const CLEAR_DETAILS = "CLEAR_DETAILS";
 export const POST_REVIEW = "POST_REVIEW";
 export const DELETE_OWN_REVIEW = "DELETE_OWN_REVIEW";
 export const EDIT_OWN_REVIEW = "EDIT_OWN_REVIEW";
+export const ERROR = "ERROR";
 
 export const POST_PRODUCT = "POST_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";

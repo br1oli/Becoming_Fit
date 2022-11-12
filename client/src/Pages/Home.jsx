@@ -3,18 +3,18 @@ import NavBar from "../Components/NavBar";
 import Footer from "../Components/Footer";
 
 //import "../Components/Style/Home.css";
-import Filters from "../Components/FIlters";
+import Filters from "../Components/Filters";
 import Styles from "../Components/Style/Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../Components/ProductCardsindex";
-import { getAllProducts } from "../Redux/Actions/Actions";
+import { getProducts } from "../Redux/Actions/UsersActions";
 import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getProducts());
   }, []);
 
   const productos = useSelector((state) => state.products);
@@ -31,7 +31,6 @@ const Home = () => {
         <div className={Styles.cardsContainer}>
           {productos &&
             productos.map((p) => {
-              console.log(productos, "Products Home");
               return (
                 <div>
                   <NavLink
