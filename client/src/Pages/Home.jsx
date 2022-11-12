@@ -7,7 +7,7 @@ import Styles from "../Components/Style/Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../Components/ProductCardsindex";
 import { getAllProducts } from "../Redux/Actions/Actions";
-import { products } from "../Redux/Reducer/products";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
