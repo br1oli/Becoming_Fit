@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./Style/ProductDetail.module.css"
 import "bootstrap/dist/css/bootstrap.min.css";
-import { getProductDetail } from "../Redux/Actions/Actions";
+import { getProductDetail } from "../Redux/Actions/UsersActions";
 import { Link } from "react-router-dom";
 
 const ProductDetail = (props) => {
@@ -24,7 +24,8 @@ const ProductDetail = (props) => {
                 <div className={styles.image}><img alt={product.name} src={product.image}/></div>
 
                 <div className={styles.detail}>
-                    <p>{product.gender} category • Becoming Fit</p>
+                    {/* <p>{product.gender} {Object.values(product?.category)} • Becoming Fit</p> */}
+                    <p>{product.gender} {product.category.name} • Becoming Fit</p>
                     <h2>{product.name}</h2>
                     <p>{product.color}</p>
                     <p>brand</p>
