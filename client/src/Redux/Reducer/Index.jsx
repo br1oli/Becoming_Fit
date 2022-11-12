@@ -17,7 +17,8 @@ import {
   EDIT_OWN_REVIEW,
   GET_NAME_PRODUCTS,
   ERROR,
-  SET_CURRENT_PAGE_PRODUCTS
+  SET_CURRENT_PAGE_PRODUCTS,
+  FILTER_UNIQUECATEGORIES
 } from "../Actions/Const";
 
 const initialState = {
@@ -60,6 +61,30 @@ function rootReducer(state = initialState, action) {
           state.indexLastProduct
         ),
       };
+      case FILTER_UNIQUECATEGORIES:
+        const allProducts3 = state.allProducts;
+        var categoriesExtracted = allProducts3.map((e)=> {
+          return e.category.name
+        })
+        const uniqueCategories = categoriesExtracted.filter((value, indice)=> {
+          return categoriesExtracted.indexOf(value) === indice;
+        })
+        return{
+          ...state,
+          categories: uniqueCategories
+        }
+      case GET_BRAND:
+        const allProducts2 = state.allProducts;
+        var brandsExtracted = allProducts2.map((e)=> {
+          return e.brand.name
+        })
+        const uniqueBrands = brandsExtracted.filter((value, indice)=> {
+          return brandsExtracted.indexOf(value) === indice;
+        })
+        return{
+          ...state,
+          brands: uniqueBrands
+        }
     case GET_NAME_PRODUCTS:
       return {
         ...state,

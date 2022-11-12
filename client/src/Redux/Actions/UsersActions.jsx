@@ -18,6 +18,7 @@ import {
   EDIT_OWN_REVIEW,
   ERROR,
   SET_CURRENT_PAGE_PRODUCTS,
+  FILTER_UNIQUECATEGORIES,
 } from "./Const";
 
 export function getProducts() {
@@ -43,6 +44,35 @@ export function filterBySize(payload) {
     type: FILTER_SIZE,
     payload,
   };
+}
+
+export function filterUniqueCategories(){
+  return async function (dispatch) {
+    try {
+      let products = await axios(URL_PRODUCTS);
+      return dispatch({
+        type: FILTER_UNIQUECATEGORIES,
+        payload: products.data,
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+}
+
+
+export function filterUniqueBrand(){
+  return async function (dispatch) {
+    try {
+      let products = await axios(URL_PRODUCTS);
+      return dispatch({
+        type: GET_BRAND,
+        payload: products.data,
+      });
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export function filterByGender(payload) {
