@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import NavBar from "../Components/NavBar";
 import Footer from "../Components/Footer";
+
 //import "../Components/Style/Home.css";
 import Filters from "../Components/FIlters";
 import Styles from "../Components/Style/Home.module.css";
@@ -27,33 +28,34 @@ const Home = () => {
         <Filters />
       </div>
       <div className="cards-container">
-      <div className={Styles.cardsContainer}>
-        {productos && productos.map((p)=> {
-          console.log(productos, "Products Home")
-          return (
-            <div>
-             <NavLink
-            //  style={{
-            //     textDecoration: 'none',
-            //     textDecorationColor: "black",
-            //     color: 'black'
-            // }} 
-            to={`/home/${p.id}`}>
-              <ProductCard name={p.name} id={p.id} image={p.image} brand={p.brandName} price={p.price}/>
-            </NavLink>
-
-            </div>
-
-          )
-
-        })
-
-        }
+        <div className={Styles.cardsContainer}>
+          {productos &&
+            productos.map((p) => {
+              console.log(productos, "Products Home");
+              return (
+                <div>
+                  <NavLink
+                    //  style={{
+                    //     textDecoration: 'none',
+                    //     textDecorationColor: "black",
+                    //     color: 'black'
+                    // }}
+                    to={`/home/${p.id}`}
+                  >
+                    <ProductCard
+                      name={p.name}
+                      id={p.id}
+                      image={p.image}
+                      brand={p.brandName}
+                      price={p.price}
+                    />
+                  </NavLink>
+                </div>
+              );
+            })}
+        </div>
       </div>
-      </div>
-      <div className="footer-container">
-      </div>
-        {/* <Footer /> */}
+      {/* <Footer /> */}
     </div>
   );
 };
