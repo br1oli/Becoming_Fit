@@ -19,6 +19,7 @@ function App() {
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/home" component={Home} />
         <Route exact path="/home/:id" render={(props)=><ProductDetail props={props}/>}/>
+        <Route exact path= "/register" component={RegisterForm} />
         <Footer/>
       {/* </Switch> */}
     </BrowserRouter>
