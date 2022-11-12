@@ -20,9 +20,9 @@ const Home = () => {
 
   return (
     <div className={Styles.homeContainer}>
-      <div className="nav.container">
+      {/* <div className="nav.container">
         <NavBar />
-      </div>
+      </div> */}
       <div className="filters-container">
         <Filters />
       </div>
@@ -30,22 +30,23 @@ const Home = () => {
         <div className={Styles.cardsContainer}>
           {productos &&
             productos.map((p) => {
+              console.log(productos, "Products Home");
               return (
-                <ProductCard
-                  key={p.id}
-                  name={p.name}
-                  id={p.id}
-                  image={p.image}
-                  brand={p.brandName}
-                  price={p.price}
-                />
+                <div>
+                  <ProductCard
+                    name={p.name}
+                    id={p.id}
+                    image={p.image}
+                    brand={p.brandName}
+                    price={p.price}
+                  />
+                </div>
               );
             })}
         </div>
       </div>
-      <div className="footer-container">
-        <Footer />
-      </div>
+      <div className="footer-container"></div>
+      <Footer />
     </div>
   );
 };
