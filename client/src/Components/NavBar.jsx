@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SearchInput from "./SearchBar.jsx";
 import "./Style/NavBar.css";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const NavBar = () => {
   return (
@@ -25,6 +26,13 @@ const NavBar = () => {
           </Link>
         </li>
         <SearchInput />
+        <li className="nav-item">
+          <Link className="nav-link" to="/home">
+            <span>
+              <ShoppingCartIcon />
+            </span>
+          </Link>
+        </li>
       </ul>
     </nav>
   );
