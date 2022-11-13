@@ -218,8 +218,8 @@ function rootReducer(state = initialState, action) {
       const genderFilter = state.products;
       const genderFiltered =
         action.payload === "all"
-          ? allProducts
-          : allProducts.filter(
+          ? state.allProducts
+          : state.allProducts.filter(
               (e) => e.gender.toLowerCase() === action.payload.toLowerCase()
             );
       return {
