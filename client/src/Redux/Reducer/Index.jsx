@@ -112,25 +112,48 @@ function rootReducer(state = initialState, action) {
           state.indexLastProduct
         ),
       };
+    case SET_CURRENT_PAGE_PRODUCTS:
+      state.currentPage = action.payload;
+      state.indexLastProduct = state.currentPage * state.productsPerPage;
+      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+      return {
+        ...state,
+        currentProducts: state.products.slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+      };
+    case SET_CURRENT_PAGE_PRODUCTS:
+      state.currentPage = action.payload;
+      state.indexLastProduct = state.currentPage * state.productsPerPage;
+      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+      return {
+        ...state,
+        currentProducts: state.products.slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+      };
 
     // NO RENDERIZA LAS CARDS
 
     case FILTER_PRICES:
+      const priceFiltered = state.allProducts;
       let priceFilter;
-
       if (action.payload === "all") {
-        priceFilter = state.products;
-      }
-      if (action.payload === "<50") {
-        priceFilter = state.products.filter((p) => p.price < 50);
-      }
-      if (action.payload === "50 - 100") {
-        priceFilter = state.products.filter(
+        priceFilter = [...priceFiltered];
+        return priceFilter;
+      } else if (action.payload === "<50") {
+        priceFilter = [...priceFiltered].filter((p) => p.price < 50);
+        return priceFilter;
+      } else if (action.payload === "50 - 100") {
+        priceFilter = [...priceFiltered].filter(
           (p) => p.price > 50 && p.price < 100
         );
-      }
-      if (action.payload === ">100") {
-        priceFilter = state.products.filter((p) => p.price > 100);
+        return priceFilter;
+      } else if (action.payload === ">100") {
+        priceFilter = [...priceFiltered].filter((p) => p.price > 100);
+        return priceFilter;
       }
       return {
         ...state,
@@ -196,7 +219,7 @@ function rootReducer(state = initialState, action) {
       const genderFiltered =
         action.payload === "all"
           ? state.allProducts
-          : genderFilter.filter(
+          : state.allProducts.filter(
               (e) => e.gender.toLowerCase() === action.payload.toLowerCase()
             );
       return {
@@ -210,7 +233,7 @@ function rootReducer(state = initialState, action) {
       const sizeFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.products.filter((p) => p.size.includes(action.payload));
+          : state.allProducts.filter((p) => p.size.includes(action.payload));
       return {
         ...state,
         products: sizeFiltered,
