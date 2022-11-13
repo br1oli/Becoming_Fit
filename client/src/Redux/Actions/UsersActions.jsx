@@ -19,6 +19,7 @@ import {
   ERROR,
   SET_CURRENT_PAGE_PRODUCTS,
   FILTER_UNIQUECATEGORIES,
+  FILTER_UNIQUEGENDER,
 } from "./Const";
 
 export function getProducts() {
@@ -67,6 +68,21 @@ export function filterUniqueBrand(){
       let products = await axios(URL_PRODUCTS);
       return dispatch({
         type: GET_BRAND,
+        payload: products.data,
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+}
+
+export function filterUniqueGender(){
+  return async function (dispatch) {
+    try {
+      let products = await axios(URL_PRODUCTS);
+      console.log(products, "ACTIONS")
+      return dispatch({
+        type: FILTER_UNIQUEGENDER,
         payload: products.data,
       });
     } catch (error) {

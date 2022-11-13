@@ -18,7 +18,8 @@ import {
   GET_NAME_PRODUCTS,
   ERROR,
   SET_CURRENT_PAGE_PRODUCTS,
-  FILTER_UNIQUECATEGORIES
+  FILTER_UNIQUECATEGORIES,
+  FILTER_UNIQUEGENDER
 } from "../Actions/Const";
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   indexLastProduct: 6,
   indexFirsProduct: 0,
   //
+  uniqueGenero: [],
   brands: [],
   allBrands: [],
   details: [],
@@ -73,6 +75,22 @@ function rootReducer(state = initialState, action) {
           ...state,
           categories: uniqueCategories
         }
+      
+        case FILTER_UNIQUEGENDER:
+          const allProducts4 = state.allProducts;
+          var gendersExtracted = allProducts4.map((e)=> {
+            return e.gender
+          })
+          const uniqueGenders = gendersExtracted.filter((value, indice)=> {
+            return gendersExtracted.indexOf(value) === indice;
+          })
+          return{
+            ...state,
+            uniqueGenero: uniqueGenders
+          }
+        
+
+
       case GET_BRAND:
         const allProducts2 = state.allProducts;
         var brandsExtracted = allProducts2.map((e)=> {
