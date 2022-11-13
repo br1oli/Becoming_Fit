@@ -41,7 +41,7 @@ export const Pagination = () => {
           </a>
         </li>
         {pagesNumbers.map((number) => (
-          <li className="page-item">
+          <li className="page-item" key={number}>
             <a
               className='page-link'
               key={ number } 

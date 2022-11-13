@@ -11,11 +11,11 @@ import { getProducts } from "../Redux/Actions/UsersActions";
 import { Pagination } from '../Components/Pagination';
 
 const Home = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getProducts());
+  // }, []);
 
   const { currentProducts } = useSelector((state) => state);
 
@@ -30,8 +30,7 @@ const Home = () => {
       <Pagination />
       <div className="cards-container">
         <div className={Styles.cardsContainer}>
-          {currentProducts &&
-            currentProducts.map((p) => {
+          {currentProducts?.map((p) => {
               return (
                     <ProductCard
                       key={p.id}
