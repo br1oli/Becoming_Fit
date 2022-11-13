@@ -6,7 +6,6 @@ const {
 const { createProductInDb } = require("../helpers/createProduct");
 const { updateProductInDb } = require("../helpers/updateProduct");
 
-
 const getProducts = async (req = request, res = response) => {
   try {
     let { name } = req.query;
@@ -32,8 +31,19 @@ const getProducts = async (req = request, res = response) => {
 
 const createProduct = async (req = request, res = response) => {
   try {
-    let { name, type, color, gender, size, rating, price, description, image } =
-      req.body;
+    let {
+      name,
+      type,
+      color,
+      gender,
+      size,
+      rating,
+      brand,
+      category,
+      price,
+      description,
+      image,
+    } = req.body;
 
     let productsFromDb = await getProductsFromDb();
 
@@ -45,6 +55,8 @@ const createProduct = async (req = request, res = response) => {
       !size ||
       !rating ||
       !price ||
+      !brand ||
+      !category ||
       !description ||
       !image
     ) {
@@ -64,10 +76,14 @@ const createProduct = async (req = request, res = response) => {
       size,
       rating,
       price,
+      brand,
+      category,
       description,
       image
     );
-    res.status(201).send(newProduct && "Product succesfully created!");
+    res
+      .status(201)
+      .send(newProduct.dataValues && "Product succesfully created!");
   } catch (error) {
     res.status(500).send(error.message);
   }
