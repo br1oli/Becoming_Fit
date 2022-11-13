@@ -17,6 +17,9 @@ import {
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
   ERROR,
+  SUCCESS,
+  CLEAR_SUCCESS,
+  CLEAR_ERROR,
   SET_CURRENT_PAGE_PRODUCTS,
   FILTER_UNIQUECATEGORIES,
   FILTER_UNIQUEGENDER,
@@ -28,7 +31,6 @@ export function getProducts() {
   return async function (dispatch) {
     try {
       let products = await axios(URL_PRODUCTS);
-      console.log(products);
       return dispatch({
         type: GET_PRODUCTS,
         payload: products.data,
@@ -36,7 +38,7 @@ export function getProducts() {
     } catch (error) {
       return dispatch({
         type: ERROR,
-        payload: error,
+        payload: error.response.data,
       });
     }
   };
@@ -53,7 +55,7 @@ export function getProductDetail(detailId) {
     } catch (error) {
       return dispatch({
         type: ERROR,
-        payload: error,
+        payload: error.response.data,
       });
     }
   };
@@ -68,7 +70,10 @@ export function getNameProducts(name) {
         payload: products.data,
       });
     } catch (error) {
-      alert("Product doesnt exist");
+      return dispatch({
+        type: ERROR,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -82,7 +87,7 @@ export function filterBySize(payload) {
   };
 }
 
-export function filterUniqueCategories(){
+export function filterUniqueCategories() {
   return async function (dispatch) {
     try {
       let products = await axios(URL_PRODUCTS);
@@ -91,13 +96,15 @@ export function filterUniqueCategories(){
         payload: products.data,
       });
     } catch (error) {
-      return error;
+      return dispatch({
+        type: ERROR,
+        payload: error.response.data,
+      });
     }
-  }
+  };
 }
 
-
-export function filterUniqueBrand(){
+export function filterUniqueBrand() {
   return async function (dispatch) {
     try {
       let products = await axios(URL_PRODUCTS);
@@ -106,24 +113,29 @@ export function filterUniqueBrand(){
         payload: products.data,
       });
     } catch (error) {
-      return error;
+      return dispatch({
+        type: ERROR,
+        payload: error.response.data,
+      });
     }
-  }
+  };
 }
 
-export function filterUniqueGender(){
+export function filterUniqueGender() {
   return async function (dispatch) {
     try {
       let products = await axios(URL_PRODUCTS);
-      console.log(products, "ACTIONS")
       return dispatch({
         type: FILTER_UNIQUEGENDER,
         payload: products.data,
       });
     } catch (error) {
-      return error;
+      return dispatch({
+        type: ERROR,
+        payload: error.response.data,
+      });
     }
-  }
+  };
 }
 
 export function filterByGender(payload) {
@@ -174,10 +186,10 @@ export function orderByPrice(payload) {
 // this action creator works for paging:
 export const setProductsPerPage = (currentPage) => {
   return async (dispatch) => {
-      if (currentPage) {
-          const data = { type: SET_CURRENT_PAGE_PRODUCTS, payload: currentPage };
-          await dispatch(data);
-      }
+    if (currentPage) {
+      const data = { type: SET_CURRENT_PAGE_PRODUCTS, payload: currentPage };
+      await dispatch(data);
+    }
   };
 };
 
@@ -187,13 +199,23 @@ export function postReview(payload) {
   return async (dispatch) => {
     try {
       const response = await axios.post(URL_PRODUCTS, payload);
-      return {
-        response,
-      };
+      return dispatch({
+        type: SUCCESS,
+        payload: response.data,
+      });
     } catch (error) {
-      return error;
+      return dispatch({
+        type: ERROR,
+        payload: error.response.data,
+      });
     }
   };
 }
+//// Cleaning responses from back, ejecutarlos con los handleChange de los inputs
+export const clearError = () => {
+  return { type: CLEAR_ERROR };
+};
 
-
+export const clearSuccess = () => {
+  return { type: CLEAR_SUCCESS };
+};

@@ -16,11 +16,13 @@ import {
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
   GET_NAME_PRODUCTS,
-  SET_CURRENT_PAGE_PRODUCTS,
+  SUCCESS,
   ERROR,
+  CLEAR_ERROR,
+  CLEAR_SUCCESS,
   SET_CURRENT_PAGE_PRODUCTS,
   FILTER_UNIQUECATEGORIES,
-  FILTER_UNIQUEGENDER
+  FILTER_UNIQUEGENDER,
 } from "../Actions/Const";
 
 const initialState = {
@@ -30,6 +32,7 @@ const initialState = {
   allBrands: [],
   details: [],
   error: "",
+  success: "",
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -52,51 +55,51 @@ function rootReducer(state = initialState, action) {
           state.indexLastProduct
         ),
       };
-      case FILTER_UNIQUECATEGORIES:
-        const allProducts3 = state.allProducts;
-        var categoriesExtracted = allProducts3.map((e)=> {
-          return e.category.name
-        })
-        const uniqueCategories = categoriesExtracted.filter((value, indice)=> {
-          return categoriesExtracted.indexOf(value) === indice;
-        })
-        return{
-          ...state,
-          categories: uniqueCategories
-        }
-      
-        case FILTER_UNIQUEGENDER:
-          const allProducts4 = state.allProducts;
-          var gendersExtracted = allProducts4.map((e)=> {
-            return e.gender
-          })
-          const uniqueGenders = gendersExtracted.filter((value, indice)=> {
-            return gendersExtracted.indexOf(value) === indice;
-          })
-          return{
-            ...state,
-            uniqueGenero: uniqueGenders
-         }
-        
-      case GET_BRAND:
-        const allProducts2 = state.allProducts;
-        var brandsExtracted = allProducts2.map((e)=> {
-          return e.brand.name
-        })
-        const uniqueBrands = brandsExtracted.filter((value, indice)=> {
-          return brandsExtracted.indexOf(value) === indice;
-        })
-        return{
-          ...state,
-          brands: uniqueBrands
-        }
+    case FILTER_UNIQUECATEGORIES:
+      const allProducts3 = state.allProducts;
+      var categoriesExtracted = allProducts3.map((e) => {
+        return e.category.name;
+      });
+      const uniqueCategories = categoriesExtracted.filter((value, indice) => {
+        return categoriesExtracted.indexOf(value) === indice;
+      });
+      return {
+        ...state,
+        categories: uniqueCategories,
+      };
+
+    case FILTER_UNIQUEGENDER:
+      const allProducts4 = state.allProducts;
+      var gendersExtracted = allProducts4.map((e) => {
+        return e.gender;
+      });
+      const uniqueGenders = gendersExtracted.filter((value, indice) => {
+        return gendersExtracted.indexOf(value) === indice;
+      });
+      return {
+        ...state,
+        uniqueGenero: uniqueGenders,
+      };
+
+    case GET_BRAND:
+      const allProducts2 = state.allProducts;
+      var brandsExtracted = allProducts2.map((e) => {
+        return e.brand.name;
+      });
+      const uniqueBrands = brandsExtracted.filter((value, indice) => {
+        return brandsExtracted.indexOf(value) === indice;
+      });
+      return {
+        ...state,
+        brands: uniqueBrands,
+      };
     case GET_NAME_PRODUCTS:
       return {
         ...state,
         products: action.payload,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...action.payload].slice(0,6)
+        currentProducts: [...action.payload].slice(0, 6),
       };
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
@@ -134,7 +137,7 @@ function rootReducer(state = initialState, action) {
         products: priceFilter,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...priceFilter].slice(0,6)
+        currentProducts: [...priceFilter].slice(0, 6),
       };
     case ORDER_BY_NAME:
       const sortedArr =
@@ -160,7 +163,7 @@ function rootReducer(state = initialState, action) {
         products: sortedArr,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...sortedArr].slice(0,6)
+        currentProducts: [...sortedArr].slice(0, 6),
       };
     case ORDER_BY_PRICE:
       const priceOrder =
@@ -186,7 +189,7 @@ function rootReducer(state = initialState, action) {
         products: priceOrder,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...priceOrder].slice(0,6)
+        currentProducts: [...priceOrder].slice(0, 6),
       };
     case FILTER_GENDER:
       const genderFilter = state.products;
@@ -201,7 +204,7 @@ function rootReducer(state = initialState, action) {
         products: genderFiltered,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...genderFiltered].slice(0,6)
+        currentProducts: [...genderFiltered].slice(0, 6),
       };
     case FILTER_SIZE:
       const sizeFiltered =
@@ -213,7 +216,7 @@ function rootReducer(state = initialState, action) {
         products: sizeFiltered,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...sizeFiltered].slice(0,6)
+        currentProducts: [...sizeFiltered].slice(0, 6),
       };
     case FILTER_BRAND:
       const brandFiltered =
@@ -227,7 +230,7 @@ function rootReducer(state = initialState, action) {
         products: brandFiltered,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...brandFiltered].slice(0,6)
+        currentProducts: [...brandFiltered].slice(0, 6),
       };
     case GET_DETAILS:
       return {
@@ -247,14 +250,30 @@ function rootReducer(state = initialState, action) {
         products: categoryFiltered,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...categoryFiltered].slice(0,6)
+        currentProducts: [...categoryFiltered].slice(0, 6),
+      };
+
+    /////// Managing responses from back
+    case SUCCESS:
+      return {
+        ...state,
+        success: action.payload,
+      };
+    case CLEAR_SUCCESS:
+      return {
+        ...state,
+        success: "",
       };
     case ERROR:
       return {
         ...state,
         error: action.payload,
       };
-
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: "",
+      };
     default:
       return state;
   }

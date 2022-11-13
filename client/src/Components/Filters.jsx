@@ -15,12 +15,6 @@ import Style from "./Style/Filters.module.css";
 
 export default function Filters() {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products);
-  const allBrands = useSelector((state) => state.brands);
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
 
   function handleFilterPrice(e) {
     e.preventDefault();

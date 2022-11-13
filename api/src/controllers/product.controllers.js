@@ -17,7 +17,7 @@ const getProducts = async (req = request, res = response) => {
     if (name) {
       let foundProductsByName = await getProductsByName(name);
 
-      if (!foundProductsByName) {
+      if (!foundProductsByName.length) {
         return res.status(404).send("Please enter a valid name");
       }
 

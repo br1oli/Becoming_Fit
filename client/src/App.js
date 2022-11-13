@@ -7,27 +7,33 @@ import Home from "./Pages/Home";
 import Footer from "./Components/Footer";
 import NavBar from "./Components/NavBar";
 import ProductDetail from "./Components/ProductDetail";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./Redux/Actions/UsersActions";
 import ProductForm from "./Pages/ProductForm";
 
 function App() {
   const dispatch = useDispatch();
-
+  const allProducts = useSelector((state) => state.allProducts);
   useEffect(() => {
-    dispatch(getProducts());
+    if (!allProducts.length) {
+      dispatch(getProducts());
+    }
   }, []);
 
   return (
     <BrowserRouter>
       {/* <Switch> */}
-        <NavBar/>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/home/:id" render={(props)=><ProductDetail props={props}/>}/>
-        <Route exact path= "/register" component={RegisterForm} />
-        <Route exact path= "/productForm" component={ProductForm} />
-        <Footer/>
+      <NavBar />
+      <Route exact path="/" component={LandingPage} />
+      <Route exact path="/home" component={Home} />
+      <Route
+        exact
+        path="/home/:id"
+        render={(props) => <ProductDetail props={props} />}
+      />
+      <Route exact path="/register" component={RegisterForm} />
+      <Route exact path="/productForm" component={ProductForm} />
+      <Footer />
       {/* </Switch> */}
     </BrowserRouter>
   );
