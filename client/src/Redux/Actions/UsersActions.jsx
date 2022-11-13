@@ -22,6 +22,8 @@ import {
   FILTER_UNIQUEGENDER,
 } from "./Const";
 
+// ----- PRODUCTS
+
 export function getProducts() {
   return async function (dispatch) {
     try {
@@ -39,6 +41,39 @@ export function getProducts() {
     }
   };
 }
+
+export function getProductDetail(detailId) {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get(`http://localhost:3001/products/${detailId}`);
+      return dispatch({
+        type: GET_DETAILS,
+        payload: json.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+}
+
+export function getNameProducts(name) {
+  return async function (dispatch) {
+    try {
+      const products = await axios.get(URL_PRODUCTS_QUERY + name);
+      return dispatch({
+        type: GET_NAME_PRODUCTS,
+        payload: products.data,
+      });
+    } catch (error) {
+      alert("Product doesnt exist");
+    }
+  };
+}
+
+// --- FILTERS
 
 export function filterBySize(payload) {
   return {
@@ -119,6 +154,8 @@ export function filterByBrand(payload) {
   };
 }
 
+// ----- ORDER
+
 export function orderByName(payload) {
   return {
     type: ORDER_BY_NAME,
@@ -133,19 +170,18 @@ export function orderByPrice(payload) {
   };
 }
 
-export function getNameProducts(name) {
-  return async function (dispatch) {
-    try {
-      const products = await axios.get(URL_PRODUCTS_QUERY + name);
-      return dispatch({
-        type: GET_NAME_PRODUCTS,
-        payload: products.data,
-      });
-    } catch (error) {
-      alert("Product doesnt exist");
-    }
+// --- PAGINATION
+// this action creator works for paging:
+export const setProductsPerPage = (currentPage) => {
+  return async (dispatch) => {
+      if (currentPage) {
+          const data = { type: SET_CURRENT_PAGE_PRODUCTS, payload: currentPage };
+          await dispatch(data);
+      }
   };
-}
+};
+
+// --- REVIEWS
 
 export function postReview(payload) {
   return async (dispatch) => {
@@ -160,47 +196,4 @@ export function postReview(payload) {
   };
 }
 
-export function getProductDetail(detailId) {
-  return async function (dispatch) {
-    try {
-      var json = await axios.get(`http://localhost:3001/products/${detailId}`);
-      return dispatch({
-        type: GET_DETAILS,
-        payload: json.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: ERROR,
-        payload: error,
-      });
-    }
-  };
-}
 
-// export  function getAllProducts(payload){
-//     return async function(dispath){
-//         try{
-//             var json = await axios.get(`http://localhost:3001/products`);
-//             return dispath({
-//                 type: "GET_PRODUCTS",
-//                 payload: json.data
-//             })
-//         }catch(error){
-//             console.log(error, "error al traer los productos")
-//             return dispath({
-//                 type: "ERROR",
-//                 payload: error
-//             })
-//         }
-//     }
-// }
-
-// this action creator works for paging:
-export const setProductsPerPage = (currentPage) => {
-  return async (dispatch) => {
-      if (currentPage) {
-          const data = { type: SET_CURRENT_PAGE_PRODUCTS, payload: currentPage };
-          await dispatch(data);
-      }
-  };
-};
