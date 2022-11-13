@@ -5,8 +5,8 @@ export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
 export const GET_BRAND = "GET_BRAND";
 export const FILTER_PRICES = "FILTER_PRICES";
 export const FILTER_CATEGORIES = "FILTER_CATEGORIES";
-export const FILTER_UNIQUECATEGORIES = "FILTER_UNIQUE_CATEGORIES"
-export const FILTER_UNIQUEGENDER = "FILTER_UNIQUE_GENDERS"
+export const FILTER_UNIQUECATEGORIES = "FILTER_UNIQUE_CATEGORIES";
+export const FILTER_UNIQUEGENDER = "FILTER_UNIQUE_GENDERS";
 export const FILTER_GENDER = "FILTER_GENDER";
 export const FILTER_SIZE = "FILTER_SIZE";
 export const FILTER_BRAND = "FILTER_BRAND";
@@ -18,12 +18,14 @@ export const POST_REVIEW = "POST_REVIEW";
 export const DELETE_OWN_REVIEW = "DELETE_OWN_REVIEW";
 export const EDIT_OWN_REVIEW = "EDIT_OWN_REVIEW";
 export const ERROR = "ERROR";
+export const CLEAR_ERROR = "CLEAR_ERROR";
+export const CLEAR_SUCCESS = "CLEAR_SUCCESS";
+export const SUCCESS = "SUCCESS";
 export const POST_PRODUCT = "POST_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const EDIT_PRODUCT = "EDIT PRODUCT";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const ACTION_DE_PRUEBA = "ACTION_DE_PRUEBA";
-
 
 // const from pagination:
 export const SET_CURRENT_PAGE_PRODUCTS = "get/current/page/products";
