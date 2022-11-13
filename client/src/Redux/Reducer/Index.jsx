@@ -16,6 +16,7 @@ import {
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
   GET_NAME_PRODUCTS,
+  SET_CURRENT_PAGE_PRODUCTS,
   ERROR,
   SET_CURRENT_PAGE_PRODUCTS,
   FILTER_UNIQUECATEGORIES,
@@ -25,6 +26,10 @@ import {
 const initialState = {
   products: [],
   allProducts: [],
+  brands: [],
+  allBrands: [],
+  details: [],
+  error: "",
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -33,31 +38,15 @@ const initialState = {
   indexFirsProduct: 0,
   //
   uniqueGenero: [],
-  brands: [],
-  allBrands: [],
-  details: [],
-  error: "",
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
-      return {
-        ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
-      };
     case GET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
         allProducts: action.payload,
-        // logic from pagination:
         currentProducts: [...action.payload].slice(
           state.indexFirsProduct,
           state.indexLastProduct
@@ -87,10 +76,8 @@ function rootReducer(state = initialState, action) {
           return{
             ...state,
             uniqueGenero: uniqueGenders
-          }
+         }
         
-
-
       case GET_BRAND:
         const allProducts2 = state.allProducts;
         var brandsExtracted = allProducts2.map((e)=> {
@@ -107,31 +94,47 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...action.payload].slice(0,6)
+      };
+    case SET_CURRENT_PAGE_PRODUCTS:
+      state.currentPage = action.payload;
+      state.indexLastProduct = state.currentPage * state.productsPerPage;
+      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+      return {
+        ...state,
+        currentProducts: state.products.slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
       };
 
     // NO RENDERIZA LAS CARDS
 
     case FILTER_PRICES:
-      const priceFiltered = state.allProducts;
       let priceFilter;
+
       if (action.payload === "all") {
-        priceFilter = [...priceFiltered];
-        return priceFilter;
-      } else if (action.payload === "<50") {
-        priceFilter = [...priceFiltered].filter((p) => p.price < 50);
-        return priceFilter;
-      } else if (action.payload === "50 - 100") {
-        priceFilter = [...priceFiltered].filter(
+        priceFilter = state.products;
+      }
+      if (action.payload === "<50") {
+        priceFilter = state.products.filter((p) => p.price < 50);
+      }
+      if (action.payload === "50 - 100") {
+        priceFilter = state.products.filter(
           (p) => p.price > 50 && p.price < 100
         );
-        return priceFilter;
-      } else if (action.payload === ">100") {
-        priceFilter = [...priceFiltered].filter((p) => p.price > 100);
-        return priceFilter;
+      }
+      if (action.payload === ">100") {
+        priceFilter = state.products.filter((p) => p.price > 100);
       }
       return {
         ...state,
         products: priceFilter,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...priceFilter].slice(0,6)
       };
     case ORDER_BY_NAME:
       const sortedArr =
@@ -155,22 +158,25 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: sortedArr,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...sortedArr].slice(0,6)
       };
     case ORDER_BY_PRICE:
       const priceOrder =
         action.payload === "asc"
           ? state.products.sort(function (a, b) {
-              if (a.price > b.price) {
+              if (parseInt(a.price) > parseInt(b.price)) {
                 return 1;
-              } else if (a.price < b.price) {
+              } else if (parseInt(a.price) < parseInt(b.price)) {
                 return -1;
               }
               return 0;
             })
           : state.products.sort(function (a, b) {
-              if (a.price < b.price) {
+              if (parseInt(a.price) < parseInt(b.price)) {
                 return 1;
-              } else if (a.price > b.price) {
+              } else if (parseInt(a.price) > parseInt(b.price)) {
                 return -1;
               }
               return 0;
@@ -178,38 +184,50 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: priceOrder,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...priceOrder].slice(0,6)
       };
     case FILTER_GENDER:
-      const allProducts = state.allProducts;
+      const genderFilter = state.products;
       const genderFiltered =
         action.payload === "all"
-          ? allProducts
-          : allProducts.filter(
+          ? state.allProducts
+          : genderFilter.filter(
               (e) => e.gender.toLowerCase() === action.payload.toLowerCase()
             );
       return {
         ...state,
         products: genderFiltered,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...genderFiltered].slice(0,6)
       };
     case FILTER_SIZE:
       const sizeFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.allProducts.filter((p) => p.size.includes(action.payload));
+          : state.products.filter((p) => p.size.includes(action.payload));
       return {
         ...state,
         products: sizeFiltered,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...sizeFiltered].slice(0,6)
       };
     case FILTER_BRAND:
       const brandFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.allProducts.filter(
+          : state.products.filter(
               (b) => b.brand.name.toLowerCase() === action.payload.toLowerCase()
             );
       return {
         ...state,
         products: brandFiltered,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...brandFiltered].slice(0,6)
       };
     case GET_DETAILS:
       return {
@@ -220,13 +238,16 @@ function rootReducer(state = initialState, action) {
       const categoryFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.allProducts.filter(
+          : state.products.filter(
               (b) =>
                 b.category.name.toLowerCase() === action.payload.toLowerCase()
             );
       return {
         ...state,
         products: categoryFiltered,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...categoryFiltered].slice(0,6)
       };
     case ERROR:
       return {
