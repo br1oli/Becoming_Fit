@@ -9,8 +9,7 @@ import NavBar from "./Components/NavBar";
 import ProductDetail from "./Components/ProductDetail";
 import { useDispatch } from "react-redux";
 import { getProducts } from "./Redux/Actions/UsersActions";
-
-
+import ProductForm from "./Pages/ProductForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,7 +17,6 @@ function App() {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-
 
   return (
     <BrowserRouter>
@@ -28,6 +26,7 @@ function App() {
         <Route exact path="/home" component={Home} />
         <Route exact path="/home/:id" render={(props)=><ProductDetail props={props}/>}/>
         <Route exact path= "/register" component={RegisterForm} />
+        <Route exact path= "/productForm" component={ProductForm} />
         <Footer/>
       {/* </Switch> */}
     </BrowserRouter>
