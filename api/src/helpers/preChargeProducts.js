@@ -69,15 +69,3 @@ module.exports = () => {
       .catch((err) => console.error(err));
   });
 };
-
-    Brand.findOne({
-      where: {
-        name: p.brand,
-      },
-    })
-      .then(async (brand) => {
-        await brand.addProduct(product);
-      })
-      .catch((err) => console.error(err));
-  });
-};
