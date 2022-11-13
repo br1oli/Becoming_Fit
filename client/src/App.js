@@ -7,6 +7,7 @@ import Home from "./Pages/Home";
 import Footer from "./Components/Footer";
 import NavBar from "./Components/NavBar";
 import ProductDetail from "./Components/ProductDetail";
+import ProductForm from "./Pages/ProductForm";
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/home" component={Home} />
         <Route exact path="/home/:id" render={(props)=><ProductDetail props={props}/>}/>
         <Route exact path= "/register" component={RegisterForm} />
+        <Route exact path= "/productForm" component={ProductForm} />
         <Footer/>
       {/* </Switch> */}
     </BrowserRouter>
