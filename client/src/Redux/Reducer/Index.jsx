@@ -23,6 +23,12 @@ import {
   SET_CURRENT_PAGE_PRODUCTS,
   FILTER_UNIQUECATEGORIES,
   FILTER_UNIQUEGENDER,
+
+  //Shopping cart actions
+  ADD_PRODUCT_TO_CART,
+  REMOVE_ALL_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+  CLEAR_CART,
 } from "../Actions/Const";
 
 const initialState = {
@@ -41,6 +47,9 @@ const initialState = {
   indexFirsProduct: 0,
   //
   uniqueGenero: [],
+  shoppingCart: [],
+  totalItemsInCart: 0,
+  totalToPay: 0,
 };
 
 function rootReducer(state = initialState, action) {
@@ -297,6 +306,85 @@ function rootReducer(state = initialState, action) {
         ...state,
         error: "",
       };
+
+    // Shopping cart reducer functions
+    case ADD_PRODUCT_TO_CART:
+      let newItem = state.allProducts.find(
+        (item) => item.id === action.payload
+      );
+
+      let itemInCart = state.shoppingCart.find(
+        (item) => item.id === newItem.id
+      );
+      let totalItemsAdded = state.shoppingCart
+        .map((item) => item.quantity)
+        .reduce((acc, item) => (acc += item), 1);
+
+      let conditionalAddState = itemInCart
+        ? {
+            ...state,
+            shoppingCart: state.shoppingCart.map((item) =>
+              item.id === newItem.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            ),
+            totalItemsInCart: totalItemsAdded,
+          }
+        : {
+            ...state,
+            shoppingCart: [...state.shoppingCart, { ...newItem, quantity: 1 }],
+            totalItemsInCart: totalItemsAdded,
+          };
+
+      return conditionalAddState;
+    case REMOVE_ALL_FROM_CART:
+      let deletedItem = state.shoppingCart.find(
+        (item) => item.id === action.payload
+      );
+
+      let remainedProducts = state.shoppingCart.filter(
+        (item) => item.id !== action.payload
+      );
+
+      let totalItemsRemainedInCart =
+        state.shoppingCart
+          .map((item) => item.quantity)
+          .reduce((acc, item) => (acc += item), 0) - deletedItem.quantity;
+
+      return {
+        ...state,
+        shoppingCart: remainedProducts,
+        totalItemsInCart: totalItemsRemainedInCart,
+      };
+    case REMOVE_ONE_FROM_CART:
+      let itemToDelete = state.shoppingCart.find(
+        (item) => item.id === action.payload
+      );
+      let totalItemsRemained = state.shoppingCart
+        .map((item) => item.quantity - 1)
+        .reduce((acc, item) => (acc += item), 0);
+
+      let conditionalRemoveState =
+        itemToDelete.quantity > 1
+          ? {
+              ...state,
+              shoppingCart: state.shoppingCart.map((item) =>
+                item.id === action.payload
+                  ? { ...item, quantity: item.quantity - 1 }
+                  : item
+              ),
+              totalItemsInCart: totalItemsRemained,
+            }
+          : {
+              ...state,
+              shoppingCart: state.shoppingCart.filter(
+                (item) => item.id !== action.payload
+              ),
+              totalItemsInCart: totalItemsRemained,
+            };
+      return conditionalRemoveState;
+    case CLEAR_CART:
+      return { ...state, shoppingCart: [] };
     default:
       return state;
   }

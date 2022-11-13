@@ -23,6 +23,12 @@ import {
   CLEAR_ERROR,
   FILTER_UNIQUECATEGORIES,
   FILTER_UNIQUEGENDER,
+
+  //Shopping Cart actions
+  ADD_PRODUCT_TO_CART,
+  REMOVE_ALL_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+  CLEAR_CART,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -36,10 +42,10 @@ export function getProducts() {
         payload: products.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -53,10 +59,10 @@ export function getProductDetail(detailId) {
         payload: json.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -70,10 +76,10 @@ export function getNameProducts(name) {
         payload: products.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -96,10 +102,10 @@ export function filterUniqueCategories() {
         payload: products.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -113,10 +119,10 @@ export function filterUniqueBrand() {
         payload: products.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -130,10 +136,10 @@ export function filterUniqueGender() {
         payload: products.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -204,10 +210,10 @@ export function postReview(payload) {
         payload: response.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -218,4 +224,20 @@ export const clearError = () => {
 
 export const clearSuccess = () => {
   return { type: CLEAR_SUCCESS };
+};
+
+// Shopping cart actions
+export const addToCart = (id) => {
+  return { type: ADD_PRODUCT_TO_CART, payload: id };
+};
+export const deleteFromCart = (id, all = false) => {
+  if (all) {
+    return { type: REMOVE_ALL_FROM_CART, payload: id };
+  } else {
+    return { type: REMOVE_ONE_FROM_CART, payload: id };
+  }
+};
+
+export const clearCart = () => {
+  return { type: CLEAR_CART };
 };
