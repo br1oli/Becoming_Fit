@@ -335,6 +335,11 @@ function rootReducer(state = initialState, action) {
       return conditionalRemoveState;
     case CLEAR_CART:
       return { ...state, shoppingCart: [] };
+    case CLEAR_DETAILS:
+      return{
+        ...state,
+        details: []
+      }
     default:
       return state;
   }
