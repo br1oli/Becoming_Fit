@@ -1,450 +1,404 @@
 import React, { useEffect, useState } from "react";
 import {
-    Card,
-    Col,
-    Row,
-    Button,
-    FloatingLabel,
-    Container,
+  Card,
+  Col,
+  Row,
+  Button,
+  FloatingLabel,
+  Container,
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { filterUniqueBrand, filterUniqueCategories, filterUniqueGender, getProducts, postProduct } from "../Redux/Actions/UsersActions";
-import Style from "../Components/Style/ProductForm.module.css"
-
-
+import {
+  filterUniqueBrand,
+  filterUniqueCategories,
+  filterUniqueGender,
+  getProducts,
+  postProduct,
+} from "../Redux/Actions/UsersActions";
+import Style from "../Components/Style/ProductForm.module.css";
 
 function validador(input) {
-    let errors = {};
-    
-    if (!input.name) {
-        errors.name = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.name)) {
-        errors.name ="La primera letra debe estar en mayuscula";
-    }
-    if (!input.type) {
-        errors.type = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.type)) {
-        errors.type ="La primera letra debe estar en mayuscula";
-    }
-    if (!input.color) {
-        errors.color = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
-        errors.color ="La primera letra debe estar en mayuscula";
-    }
-    if (!input.description) {
-        errors.description = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.description)) {
-        errors.description ="La primera letra debe estar en mayuscula";
-    }
-    
-    if (!input.color) {
-        errors.color = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
-        errors.color ="La primera letra debe estar en mayuscula";
-    }if (!input.gender) {
-        errors.gender = "Requerido";
-    }if (!input.size) {
-        errors.size = "Requerido";
-        }else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.size)){
-            errors.size = "El size debe ser un número"
-        }
-    if (!input.rating) {
-        errors.rating = "Requerido";
-    }
-    if (!input.price) {
-        errors.price = "Requerido";
-        }else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.price)){
-            errors.price = "El price debe ser un número"
-        }
-    if (!input.brand) {
-        errors.brand = "Requerido";
-    }if (!input.category) {
-        errors.category = "Requerido";
-    } else if (input.price < 0 || input.price > 1000000) {
-        errors.price = "Excede de limites razonables";
-    }
-    if (!input.image) {
-        errors.image = "Requerido";
-        }else if (!/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(input.image)){
-            errors.image = "Debe ser un Url válido"
-        }
-        return errors
-    }
-    
-    export default function ProductForm() {
-        const dispatch = useDispatch();
-        
-        
-        const [input, setInput] = useState({
-            name: "",
-            type: "",
-            gender: "",
-            price: "",
-            image: "",
-            brand: "",
-            color: "",
-            description: "",
-            size: "",
-            category: "",
-            rating: ""
+  let errors = {};
 
-        })
-        
-        const [errors, setErrors] = useState({
-            name: "",
-            type: "",
-            gender: "",
-            price: "",
-            image: "",
-            brand: "",
-            color: "",
-            description: "",
-            size: "",
-            category: "",
-            rating: ""
-        })
+  if (!input.name) {
+    errors.name = "Requerido";
+  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.name)) {
+    errors.name = "La primera letra debe estar en mayuscula";
+  }
+  if (!input.type) {
+    errors.type = "Requerido";
+  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.type)) {
+    errors.type = "La primera letra debe estar en mayuscula";
+  }
+  if (!input.color) {
+    errors.color = "Requerido";
+  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
+    errors.color = "La primera letra debe estar en mayuscula";
+  }
+  if (!input.description) {
+    errors.description = "Requerido";
+  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.description)) {
+    errors.description = "La primera letra debe estar en mayuscula";
+  }
 
-
-        const allProducts = useSelector((state)=> state.allProducts)
-        const brandss = [...new Set(allProducts.map((e)=>e.brand.name))]
-        const categories = [...new Set(allProducts.map((e)=>e.category.name))]
-        const gender = [...new Set(allProducts.map((e)=>e.gender))]
-        
-        
-        
-        
-        
-        const handleInputChange = (e) => {
-            setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-            let errorObj = validador({...input,[e.target.name]: e.target.value})
-            setErrors(errorObj);
-        };
-    
-    function handleSubmit(e){
-        e.preventDefault();
-        if(!input.name || !input.type || !input.color || !input.gender || !input.size || !input.rating || !input.price || !input.brand || !input.image || !input.category || !input.description){
-            alert("Formulario incompleto")
-        }else{
-                dispatch(postProduct(input))
-                setInput({
-                    name: "",
-                    type: "",
-                    gender: "",
-                    price: "",
-                    image: "",
-                    brand: "",
-                    color: "",
-                    description: "",
-                    size: "",
-                    category: "",
-                    rating: ""
-                })
-                alert('Actividad Creada!!')
-                // history.push('/home')
-                }
-        }   
-
-    return(
-        <Container>
-            <h1>Formulario de Carga</h1>
-            <Card>
-                        <form
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                // handleSubmit();
-                            }}
-                            className="submitForm"
-                            >
-                            <div>
-                            <Row>
-                                    <Col>
-                                        <FloatingLabel
-                                        className="mb-3"
-                                        controlId="floatingimage"
-                                        label="Nombre"
-                                        >
-                                        <Form.Control
-                                            type={"text"}
-                                            value={input.name}
-                                            name="name"
-                                            onChange={handleInputChange}
-                                        />
-                                        </FloatingLabel>
-                                    {errors?.name ? (
-                                        <div className={Style.danger}>{errors.name}</div>
-                                    ) : null}
-                                    </Col>
-                                    <Col>
-                                        <FloatingLabel
-                                        className="mb-3"
-                                        controlId="floatingimage"
-                                        label="Tipo"
-                                        >
-                                        <Form.Control
-                                            type={"text"}
-                                            value={input.type}
-                                            name="type"
-                                            onChange={handleInputChange}
-                                        />
-                                        </FloatingLabel>
-                                        {errors?.type ? (
-                                        <div className={Style.danger}>{errors.type}</div>
-                                    ) : null}
-                                    </Col>
-                                </Row>
-                                <Row>
-                                <Col>
-                                        <FloatingLabel
-                                        className="mb-3"
-                                        controlId="floatingimage"
-                                        label="Color"
-                                        >
-                                        <Form.Control
-                                            type={"text"}
-                                            value={input.color}
-                                            name="color"
-                                            onChange={handleInputChange}
-                                        />
-                                        </FloatingLabel>
-                                        {errors?.color ? (
-                                        <div className={Style.danger}>{errors.color}</div>
-                                    ) : null}
-                                    </Col>
-                                    <Col>
-                                        <FloatingLabel
-                                            controlId="floatingBrands"
-                                            label="Género"
-                                        >
-                                            
-                                                <Form.Select
-                                                    name="gender"
-                                                    onChange={handleInputChange}
-                                                >
-                                                    <option value={"NULL"}>
-                                                        Elegir
-                                                    </option>
-                                                    {gender?.map((e) => {
-                                                        return (
-                                                            <option
-                                                                key={e}
-                                                                value={e}
-                                                                name="gender"
-                                                            >
-                                                                {e}
-                                                            </option>
-                                                        );
-                                                    })}
-                                                
-                                                </Form.Select>
-                                        </FloatingLabel>
-                                        {errors?.gender ? (
-                                        <div className={Style.danger}>{errors.gender}</div>
-                                    ) : null}
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <FloatingLabel
-                                        className="mb-3"
-                                        controlId="floatingimage"
-                                        label="Size(cm)"
-                                        >
-                                        <Form.Control
-                                            type={"text"}
-                                            value={input.size}
-                                            name="size"
-                                            onChange={handleInputChange}
-                                        />
-                                        </FloatingLabel>
-                                        {errors?.size ? (
-                                        <div className={Style.danger}>{errors.size}</div>
-                                    ) : null}
-                                    </Col>
-                                    <Col>
-                                        <FloatingLabel
-                                        className="mb-3"
-                                        controlId="floatingimage"
-                                        label="Rating"
-                                        >
-                                        <Form.Select
-                                                    name="rating"
-                                                    onChange={handleInputChange}
-                                                >
-                                                    <option value={"NULL"}>
-                                                        Elegir
-                                                    </option>
-
-                                                            <option
-                                                                key={1}
-                                                                value={1}
-                                                            >
-                                                            ⭐
-                                                            </option>
-                                                            <option
-                                                                key={2}
-                                                                value={2}
-                                                            >
-                                                            ⭐⭐
-                                                            </option>
-                                                            <option
-                                                                key={3}
-                                                                value={3}
-                                                            >
-                                                            ⭐⭐⭐
-                                                            </option>
-                                                            <option
-                                                                key={4}
-                                                                value={4}
-                                                            >
-                                                            ⭐⭐⭐⭐
-                                                            </option>
-                                                            <option
-                                                                key={5}
-                                                                value={5}
-                                                            >
-                                                            ⭐⭐⭐⭐⭐
-                                                            </option>
-                                                
-                                                </Form.Select>
-                                        </FloatingLabel>
-                                        {errors?.rating ? (
-                                        <div className={Style.danger}>{errors.rating}</div>
-                                    ) : null}
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <FloatingLabel
-                                        className="mb-3"
-                                        controlId="floatingimage"
-                                        label="Price"
-                                        >
-                                        <Form.Control
-                                            type={"text"}
-                                            value={input.price}
-                                            name="price"
-                                            onChange={handleInputChange}
-                                        />
-                                        </FloatingLabel>
-                                        {errors?.price ? (
-                                        <div className={Style.danger}>{errors.price}</div>
-                                    ) : null}
-                                    </Col>
-                                    <Col>
-                                        <FloatingLabel
-                                            controlId="floatingBrands"
-                                            label="Marca"
-                                        >
-                                            
-                                                <Form.Select
-                                                    name="brand"
-                                                    onChange={handleInputChange}
-                                                >
-                                                    <option value={"NULL"}>
-                                                        Elegir
-                                                    </option>
-                                                    {brandss?.map((e) => {
-                                                        return (
-                                                            <option
-                                                                key={e}
-                                                                value={e}
-                                                                name="brand"
-                                                            >
-                                                                {e}
-                                                            </option>
-                                                        );
-                                                    })}
-                                                    <option value={""}>
-                                                        Crear Marca
-                                                    </option>
-                                                </Form.Select>
-                                        </FloatingLabel>
-                                        {errors?.brand ? (
-                                        <div className={Style.danger}>{errors.brand}</div>
-                                    ) : null}
-                                    </Col>
-                                </Row>
-                        
-                                <FloatingLabel
-                                    className="mb-3"
-                                    controlId="floatingimage"
-                                    label="Imagen"
-                                    >
-                                    <Form.Control
-                                        type={"text"}
-                                        value={input.image}
-                                        name="image"
-                                        onChange={handleInputChange}
-                                    />
-                                    {errors?.image ? (
-                                        <div className={Style.danger}>{errors.image}</div>
-                                    ) : null}
-                                </FloatingLabel>
-                                
-                                <Row>
-                                    <Col>
-                                        <FloatingLabel
-                                            controlId="floatingCategoies"
-                                            label="Categoría"
-                                        >
-                                            <Form.Select
-                                                onChange={handleInputChange}
-                                                name="category"
-                                            >
-                                                <option value={"NULL"}>
-                                                    Elegir
-                                                </option>
-                                                {categories?.map((e) => {
-                                                    return (
-                                                        <option
-                                                            key={e}
-                                                            value={e}
-                                                            name="category"
-                                                        >
-                                                            {e}
-                                                        </option>
-                                                    );
-                                                })}
-                                                <option value={""}>
-                                                    Crear
-                                                </option>
-                                                
-                                            </Form.Select>
-                                        </FloatingLabel>
-                                        {errors?.category ? (
-                                        <div className={Style.danger}>{errors.category}</div>
-                                    ) : null}
-                                    </Col>
-                                    
-                                </Row>
-                                <FloatingLabel
-                                    className="mb-3"
-                                    controlId="floatingimage"
-                                    label="Description"
-                                    >
-                                    <Form.Control
-                                        type={"text"}
-                                        value={input.description}
-                                        name="description"
-                                        onChange={handleInputChange}
-                                    />
-                                    {errors?.description ? (
-                                        <div className={Style.danger}>{errors.description}</div>
-                                    ) : null}
-                                </FloatingLabel>
-                                
-                                <Button
-                                    className="m-3"
-                                    style={{ float: "right" }}
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                >
-                                    Submit
-                                </Button>
-                            </div>
-                        </form>
-                    </Card>
-        </Container>
+  if (!input.color) {
+    errors.color = "Requerido";
+  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
+    errors.color = "La primera letra debe estar en mayuscula";
+  }
+  if (!input.gender) {
+    errors.gender = "Requerido";
+  }
+  if (!input.size) {
+    errors.size = "Requerido";
+  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.size)) {
+    errors.size = "El size debe ser un número";
+  }
+  if (!input.rating) {
+    errors.rating = "Requerido";
+  }
+  if (!input.price) {
+    errors.price = "Requerido";
+  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.price)) {
+    errors.price = "El price debe ser un número";
+  }
+  if (!input.brand) {
+    errors.brand = "Requerido";
+  }
+  if (!input.category) {
+    errors.category = "Requerido";
+  } else if (input.price < 0 || input.price > 1000000) {
+    errors.price = "Excede de limites razonables";
+  }
+  if (!input.image) {
+    errors.image = "Requerido";
+  } else if (
+    !/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(
+      input.image
     )
+  ) {
+    errors.image = "Debe ser un Url válido";
+  }
+  return errors;
+}
+
+export default function ProductForm() {
+  const dispatch = useDispatch();
+
+  const [input, setInput] = useState({
+    name: "",
+    type: "",
+    gender: "",
+    price: "",
+    image: "",
+    brand: "",
+    color: "",
+    description: "",
+    size: "",
+    category: "",
+    rating: "",
+  });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    type: "",
+    gender: "",
+    price: "",
+    image: "",
+    brand: "",
+    color: "",
+    description: "",
+    size: "",
+    category: "",
+    rating: "",
+  });
+
+  const allProducts = useSelector((state) => state.allProducts);
+  const brandss = [...new Set(allProducts.map((e) => e.brand.name))];
+  const categories = [...new Set(allProducts.map((e) => e.category.name))];
+  const gender = [...new Set(allProducts.map((e) => e.gender))];
+
+  const handleInputChange = (e) => {
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    let errorObj = validador({ ...input, [e.target.name]: e.target.value });
+    setErrors(errorObj);
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (
+      !input.name ||
+      !input.type ||
+      !input.color ||
+      !input.gender ||
+      !input.size ||
+      !input.rating ||
+      !input.price ||
+      !input.brand ||
+      !input.image ||
+      !input.category ||
+      !input.description
+    ) {
+      alert("Formulario incompleto");
+    } else {
+      dispatch(postProduct(input));
+      setInput({
+        name: "",
+        type: "",
+        gender: "",
+        price: "",
+        image: "",
+        brand: "",
+        color: "",
+        description: "",
+        size: "",
+        category: "",
+        rating: "",
+      });
+      alert("Actividad Creada!!");
+      // history.push('/home')
+    }
+  }
+
+  return (
+    <div style={{ margin: 15 }}>
+      <Container>
+        <Card>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              // handleSubmit();
+            }}
+            className="submitForm"
+          >
+            <div>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="mb-3"
+                    controlId="floatingimage"
+                    label="Nombre"
+                  >
+                    <Form.Control
+                      type={"text"}
+                      value={input.name}
+                      name="name"
+                      onChange={handleInputChange}
+                    />
+                  </FloatingLabel>
+                  {errors?.name ? (
+                    <div className={Style.danger}>{errors.name}</div>
+                  ) : null}
+                </Col>
+                <Col>
+                  <FloatingLabel
+                    className="mb-3"
+                    controlId="floatingimage"
+                    label="Tipo"
+                  >
+                    <Form.Control
+                      type={"text"}
+                      value={input.type}
+                      name="type"
+                      onChange={handleInputChange}
+                    />
+                  </FloatingLabel>
+                  {errors?.type ? (
+                    <div className={Style.danger}>{errors.type}</div>
+                  ) : null}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="mb-3"
+                    controlId="floatingimage"
+                    label="Color"
+                  >
+                    <Form.Control
+                      type={"text"}
+                      value={input.color}
+                      name="color"
+                      onChange={handleInputChange}
+                    />
+                  </FloatingLabel>
+                  {errors?.color ? (
+                    <div className={Style.danger}>{errors.color}</div>
+                  ) : null}
+                </Col>
+                <Col>
+                  <FloatingLabel controlId="floatingBrands" label="Género">
+                    <Form.Select name="gender" onChange={handleInputChange}>
+                      <option value={"NULL"}>Elegir</option>
+                      {gender?.map((e) => {
+                        return (
+                          <option key={e} value={e} name="gender">
+                            {e}
+                          </option>
+                        );
+                      })}
+                    </Form.Select>
+                  </FloatingLabel>
+                  {errors?.gender ? (
+                    <div className={Style.danger}>{errors.gender}</div>
+                  ) : null}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="mb-3"
+                    controlId="floatingimage"
+                    label="Size(cm)"
+                  >
+                    <Form.Control
+                      type={"text"}
+                      value={input.size}
+                      name="size"
+                      onChange={handleInputChange}
+                    />
+                  </FloatingLabel>
+                  {errors?.size ? (
+                    <div className={Style.danger}>{errors.size}</div>
+                  ) : null}
+                </Col>
+                <Col>
+                  <FloatingLabel
+                    className="mb-3"
+                    controlId="floatingimage"
+                    label="Rating"
+                  >
+                    <Form.Select name="rating" onChange={handleInputChange}>
+                      <option value={"NULL"}>Elegir</option>
+
+                      <option key={1} value={1}>
+                        ⭐
+                      </option>
+                      <option key={2} value={2}>
+                        ⭐⭐
+                      </option>
+                      <option key={3} value={3}>
+                        ⭐⭐⭐
+                      </option>
+                      <option key={4} value={4}>
+                        ⭐⭐⭐⭐
+                      </option>
+                      <option key={5} value={5}>
+                        ⭐⭐⭐⭐⭐
+                      </option>
+                    </Form.Select>
+                  </FloatingLabel>
+                  {errors?.rating ? (
+                    <div className={Style.danger}>{errors.rating}</div>
+                  ) : null}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="mb-3"
+                    controlId="floatingimage"
+                    label="Price"
+                  >
+                    <Form.Control
+                      type={"text"}
+                      value={input.price}
+                      name="price"
+                      onChange={handleInputChange}
+                    />
+                  </FloatingLabel>
+                  {errors?.price ? (
+                    <div className={Style.danger}>{errors.price}</div>
+                  ) : null}
+                </Col>
+                <Col>
+                  <FloatingLabel controlId="floatingBrands" label="Marca">
+                    <Form.Select name="brand" onChange={handleInputChange}>
+                      <option value={"NULL"}>Elegir</option>
+                      {brandss?.map((e) => {
+                        return (
+                          <option key={e} value={e} name="brand">
+                            {e}
+                          </option>
+                        );
+                      })}
+                      <option value={""}>Crear Marca</option>
+                    </Form.Select>
+                  </FloatingLabel>
+                  {errors?.brand ? (
+                    <div className={Style.danger}>{errors.brand}</div>
+                  ) : null}
+                </Col>
+              </Row>
+
+              <FloatingLabel
+                className="mb-3"
+                controlId="floatingimage"
+                label="Imagen"
+              >
+                <Form.Control
+                  type={"text"}
+                  value={input.image}
+                  name="image"
+                  onChange={handleInputChange}
+                />
+                {errors?.image ? (
+                  <div className={Style.danger}>{errors.image}</div>
+                ) : null}
+              </FloatingLabel>
+
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    controlId="floatingCategoies"
+                    label="Categoría"
+                  >
+                    <Form.Select onChange={handleInputChange} name="category">
+                      <option value={"NULL"}>Elegir</option>
+                      {categories?.map((e) => {
+                        return (
+                          <option key={e} value={e} name="category">
+                            {e}
+                          </option>
+                        );
+                      })}
+                      <option value={""}>Crear</option>
+                    </Form.Select>
+                  </FloatingLabel>
+                  {errors?.category ? (
+                    <div className={Style.danger}>{errors.category}</div>
+                  ) : null}
+                </Col>
+              </Row>
+              <FloatingLabel
+                className="mb-3"
+                controlId="floatingimage"
+                label="Description"
+              >
+                <Form.Control
+                  type={"text"}
+                  value={input.description}
+                  name="description"
+                  onChange={handleInputChange}
+                />
+                {errors?.description ? (
+                  <div className={Style.danger}>{errors.description}</div>
+                ) : null}
+              </FloatingLabel>
+
+              <Button
+                className="m-3"
+                style={{ float: "right" }}
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
+          </form>
+        </Card>
+      </Container>
+    </div>
+  );
 }
