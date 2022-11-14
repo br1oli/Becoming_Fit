@@ -9,6 +9,7 @@ import ShoppingCart from "./ShoppingCart.jsx";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useState } from "react";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const options = [
   {
@@ -61,7 +62,7 @@ function SideBar(props) {
     </>
   );
 }
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+
 
 const NavBar = () => {
   return (
