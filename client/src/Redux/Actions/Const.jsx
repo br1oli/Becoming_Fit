@@ -2,11 +2,9 @@ export const URL_PRODUCTS = "http://localhost:3001/products";
 export const URL_PRODUCTS_QUERY = "http://localhost:3001/products?name=";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
-export const GET_BRAND = "GET_BRAND";
+
 export const FILTER_PRICES = "FILTER_PRICES";
 export const FILTER_CATEGORIES = "FILTER_CATEGORIES";
-export const FILTER_UNIQUECATEGORIES = "FILTER_UNIQUE_CATEGORIES";
-export const FILTER_UNIQUEGENDER = "FILTER_UNIQUE_GENDERS";
 export const FILTER_GENDER = "FILTER_GENDER";
 export const FILTER_SIZE = "FILTER_SIZE";
 export const FILTER_BRAND = "FILTER_BRAND";
@@ -29,3 +27,10 @@ export const ACTION_DE_PRUEBA = "ACTION_DE_PRUEBA";
 
 // const from pagination:
 export const SET_CURRENT_PAGE_PRODUCTS = "get/current/page/products";
+
+// Shopping cart actions
+
+export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
+export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";

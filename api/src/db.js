@@ -5,7 +5,6 @@ const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 // const { DB_USER, DB_PASSWORD, DB_HOST } = require('../.env');
 
-
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/becomingfit`,
   {
@@ -132,11 +131,11 @@ PurchaseDetail.belongsTo(
   PaymentDetail /* {through: "PaymentDetail_PurchaseDetail"} */
 );
 
-PurchaseDetail.hasMany(PurchasedProduct)
-PurchasedProduct.belongsTo(PurchaseDetail)
+PurchaseDetail.hasMany(PurchasedProduct);
+PurchasedProduct.belongsTo(PurchaseDetail);
 
-User.hasMany(PurchaseDetail)
-PurchaseDetail.belongsTo(User)
+User.hasMany(PurchaseDetail);
+PurchaseDetail.belongsTo(User);
 
 //-------------------------------------Relacion usuario-Reviews---------------------------------
 

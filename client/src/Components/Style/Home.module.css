@@ -1,27 +1,39 @@
 .homeContainer {
     display: grid;
     grid-gap: 20px;
+    margin-top: 25px;
     grid-template: 
-    "navbar" 100px
-    "cards" auto
-    "footer" 150px;
-}
+    "leftSide RigthSide" / 200px
 
-.footerContainer {
-    grid-area: footer;
-}
-
-.navContainer {
-    grid-area: navbar;
 }
 
 .cardsContainer {
-        display: grid;
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     grid-auto-rows: auto;
+    grid-area: cards;
     /* espacio entre cards */
-    grid-gap: 1rem;
+    grid-gap: 0.5rem;
     width: 100%;
     padding: 1rem;
+}
 
+.leftSide {
+    grid-area: leftSide;
+}
+
+.rigthSide {
+    grid-area: rigthSide;
+}
+
+.paginationContainer {
+    grid-area: pagination;
+}
+
+.shopContainer {
+    grid-area: shop;
+}
+
+.filtersContainer {
+    grid-area: filters;
 }

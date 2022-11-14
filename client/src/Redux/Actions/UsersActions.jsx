@@ -4,7 +4,6 @@ import {
   URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
   GET_NAME_PRODUCTS,
-  GET_BRAND,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -16,14 +15,18 @@ import {
   CLEAR_DETAILS,
   DELETE_OWN_REVIEW,
   EDIT_OWN_REVIEW,
+  SET_CURRENT_PAGE_PRODUCTS,
   ERROR,
   SUCCESS,
   CLEAR_SUCCESS,
   CLEAR_ERROR,
-  SET_CURRENT_PAGE_PRODUCTS,
-  FILTER_UNIQUECATEGORIES,
-  FILTER_UNIQUEGENDER,
-  POST_PRODUCT,
+
+
+  //Shopping Cart actions
+  ADD_PRODUCT_TO_CART,
+  REMOVE_ALL_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+  CLEAR_CART,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -37,10 +40,10 @@ export function getProducts() {
         payload: products.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -54,10 +57,10 @@ export function getProductDetail(detailId) {
         payload: json.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -71,10 +74,10 @@ export function getNameProducts(name) {
         payload: products.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -88,56 +91,7 @@ export function filterBySize(payload) {
   };
 }
 
-export function filterUniqueCategories() {
-  return async function (dispatch) {
-    try {
-      let products = await axios(URL_PRODUCTS);
-      return dispatch({
-        type: FILTER_UNIQUECATEGORIES,
-        payload: products.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: ERROR,
-        payload: error.response.data,
-      });
-    }
-  };
-}
 
-export function filterUniqueBrand() {
-  return async function (dispatch) {
-    try {
-      let products = await axios(URL_PRODUCTS);
-      return dispatch({
-        type: GET_BRAND,
-        payload: products.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: ERROR,
-        payload: error.response.data,
-      });
-    }
-  };
-}
-
-export function filterUniqueGender() {
-  return async function (dispatch) {
-    try {
-      let products = await axios(URL_PRODUCTS);
-      return dispatch({
-        type: FILTER_UNIQUEGENDER,
-        payload: products.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: ERROR,
-        payload: error.response.data,
-      });
-    }
-  };
-}
 
 export function filterByGender(payload) {
   return {
@@ -205,10 +159,10 @@ export function postProduct(payload) {
         payload: response.data,
       });
     } catch (error) {
-      return dispatch({
+      return {
         type: ERROR,
         payload: error.response.data,
-      });
+      };
     }
   };
 }
@@ -219,4 +173,20 @@ export const clearError = () => {
 
 export const clearSuccess = () => {
   return { type: CLEAR_SUCCESS };
+};
+
+// Shopping cart actions
+export const addToCart = (id) => {
+  return { type: ADD_PRODUCT_TO_CART, payload: id };
+};
+export const deleteFromCart = (id, all = false) => {
+  if (all) {
+    return { type: REMOVE_ALL_FROM_CART, payload: id };
+  } else {
+    return { type: REMOVE_ONE_FROM_CART, payload: id };
+  }
+};
+
+export const clearCart = () => {
+  return { type: CLEAR_CART };
 };

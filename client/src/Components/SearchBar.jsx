@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { getNameProducts } from "../Redux/Actions/UsersActions";
 //import { connect } from "react-redux";
 import style from "./Style/SearchBar.module.css";
+import SearchIcon from "@material-ui/icons/Search";
 
 const SearchInput = (props) => {
   const [input, setInput] = useState("");
@@ -22,19 +23,19 @@ const SearchInput = (props) => {
   };
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input
-          className={style.input}
-          type={"text"}
-          name="products"
-          value={input}
-          placeholder="Search"
-          onChange={(e) => handleChange(e)}
-        />
-        <input className={style.submit} type={"submit"} />
-      </form>
-    </div>
+    <form onSubmit={(e) => handleSubmit(e)} className={style.formSearch}>
+      <input
+        className={style.input}
+        type={"text"}
+        name="products"
+        value={input}
+        placeholder="Search"
+        onChange={(e) => handleChange(e)}
+      />
+      <button className={style.submit} type={"submit"}>
+        <SearchIcon style={{ fontSize: 28 }} />
+      </button>
+    </form>
   );
 };
 

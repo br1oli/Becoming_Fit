@@ -2,7 +2,6 @@ import {
   URL_PRODUCTS,
   URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
-  GET_BRAND,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -21,14 +20,19 @@ import {
   CLEAR_ERROR,
   CLEAR_SUCCESS,
   SET_CURRENT_PAGE_PRODUCTS,
-  FILTER_UNIQUECATEGORIES,
-  FILTER_UNIQUEGENDER,
+
+
+
+  //Shopping cart actions
+  ADD_PRODUCT_TO_CART,
+  REMOVE_ALL_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+  CLEAR_CART,
 } from "../Actions/Const";
 
 const initialState = {
   products: [],
   allProducts: [],
-  brands: [],
   allBrands: [],
   details: [],
   error: "",
@@ -40,9 +44,9 @@ const initialState = {
   indexLastProduct: 6,
   indexFirsProduct: 0,
   //
-  uniqueGenero: [],
-  categories: [],
-  
+  shoppingCart: [],
+  totalItemsInCart: 0,
+  totalToPay: 0,
 };
 
 function rootReducer(state = initialState, action) {
@@ -56,44 +60,6 @@ function rootReducer(state = initialState, action) {
           state.indexFirsProduct,
           state.indexLastProduct
         ),
-      };
-    case FILTER_UNIQUECATEGORIES:
-      const allProducts3 = state.allProducts;
-      var categoriesExtracted = allProducts3.map((e) => {
-        return e.category.name;
-      });
-      const uniqueCategories = categoriesExtracted.filter((value, indice) => {
-        return categoriesExtracted.indexOf(value) === indice;
-      });
-      return {
-        ...state,
-        categories: uniqueCategories,
-      };
-
-    case FILTER_UNIQUEGENDER:
-      const allProducts4 = state.allProducts;
-      var gendersExtracted = allProducts4.map((e) => {
-        return e.gender;
-      });
-      const uniqueGenders = gendersExtracted.filter((value, indice) => {
-        return gendersExtracted.indexOf(value) === indice;
-      });
-      return {
-        ...state,
-        uniqueGenero: uniqueGenders,
-      };
-
-    case GET_BRAND:
-      const allProducts2 = state.allProducts;
-      var brandsExtracted = allProducts2.map((e) => {
-        return e.brand.name;
-      });
-      const uniqueBrands = brandsExtracted.filter((value, indice) => {
-        return brandsExtracted.indexOf(value) === indice;
-      });
-      return {
-        ...state,
-        brands: uniqueBrands,
       };
     case GET_NAME_PRODUCTS:
       return {
@@ -114,25 +80,48 @@ function rootReducer(state = initialState, action) {
           state.indexLastProduct
         ),
       };
+    case SET_CURRENT_PAGE_PRODUCTS:
+      state.currentPage = action.payload;
+      state.indexLastProduct = state.currentPage * state.productsPerPage;
+      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+      return {
+        ...state,
+        currentProducts: state.products.slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+      };
+    case SET_CURRENT_PAGE_PRODUCTS:
+      state.currentPage = action.payload;
+      state.indexLastProduct = state.currentPage * state.productsPerPage;
+      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+      return {
+        ...state,
+        currentProducts: state.products.slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+      };
 
     // NO RENDERIZA LAS CARDS
 
     case FILTER_PRICES:
+      const priceFiltered = state.allProducts;
       let priceFilter;
-
       if (action.payload === "all") {
-        priceFilter = state.products;
-      }
-      if (action.payload === "<50") {
-        priceFilter = state.products.filter((p) => p.price < 50);
-      }
-      if (action.payload === "50 - 100") {
-        priceFilter = state.products.filter(
+        priceFilter = [...priceFiltered];
+        return priceFilter;
+      } else if (action.payload === "<50") {
+        priceFilter = [...priceFiltered].filter((p) => p.price < 50);
+        return priceFilter;
+      } else if (action.payload === "50 - 100") {
+        priceFilter = [...priceFiltered].filter(
           (p) => p.price > 50 && p.price < 100
         );
-      }
-      if (action.payload === ">100") {
-        priceFilter = state.products.filter((p) => p.price > 100);
+        return priceFilter;
+      } else if (action.payload === ">100") {
+        priceFilter = [...priceFiltered].filter((p) => p.price > 100);
+        return priceFilter;
       }
       return {
         ...state,
@@ -198,7 +187,7 @@ function rootReducer(state = initialState, action) {
       const genderFiltered =
         action.payload === "all"
           ? state.allProducts
-          : genderFilter.filter(
+          : state.allProducts.filter(
               (e) => e.gender.toLowerCase() === action.payload.toLowerCase()
             );
       return {
@@ -212,7 +201,7 @@ function rootReducer(state = initialState, action) {
       const sizeFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.products.filter((p) => p.size.includes(action.payload));
+          : state.allProducts.filter((p) => p.size.includes(action.payload));
       return {
         ...state,
         products: sizeFiltered,
@@ -276,6 +265,85 @@ function rootReducer(state = initialState, action) {
         ...state,
         error: "",
       };
+
+    // Shopping cart reducer functions
+    case ADD_PRODUCT_TO_CART:
+      let newItem = state.allProducts.find(
+        (item) => item.id === action.payload
+      );
+
+      let itemInCart = state.shoppingCart.find(
+        (item) => item.id === newItem.id
+      );
+      let totalItemsAdded = state.shoppingCart
+        .map((item) => item.quantity)
+        .reduce((acc, item) => (acc += item), 1);
+
+      let conditionalAddState = itemInCart
+        ? {
+            ...state,
+            shoppingCart: state.shoppingCart.map((item) =>
+              item.id === newItem.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            ),
+            totalItemsInCart: totalItemsAdded,
+          }
+        : {
+            ...state,
+            shoppingCart: [...state.shoppingCart, { ...newItem, quantity: 1 }],
+            totalItemsInCart: totalItemsAdded,
+          };
+
+      return conditionalAddState;
+    case REMOVE_ALL_FROM_CART:
+      let deletedItem = state.shoppingCart.find(
+        (item) => item.id === action.payload
+      );
+
+      let remainedProducts = state.shoppingCart.filter(
+        (item) => item.id !== action.payload
+      );
+
+      let totalItemsRemainedInCart =
+        state.shoppingCart
+          .map((item) => item.quantity)
+          .reduce((acc, item) => (acc += item), 0) - deletedItem.quantity;
+
+      return {
+        ...state,
+        shoppingCart: remainedProducts,
+        totalItemsInCart: totalItemsRemainedInCart,
+      };
+    case REMOVE_ONE_FROM_CART:
+      let itemToDelete = state.shoppingCart.find(
+        (item) => item.id === action.payload
+      );
+      let totalItemsRemained = state.shoppingCart
+        .map((item) => item.quantity - 1)
+        .reduce((acc, item) => (acc += item), 0);
+
+      let conditionalRemoveState =
+        itemToDelete.quantity > 1
+          ? {
+              ...state,
+              shoppingCart: state.shoppingCart.map((item) =>
+                item.id === action.payload
+                  ? { ...item, quantity: item.quantity - 1 }
+                  : item
+              ),
+              totalItemsInCart: totalItemsRemained,
+            }
+          : {
+              ...state,
+              shoppingCart: state.shoppingCart.filter(
+                (item) => item.id !== action.payload
+              ),
+              totalItemsInCart: totalItemsRemained,
+            };
+      return conditionalRemoveState;
+    case CLEAR_CART:
+      return { ...state, shoppingCart: [] };
     default:
       return state;
   }
