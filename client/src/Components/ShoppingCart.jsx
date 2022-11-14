@@ -5,7 +5,8 @@ import {
   clearCart,
   deleteFromCart,
 } from "../Redux/Actions/UsersActions";
-import CartItem from "./CardItem";
+import CartItem from "./CartItem";
+import styles from "./Style/ShoppingCart.module.css";
 
 export default function ShoppingCart() {
   let shoppingCart = useSelector((state) => state);
@@ -16,25 +17,24 @@ export default function ShoppingCart() {
     dispatch(clearCart());
   };
   return (
-    <div style={{ margin: "15px" }}>
+    <>
       {shoppingCart.shoppingCart.length ? (
-        <>
-          <button onClick={handleChange}>Clear cart</button>
+        <div className={styles.shoppingContainer}>
+          <button className={styles.btnClear} onClick={handleChange}>
+            Clear cart
+          </button>
           <div>
-            <span>Items: {shoppingCart.totalItemsInCart}</span>
+            <span className={styles.items}>
+              Items: {shoppingCart.totalItemsInCart}
+            </span>
             <span>Total: {shoppingCart.totalToPay}</span>
 
-            {shoppingCart.shoppingCart?.map((e, index) => (
-              <CartItem
-                key={index}
-                data={e}
-                deleteFromCart={deleteFromCart}
-                addToCart={addToCart}
-              />
+            {shoppingCart.shoppingCart.map((e, index) => (
+              <CartItem key={index} data={e} />
             ))}
           </div>
-        </>
+        </div>
       ) : null}
-    </div>
+    </>
   );
 }

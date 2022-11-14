@@ -1,0 +1,40 @@
+.container {
+  color: black;
+  background-color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  border: 1px solid rgba(0 0 0 / 8%);
+}
+.btnCart {
+  padding: 0.5rem;
+  border-radius: 20px;
+  border: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0 0 0 / 15%);
+}
+
+.image {
+  width: 30%;
+  align-self: auto;
+}
+.textContainer {
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #262626;
+}
+.titleCart {
+  font-size: large;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+p {
+  font-weight: 400;
+}
