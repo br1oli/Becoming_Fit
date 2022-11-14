@@ -29,30 +29,7 @@ export default function LandingPage() {
     <div className="container">
       <div className="row">
         <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3">
-          <div className="formulario">
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </div>
         </div>
-
         <div className="col-sm-12 col-md-8 col-lg-8 col-xl-8">
           <div className="carousel">
             <Carousel variant="dark">
@@ -130,41 +107,11 @@ export default function LandingPage() {
               </Carousel.Item>
             </Carousel>
           </div>
-
-          {/* </div>
-                        <div>
-                        <div className="d-grid gap-2">
-                        <Button variant="primary" size="lg">
-                        Block level button
-                        </Button>
-                        <Button variant="secondary" size="lg">
-                        Block level button
-                        </Button>
-                        </div> */}
         </div>
 
-        <Nav justify variant="tabs" defaultActiveKey="/home">
-          <Nav.Item>
-            <NavLink to="/home">
-              <Button variant="primary" size="lg">
-                Bienvenido
-              </Button>
-            </NavLink>
-          </Nav.Item>
-          {/* <Nav.Item>
-                            <Nav.Link eventKey="link-1"><Button variant="primary" size="lg">Bienvenido</Button></Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-2"><Button variant="primary" size="lg">Bienvenido</Button></Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="disabled" disabled>
-                                Disabled
-                            </Nav.Link>
-                        </Nav.Item> */}
-        </Nav>
 
-        <div className="row text-white py-5" id="row-about">
+
+{/*         <div className="row text-white py-5" id="row-about">
           <div className="container text-center">
             <div className="d-flex justify-content-center">
               <div className="col-md-10">
@@ -184,7 +131,33 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <div className="form-position">
+          <div className="form-container">
+          <div className="formulario">
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Check me out" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </div>
+      </div>
+      </div>
       </div>
     </div>
   );

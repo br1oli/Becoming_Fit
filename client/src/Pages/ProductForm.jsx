@@ -22,63 +22,58 @@ function validador(input) {
   let errors = {};
 
   if (!input.name) {
-    errors.name = "Requerido";
+    errors.name = "Required";
   } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.name)) {
-    errors.name = "La primera letra debe estar en mayuscula";
+    errors.name = "First letter must be uppercase";
   }
   if (!input.type) {
-    errors.type = "Requerido";
+    errors.type = "Required";
   } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.type)) {
-    errors.type = "La primera letra debe estar en mayuscula";
+    errors.type = "First letter must be uppercase";
   }
   if (!input.color) {
-    errors.color = "Requerido";
+    errors.color = "Required";
   } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
-    errors.color = "La primera letra debe estar en mayuscula";
+    errors.color = "First letter must be uppercase";
   }
   if (!input.description) {
-    errors.description = "Requerido";
+    errors.description = "Required";
   } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.description)) {
-    errors.description = "La primera letra debe estar en mayuscula";
+    errors.description = "First letter must be uppercase";
   }
 
-  if (!input.color) {
-    errors.color = "Requerido";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
-    errors.color = "La primera letra debe estar en mayuscula";
-  }
   if (!input.gender) {
-    errors.gender = "Requerido";
+    errors.gender = "Required";
   }
   if (!input.size) {
-    errors.size = "Requerido";
+    errors.size = "Required";
   } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.size)) {
-    errors.size = "El size debe ser un número";
+    errors.size = "Size must be a number";
   }
   if (!input.rating) {
-    errors.rating = "Requerido";
+    errors.rating = "Required";
   }
   if (!input.price) {
-    errors.price = "Requerido";
+    errors.price = "Required";
   } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.price)) {
-    errors.price = "El price debe ser un número";
+    errors.price = "Price must be a number";
   }
   if (!input.brand) {
-    errors.brand = "Requerido";
+    errors.brand = "Required";
   }
   if (!input.category) {
-    errors.category = "Requerido";
+    errors.category = "Required";
   } else if (input.price < 0 || input.price > 1000000) {
-    errors.price = "Excede de limites razonables";
+    errors.price = "Exceeds reasonable limits";
   }
   if (!input.image) {
-    errors.image = "Requerido";
+    errors.image = "Required";
   } else if (
     !/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(
       input.image
     )
   ) {
-    errors.image = "Debe ser un Url válido";
+    errors.image = "Invalid Url";
   }
   return errors;
 }
@@ -140,7 +135,7 @@ export default function ProductForm() {
       !input.category ||
       !input.description
     ) {
-      alert("Formulario incompleto");
+      alert("Incomplete form");
     } else {
       dispatch(postProduct(input));
       setInput({
@@ -156,7 +151,7 @@ export default function ProductForm() {
         category: "",
         rating: "",
       });
-      alert("Actividad Creada!!");
+      alert("Activity created!!");
       // history.push('/home')
     }
   }
@@ -178,7 +173,7 @@ export default function ProductForm() {
                   <FloatingLabel
                     className="mb-3"
                     controlId="floatingimage"
-                    label="Nombre"
+                    label="Name"
                   >
                     <Form.Control
                       type={"text"}
@@ -195,7 +190,7 @@ export default function ProductForm() {
                   <FloatingLabel
                     className="mb-3"
                     controlId="floatingimage"
-                    label="Tipo"
+                    label="Type"
                   >
                     <Form.Control
                       type={"text"}
@@ -230,7 +225,7 @@ export default function ProductForm() {
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Género">
                     <Form.Select name="gender" onChange={handleInputChange}>
-                      <option value={"NULL"}>Elegir</option>
+                      <option value={"NULL"}>Choose</option>
                       {gender?.map((e) => {
                         return (
                           <option key={e} value={e} name="gender">
@@ -270,7 +265,7 @@ export default function ProductForm() {
                     label="Rating"
                   >
                     <Form.Select name="rating" onChange={handleInputChange}>
-                      <option value={"NULL"}>Elegir</option>
+                      <option value={"NULL"}>Choose</option>
 
                       <option key={1} value={1}>
                         ⭐
@@ -315,7 +310,7 @@ export default function ProductForm() {
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Marca">
                     <Form.Select name="brand" onChange={handleInputChange}>
-                      <option value={"NULL"}>Elegir</option>
+                      <option value={"NULL"}>Choose</option>
                       {brandss?.map((e) => {
                         return (
                           <option key={e} value={e} name="brand">
@@ -323,7 +318,6 @@ export default function ProductForm() {
                           </option>
                         );
                       })}
-                      <option value={""}>Crear Marca</option>
                     </Form.Select>
                   </FloatingLabel>
                   {errors?.brand ? (
@@ -352,10 +346,10 @@ export default function ProductForm() {
                 <Col>
                   <FloatingLabel
                     controlId="floatingCategoies"
-                    label="Categoría"
+                    label="Category"
                   >
                     <Form.Select onChange={handleInputChange} name="category">
-                      <option value={"NULL"}>Elegir</option>
+                      <option value={"NULL"}>Choose</option>
                       {categories?.map((e) => {
                         return (
                           <option key={e} value={e} name="category">
@@ -363,7 +357,6 @@ export default function ProductForm() {
                           </option>
                         );
                       })}
-                      <option value={""}>Crear</option>
                     </Form.Select>
                   </FloatingLabel>
                   {errors?.category ? (

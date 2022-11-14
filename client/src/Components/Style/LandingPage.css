@@ -13,9 +13,10 @@
 }
 
 .carousel {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
     background-color: rgb(255, 255, 255, .15);
     backdrop-filter: blur(5px);
-    /* padding: 5px; */
     width: 700px;
     height: 290px;
 }
@@ -36,3 +37,22 @@
     background-attachment: fixed;
     margin: 0;
 } */
+
+.form-position{
+    grid-template-columns: 1fr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.form-container{
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(219, 218, 218);
+    border-radius: 2rem;
+    width: 500px;
+}
