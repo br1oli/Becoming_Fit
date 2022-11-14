@@ -1,4 +1,3 @@
-import "./App.css";
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./Components/LandingPage.jsx";
@@ -10,6 +9,7 @@ import ProductDetail from "./Components/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./Redux/Actions/UsersActions";
 import ProductForm from "./Pages/ProductForm";
+import { StylesContext } from "@material-ui/styles";
 
 function App() {
   const dispatch = useDispatch();

@@ -106,7 +106,7 @@ export default function Filters() {
 
       <div>
         <select onChange={(e) => handleSortName(e)}>
-          <option value="all">ORDER BY PRODUCT NAME</option>
+          <option value="all">ORDER BY NAME</option>
           <option value="asc">A - Z</option>
           <option value="des">Z - A</option>
         </select>
