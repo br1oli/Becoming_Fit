@@ -21,8 +21,6 @@ import {
   CLEAR_SUCCESS,
   SET_CURRENT_PAGE_PRODUCTS,
 
-
-
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
   REMOVE_ALL_FROM_CART,
@@ -177,11 +175,10 @@ function rootReducer(state = initialState, action) {
         currentProducts: [...priceOrder].slice(0, 6),
       };
     case FILTER_GENDER:
-      const genderFilter = state.products;
       const genderFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.allProducts.filter(
+          : state.allProducts?.filter(
               (e) => e.gender.toLowerCase() === action.payload.toLowerCase()
             );
       return {
