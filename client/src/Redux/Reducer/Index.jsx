@@ -41,6 +41,8 @@ const initialState = {
   indexFirsProduct: 0,
   //
   uniqueGenero: [],
+  categories: [],
+  
 };
 
 function rootReducer(state = initialState, action) {

@@ -9,79 +9,72 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { filterUniqueBrand, filterUniqueCategories, filterUniqueGender, getProducts } from "../Redux/Actions/UsersActions";
-
+import { filterUniqueBrand, filterUniqueCategories, filterUniqueGender, getProducts, postProduct } from "../Redux/Actions/UsersActions";
+import Style from "../Components/Style/ProductForm.module.css"
 
 
 
 function validador(input) {
     let errors = {};
-    if(!input.name || !input.type || !input.price || !input.image || !input.brand || !input.color || !input.description || !input.size || !input.category || !input.rating){
-        alert("formularios incompletos")
-    }
+    
     if (!input.name) {
         errors.name = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.brand)) {
+    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.name)) {
         errors.name ="La primera letra debe estar en mayuscula";
     }
     if (!input.type) {
         errors.type = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.brand)) {
+    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.type)) {
         errors.type ="La primera letra debe estar en mayuscula";
+    }
+    if (!input.color) {
+        errors.color = "Requerido";
+    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
+        errors.color ="La primera letra debe estar en mayuscula";
     }
     if (!input.description) {
         errors.description = "Requerido";
-    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.brand)) {
+    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.description)) {
         errors.description ="La primera letra debe estar en mayuscula";
     }
-    if (!input.image) {
-        errors.image = "Url Requerido";
-    } else if (!/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|svg)/.test(input.image)) {
-        errors.image = "Debe ser una Url valida";
-    }
+    
     if (!input.color) {
-        errors.model = "Requerido";
-    } else if (input.model.length > 15) {
-        errors.model =
-        "El nombre del modelo es demasiado largo";
+        errors.color = "Requerido";
+    } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
+        errors.color ="La primera letra debe estar en mayuscula";
+    }if (!input.gender) {
+        errors.gender = "Requerido";
+    }if (!input.size) {
+        errors.size = "Requerido";
+        }else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.size)){
+            errors.size = "El size debe ser un número"
+        }
+    if (!input.rating) {
+        errors.rating = "Requerido";
     }
     if (!input.price) {
         errors.price = "Requerido";
+        }else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.price)){
+            errors.price = "El price debe ser un número"
+        }
+    if (!input.brand) {
+        errors.brand = "Requerido";
+    }if (!input.category) {
+        errors.category = "Requerido";
     } else if (input.price < 0 || input.price > 1000000) {
         errors.price = "Excede de limites razonables";
     }
-    // if (!input.detail0) {
-        //     errors.detail0 = "Requerido";
-        // } else if (
-            //     input.detail0.length > 15 ||
-            //     input.detail0.length < 2
-            // ) {
-                //     errors.detail0 =
-                //         "La especificacion es demasiado larga o corta";
-                // }
-                
-        if (!input.detail1) {
-            errors.detail1 = "Requerido";
-        } else if (
-            input.detail1.length > 15 || input.detail1.length < 2
-        ) {
-            errors.detail1 =
-            "La especificacion es demasiado larga o corta";
-    }
-    
-    if (!input.detail2) {
-        errors.detail2 = "Requerido";
-    } else if (
-        input.detail2.length > 15 ||
-        input.detail2.length < 2
-        ) {
-            errors.detail2 =
-            "La especificacion es demasiado larga o corta";
+    if (!input.image) {
+        errors.image = "Requerido";
+        }else if (!/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(input.image)){
+            errors.image = "Debe ser un Url válido"
         }
+        return errors
     }
     
     export default function ProductForm() {
         const dispatch = useDispatch();
+        
         
         const [input, setInput] = useState({
             name: "",
@@ -110,31 +103,48 @@ function validador(input) {
             size: "",
             category: "",
             rating: ""
-
         })
-
-    
 
 
         const allProducts = useSelector((state)=> state.allProducts)
-        const brandss = useSelector((state)=> state.brands)
-        const categories = useSelector((state)=> state.categories)
-        const gender = useSelector((state)=> state.uniqueGenero)
+        const brandss = [...new Set(allProducts.map((e)=>e.brand.name))]
+        const categories = [...new Set(allProducts.map((e)=>e.category.name))]
+        const gender = [...new Set(allProducts.map((e)=>e.gender))]
         
-        useEffect(() => {
-            dispatch(getProducts());
-            dispatch(filterUniqueGender());
-            dispatch(filterUniqueBrand());
-            dispatch(filterUniqueCategories());
-        }, []);
+        
+        
         
         
         const handleInputChange = (e) => {
-            console.log(e.target.value, "valor")
             setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
-    console.log(input)
+            let errorObj = validador({...input,[e.target.name]: e.target.value})
+            setErrors(errorObj);
+        };
     
+    function handleSubmit(e){
+        e.preventDefault();
+        if(!input.name || !input.type || !input.color || !input.gender || !input.size || !input.rating || !input.price || !input.brand || !input.image || !input.category || !input.description){
+            alert("Formulario incompleto")
+        }else{
+                dispatch(postProduct(input))
+                setInput({
+                    name: "",
+                    type: "",
+                    gender: "",
+                    price: "",
+                    image: "",
+                    brand: "",
+                    color: "",
+                    description: "",
+                    size: "",
+                    category: "",
+                    rating: ""
+                })
+                alert('Actividad Creada!!')
+                // history.push('/home')
+                }
+        }   
+
     return(
         <Container>
             <h1>Formulario de Carga</h1>
@@ -160,8 +170,10 @@ function validador(input) {
                                             name="name"
                                             onChange={handleInputChange}
                                         />
-                                    {errors.name }
                                         </FloatingLabel>
+                                    {errors?.name ? (
+                                        <div className={Style.danger}>{errors.name}</div>
+                                    ) : null}
                                     </Col>
                                     <Col>
                                         <FloatingLabel
@@ -176,6 +188,9 @@ function validador(input) {
                                             onChange={handleInputChange}
                                         />
                                         </FloatingLabel>
+                                        {errors?.type ? (
+                                        <div className={Style.danger}>{errors.type}</div>
+                                    ) : null}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -192,6 +207,9 @@ function validador(input) {
                                             onChange={handleInputChange}
                                         />
                                         </FloatingLabel>
+                                        {errors?.color ? (
+                                        <div className={Style.danger}>{errors.color}</div>
+                                    ) : null}
                                     </Col>
                                     <Col>
                                         <FloatingLabel
@@ -220,6 +238,9 @@ function validador(input) {
                                                 
                                                 </Form.Select>
                                         </FloatingLabel>
+                                        {errors?.gender ? (
+                                        <div className={Style.danger}>{errors.gender}</div>
+                                    ) : null}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -236,6 +257,9 @@ function validador(input) {
                                             onChange={handleInputChange}
                                         />
                                         </FloatingLabel>
+                                        {errors?.size ? (
+                                        <div className={Style.danger}>{errors.size}</div>
+                                    ) : null}
                                     </Col>
                                     <Col>
                                         <FloatingLabel
@@ -284,6 +308,9 @@ function validador(input) {
                                                 
                                                 </Form.Select>
                                         </FloatingLabel>
+                                        {errors?.rating ? (
+                                        <div className={Style.danger}>{errors.rating}</div>
+                                    ) : null}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -300,6 +327,9 @@ function validador(input) {
                                             onChange={handleInputChange}
                                         />
                                         </FloatingLabel>
+                                        {errors?.price ? (
+                                        <div className={Style.danger}>{errors.price}</div>
+                                    ) : null}
                                     </Col>
                                     <Col>
                                         <FloatingLabel
@@ -330,6 +360,9 @@ function validador(input) {
                                                     </option>
                                                 </Form.Select>
                                         </FloatingLabel>
+                                        {errors?.brand ? (
+                                        <div className={Style.danger}>{errors.brand}</div>
+                                    ) : null}
                                     </Col>
                                 </Row>
                         
@@ -339,13 +372,16 @@ function validador(input) {
                                     label="Imagen"
                                     >
                                     <Form.Control
-                                        type={"image"}
+                                        type={"text"}
                                         value={input.image}
                                         name="image"
                                         onChange={handleInputChange}
                                     />
+                                    {errors?.image ? (
+                                        <div className={Style.danger}>{errors.image}</div>
+                                    ) : null}
                                 </FloatingLabel>
-                                {errors.description}
+                                
                                 <Row>
                                     <Col>
                                         <FloatingLabel
@@ -376,6 +412,9 @@ function validador(input) {
                                                 
                                             </Form.Select>
                                         </FloatingLabel>
+                                        {errors?.category ? (
+                                        <div className={Style.danger}>{errors.category}</div>
+                                    ) : null}
                                     </Col>
                                     
                                 </Row>
@@ -390,12 +429,16 @@ function validador(input) {
                                         name="description"
                                         onChange={handleInputChange}
                                     />
+                                    {errors?.description ? (
+                                        <div className={Style.danger}>{errors.description}</div>
+                                    ) : null}
                                 </FloatingLabel>
                                 
                                 <Button
                                     className="m-3"
                                     style={{ float: "right" }}
                                     type="submit"
+                                    onClick={handleSubmit}
                                 >
                                     Submit
                                 </Button>

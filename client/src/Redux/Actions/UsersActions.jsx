@@ -23,6 +23,7 @@ import {
   SET_CURRENT_PAGE_PRODUCTS,
   FILTER_UNIQUECATEGORIES,
   FILTER_UNIQUEGENDER,
+  POST_PRODUCT,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -195,7 +196,7 @@ export const setProductsPerPage = (currentPage) => {
 
 // --- REVIEWS
 
-export function postReview(payload) {
+export function postProduct(payload) {
   return async (dispatch) => {
     try {
       const response = await axios.post(URL_PRODUCTS, payload);
