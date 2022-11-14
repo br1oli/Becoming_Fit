@@ -4,7 +4,6 @@ import {
   URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
   GET_NAME_PRODUCTS,
-  GET_BRAND,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -21,8 +20,7 @@ import {
   SUCCESS,
   CLEAR_SUCCESS,
   CLEAR_ERROR,
-  FILTER_UNIQUECATEGORIES,
-  FILTER_UNIQUEGENDER,
+
 
   //Shopping Cart actions
   ADD_PRODUCT_TO_CART,
@@ -93,56 +91,7 @@ export function filterBySize(payload) {
   };
 }
 
-export function filterUniqueCategories() {
-  return async function (dispatch) {
-    try {
-      let products = await axios(URL_PRODUCTS);
-      return dispatch({
-        type: FILTER_UNIQUECATEGORIES,
-        payload: products.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}
 
-export function filterUniqueBrand() {
-  return async function (dispatch) {
-    try {
-      let products = await axios(URL_PRODUCTS);
-      return dispatch({
-        type: GET_BRAND,
-        payload: products.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}
-
-export function filterUniqueGender() {
-  return async function (dispatch) {
-    try {
-      let products = await axios(URL_PRODUCTS);
-      return dispatch({
-        type: FILTER_UNIQUEGENDER,
-        payload: products.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}
 
 export function filterByGender(payload) {
   return {
@@ -201,7 +150,7 @@ export const setProductsPerPage = (currentPage) => {
 
 // --- REVIEWS
 
-export function postReview(payload) {
+export function postProduct(payload) {
   return async (dispatch) => {
     try {
       const response = await axios.post(URL_PRODUCTS, payload);
