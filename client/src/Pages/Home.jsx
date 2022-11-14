@@ -30,15 +30,14 @@ const Home = () => {
         <div className={Styles.cardsContainer}>
           {currentProducts?.map((p) => {
             return (
-              <div key={p.id}>
-                <ProductCard
-                  name={p.name}
-                  id={p.id}
-                  image={p.image}
-                  brand={p.brandName}
-                  price={p.price}
-                />
-              </div>
+              <ProductCard
+                key={p.id}
+                name={p.name}
+                id={p.id}
+                image={p.image}
+                brand={p.brandName}
+                price={p.price}
+              />
             );
           })}
         </div>
