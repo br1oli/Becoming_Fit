@@ -65,11 +65,11 @@ export function RegisterForm() {
     const handleSubmit = (e) => {
     	e.preventDefault()
     	if (!input.userName || !input.firstName || !input.lastName || !input.email || !input.password || !input.zipCode || !input.telephone || !input.image || !input.address) {
-    		return alert('Campos incompletos.')
+    		return alert('Incomplete fields.')
     	}
     	setInput({
             userName: "",
-            firstName: "",
+            firstName: "", 
             lastName: "",
             email: "",
             password: "",
@@ -100,7 +100,7 @@ export function RegisterForm() {
                         <label>Username</label>
 
                         <input
-                            placeholder="Escribe aqui"
+                            placeholder="Write here"
                             type="text"
                             value={input.userName}
                             name="userName"
@@ -113,7 +113,7 @@ export function RegisterForm() {
                     <div>
                         <label>First Name</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="text"
                                 value={input.firstName}
                                 name="firstName"
@@ -126,7 +126,7 @@ export function RegisterForm() {
                     <div>
                         <label>Last Name</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="text"
                                 value={input.lastName}
                                 name="lastName"
@@ -139,7 +139,7 @@ export function RegisterForm() {
                     <div>
                         <label>Email</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="text"
                                 value={input.email}
                                 name="email"
@@ -152,7 +152,7 @@ export function RegisterForm() {
                     <div>
                         <label>Adress</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="address"
                                 value={input.address}
                                 name="address"
@@ -165,7 +165,7 @@ export function RegisterForm() {
                     <div>
                         <label>Password</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="password"
                                 value={input.password}
                                 name="password"
@@ -178,7 +178,7 @@ export function RegisterForm() {
                     <div>
                         <label>Zip Code</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="text"
                                 value={input.zipCode}
                                 name="zipCode"
@@ -191,7 +191,7 @@ export function RegisterForm() {
                     <div>
                         <label>Telephone</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="number"
                                 value={input.telephone}
                                 name="telephone"
@@ -204,7 +204,7 @@ export function RegisterForm() {
                     <div>
                         <label>Image</label>
                             <input
-                                placeholder="Escribe aqui"
+                                placeholder="Write here"
                                 type="text"
                                 value={input.image}
                                 name="image"
