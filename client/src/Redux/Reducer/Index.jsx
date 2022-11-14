@@ -144,25 +144,19 @@ function rootReducer(state = initialState, action) {
         ),
       };
 
-    // NO RENDERIZA LAS CARDS
-
     case FILTER_PRICES:
       const priceFiltered = state.allProducts;
       let priceFilter;
       if (action.payload === "all") {
-        priceFilter = [...priceFiltered];
-        return priceFilter;
+        priceFilter = priceFiltered;
       } else if (action.payload === "<50") {
-        priceFilter = [...priceFiltered].filter((p) => p.price < 50);
-        return priceFilter;
+        priceFilter = priceFiltered.filter((p) => parseInt(p.price) < 50);
       } else if (action.payload === "50 - 100") {
-        priceFilter = [...priceFiltered].filter(
-          (p) => p.price > 50 && p.price < 100
+        priceFilter = priceFiltered.filter(
+          (p) => parseInt(p.price) > 50 && parseInt(p.price) < 100
         );
-        return priceFilter;
       } else if (action.payload === ">100") {
-        priceFilter = [...priceFiltered].filter((p) => p.price > 100);
-        return priceFilter;
+        priceFilter = priceFiltered.filter((p) => parseInt(p.price) > 100);
       }
       return {
         ...state,
@@ -174,7 +168,7 @@ function rootReducer(state = initialState, action) {
     case ORDER_BY_NAME:
       const sortedArr =
         action.payload === "asc"
-          ? state.products.sort(function (a, b) {
+          ? state.allProducts.sort(function (a, b) {
               if (a.name > b.name) {
                 return 1;
               } else if (a.name < b.name) {
@@ -182,7 +176,7 @@ function rootReducer(state = initialState, action) {
               }
               return 0;
             })
-          : state.products.sort(function (a, b) {
+          : state.allProducts.sort(function (a, b) {
               if (a.name < b.name) {
                 return 1;
               } else if (a.name > b.name) {
@@ -200,7 +194,7 @@ function rootReducer(state = initialState, action) {
     case ORDER_BY_PRICE:
       const priceOrder =
         action.payload === "asc"
-          ? state.products.sort(function (a, b) {
+          ? state.allProducts.sort(function (a, b) {
               if (parseInt(a.price) > parseInt(b.price)) {
                 return 1;
               } else if (parseInt(a.price) < parseInt(b.price)) {
@@ -208,7 +202,7 @@ function rootReducer(state = initialState, action) {
               }
               return 0;
             })
-          : state.products.sort(function (a, b) {
+          : state.allProducts.sort(function (a, b) {
               if (parseInt(a.price) < parseInt(b.price)) {
                 return 1;
               } else if (parseInt(a.price) > parseInt(b.price)) {
@@ -254,7 +248,7 @@ function rootReducer(state = initialState, action) {
       const brandFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.products.filter(
+          : state.allProducts.filter(
               (b) => b.brand.name.toLowerCase() === action.payload.toLowerCase()
             );
       return {
@@ -273,7 +267,7 @@ function rootReducer(state = initialState, action) {
       const categoryFiltered =
         action.payload === "all"
           ? state.allProducts
-          : state.products.filter(
+          : state.allProducts.filter(
               (b) =>
                 b.category.name.toLowerCase() === action.payload.toLowerCase()
             );
