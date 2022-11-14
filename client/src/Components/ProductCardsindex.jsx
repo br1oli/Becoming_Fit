@@ -34,7 +34,7 @@ const ProductCard = (props) => {
               <Card.Title className="Title">{props.name}</Card.Title>
               <Card.Text className="Description">{props.brandName}</Card.Text>
 
-              <Card.Text className="Price">{props.price}</Card.Text>
+              <Card.Text className="Price">US {props.price}</Card.Text>
               <div className="buttons">
                 <button value={props.id} className="add" onClick={handleChange}>
                   Add to Cart

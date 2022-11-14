@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../Redux/Actions/UsersActions";
 import styles from "./Style/ProductDetail.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { getProductDetail } from "../Redux/Actions/UsersActions";
+import { addToCart, getProductDetail, clearDetails } from "../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCardsindex"
 
@@ -14,6 +13,10 @@ const ProductDetail = (props) => {
   const product = useSelector((state) => state.details);
   useEffect(() => {
     dispatch(getProductDetail(detailId));
+     
+    return () => {
+        dispatch(clearDetails())
+    }
   }, []);
 
   const handleChange = (e) => {

@@ -190,3 +190,7 @@ export const deleteFromCart = (id, all = false) => {
 export const clearCart = () => {
   return { type: CLEAR_CART };
 };
+
+export function clearDetails(){
+  return {type: CLEAR_DETAILS}
+}
