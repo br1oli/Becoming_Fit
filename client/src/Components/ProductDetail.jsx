@@ -69,7 +69,7 @@ const ProductDetail = (props) => {
                     <h5 className={styles.price}> $ US  {product.price}</h5>
 
                     <div className={styles.buttons}>
-                        <button className={styles.add}>ADD TO CART</button>
+                        <button className={styles.add} onClick={handleChange}>ADD TO CART</button>
                         <button className={styles.like}>♥</button>
                     </div>
 
