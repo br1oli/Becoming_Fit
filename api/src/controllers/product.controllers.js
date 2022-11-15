@@ -1,4 +1,5 @@
 const { response, request } = require("express");
+const { Product } = require("../db");
 const {
   getProductsFromDb,
   getProductsByName,
@@ -125,8 +126,27 @@ const updateProduct = async (req = request, res = response) => {
     res.status(500).send(error.message);
   }
 };
+
+const deleteProductFromDb = async (req = request, res = response) => {
+  const { id } = req.params;
+  if(!id){
+    return res.status(404).send("¡ID is needed to remove product!");
+  }
+  try {
+    await Product.destroy({
+      where: {
+        id,
+      },
+    });
+    res.status(200).send(`Product with ID:${id} was successfully removed`)
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
   updateProduct,
+  deleteProductFromDb,
 };

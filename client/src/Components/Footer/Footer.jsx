@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { BsTwitter, BsInstagram, BsFacebook, BsWhatsapp } from "react-icons/bs";
 
-import "./Style/Footer.css";
+import "./Footer.css";
 
 const Footer = () => {
   return (
