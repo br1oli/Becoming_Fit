@@ -7,7 +7,6 @@
     display: grid;
     grid-template-rows: 1fr 3fr;
     
-    
 }
 
 .logoContainer{
@@ -22,13 +21,16 @@
 }
 
 
-.bottomHome{
+.buttomHome{
     /* border: 3px solid black; */
     display: flex;
     justify-content: flex-end;
     color: white;
-    padding: 20px;
-    
+    padding: 20px;     
+}
+
+.buttomHome:hover{
+    color: rgb(154, 150, 150);
 }
 
 .bodyContainer{
@@ -49,7 +51,7 @@
 }
 
 
-.loginBottoms{
+.loginButtoms{
     display: grid;
     grid-template-columns: 1fr 0.04fr 1fr;
     
@@ -60,14 +62,32 @@
     /* border: 1px solid black; */
     display: flex;
     justify-content: flex-end;
+    color: white;
+    
+}
+
+.signIn:hover{
+    color: rgb(154, 150, 150);
 }
 
 .signUp{
     font-size: 2rem;
+    color: white;
     /* border: 1px solid black; */
 }
 
+.signUp:hover{
+    color: rgb(154, 150, 150);
+}
+
+.separatorContainer{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .separator{
-    font-size: 3rem;
+    font-size: 42px;
+    
+    /* border: 1px solid black; */
 }
 

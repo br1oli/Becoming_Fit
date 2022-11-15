@@ -12,7 +12,7 @@ const LandingPage = () => {
            LOGO
          </div> 
          <div className={Style.linkContainter}>
-          <Link className={Style.bottomHome} to={"/home"}>
+          <Link className={Style.buttomHome} to={"/home"}>
           <FaHome size={30} />
           </Link>
          </div>
@@ -24,15 +24,21 @@ const LandingPage = () => {
       <h1 className={Style.title}>BECOMING FIT</h1>
       </div>
          
-         <div className={Style.loginBottoms}>
-             <div className={Style.signIn}>
-                Sign In
-             </div>
-             
+         <div className={Style.loginButtoms}>
+             <div className={Style.signInContainer}>
+             <Link to='signin' className={Style.signIn}>
+                Sign in
+                {/* SIGN IN */}
+             </Link>
+             </div>  
+             <div className={Style.separatorContainer}>
               <h3 className={Style.separator}>|</h3>
-             
-             <div className={Style.signUp}>
-              Sign Up
+              </div>
+              <div className={Style.signUpContainer}>
+             <Link to='/signup' className={Style.signUp}>
+              Sign up
+              {/* SIGN UP */}
+             </Link>
              </div>
          </div>
      </div>
