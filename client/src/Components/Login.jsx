@@ -14,7 +14,7 @@ const auth = getAuth(firebaseApp);
 //provedores:
 const googleProvider = new GoogleAuthProvider();
 
-export const RegisterForm = () => {
+export const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -58,4 +58,3 @@ export const RegisterForm = () => {
     </Container>
   );
 };
-export default RegisterForm
