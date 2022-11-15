@@ -1,12 +1,14 @@
 import React from "react";
 import Styles from "./About.module.css";
+import { Link } from "react-router-dom";
+import { FaHome } from 'react-icons/fa'
 
 const About = () => {
   return (
     <div className={Styles.aboutContainer}>
       <div className={Styles.topContainer}>
         <Link to={"/home"}>
-          <HomeIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
+          <FaHome style={{ fontSize: 35, color: "#f5f5f5" }} />
         </Link>
         <h1 className={Styles.title}>Becoming Fit</h1>
       </div>
