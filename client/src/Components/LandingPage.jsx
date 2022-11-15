@@ -1,5 +1,7 @@
 import React from 'react'
 import Style from './Style/LandingPage.module.css'
+import { Link } from "react-router-dom";
+import { FaHome } from 'react-icons/fa'
 
 const LandingPage = () => {
   return (
@@ -9,8 +11,10 @@ const LandingPage = () => {
          <div className={Style.logoContainer}>
            LOGO
          </div> 
-         <div className={Style.bottomHome}>
-          HOME
+         <div className={Style.linkContainter}>
+          <Link className={Style.bottomHome} to={"/home"}>
+          <FaHome size={30} />
+          </Link>
          </div>
      </div>
 
