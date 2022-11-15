@@ -7,15 +7,16 @@ import ProductCard from "../Components/ProductCardsindex";
 import { getProducts } from "../Redux/Actions/UsersActions";
 import { Pagination } from "../Components/Pagination";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import NavBar from "../Components/NavBar";
 
 const Home = () => {
   const { currentProducts } = useSelector((state) => state);
 
   return (
     <div className={Styles.homeContainer}>
-      {/* <div className="nav.container">
+      <div className={Styles.navContainer}>
         <NavBar />
-      </div> */}
+      </div>
       <div className={Styles.leftSide}>
         <div className={Styles.filtersContainer}>
           <Filters />

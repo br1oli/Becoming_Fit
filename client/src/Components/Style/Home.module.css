@@ -1,8 +1,9 @@
 .homeContainer {
+    margin: 0;
     display: grid;
     grid-gap: 20px;
-    margin-top: 25px;
     grid-template: 
+    "navBar navBar"
     "leftSide RigthSide" / 200px
 
 }
@@ -12,7 +13,6 @@
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     grid-auto-rows: auto;
     grid-area: cards;
-    /* espacio entre cards */
     grid-gap: 0.5rem;
     width: 100%;
     padding: 1rem;
@@ -36,4 +36,8 @@
 
 .filtersContainer {
     grid-area: filters;
+}
+
+.navContainer {
+    grid-area: navBar;
 }
