@@ -18,12 +18,13 @@ const LandingPage = () => {
          </div>
      </div>
 
-     <div className={Style.bodyContainer}>
-
+    <div className={Style.bodyContainer}>
       <div className={Style.becomingFit}>
-      <h1 className={Style.title}>BECOMING FIT</h1>
-      </div>
-         
+      <h1 className={Style.becomingFitTitle}>BECOMING FIT</h1>
+      <h5 className={Style.becomingFitSlogan}>Sports clothing for growing up yourself</h5>
+    </div>
+    
+
          <div className={Style.loginButtoms}>
              <div className={Style.signInContainer}>
              <Link to='signin' className={Style.signIn}>

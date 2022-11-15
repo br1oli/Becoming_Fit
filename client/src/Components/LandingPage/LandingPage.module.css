@@ -40,14 +40,25 @@
     color: white;
 }
 
+
+
 .becomingFit{
     /* border: 1px solid black; */
-    display: flex;
+    display: flex;   
     align-items: flex-end;
+    flex-direction: column;
+    
 }
 
-.title{
+.becomingFitTitle{
     font-size: 100px;
+}
+
+.becomingFitSlogan{
+    color: rgb(154, 150, 150);
+    width: 100%;
+    text-align: center;
+    
 }
 
 
