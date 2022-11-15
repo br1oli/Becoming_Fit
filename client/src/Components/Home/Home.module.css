@@ -1,8 +1,9 @@
 .homeContainer {
+    margin: 0;
     display: grid;
     grid-gap: 20px;
-    margin-top: 25px;
     grid-template: 
+    "navBar navBar"
     "leftSide RigthSide" / 200px
 
 }
@@ -37,6 +38,11 @@
     grid-area: filters;
 }
 
+
+.navContainer {
+    grid-area: navBar;
+}
+
 .loadingTitle {
     font: 1.5rem "Roboto", sans-serif;
     margin: 2rem 0;
@@ -63,3 +69,4 @@
       -webkit-transform: rotate(360deg);
     }
   }
+

@@ -4,6 +4,12 @@ import Styles from "./About.module.css";
 const About = () => {
   return (
     <div className={Styles.aboutContainer}>
+      <div className={Styles.topContainer}>
+        <Link to={"/home"}>
+          <HomeIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
+        </Link>
+        <h1 className={Styles.title}>Becoming Fit</h1>
+      </div>
       <div className={Styles.pharagraphContainer}>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil ut
