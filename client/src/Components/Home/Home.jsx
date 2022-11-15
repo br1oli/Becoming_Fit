@@ -1,22 +1,15 @@
-import React, { useEffect } from "react";
-
-import Filters from "../Components/Filters";
-import Styles from "../Components/Style/Home.module.css";
+import React from "react";
 import { useSelector } from "react-redux";
-import ProductCard from "../Components/ProductCardsindex";
-import { getProducts } from "../Redux/Actions/UsersActions";
-import { Pagination } from "../Components/Pagination";
-import ShoppingCart from "@material-ui/icons/ShoppingCart";
-import NavBar from "../Components/NavBar";
+import Styles from "./Home.module.css";
+import Filters from "../Filters/Filters";
+import ProductCard from "../ProductComponents/ProductCard";
+import { Pagination } from "./Pagination";
 
 const Home = () => {
   const { currentProducts, allProducts } = useSelector((state) => state);
 
   return (
     <div className={Styles.homeContainer}>
-      <div className={Styles.navContainer}>
-        <NavBar />
-
       <div className={Styles.leftSide}>
         <div className={Styles.filtersContainer}>
           <Filters />

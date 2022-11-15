@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addToCart, deleteFromCart } from "../Redux/Actions/UsersActions";
+import { addToCart, deleteFromCart } from "../../Redux/Actions/UsersActions";
 import { NavLink } from "react-router-dom";
-import styles from "./Style/CartItem.module.css";
+import styles from "./CartItem.module.css";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";

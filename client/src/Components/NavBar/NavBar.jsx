@@ -2,37 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SearchInput from "./SearchBar.jsx";
-import styles from "./Style/NavBar.module.css";
+import styles from "./NavBar.module.css";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import HomeIcon from "@material-ui/icons/Home";
-import ShoppingCart from "./ShoppingCart.jsx";
+import ShoppingCart from "../ShoppCart/ShoppingCart";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useState } from "react";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-
-const options = [
-  {
-    name: "Enable backdrop (default)",
-    scroll: false,
-    backdrop: true,
-  },
-  {
-    name: "Disable backdrop",
-    scroll: false,
-    backdrop: false,
-  },
-  {
-    name: "Enable body scrolling",
-    scroll: true,
-    backdrop: false,
-  },
-  {
-    name: "Enable both scrolling & backdrop",
-    scroll: true,
-    backdrop: true,
-  },
-];
 
 function OffCanvas({ name, ...props }) {
   const [show, setShow] = useState(false);
@@ -62,7 +39,6 @@ function SideBar(props) {
     </>
   );
 }
-
 
 const NavBar = () => {
   return (
