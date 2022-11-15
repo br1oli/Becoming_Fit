@@ -1,0 +1,36 @@
+.aboutContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px;
+}
+
+.pharagraphContainer {
+    margin: 40px;
+    text-align: center;
+}
+
+.imgContainer {
+    margin: 15px;
+}
+
+.colabsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.oneColabContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    border: 3px solid rgb(52, 129, 231);
+    border-radius: 25px;
+    padding: 10px 30px;
+}
+
+.twoColabsContainer {
+    display: flex;
+    flex-direction: row-reverse;
+}

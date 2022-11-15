@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./Redux/Actions/UsersActions";
 import ProductForm from "./Pages/ProductForm";
 import { StylesContext } from "@material-ui/styles";
+import About from "./Components/About.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,8 @@ function App() {
       />
       <Route exact path="/register" component={RegisterForm} />
       <Route exact path="/productForm" component={ProductForm} />
+      <Route exact path="/contact" component={About} />
+
       <Footer />
       {/* </Switch> */}
     </BrowserRouter>
