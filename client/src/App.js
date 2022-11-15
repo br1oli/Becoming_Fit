@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LandingPage from "./Components/LandingPage.jsx";
-import { RegisterForm } from "./Components/RegisterForm";
-import Home from "./Pages/Home";
-import Footer from "./Components/Footer";
-import NavBar from "./Components/NavBar";
-import ProductDetail from "./Components/ProductDetail";
+import { BrowserRouter, Route } from "react-router-dom";
+import LandingPage from "./Components/LandingPage/LandingPage";
+import { RegisterForm } from "./Components/UserComponents/RegisterForm";
+import Home from "./Components/Home/Home";
+import Footer from "./Components/Footer/Footer";
+import NavBar from "./Components/NavBar/NavBar";
+import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./Redux/Actions/UsersActions";
-import ProductForm from "./Pages/ProductForm";
-import { StylesContext } from "@material-ui/styles";
-import About from "./Components/About.jsx";
+import ProductForm from "./Components/ProductComponents/ProductForm";
+import About from "./Components/About/About.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +22,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <Switch> */}
+      <NavBar />
       <Route exact path="/" component={LandingPage} />
       <Route exact path="/home" component={Home} />
       <Route
@@ -36,7 +35,6 @@ function App() {
       <Route exact path="/contact" component={About} />
 
       <Footer />
-      {/* </Switch> */}
     </BrowserRouter>
   );
 }

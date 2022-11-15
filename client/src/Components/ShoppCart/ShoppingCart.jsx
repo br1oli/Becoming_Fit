@@ -1,12 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCart,
-  clearCart,
-  deleteFromCart,
-} from "../Redux/Actions/UsersActions";
+import { clearCart } from "../../Redux/Actions/UsersActions";
 import CartItem from "./CartItem";
-import styles from "./Style/ShoppingCart.module.css";
+import styles from "./ShoppingCart.module.css";
 
 export default function ShoppingCart() {
   let shoppingCart = useSelector((state) => state);

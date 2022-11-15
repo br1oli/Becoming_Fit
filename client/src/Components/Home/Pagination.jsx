@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { setProductsPerPage } from "../Redux/Actions/UsersActions";
+import { setProductsPerPage } from "../../Redux/Actions/UsersActions";
 
 export const Pagination = () => {
   const { products, productsPerPage, currentPage, currentProducts } =

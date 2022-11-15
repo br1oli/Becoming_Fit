@@ -10,8 +10,8 @@ import {
   filterByBrand,
   filterByCategory,
   filterByPrice,
-} from "../Redux/Actions/UsersActions";
-import Style from "./Style/Filters.module.css";
+} from "../../Redux/Actions/UsersActions";
+import Style from "./Filters.module.css";
 
 export default function Filters() {
   const dispatch = useDispatch();

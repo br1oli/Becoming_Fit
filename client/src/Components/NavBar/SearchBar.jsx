@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getNameProducts } from "../Redux/Actions/UsersActions";
-//import { connect } from "react-redux";
-import style from "./Style/SearchBar.module.css";
+import { getNameProducts } from "../../Redux/Actions/UsersActions";
+import style from "./SearchBar.module.css";
 import SearchIcon from "@material-ui/icons/Search";
 
 const SearchInput = (props) => {
@@ -15,11 +14,9 @@ const SearchInput = (props) => {
   };
 
   const handleSubmit = (e) => {
-    //debugger
     e.preventDefault(e);
     dispatch(getNameProducts(input));
     setInput("");
-    //debugger
   };
 
   return (

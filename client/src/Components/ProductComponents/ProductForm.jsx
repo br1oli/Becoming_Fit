@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   Col,
@@ -9,14 +9,8 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filterUniqueBrand,
-  filterUniqueCategories,
-  filterUniqueGender,
-  getProducts,
-  postProduct,
-} from "../Redux/Actions/UsersActions";
-import Style from "../Components/Style/ProductForm.module.css";
+import { postProduct } from "../../Redux/Actions/UsersActions";
+import Style from "./ProductForm.module.css";
 
 function validador(input) {
   let errors = {};
@@ -152,7 +146,6 @@ export default function ProductForm() {
         rating: "",
       });
       alert("Activity created!!");
-      // history.push('/home')
     }
   }
 
@@ -160,13 +153,7 @@ export default function ProductForm() {
     <div style={{ margin: 15 }}>
       <Container>
         <Card>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              // handleSubmit();
-            }}
-            className="submitForm"
-          >
+          <form className="submitForm">
             <div>
               <Row>
                 <Col>
@@ -344,10 +331,7 @@ export default function ProductForm() {
 
               <Row>
                 <Col>
-                  <FloatingLabel
-                    controlId="floatingCategoies"
-                    label="Category"
-                  >
+                  <FloatingLabel controlId="floatingCategoies" label="Category">
                     <Form.Select onChange={handleInputChange} name="category">
                       <option value={"NULL"}>Choose</option>
                       {categories?.map((e) => {
