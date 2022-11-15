@@ -24,7 +24,6 @@ function App() {
   return (
     <BrowserRouter>
       {/* <Switch> */}
-     
       <Route exact path="/" component={LandingPage} />
       <Route exact path="/home" component={Home} />
       <Route
