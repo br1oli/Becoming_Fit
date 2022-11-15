@@ -1,7 +1,6 @@
 import React from "react";
-import "./Style/LandingPage.css";
+import "./LandingPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, NavLink } from "react-router-dom";
 import { Carousel, Nav, Button, Form } from "react-bootstrap";
 
 export default function LandingPage() {
@@ -28,8 +27,7 @@ export default function LandingPage() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3">
-        </div>
+        <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3"></div>
         <div className="col-sm-12 col-md-8 col-lg-8 col-xl-8">
           <div className="carousel">
             <Carousel variant="dark">
@@ -109,9 +107,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-
-
-{/*         <div className="row text-white py-5" id="row-about">
+        {/*         <div className="row text-white py-5" id="row-about">
           <div className="container text-center">
             <div className="d-flex justify-content-center">
               <div className="col-md-10">
@@ -134,30 +130,30 @@ export default function LandingPage() {
         </div> */}
         <div className="form-position">
           <div className="form-container">
-          <div className="formulario">
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
+            <div className="formulario">
+              <Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                  </Form.Text>
+                </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check type="checkbox" label="Check me out" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </Form>
+            </div>
           </div>
-      </div>
-      </div>
+        </div>
       </div>
     </div>
   );
