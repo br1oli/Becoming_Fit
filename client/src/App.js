@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./Redux/Actions/UsersActions";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
+import PruebaLanding from "./Components/PruebaLanding.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,8 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>    
+    <BrowserRouter>
+      <Route exact path="/landingPrueba" component={PruebaLanding} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/" component={LandingPage} />
       <Route exact path="/home" component={Home} />
