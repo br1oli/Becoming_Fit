@@ -1,0 +1,80 @@
+/* .signInContainer {
+    display: grid;
+    grid-gap: 20px;
+    background-color: antiquewhite;
+    justify-content: center;
+    padding-top: 25px;
+} */
+
+.formOrder {
+    display: grid;
+    grid-gap: 20px;
+    background-color: antiquewhite;
+    justify-content: center;
+    padding-top: 25px;
+} 
+
+.form {
+    width: 100%;
+    height: 55px;
+    max-width: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.form input {
+    width: 100%;
+    height: 100%;
+    background: none;
+    color: #212121;
+    font-size: 18px;
+    padding-top: 20px;
+    border: none;
+    outline: 0;
+}
+
+.form .lblNombre {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-bottom: 1px solid #a0a0a0;
+}
+
+.form .lblNombre:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 100%;
+    border-bottom: 2px solid rgb(185, 93, 31);
+    transform: translateX(-100%);
+    transition: all 0.3s ease;
+}
+
+.textNomb {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    transition: all 0.3s ease;
+    color: #a0a0a0;
+}
+
+.form input:focus + .lblNombre .textNomb {
+    transform: translateY(-30px);
+    font-size: 14px;
+    color: rgb(185, 93, 31);
+}
+
+.form input:valid + .lblNombre .textNomb {
+    transform: translateY(-30px);
+    font-size: 14px;
+    color: rgb(185, 93, 31);
+}
+
+.form input:focus + .lblNombre:after, .form input:valid + .lblNombre:after {
+    transform: translateX(0%);
+}
