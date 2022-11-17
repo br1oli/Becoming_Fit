@@ -11,6 +11,7 @@ import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 import Login from "./Components/UserComponents/Login";
 import Registrando from "./Components/UserComponents/Registrando";
+import RegisterForm from './Components/UserComponents/RegisterForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
     <Route exact path="/signin" component={Login} />
     <Route exact path="/signup" component={Registrando} />
     
+    
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/" component={LandingPage} />
       <Route exact path="/home" component={Home} />
@@ -37,7 +39,10 @@ function App() {
       <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
 
+      { /* <Route exact path="/signin" component={Login} /> */ }
+      <Route exact path="/signup" component={RegisterForm} />
       <Footer />
+     
     </BrowserRouter>
   );
 }
