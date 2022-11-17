@@ -23,9 +23,9 @@ function OffCanvas({ name, ...props }) {
         <ShoppingCartIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
       </Button>
       <Offcanvas show={show} onHide={handleClose} {...props}>
-        <Offcanvas.Header closeButton></Offcanvas.Header>
+        <Offcanvas.Header closeButton>YOUR CART</Offcanvas.Header>
         <Offcanvas.Body>
-          <ShoppingCart />
+          <ShoppingCart toggleShow={toggleShow} />
         </Offcanvas.Body>
       </Offcanvas>
     </>
