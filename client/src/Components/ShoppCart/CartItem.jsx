@@ -3,15 +3,11 @@ import { useDispatch } from "react-redux";
 import { addToCart, deleteFromCart } from "../../Redux/Actions/UsersActions";
 import { NavLink } from "react-router-dom";
 import styles from "./CartItem.module.css";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 export default function CartItem({ data }) {
   let dispatch = useDispatch();
 
-  let { id, name, price, image, size, brandName, categoryName, quantity } =
-    data;
+  let { id, name, price, image, size, brandName, categoryName, amount } = data;
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.value === "+") {
@@ -37,16 +33,16 @@ export default function CartItem({ data }) {
         <p>{brandName}</p>
         <p>{categoryName}</p>
         <h5>
-          ${price}.00 x {quantity} = ${price * quantity}.00
+          ${price}.00 x {amount} = ${price * amount}.00
         </h5>
         <button className={styles.btnCart} value="+" onClick={handleChange}>
-          <AddIcon />
+          +
         </button>
         <button className={styles.btnCart} value="-" onClick={handleChange}>
-          <RemoveIcon />
+          -
         </button>
         <button className={styles.btnCart} value="all" onClick={handleChange}>
-          <DeleteOutlineIcon />
+          DELETE
         </button>
       </div>
     </div>
