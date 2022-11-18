@@ -6,10 +6,16 @@ const usersRoutes = require("./routes/users.routes");
 const productRoutes = require("./routes/products.routes");
 const detailRoute = require("./routes/details.routes");
 const categoriesRoutes = require("./routes/categories.routes");
+const dotenv = require("dotenv");
+
+const PaymentController = require("./mercadoPago/Controllers/paymentController");
+const PaymentService = require("./mercadoPago/Services/paymentServices");
+const PaymentInstance = new PaymentController(new PaymentService());
 
 require("./db.js");
 
 const server = express();
+dotenv.config();
 
 server.name = "API";
 
@@ -32,6 +38,12 @@ server.use(usersRoutes);
 server.use(productRoutes);
 server.use(detailRoute);
 server.use(categoriesRoutes);
+
+server.get("/payment/new", (req, res) =>
+  PaymentInstance.getMercadoPagoLink(req, res)
+);
+
+server.post("/webhook", (req, res) => PaymentInstance.webhook(req, res));
 
 // Error catching endware.
 server.use((err, req, res, next) => {
