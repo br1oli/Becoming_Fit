@@ -267,7 +267,7 @@ function rootReducer(state = initialState, action) {
         (item) => item.id === newItem.id
       );
       let totalItemsAdded = state.shoppingCart
-        .map((item) => item.quantity)
+        .map((item) => item.amount)
         .reduce((acc, item) => (acc += item), 1);
 
       let conditionalAddState = itemInCart
@@ -275,14 +275,14 @@ function rootReducer(state = initialState, action) {
             ...state,
             shoppingCart: state.shoppingCart.map((item) =>
               item.id === newItem.id
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, amount: item.amount + 1 }
                 : item
             ),
             totalItemsInCart: totalItemsAdded,
           }
         : {
             ...state,
-            shoppingCart: [...state.shoppingCart, { ...newItem, quantity: 1 }],
+            shoppingCart: [...state.shoppingCart, { ...newItem, amount: 1 }],
             totalItemsInCart: totalItemsAdded,
           };
 
@@ -298,8 +298,8 @@ function rootReducer(state = initialState, action) {
 
       let totalItemsRemainedInCart =
         state.shoppingCart
-          .map((item) => item.quantity)
-          .reduce((acc, item) => (acc += item), 0) - deletedItem.quantity;
+          .map((item) => item.amount)
+          .reduce((acc, item) => (acc += item), 0) - deletedItem.amount;
 
       return {
         ...state,
@@ -311,16 +311,16 @@ function rootReducer(state = initialState, action) {
         (item) => item.id === action.payload
       );
       let totalItemsRemained = state.shoppingCart
-        .map((item) => item.quantity - 1)
+        .map((item) => item.amount - 1)
         .reduce((acc, item) => (acc += item), 0);
 
       let conditionalRemoveState =
-        itemToDelete.quantity > 1
+        itemToDelete.amount > 1
           ? {
               ...state,
               shoppingCart: state.shoppingCart.map((item) =>
                 item.id === action.payload
-                  ? { ...item, quantity: item.quantity - 1 }
+                  ? { ...item, amount: item.amount - 1 }
                   : item
               ),
               totalItemsInCart: totalItemsRemained,
