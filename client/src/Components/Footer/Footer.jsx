@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { BsTwitter, BsInstagram, BsFacebook, BsWhatsapp } from "react-icons/bs";
 
-import "./Style/Footer.css";
+import "./Footer.css";
 
 const Footer = () => {
   return (
@@ -11,7 +11,6 @@ const Footer = () => {
       <div className="container-fluid text-center text-md-left">
         <div className="row">
           <div className="col-md-5 mt-md-0 mt-2">
-            {/* <h1>Henry Becoming-Fit</h1> */}
             <h4>CONTACT</h4>
             <h5 className="text-secondary text-decoration-none">
               henry.becomingfit@gmail.com
@@ -48,7 +47,7 @@ const Footer = () => {
 
           <div className="col-md-2 mb-md-0 mb-2">
             <h5 id="info" className="text-uppercase">
-              Infotmation
+              Information
             </h5>
             <ul className="list-unstyled text-secondary">
               <li>
@@ -82,7 +81,6 @@ const Footer = () => {
           </div>
 
           <div className="col-md-2 mb-md-0 mb-2">
-            {/* <h5 id='info' className='text-uppercase'>Follow Us</h5> */}
             <ul className="list-unstyled text-secondary d-flex justify-content-center flex-row">
               <li>
                 <a

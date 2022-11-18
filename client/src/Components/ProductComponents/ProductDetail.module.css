@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+
+.primaryContainer{
+overflow: hidden;
+}
+
+.secondaryContainer{
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding-bottom: 6rem;
+ margin-left: 8%;
+}
+
+.image{
+width: 40%;
+display: inline-block;
+margin: auto;
+justify-content: center;
+}
+
+.img{
+  width: 30rem;
+}
+
+.detail{
+border-left: 1px solid grey;
+padding-left: 3rem;
+width: 40%;
+display: inline-block;
+margin: auto;
+}
+
+.imgColor{
+  width: 3rem;
+}
+
+.rating{
+  padding-bottom: 2rem;
+}
+
+.sizes{
+    background: darken(light, 10%);
+    width: 10rem;
+    background-color:rgb(217, 215, 215);
+    padding: 0.3rem;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+}
+.sizes:hover {
+  background: black;
+  color: aliceblue;
+  transition: all 0.5s ease-in-out;
+}
+
+.sizesDiv{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.cantidad1{
+  background: darken(light, 10%);
+  width: 3rem;
+  background-color:rgb(217, 215, 215);
+  padding: 0.3rem;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  margin: -1px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  cursor: pointer;
+  margin: auto;
+}
+.cantidad1:hover {
+  background: black;
+  color: aliceblue;
+  transition: all 0.5s ease-in-out;
+}
+.cantidad2{
+    background: darken(light, 10%);
+    background-color: rgb(184, 182, 182);
+    width: 5rem;
+    padding: 0.3rem;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    margin: auto;
+    margin-bottom: 4rem;
+}
+
+.price{
+  margin-top: 5rem;
+  font-weight: 400;
+}
+
+.detailsTitle{
+  display: flex;
+  justify-content: center;
+  font-weight: lighter;
+  margin-bottom: 2rem;
+  border-top: 0.5px solid gray;
+  margin-left: 10rem;
+  margin-right: 10rem;
+}
+
+.thirdContainer{
+  margin-bottom: 10rem;
+}
+
+.accordion{
+margin-right: 20rem;
+margin-bottom: 4rem;
+margin-left: 5rem;
+margin-right: 20rem;
+}
+
+.review{
+  margin-right: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 5rem;
+  margin-right: 20rem;
+}
+.buttonReview{
+  background: darken(light, 10%);
+  background-color: black;
+  width: 18rem;
+  padding: 10px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  margin: -1px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  cursor: pointer;
+  margin-top: 3rem;
+}
+.buttonReview:hover{
+  background: white;
+  color: aliceblue;
+  transition: all 0.5s ease-in-out;
+}
+
+.range{
+  width: 20rem;
+}
+
+.rangeContainer{
+display: flex;
+justify-content: space-around;
+margin-bottom: 4rem;
+margin-left: 5rem;
+margin-right: 5rem;
+}
+
+.title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-bottom: 4rem;
+  padding-top: 2rem;
+}
+
+.suggestions{
+padding: 5rem;
+margin-bottom: 5rem;
+}
+.divSuggestions{
+ display: flex;
+ flex-direction: row;
+ justify-content:space-between;
+ margin-left: 5rem;
+margin-right: 5rem;
+}
+
+.oportunity{
+border: 1px solid gray;
+padding: 1rem;
+width: fit-content;
+height: fit-content;
+}
+
+.buttons{
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+}
+
+.add {
+    background: darken(light, 10%);
+    background-color: black;
+    width: 18rem;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+  }
+  .add:hover {
+    background: white;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .like {
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: black;
+    cursor: pointer;
+  }
+  .like:hover {
+    background: black;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
+
+
+
+  .dealsDiv{
+    background-color:yellow;
+    color: black;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .deals{
+    display: inline-block;
+    padding-right: rem;
+  }
+
+  .join{
+    display: inline-block;
+
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: black;
+    cursor: pointer;
+  }
+  .join:hover {
+    background: black;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
