@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import Footer from "./Components/Footer/Footer";
@@ -14,7 +14,7 @@ import Registrando from "./Components/UserComponents/Registrando";
 import RegisterForm from './Components/UserComponents/RegisterForm';
 import Carousel from "./Components/Carousel/Carousel.jsx";
 
-function App() {
+function App(props) {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.allProducts);
   useEffect(() => {
@@ -24,29 +24,20 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>    
-    <Route exact path="/signin" component={Login} />
-    <Route exact path="/signup" component={Registrando} />
-    
-    <Route exact path="/carousel" component={Carousel} />
-
-    
-      <Route exact path="/home" component={NavBar} />
-      <Route exact path="/" component={LandingPage} />
-      <Route exact path="/home" component={Home} />
-      <Route
-        exact
-        path="/home/:id"
-        render={(props) => <ProductDetail props={props} />}
-      />
-      <Route exact path="/productForm" component={ProductForm} />
-      <Route exact path="/contact" component={About} />
-
-      { /* <Route exact path="/signin" component={Login} /> */ }
-      <Route exact path="/signup" component={RegisterForm} />
-      <Footer />
+    <Routes>    
+    <Route exact path="/signin" element={<Login />} />
+    <Route exact path="/signup" element={<Registrando />} />
+    <Route exact path="/carousel" element={<Carousel />} />
+    <Route exact path="/" element={<LandingPage />} />
+    <Route exact path="/home" element={<Home />} />
+    <Route exact path="/home/:id" element={<ProductDetail />} />
+    <Route exact path="/productForm" element={<ProductForm />} />
+    <Route exact path="/contact" element={<About />} />
+    <Route exact path="/signup" element={<RegisterForm />} />
+      
+      
      
-    </BrowserRouter>
+    </Routes>
   );
 }
 

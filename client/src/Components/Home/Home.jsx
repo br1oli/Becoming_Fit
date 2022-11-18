@@ -4,12 +4,21 @@ import Styles from "./Home.module.css";
 import Filters from "../Filters/Filters";
 import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
+import NavBar from '../NavBar/NavBar'
+import Footer from '../Footer/Footer'
+
 
 const Home = () => {
   const { currentProducts, allProducts } = useSelector((state) => state);
 
   return (
+
+    
+    <>
+        <NavBar />
     <div className={Styles.homeContainer}>
+  
+      
       <div className={Styles.leftSide}>
         <div className={Styles.filtersContainer}>
           <Filters />
@@ -44,6 +53,8 @@ const Home = () => {
         </>
       )}
     </div>
+    <Footer />
+    </>
   );
 };
 
