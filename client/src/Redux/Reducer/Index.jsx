@@ -96,17 +96,6 @@ function rootReducer(state = initialState, action) {
           state.indexLastProduct
         ),
       };
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
-      return {
-        ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
-      };
 
     case FILTER_PRICES:
       const priceFiltered = state.allProducts;

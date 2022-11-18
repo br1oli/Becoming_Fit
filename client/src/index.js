@@ -6,6 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store/Index.js";
 import axios from "axios";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 axios.defaults.baseURL = process.env.REACT_APP_API || "https://becomingfit-production.up.railway.app";
 
