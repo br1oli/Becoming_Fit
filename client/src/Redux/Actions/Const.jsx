@@ -1,7 +1,7 @@
-// export const URL_PRODUCTS = "http://localhost:3001/products";
 export const URL_PRODUCTS = "/products";
-// export const URL_PRODUCTS_QUERY = "http://localhost:3001/products?name=";
+// export const URL_PRODUCTS = "http://localhost:3001/products";
 export const URL_PRODUCTS_QUERY = "/products?name=";
+// export const URL_PRODUCTS_QUERY = "http://localhost:3001/products?name=";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
 
