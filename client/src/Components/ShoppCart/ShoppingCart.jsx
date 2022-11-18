@@ -30,7 +30,7 @@ export default function ShoppingCart({ toggleShow }) {
               <CartItem key={index} data={e} />
             ))}
           </div>
-          <button className={styles.btnPay}>Buy it!</button>
+          <button className={styles.btnPay}>Buy it all!</button>
         </div>
       ) : (
         <div className={styles.emptyCart}>
