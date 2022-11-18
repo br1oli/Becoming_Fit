@@ -5,6 +5,7 @@ import CartItem from "./CartItem";
 import styles from "./ShoppingCart.module.css";
 import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import { deleteStorage } from "../../localStorage/localStorageFunctions";
 
 export default function ShoppingCart({ toggleShow }) {
   let shoppingCart = useSelector((state) => state);
@@ -12,6 +13,7 @@ export default function ShoppingCart({ toggleShow }) {
 
   const handleChange = (e) => {
     e.preventDefault();
+    deleteStorage("shoppCart");
     dispatch(clearCart());
   };
   return (

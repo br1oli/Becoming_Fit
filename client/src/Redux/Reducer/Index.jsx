@@ -1,4 +1,9 @@
 import {
+  getStorage,
+  saveStorage,
+  deleteStorage,
+} from "../../localStorage/localStorageFunctions";
+import {
   URL_PRODUCTS,
   URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
@@ -28,6 +33,8 @@ import {
   CLEAR_CART,
 } from "../Actions/Const";
 
+const dataStorage = getStorage("shoppCart");
+
 const initialState = {
   products: [],
   allProducts: [],
@@ -42,7 +49,7 @@ const initialState = {
   indexLastProduct: 6,
   indexFirsProduct: 0,
   //
-  shoppingCart: [],
+  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
   totalItemsInCart: 0,
   totalToPay: 0,
 };
@@ -285,7 +292,9 @@ function rootReducer(state = initialState, action) {
             shoppingCart: [...state.shoppingCart, { ...newItem, amount: 1 }],
             totalItemsInCart: totalItemsAdded,
           };
-
+      saveStorage("shoppCart", {
+        ...conditionalAddState.shoppingCart,
+      });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
       let deletedItem = state.shoppingCart.find(
@@ -301,6 +310,10 @@ function rootReducer(state = initialState, action) {
           .map((item) => item.amount)
           .reduce((acc, item) => (acc += item), 0) - deletedItem.amount;
 
+      saveStorage("shoppCart", {
+        ...remainedProducts,
+      });
+
       return {
         ...state,
         shoppingCart: remainedProducts,
@@ -315,7 +328,7 @@ function rootReducer(state = initialState, action) {
         .reduce((acc, item) => (acc += item), 0);
 
       let conditionalRemoveState =
-        itemToDelete.amount > 1
+        itemToDelete?.amount > 1
           ? {
               ...state,
               shoppingCart: state.shoppingCart.map((item) =>
@@ -332,14 +345,19 @@ function rootReducer(state = initialState, action) {
               ),
               totalItemsInCart: totalItemsRemained,
             };
+
+      saveStorage("shoppCart", {
+        ...conditionalRemoveState.shoppingCart,
+      });
+
       return conditionalRemoveState;
     case CLEAR_CART:
       return { ...state, shoppingCart: [] };
     case CLEAR_DETAILS:
-      return{
+      return {
         ...state,
-        details: []
-      }
+        details: [],
+      };
     default:
       return state;
   }
