@@ -4,7 +4,7 @@
     grid-gap: 20px;
     grid-template: 
     "navBar navBar"
-    "leftSide RigthSide" / 200px
+    "leftSide rightSide" / 200px
 
 }
 
@@ -22,8 +22,8 @@
     grid-area: leftSide;
 }
 
-.rigthSide {
-    grid-area: rigthSide;
+.rightSide {
+    grid-area: rightSide;
 }
 
 .paginationContainer {
