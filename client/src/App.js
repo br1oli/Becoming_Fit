@@ -12,6 +12,7 @@ import About from "./Components/About/About.jsx";
 import Login from "./Components/UserComponents/Login";
 import Registrando from "./Components/UserComponents/Registrando";
 import RegisterForm from './Components/UserComponents/RegisterForm';
+import Carousel from "./Components/Carousel/Carousel.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ function App() {
     <Route exact path="/signin" component={Login} />
     <Route exact path="/signup" component={Registrando} />
     
+    <Route exact path="/carousel" component={Carousel} />
+
     
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/" component={LandingPage} />
