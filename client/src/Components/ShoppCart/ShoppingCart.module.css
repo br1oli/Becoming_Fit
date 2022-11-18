@@ -12,7 +12,7 @@
   overflow: auto;
 }
 .cardsContainer {
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
 }
 .textContainer {
   margin: 1rem;
@@ -23,7 +23,7 @@
 }
 
 .btnPay {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   bottom: 0;
   position: fixed;
 }
