@@ -51,7 +51,8 @@ export function getProducts() {
 export function getProductDetail(detailId) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`http://localhost:3001/products/${detailId}`);
+      // var json = await axios.get(`http://localhost:3001/products/${detailId}`);
+      var json = await axios.get(`/products/${detailId}`);
       return dispatch({
         type: GET_DETAILS,
         payload: json.data,
