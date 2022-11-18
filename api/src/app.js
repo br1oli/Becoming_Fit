@@ -6,19 +6,19 @@ const usersRoutes = require("./routes/users.routes");
 const productRoutes = require("./routes/products.routes");
 const detailRoute = require("./routes/details.routes");
 const categoriesRoutes = require("./routes/categories.routes");
-const dotenv = require("dotenv");
 
-const PaymentController = require("./mercadoPago/Controllers/paymentController");
-const PaymentService = require("./mercadoPago/Services/paymentServices");
-const PaymentInstance = new PaymentController(new PaymentService());
+// const PaymentController = require("./mercadoPago/Controllers/paymentController");
+// const PaymentService = require("./mercadoPago/Services/paymentServices");
+// const PaymentInstance = new PaymentController(new PaymentService());
 
 require("./db.js");
 
 const server = express();
-dotenv.config();
+const cors = require('cors');
 
 server.name = "API";
 
+server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
