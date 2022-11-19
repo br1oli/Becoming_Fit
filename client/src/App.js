@@ -13,6 +13,8 @@ import Login from "./Components/UserComponents/Login";
 import Registrando from "./Components/UserComponents/Registrando";
 import RegisterForm from "./Components/UserComponents/RegisterForm";
 
+import FiltersSideBar from "./Components/NavBar/FiltersSideBar";
+
 function App() {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.allProducts);
@@ -24,6 +26,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/*  <Route exact path="/sidebar" component={FiltersSideBar} /> */}
       <Route exact path="/signin" component={Login} />
       <Route exact path="/signup" component={Registrando} />
 
