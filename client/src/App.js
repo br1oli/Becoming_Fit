@@ -31,8 +31,8 @@ function App() {
     <BrowserRouter>
 
 
-      <Route exact path="/signin" component={Login} />
-      <Route exact path="/signup" component={Registrando} />
+      {/* <Route exact path="/signin" component={Login} /> */}
+      {/* <Route exact path="/signup" component={Registrando} /> */}
 
       {isAuthenticated? <LogoutButton/>:<LoginButton/>} 
       <Route exact path="/profile" component={Profile}/>
