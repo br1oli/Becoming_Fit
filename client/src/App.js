@@ -23,6 +23,7 @@ import LogoutButton from "./Components/Auth/LogoutButton";
 
 
 function App(props) {
+
   const dispatch = useDispatch();
   const {isLoading, isAuthenticated} = useAuth0()
   const allProducts = useSelector((state) => state.allProducts);
@@ -33,6 +34,7 @@ function App(props) {
   }, []);
 
   return (
+
 
     <Routes>    
      {isAuthenticated? <LogoutButton/>:<LoginButton/>}
@@ -48,7 +50,6 @@ function App(props) {
       <Route exact path="/home/:id" render={(props) => <ProductDetail id={props} />}/>
 
     </Routes>
-
   );
 }
 
