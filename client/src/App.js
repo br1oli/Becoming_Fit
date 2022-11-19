@@ -36,18 +36,14 @@ function App(props) {
 
     <Routes>    
      {isAuthenticated? <LogoutButton/>:<LoginButton/>}
-     <Route exact path="/profile" component={Profile}/>
+     <Route exact path="/profile" element={<Profile />}/>
      
      
-      <Route exact path="/signin" element={<Login />} />
-      <Route exact path="/signup" element={<Registrando />} />
       <Route exact path="/carousel" element={<Carousel />} />
       <Route exact path="/" element={<LandingPage />} />
       <Route exact path="/home" element={<Home />} />
 {/*       <Route exact path="/productForm" element={<ProductForm />} />
  */}      <Route exact path="/contact" element={<About />} />
-
-      <Route exact path="/home/:id" element={<ProductDetail />} />
 
       <Route exact path="/home/:id" render={(props) => <ProductDetail id={props} />}/>
 
