@@ -15,6 +15,8 @@ import LoginButton from "./Components/Auth/LoginButton";
 import Profile from "./Components/Auth/user-info";
 import LogoutButton from "./Components/Auth/LogoutButton";
 
+import FiltersSideBar from "./Components/NavBar/FiltersSideBar";
+
 function App() {
   const dispatch = useDispatch();
   const {isLoading, isAuthenticated} = useAuth0()
@@ -27,6 +29,11 @@ function App() {
 
   return (
     <BrowserRouter>
+
+
+      <Route exact path="/signin" component={Login} />
+      <Route exact path="/signup" component={Registrando} />
+
       {isAuthenticated? <LogoutButton/>:<LoginButton/>} 
       <Route exact path="/profile" component={Profile}/>
       <Route exact path="/home" component={NavBar} />

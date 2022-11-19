@@ -1767,5 +1767,28 @@
       "description": "Fashion passes, but style remains, reflect your good taste with the Nike Sportswear Icon Clash T-shirt made of soft cotton that gives you freshness and warmth, its design above the croptop waist gives you a loose and urban look so you can look with your favorite jeans or shorts. Its print with figures, the black and white checkered pattern and the label on the back of the neck give you a modern and differential style that will make you stand out from the crowd.",
       "price": "20",
       "image": "https://http2.mlstatic.com/D_NQ_NP_913856-MLA49589991592_042022-O.webp"
+    },
+
+    {
+      "amount": 1,
+      "brand":{
+        "name": "Nike"},
+      "brandName":"Nike",
+      "category": {
+        "name": "Jacket"},
+      "categoryName": "Jacket",
+      "color": "black",
+      "description": "Nike Sportswear Essential women\"s Fleece Essential full-zip hooded jacket. Semi-sheer fleece fabric in a zippered design provides the perfect softness and lightness for everyday wear. Zippered design and adjustable drawstring hood keep you protected from the elements..",
+      "gender": "Female",
+      "id": "bfe949a0-616c-46f8-823d-bc15ca11ff08",
+      "image": "https://http2.mlstatic.com/D_NQ_NP_2X_714567-MLU46233272230_062021-F.webp",
+      "name": "Jacket Nike W NSW ESSNTL HOODIE FZ FLC",
+      "price": "62",
+      "rating": 4.3,
+      "size": "XS, S",
+      "type": "Running"
     }
   ]
+
+  
+    
