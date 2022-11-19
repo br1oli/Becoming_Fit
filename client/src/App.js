@@ -9,13 +9,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./Redux/Actions/UsersActions";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
+
 import Login from "./Components/UserComponents/Login";
 import Registrando from "./Components/UserComponents/Registrando";
 import RegisterForm from './Components/UserComponents/RegisterForm';
 import Carousel from "./Components/Carousel/Carousel.jsx";
 
+//AUTH0
+import {useAuth0} from '@auth0/auth0-react'
+import LoginButton from "./Components/Auth/LoginButton";
+import Profile from "./Components/Auth/user-info";
+import LogoutButton from "./Components/Auth/LogoutButton";
+
+
 function App(props) {
   const dispatch = useDispatch();
+  const {isLoading, isAuthenticated} = useAuth0()
   const allProducts = useSelector((state) => state.allProducts);
   useEffect(() => {
     if (!allProducts.length) {
@@ -24,7 +33,12 @@ function App(props) {
   }, []);
 
   return (
+
     <Routes>    
+     {isAuthenticated? <LogoutButton/>:<LoginButton/>}
+     <Route exact path="/profile" component={Profile}/>
+     
+     
       <Route exact path="/signin" element={<Login />} />
       <Route exact path="/signup" element={<Registrando />} />
       <Route exact path="/carousel" element={<Carousel />} />
@@ -32,13 +46,13 @@ function App(props) {
       <Route exact path="/home" element={<Home />} />
 {/*       <Route exact path="/productForm" element={<ProductForm />} />
  */}      <Route exact path="/contact" element={<About />} />
-      <Route exact path="/signup" element={<RegisterForm />} />
 
       <Route exact path="/home/:id" element={<ProductDetail />} />
 
       <Route exact path="/home/:id" render={(props) => <ProductDetail id={props} />}/>
 
     </Routes>
+
   );
 }
 

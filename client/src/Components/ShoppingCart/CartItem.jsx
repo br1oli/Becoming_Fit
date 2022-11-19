@@ -3,9 +3,30 @@ import { useDispatch } from "react-redux";
 import { addToCart, deleteFromCart } from "../../Redux/Actions/UsersActions";
 import { NavLink } from "react-router-dom";
 import styles from "./CartItem.module.css";
+//AUTH0
+import { useAuth0 } from '@auth0/auth0-react'
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function CartItem({ data }) {
   let dispatch = useDispatch();
+    //AUTH0
+    const { getAccessTokenSilently } = useAuth0();
+    const [token, setToken] = useState([])
+
+  useEffect(() => {
+    const generarToken = async () => {
+      try {
+        const tokenApi = await getAccessTokenSilently()
+        setToken(tokenApi)
+        console.log(`ESTO SERIA EL TOKEN API  ${tokenApi}`)
+        console.log(`ESTO SERIA EL TOKEN ${token}`)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    generarToken()
+  }, [])
 
   let { id, name, price, image, size, brandName, categoryName, amount } = data;
   const handleChange = (e) => {
