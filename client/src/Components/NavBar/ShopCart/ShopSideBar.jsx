@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import ShoppingCart from "../../ShoppCart/ShoppingCart";
+import ShoppingCart from "../../ShoppingCart/ShoppingCart";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 function OffCanvas({ name, ...props }) {
