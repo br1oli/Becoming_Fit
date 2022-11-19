@@ -42,10 +42,10 @@
   .slideshow {
     margin: auto;
     width: 60vw;
-    aspect-ratio: calc(16 / 9);
+    aspect-ratio: calc(32 / 9);
     position: relative;
     overflow: hidden;
-    border-radius: 16px;
+    
   }
   
   .slides {

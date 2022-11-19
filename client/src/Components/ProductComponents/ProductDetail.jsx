@@ -8,12 +8,28 @@ import {
   getProductDetail,
   clearDetails,
 } from "../../Redux/Actions/UsersActions";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
 import NavBar from "../NavBar/NavBar";
 
+
+/* import { useSearchParams } from "react-router-dom"; */
+
 const ProductDetail = (props) => {
-  const detailId = props.props.match.params.id;
+
+  /* const { id } = this.props.match.params */
+  
+
+  const useQuery = () => new URLSearchParams(useLocation().search);
+
+  const query = useQuery();
+
+  const id = query.get('id');
+  console.log(id);
+
+
+  
+  const detailId = props.props.match.params.id
   const dispatch = useDispatch();
   const product = useSelector((state) => state.details);
   const cartItems = useSelector((state) => state.shoppingCart);

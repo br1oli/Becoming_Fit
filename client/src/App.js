@@ -30,10 +30,14 @@ function App(props) {
       <Route exact path="/carousel" element={<Carousel />} />
       <Route exact path="/" element={<LandingPage />} />
       <Route exact path="/home" element={<Home />} />
-      <Route exact path="/home/:id" element={<ProductDetail />} />
-      <Route exact path="/productForm" element={<ProductForm />} />
-      <Route exact path="/contact" element={<About />} />
+{/*       <Route exact path="/productForm" element={<ProductForm />} />
+ */}      <Route exact path="/contact" element={<About />} />
       <Route exact path="/signup" element={<RegisterForm />} />
+
+      <Route exact path="/home/:id" element={<ProductDetail />} />
+
+      <Route exact path="/home/:id" render={(props) => <ProductDetail id={props} />}/>
+
     </Routes>
   );
 }

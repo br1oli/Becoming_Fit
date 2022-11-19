@@ -6,6 +6,7 @@ import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
+import Carousel from '../Carousel/Carousel'
 
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
     
     <>
         <NavBar />
+        <Carousel />
     <div className={Styles.homeContainer}>
   
       

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Styles from './Carousel.module.css'
-import { BiRightArrow, BiLeftArrow } from 'react-icons/bi'
+import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs'
 import { AnimatePresence, motion } from 'framer-motion'
 
 
@@ -68,7 +68,7 @@ const Carousel = () => {
 
 
   return (
-    <div className={Styles.container}>
+    
     <div className={Styles.slideshow}>
       <AnimatePresence initial={false} custom={direction}>
         <motion.img
@@ -84,13 +84,13 @@ const Carousel = () => {
         />
       </AnimatePresence>
       <button className={Styles.prevButton} onClick={prevStep}>
-      <BiLeftArrow size={25} />
+      <BsFillArrowLeftCircleFill size={25} color={'black'} />
       </button>
       <button className={Styles.nextButton} onClick={nextStep}>
-      <BiRightArrow size={25}/>
+      <BsFillArrowRightCircleFill size={25} color={'black'} />
       </button>
     </div>
-  </div>
+  
   )
 }
 
