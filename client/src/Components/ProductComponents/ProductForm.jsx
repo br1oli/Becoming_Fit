@@ -17,7 +17,7 @@ function validador(input) {
 
   if (!input.name) {
     errors.name = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.name)) {
+  } else if (!/[^A-Z](?:^|\s)(\S{1,19})(?=$|[\s.,:;])/g.test(input.name)) {
     errors.name = "First letter must be uppercase";
   }
   if (!input.type) {
@@ -145,7 +145,7 @@ export default function ProductForm() {
         category: "",
         rating: "",
       });
-      alert("Activity created!!");
+      alert("Product created!!");
     }
   }
 

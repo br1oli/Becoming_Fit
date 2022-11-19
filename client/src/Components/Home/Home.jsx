@@ -4,14 +4,18 @@ import Styles from "./Home.module.css";
 import Filters from "../Filters/Filters";
 import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
+
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
 import Carousel from '../Carousel/Carousel'
 
 
+import LogoutButton from "../Auth/LogoutButton";
+
+
 const Home = () => {
   const { currentProducts, allProducts } = useSelector((state) => state);
-
+  
   return (
 
     
@@ -23,6 +27,7 @@ const Home = () => {
       
       <div className={Styles.leftSide}>
         <div className={Styles.filtersContainer}>
+      <LogoutButton/>
           <Filters />
         </div>
       </div>

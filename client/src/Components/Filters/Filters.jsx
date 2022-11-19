@@ -16,6 +16,11 @@ import Style from "./Filters.module.css";
 export default function Filters() {
   const dispatch = useDispatch();
 
+  function handleReload(e) {
+    e.preventDefault();
+    dispatch(getProducts());
+  }
+
   function handleFilterPrice(e) {
     e.preventDefault();
     dispatch(filterByPrice(e.target.value));
@@ -118,6 +123,10 @@ export default function Filters() {
           <option value="asc">LOWER PRICE</option>
           <option value="des">HIGHER PRICE</option>
         </select>
+      </div>
+
+      <div>
+        <button onClick={(e) => handleReload(e)}>REFRESH</button>
       </div>
     </div>
   );

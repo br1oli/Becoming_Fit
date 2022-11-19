@@ -50,8 +50,6 @@ const initialState = {
   indexFirsProduct: 0,
   //
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
-  totalItemsInCart: 0,
-  totalToPay: 0,
 };
 
 function rootReducer(state = initialState, action) {
@@ -73,17 +71,6 @@ function rootReducer(state = initialState, action) {
         currentPage: 1,
         indexFirsProduct: 0,
         currentProducts: [...action.payload].slice(0, 6),
-      };
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
-      return {
-        ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
       };
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
@@ -273,9 +260,6 @@ function rootReducer(state = initialState, action) {
       let itemInCart = state.shoppingCart.find(
         (item) => item.id === newItem.id
       );
-      let totalItemsAdded = state.shoppingCart
-        .map((item) => item.amount)
-        .reduce((acc, item) => (acc += item), 1);
 
       let conditionalAddState = itemInCart
         ? {
@@ -285,30 +269,24 @@ function rootReducer(state = initialState, action) {
                 ? { ...item, amount: item.amount + 1 }
                 : item
             ),
-            totalItemsInCart: totalItemsAdded,
           }
         : {
             ...state,
             shoppingCart: [...state.shoppingCart, { ...newItem, amount: 1 }],
-            totalItemsInCart: totalItemsAdded,
           };
       saveStorage("shoppCart", {
         ...conditionalAddState.shoppingCart,
       });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
-      let deletedItem = state.shoppingCart.find(
-        (item) => item.id === action.payload
-      );
 
       let remainedProducts = state.shoppingCart.filter(
         (item) => item.id !== action.payload
       );
 
-      let totalItemsRemainedInCart =
-        state.shoppingCart
-          .map((item) => item.amount)
-          .reduce((acc, item) => (acc += item), 0) - deletedItem.amount;
+      if (remainedProducts.length === 0) {
+        deleteStorage("shoppCart");
+      }
 
       saveStorage("shoppCart", {
         ...remainedProducts,
@@ -317,15 +295,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         shoppingCart: remainedProducts,
-        totalItemsInCart: totalItemsRemainedInCart,
       };
     case REMOVE_ONE_FROM_CART:
       let itemToDelete = state.shoppingCart.find(
         (item) => item.id === action.payload
       );
-      let totalItemsRemained = state.shoppingCart
-        .map((item) => item.amount - 1)
-        .reduce((acc, item) => (acc += item), 0);
 
       let conditionalRemoveState =
         itemToDelete?.amount > 1
@@ -336,14 +310,12 @@ function rootReducer(state = initialState, action) {
                   ? { ...item, amount: item.amount - 1 }
                   : item
               ),
-              totalItemsInCart: totalItemsRemained,
             }
           : {
               ...state,
               shoppingCart: state.shoppingCart.filter(
                 (item) => item.id !== action.payload
               ),
-              totalItemsInCart: totalItemsRemained,
             };
 
       saveStorage("shoppCart", {

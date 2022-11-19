@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import Styles from "./Pagination.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductsPerPage } from "../../Redux/Actions/UsersActions";
 
@@ -27,22 +27,27 @@ export const Pagination = () => {
   };
 
   return (
-    <nav aria-label="Page navigation example">
-      <ul className="pagination justify-content-center">
-        <li className="page-item">
-          <a
-            className={classnames("page-link", {
+    <nav className={Styles.paginadoContainer}>
+      <ul className={Styles.paginado}>
+        <a
+          className={
+            Styles.numberArrow
+            /* (Styles.numberArrow,
+            {
               disabled: currentPage === 1,
-            })}
-            onClick={() => handlePagination(currentPage - 1)}
-          >
-            Previous
-          </a>
-        </li>
+            }) */
+          }
+          onClick={() => handlePagination(currentPage - 1)}
+        >
+          Previous
+        </a>
+
         {pagesNumbers.map((number) => (
-          <li className="page-item" key={number}>
+          <li className={Styles.numberLi} key={number}>
             <a
-              className="page-link"
+              className={`${Styles.number} ${
+                number === currentPage ? Styles.current : ""
+              }`}
               key={number}
               href="#"
               onClick={() => handlePagination(number)}
@@ -51,17 +56,20 @@ export const Pagination = () => {
             </a>
           </li>
         ))}
-        <li className="page-item">
-          <a
-            className={classnames("page-link", {
+
+        <a
+          className={
+            Styles.numberArrow
+            /*  (Styles.numberArrow,
+            {
               disabled: currentProducts?.length < 6,
-            })}
-            href="#"
-            onClick={() => handlePagination(currentPage + 1)}
-          >
-            Next
-          </a>
-        </li>
+            }) */
+          }
+          href="#"
+          onClick={() => handlePagination(currentPage + 1)}
+        >
+          Next
+        </a>
       </ul>
     </nav>
   );

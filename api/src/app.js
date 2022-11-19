@@ -7,12 +7,18 @@ const productRoutes = require("./routes/products.routes");
 const detailRoute = require("./routes/details.routes");
 const categoriesRoutes = require("./routes/categories.routes");
 
+// const PaymentController = require("./mercadoPago/Controllers/paymentController");
+// const PaymentService = require("./mercadoPago/Services/paymentServices");
+// const PaymentInstance = new PaymentController(new PaymentService());
+
 require("./db.js");
 
 const server = express();
+const cors = require('cors');
 
 server.name = "API";
 
+server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
@@ -32,6 +38,12 @@ server.use(usersRoutes);
 server.use(productRoutes);
 server.use(detailRoute);
 server.use(categoriesRoutes);
+
+server.get("/payment/new", (req, res) =>
+  PaymentInstance.getMercadoPagoLink(req, res)
+);
+
+server.post("/webhook", (req, res) => PaymentInstance.webhook(req, res));
 
 // Error catching endware.
 server.use((err, req, res, next) => {
