@@ -6,10 +6,46 @@ import styles from "./ShoppingCart.module.css";
 import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { deleteStorage } from "../../localStorage/localStorageFunctions";
+//AUTH0
+import { useAuth0 } from '@auth0/auth0-react'
+import { useState, useEffect } from "react";
 
 export default function ShoppingCart({ toggleShow }) {
-  let shoppingCart = useSelector((state) => state);
+  let reduxCart = useSelector((state) => state);
   let dispatch = useDispatch();
+  //AUTH0
+  const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useState([])
+
+  useEffect(() => {
+    const generarToken = async () => {
+      try {
+        const tokenApi = await getAccessTokenSilently()
+        setToken(tokenApi)
+        console.log(`ESTO SERIA EL TOKEN API  ${tokenApi}`)
+        console.log(`ESTO SERIA EL TOKEN ${token}`)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    generarToken()
+  }, [])
+
+  let totalItemsAdded = reduxCart.shoppingCart.length
+    ? reduxCart.shoppingCart
+      .map((item) => item.amount)
+      .reduce((acc, item) => (acc += item))
+    : 0;
+
+  let totalPayment = reduxCart.shoppingCart.length
+    ? reduxCart.shoppingCart
+      .map((elem) =>
+        elem.amount ? Number(elem.price) * elem.amount : Number(elem.price)
+      )
+      .reduce((acc, elem) => (acc += elem))
+    : 0;
+
+  useEffect(() => { }, [reduxCart.shoppingCart]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -18,17 +54,17 @@ export default function ShoppingCart({ toggleShow }) {
   };
   return (
     <div>
-      {shoppingCart.shoppingCart.length ? (
+      {reduxCart.shoppingCart.length ? (
         <div className={styles.shoppingContainer}>
           <button className={styles.btnClear} onClick={handleChange}>
             Clear cart
           </button>
           <div className={styles.textContainer}>
-            <span>Items: {shoppingCart.totalItemsInCart}</span>
-            <span>Total: {shoppingCart.totalToPay}</span>
+            <span>Items: {totalItemsAdded}</span>
+            <span>Total: {totalPayment}</span>
           </div>
           <div className={styles.cardsContainer}>
-            {shoppingCart.shoppingCart.map((e, index) => (
+            {reduxCart.shoppingCart.map((e, index) => (
               <CartItem key={index} data={e} />
             ))}
           </div>

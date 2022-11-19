@@ -10,6 +10,7 @@ import title from "../../Utils/Title.png";
 import FiltersSideBar from "./FiltersSideBar.jsx";
 import ShopSideBar from "./ShopCart/ShopSideBar.jsx";
 
+
 const NavBar = () => {
   return (
     <nav className={styles.navContainer}>

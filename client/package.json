@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+
+    "@auth0/auth0-react": "^1.12.0",
+
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.10.14",
@@ -20,6 +24,7 @@
     "react-bootstrap": "^2.6.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.6.0",
+    "react-json-pretty": "^2.2.0",
     "react-redux": "^7.2.9",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
