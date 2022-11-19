@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: 'Slasher';
+    src: url("../../Utils/slasherfilm.ttf");
+}
 .landingContainer{
     background-color: rgb(45, 47, 47);
     width: 100%;
@@ -17,7 +20,7 @@
 .landingHeader{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-
+    margin: 10px
 }
 
 
@@ -35,7 +38,6 @@
 
 .bodyContainer{
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
     justify-content: center;
     color: white;
 }
@@ -58,7 +60,9 @@
     color: rgb(154, 150, 150);
     width: 100%;
     text-align: center;
-    
+    font-family: 'Slasher';
+    font-size: 45px;
+    letter-spacing: 3px;
 }
 
 
@@ -69,12 +73,11 @@
 }
 
 .signIn{
-    font-size: 2rem;
-    /* border: 1px solid black; */
+    font-size: 4rem;
     display: flex;
     justify-content: flex-end;
     color: white;
-    
+    font-family: 'Slasher';
 }
 
 .signIn:hover{
@@ -82,9 +85,9 @@
 }
 
 .signUp{
-    font-size: 2rem;
+    font-size: 4rem;
     color: white;
-    /* border: 1px solid black; */
+    font-family: 'Slasher';
 }
 
 .signUp:hover{
@@ -97,7 +100,8 @@
 }
 
 .separator{
-    font-size: 42px;
+    font-size: 4.5rem;
+    font-weight: lighter;
     
     /* border: 1px solid black; */
 }
