@@ -5,15 +5,15 @@ import SearchInput from "./SearchBar.jsx";
 import styles from "./NavBar.module.css";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import HomeIcon from "@material-ui/icons/Home";
-import ShoppingCart from "../ShoppCart/ShoppingCart";
+// import ShoppingCart from "../ShoppCart/ShoppingCart";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useState } from "react";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 function OffCanvas({ name, ...props }) {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
@@ -23,9 +23,9 @@ function OffCanvas({ name, ...props }) {
         <ShoppingCartIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
       </Button>
       <Offcanvas show={show} onHide={handleClose} {...props}>
-        <Offcanvas.Header closeButton></Offcanvas.Header>
+        <Offcanvas.Header closeButton>YOUR CART</Offcanvas.Header>
         <Offcanvas.Body>
-          <ShoppingCart />
+        <ShoppingCart toggleShow={toggleShow} />
         </Offcanvas.Body>
       </Offcanvas>
     </>

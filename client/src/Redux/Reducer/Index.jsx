@@ -1,4 +1,9 @@
 import {
+  getStorage,
+  saveStorage,
+  deleteStorage,
+} from "../../localStorage/localStorageFunctions";
+import {
   URL_PRODUCTS,
   URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
@@ -28,6 +33,8 @@ import {
   CLEAR_CART,
 } from "../Actions/Const";
 
+const dataStorage = getStorage("shoppCart");
+
 const initialState = {
   products: [],
   allProducts: [],
@@ -42,9 +49,7 @@ const initialState = {
   indexLastProduct: 6,
   indexFirsProduct: 0,
   //
-  shoppingCart: [],
-  totalItemsInCart: 0,
-  totalToPay: 0,
+  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -66,17 +71,6 @@ function rootReducer(state = initialState, action) {
         currentPage: 1,
         indexFirsProduct: 0,
         currentProducts: [...action.payload].slice(0, 6),
-      };
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
-      return {
-        ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
       };
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
@@ -266,80 +260,76 @@ function rootReducer(state = initialState, action) {
       let itemInCart = state.shoppingCart.find(
         (item) => item.id === newItem.id
       );
-      let totalItemsAdded = state.shoppingCart
-        .map((item) => item.quantity)
-        .reduce((acc, item) => (acc += item), 1);
 
       let conditionalAddState = itemInCart
         ? {
             ...state,
             shoppingCart: state.shoppingCart.map((item) =>
               item.id === newItem.id
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, amount: item.amount + 1 }
                 : item
             ),
-            totalItemsInCart: totalItemsAdded,
           }
         : {
             ...state,
-            shoppingCart: [...state.shoppingCart, { ...newItem, quantity: 1 }],
-            totalItemsInCart: totalItemsAdded,
+            shoppingCart: [...state.shoppingCart, { ...newItem, amount: 1 }],
           };
-
+      saveStorage("shoppCart", {
+        ...conditionalAddState.shoppingCart,
+      });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
-      let deletedItem = state.shoppingCart.find(
-        (item) => item.id === action.payload
-      );
 
       let remainedProducts = state.shoppingCart.filter(
         (item) => item.id !== action.payload
       );
 
-      let totalItemsRemainedInCart =
-        state.shoppingCart
-          .map((item) => item.quantity)
-          .reduce((acc, item) => (acc += item), 0) - deletedItem.quantity;
+      if (remainedProducts.length === 0) {
+        deleteStorage("shoppCart");
+      }
+
+      saveStorage("shoppCart", {
+        ...remainedProducts,
+      });
 
       return {
         ...state,
         shoppingCart: remainedProducts,
-        totalItemsInCart: totalItemsRemainedInCart,
       };
     case REMOVE_ONE_FROM_CART:
       let itemToDelete = state.shoppingCart.find(
         (item) => item.id === action.payload
       );
-      let totalItemsRemained = state.shoppingCart
-        .map((item) => item.quantity - 1)
-        .reduce((acc, item) => (acc += item), 0);
 
       let conditionalRemoveState =
-        itemToDelete.quantity > 1
+        itemToDelete?.amount > 1
           ? {
               ...state,
               shoppingCart: state.shoppingCart.map((item) =>
                 item.id === action.payload
-                  ? { ...item, quantity: item.quantity - 1 }
+                  ? { ...item, amount: item.amount - 1 }
                   : item
               ),
-              totalItemsInCart: totalItemsRemained,
             }
           : {
               ...state,
               shoppingCart: state.shoppingCart.filter(
                 (item) => item.id !== action.payload
               ),
-              totalItemsInCart: totalItemsRemained,
             };
+
+      saveStorage("shoppCart", {
+        ...conditionalRemoveState.shoppingCart,
+      });
+
       return conditionalRemoveState;
     case CLEAR_CART:
       return { ...state, shoppingCart: [] };
     case CLEAR_DETAILS:
-      return{
+      return {
         ...state,
-        details: []
-      }
+        details: [],
+      };
     default:
       return state;
   }

@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: 'Slasher';
+    src: url("../../Utils/slasherfilm.ttf");
+}
 .landingContainer{
     background-color: rgb(45, 47, 47);
     width: 100%;
@@ -6,7 +9,6 @@
 
     display: grid;
     grid-template-rows: 1fr 3fr;
-    
     
 }
 
@@ -18,56 +20,89 @@
 .landingHeader{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-
+    margin: 10px
 }
 
 
-.bottomHome{
+.buttomHome{
     /* border: 3px solid black; */
     display: flex;
     justify-content: flex-end;
     color: white;
-    padding: 20px;
-    
+    padding: 20px;     
+}
+
+.buttomHome:hover{
+    color: rgb(154, 150, 150);
 }
 
 .bodyContainer{
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
     justify-content: center;
     color: white;
 }
 
+
+
 .becomingFit{
     /* border: 1px solid black; */
-    display: flex;
+    display: flex;   
     align-items: flex-end;
+    flex-direction: column;
+    
 }
 
-.title{
+.becomingFitTitle{
     font-size: 100px;
 }
 
+.becomingFitSlogan{
+    color: rgb(154, 150, 150);
+    width: 100%;
+    text-align: center;
+    font-family: 'Slasher';
+    font-size: 45px;
+    letter-spacing: 3px;
+}
 
-.loginBottoms{
+
+.loginButtoms{
     display: grid;
     grid-template-columns: 1fr 0.04fr 1fr;
     
 }
 
 .signIn{
-    font-size: 2rem;
-    /* border: 1px solid black; */
+    font-size: 4rem;
     display: flex;
     justify-content: flex-end;
+    color: white;
+    font-family: 'Slasher';
+}
+
+.signIn:hover{
+    color: rgb(154, 150, 150);
 }
 
 .signUp{
-    font-size: 2rem;
-    /* border: 1px solid black; */
+    font-size: 4rem;
+    color: white;
+    font-family: 'Slasher';
+}
+
+.signUp:hover{
+    color: rgb(154, 150, 150);
+}
+
+.separatorContainer{
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .separator{
-    font-size: 3rem;
+    font-size: 4.5rem;
+    font-weight: lighter;
+    
+    /* border: 1px solid black; */
 }
 

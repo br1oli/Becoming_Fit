@@ -4,16 +4,22 @@ import styles from "./ProductDetail.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   addToCart,
+  deleteFromCart,
   getProductDetail,
   clearDetails,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
+import NavBar from "../NavBar/NavBar";
 
 const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
   const dispatch = useDispatch();
   const product = useSelector((state) => state.details);
+  const cartItems = useSelector((state) => state.shoppingCart);
+  const productInCart = cartItems.find((e) => e.id === detailId);
+  //const favorites = useSelector((state) => state.favorites);
+
   useEffect(() => {
     dispatch(getProductDetail(detailId));
 
@@ -24,10 +30,18 @@ const ProductDetail = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    dispatch(addToCart(detailId));
+    console.log(e.target.value);
+    if (e.target.value === "+" || e.target.value === "add") {
+      dispatch(addToCart(detailId));
+    }
+    if (e.target.value === "-") {
+      dispatch(deleteFromCart(detailId));
+    }
   };
+
   return (
     <div className={styles.primaryContainer}>
+      <NavBar />
       <br />
       <br />
       <br />
@@ -76,9 +90,23 @@ const ProductDetail = (props) => {
 
           <p>Cantidad</p>
           <div className={styles.cantidad}>
-            <p className={styles.cantidad1}>-</p>
-            <p className={styles.cantidad2}>1</p>
-            <p className={styles.cantidad1}>+</p>
+            <button
+              onClick={handleChange}
+              value="-"
+              className={styles.cantidad1}
+            >
+              -
+            </button>
+            <p className={styles.cantidad2}>
+              {productInCart?.amount ? productInCart.amount : 0}
+            </p>
+            <button
+              onClick={handleChange}
+              value="+"
+              className={styles.cantidad1}
+            >
+              +
+            </button>
           </div>
 
           <p className={styles.oportunity}>
@@ -89,7 +117,7 @@ const ProductDetail = (props) => {
           <h5 className={styles.price}> $ US {product.price}</h5>
 
           <div className={styles.buttons}>
-            <button className={styles.add} onClick={handleChange}>
+            <button className={styles.add} onClick={handleChange} value="add">
               ADD TO CART
             </button>
             <button className={styles.like}>♥</button>
