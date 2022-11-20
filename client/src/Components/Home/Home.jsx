@@ -1,20 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Styles from "./Home.module.css";
-import Filters from "../Filters/Filters";
+import Footer from "../Footer/Footer.jsx";
 import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
-import LogoutButton from "../Auth/LogoutButton";
 
 const Home = () => {
   const { currentProducts, allProducts } = useSelector((state) => state);
-  
+
   return (
     <div className={Styles.homeContainer}>
       <div className={Styles.leftSide}>
         <div className={Styles.filtersContainer}>
-      <LogoutButton/>
-          <Filters />
+          {/*           <LogoutButton /> */}
         </div>
       </div>
 
@@ -45,6 +43,9 @@ const Home = () => {
           <div className={Styles.loading}></div>
         </>
       )}
+      <div className={Styles.footer}>
+        <Footer />
+      </div>
     </div>
   );
 };

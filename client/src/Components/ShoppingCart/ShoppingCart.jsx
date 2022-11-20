@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../Redux/Actions/UsersActions";
+import { clearCart, sendOrder } from "../../Redux/Actions/UsersActions";
 import CartItem from "./CartItem";
 import styles from "./ShoppingCart.module.css";
 import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { deleteStorage } from "../../localStorage/localStorageFunctions";
 //AUTH0
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 
 export default function ShoppingCart({ toggleShow }) {
@@ -15,43 +15,53 @@ export default function ShoppingCart({ toggleShow }) {
   let dispatch = useDispatch();
   //AUTH0
   const { getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState([])
+  const [token, setToken] = useState([]);
+  const [order, setOrder] = useState([]);
 
   useEffect(() => {
     const generarToken = async () => {
       try {
-        const tokenApi = await getAccessTokenSilently()
-        setToken(tokenApi)
-        console.log(`ESTO SERIA EL TOKEN API  ${tokenApi}`)
-        console.log(`ESTO SERIA EL TOKEN ${token}`)
+        const tokenApi = await getAccessTokenSilently();
+        setToken(tokenApi);
+        console.log(`ESTO SERIA EL TOKEN API  ${tokenApi}`);
+        console.log(`ESTO SERIA EL TOKEN ${token}`);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-    generarToken()
-  }, [])
+    };
+    generarToken();
+  }, []);
 
   let totalItemsAdded = reduxCart.shoppingCart.length
     ? reduxCart.shoppingCart
-      .map((item) => item.amount)
-      .reduce((acc, item) => (acc += item))
+        .map((item) => item.amount)
+        .reduce((acc, item) => (acc += item))
     : 0;
 
   let totalPayment = reduxCart.shoppingCart.length
     ? reduxCart.shoppingCart
-      .map((elem) =>
-        elem.amount ? Number(elem.price) * elem.amount : Number(elem.price)
-      )
-      .reduce((acc, elem) => (acc += elem))
+        .map((elem) =>
+          elem.amount ? Number(elem.price) * elem.amount : Number(elem.price)
+        )
+        .reduce((acc, elem) => (acc += elem))
     : 0;
 
-  useEffect(() => { }, [reduxCart.shoppingCart]);
+  useEffect(() => {
+    setOrder([...reduxCart.shoppingCart]);
+  }, [reduxCart.shoppingCart]);
 
   const handleChange = (e) => {
     e.preventDefault();
     deleteStorage("shoppCart");
     dispatch(clearCart());
   };
+
+  const handleOrder = (e) => {
+    e.preventDefault();
+    console.log("order enviada", order);
+    dispatch(sendOrder(order));
+  };
+
   return (
     <div>
       {reduxCart.shoppingCart.length ? (
@@ -68,7 +78,9 @@ export default function ShoppingCart({ toggleShow }) {
               <CartItem key={index} data={e} />
             ))}
           </div>
-          <button className={styles.btnPay}>Buy it all!</button>
+          <button className={styles.btnPay} onClick={handleOrder}>
+            Buy it all!
+          </button>
         </div>
       ) : (
         <div className={styles.emptyCart}>

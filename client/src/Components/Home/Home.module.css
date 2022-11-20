@@ -1,15 +1,16 @@
 .homeContainer {
     margin: 0;
     display: grid;
-    grid-gap: 20px;
     grid-template: 
-    "navBar navBar"
-    "leftSide rightSide" / 200px
+    "navBar"
+    "rightSide"
+    "footer"
 
 }
 
 .cardsContainer {
     display: grid;
+    justify-items: center;
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     grid-auto-rows: auto;
     grid-area: cards;
@@ -20,10 +21,6 @@
 
 .leftSide {
     grid-area: leftSide;
-}
-
-.rightSide {
-    grid-area: rightSide;
 }
 
 .paginationContainer {
@@ -41,6 +38,11 @@
 
 .navContainer {
     grid-area: navBar;
+}
+
+.footer {
+  grid-area: footer;
+  width: 100%;
 }
 
 .loadingTitle {

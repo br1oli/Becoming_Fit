@@ -31,6 +31,7 @@ import {
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   CLEAR_CART,
+  SEND_ORDER,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -40,6 +41,7 @@ const initialState = {
   allProducts: [],
   allBrands: [],
   details: [],
+  orden: [],
   error: "",
   success: "",
   //pagination:
@@ -213,6 +215,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: action.payload,
       };
+    case SEND_ORDER:
+      return {
+        ...state,
+        orden: [...state.orden, action.payload],
+      };
     case FILTER_CATEGORIES:
       const categoryFiltered =
         action.payload === "all"
@@ -279,7 +286,6 @@ function rootReducer(state = initialState, action) {
       });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
-
       let remainedProducts = state.shoppingCart.filter(
         (item) => item.id !== action.payload
       );

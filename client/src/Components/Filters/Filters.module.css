@@ -1,5 +1,69 @@
+@font-face {
+  font-family: 'Slasher';
+  src: url("../../Utils/slasherfilm.ttf");
+}
+
 .filterContainer {
   display: grid;
-  grid-gap: 20px;
-  margin: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.select {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: #C06162;
+  background: #404040;
+  position: relative;
+  font-size: 18px;
+  left: 0;
+  
+  perspective: 1000px;
+}
+/* 
+.select{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  perspective: 1000px;
+  z-index: -1;
+} */
+.select option{ 
+ display: none;
+ color: white;
+ background-color: #b5e211;
+ padding: 10px 20px;
+ font-size: 16px;
+ opacity: 0;
+}
+ .select option:hover{
+   background-color: #d35b4b 
+ }
+
+.select:hover{
+    background: #2980b9;
+    cursor: pointer;
+}
+
+.select:hover option {
+    display: block;
+}
+
+@keyframes rotateX {
+0% {
+opacity: 0;
+transform: rotateX(-90deg);
+}
+50% {
+transform: rotateX(-20deg);
+}
+100% {
+opacity: 1;
+transform: rotateX(0deg);
+}
 }

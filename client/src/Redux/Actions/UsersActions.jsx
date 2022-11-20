@@ -20,16 +20,34 @@ import {
   SUCCESS,
   CLEAR_SUCCESS,
   CLEAR_ERROR,
-
+  SEND_ORDER,
 
   //Shopping Cart actions
   ADD_PRODUCT_TO_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   CLEAR_CART,
+  URL_PAYMENT,
 } from "./Const";
 
 // ----- PRODUCTS
+export function sendOrder(values) {
+  console.log("actions Order", values);
+  return async function (dispatch) {
+    try {
+      let order = await axios.post(URL_PAYMENT, values);
+      return dispatch({
+        type: SEND_ORDER,
+        payload: order.data.url,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
 
 export function getProducts() {
   return async function (dispatch) {
@@ -90,8 +108,6 @@ export function filterBySize(payload) {
     payload,
   };
 }
-
-
 
 export function filterByGender(payload) {
   return {
@@ -191,6 +207,6 @@ export const clearCart = () => {
   return { type: CLEAR_CART };
 };
 
-export function clearDetails(){
-  return {type: CLEAR_DETAILS}
+export function clearDetails() {
+  return { type: CLEAR_DETAILS };
 }

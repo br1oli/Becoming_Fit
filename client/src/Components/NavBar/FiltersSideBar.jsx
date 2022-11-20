@@ -1,36 +1,3 @@
-/* import React, { useState } from "react";
-import { motion } from "framer-motion";
-import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
-
-function FiltersSideBar() {
-  const [show, setShow] = useState(false);
-  const variants = {
-    open: { opacity: 1, x: 0 },
-    closed: { opacity: 0, x: "-100%" },
-  };
-
-  return (
-    <>
-      <motion.nav
-        animate={show ? "open" : "closed"}
-        variants={variants}
-        transition={{ duration: 0.5 }}
-      />
-
-      <motion.button
-        className="toggle"
-        onClick={() => setShow((show) => !show)}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        button toggle
-      </motion.button>
-    </>
-  );
-}
-
-export default FiltersSideBar; */
-
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -67,3 +34,26 @@ function FiltersRender(props) {
 }
 
 export default FiltersSideBar;
+
+/* import React from "react";
+import Accordion from "react-bootstrap/Accordion";
+import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
+import Filters from "../Filters/Filters.jsx";
+
+function FiltersSideBar() {
+  return (
+    <Accordion defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>
+          <TuneRoundedIcon />
+        </Accordion.Header>
+        <Accordion.Body>
+          <Filters />
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
+export default FiltersSideBar;
+ */

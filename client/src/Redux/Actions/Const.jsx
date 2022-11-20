@@ -1,7 +1,9 @@
 export const URL_PRODUCTS = "/products";
 export const URL_PRODUCTS_QUERY = "/products?name=";
+export const URL_PAYMENT = "/payment/new";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
+export const SEND_ORDER = "SEND_ORDER";
 
 export const FILTER_PRICES = "FILTER_PRICES";
 export const FILTER_CATEGORIES = "FILTER_CATEGORIES";
