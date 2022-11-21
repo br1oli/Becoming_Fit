@@ -25,7 +25,7 @@ const About = () => {
       </div>
       <div className={Styles.pharagraphContainer}>
         <p>
-          Aplicación desarrolada por equipo de estudiantes de SoyHenry® <br />
+          Aplicación desarrollada por equipo de estudiantes de SoyHenry® <br />
           Implementacion de JavaScript - NodeJS - Express - React - Redux -
           Bootstrap - Material UI - Auth 0 - Vercell
         </p>
