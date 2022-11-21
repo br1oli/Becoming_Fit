@@ -175,13 +175,6 @@ const deleteCart = async (req = request, res = response) => {
   try {
     const { cartId } = req.query;
 
-    /*  let cartDestroy = await Cart.destroy({
-      where: {
-        id: cartId,
-      },
-    }); 
-    if (cartDestroy) return res.send("cart deleted successfully");
-    return res.status(404).send("Cart not found");*/
     let allCartProducts = await CartProduct.findAll({
       where: {
         cartId: cartId,
