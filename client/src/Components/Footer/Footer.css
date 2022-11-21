@@ -4,7 +4,7 @@
     font-family: 'Outfit', sans-serif;
 }
 
-#footer {
+.footerContainer {
     background-color: rgb(45, 47, 47);
     margin-top: auto;
     position: relative;
