@@ -21,12 +21,14 @@ import {
   CLEAR_SUCCESS,
   CLEAR_ERROR,
 
-
   //Shopping Cart actions
   ADD_PRODUCT_TO_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   CLEAR_CART,
+
+  //User actions
+  CREATE_USER,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -91,8 +93,6 @@ export function filterBySize(payload) {
   };
 }
 
-
-
 export function filterByGender(payload) {
   return {
     type: FILTER_GENDER,
@@ -154,6 +154,7 @@ export function postProduct(payload) {
   return async (dispatch) => {
     try {
       const response = await axios.post(URL_PRODUCTS, payload);
+
       return dispatch({
         type: SUCCESS,
         payload: response.data,
@@ -176,8 +177,8 @@ export const clearSuccess = () => {
 };
 
 // Shopping cart actions
-export const addToCart = (id) => {
-  return { type: ADD_PRODUCT_TO_CART, payload: id };
+export const addToCart = (values) => {
+  return { type: ADD_PRODUCT_TO_CART, payload: values };
 };
 export const deleteFromCart = (id, all = false) => {
   if (all) {
@@ -190,7 +191,38 @@ export const deleteFromCart = (id, all = false) => {
 export const clearCart = () => {
   return { type: CLEAR_CART };
 };
+export const clearCartInDb = (userID) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete("/cart", userID);
+      return dispatch({ type: SUCCESS, payload: response.data });
+    } catch (error) {
+      return dispatch({ type: ERROR, payload: error.response.data });
+    }
+  };
+};
 
-export function clearDetails(){
-  return {type: CLEAR_DETAILS}
+export function clearDetails() {
+  return { type: CLEAR_DETAILS };
 }
+
+// User actions
+
+export const createUser = (email) => {
+  return async function (dispatch) {
+    try {
+      let user = await axios.post(`/user?email=${email}`);
+      console.log("action", user);
+
+      return dispatch({
+        type: CREATE_USER,
+        payload: user.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+};

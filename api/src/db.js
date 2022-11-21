@@ -79,8 +79,10 @@ const {
   Product,
   PurchaseDetail,
   PurchasedProduct,
-  UserAdress,
   User,
+  UserAdress,
+  UserPhone,
+  UserProfile,
   Review,
 } = sequelize.models;
 
@@ -164,6 +166,12 @@ PurchasedProduct.belongsTo(PurchaseDetail);
 
 User.hasMany(PurchaseDetail);
 PurchaseDetail.belongsTo(User);
+
+User.hasOne(UserProfile);
+UserProfile.belongsTo(User);
+
+User.hasMany(UserPhone);
+UserPhone.belongsTo(User);
 
 //-------------------------------------Relacion usuario-Reviews---------------------------------
 

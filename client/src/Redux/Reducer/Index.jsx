@@ -31,6 +31,7 @@ import {
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   CLEAR_CART,
+  CREATE_USER,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -50,6 +51,7 @@ const initialState = {
   indexFirsProduct: 0,
   //
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
+  userStore: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -71,17 +73,6 @@ function rootReducer(state = initialState, action) {
         currentPage: 1,
         indexFirsProduct: 0,
         currentProducts: [...action.payload].slice(0, 6),
-      };
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
-      return {
-        ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
       };
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
@@ -279,7 +270,6 @@ function rootReducer(state = initialState, action) {
       });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
-
       let remainedProducts = state.shoppingCart.filter(
         (item) => item.id !== action.payload
       );
@@ -329,6 +319,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         details: [],
+      };
+    case CREATE_USER:
+      console.log("user", action.payload);
+      return {
+        ...state,
+        userStore: action.payload,
       };
     default:
       return state;

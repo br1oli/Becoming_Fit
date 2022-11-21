@@ -2,7 +2,6 @@ export const URL_PRODUCTS = "/products";
 export const URL_PRODUCTS_QUERY = "/products?name=";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
-
 export const FILTER_PRICES = "FILTER_PRICES";
 export const FILTER_CATEGORIES = "FILTER_CATEGORIES";
 export const FILTER_GENDER = "FILTER_GENDER";
@@ -34,3 +33,7 @@ export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
+export const CLEAR_CART_IN_DB = "CLEAR_CART_IN_DB";
+
+//User actions
+export const CREATE_USER = "CREATE_USER";
