@@ -19,89 +19,25 @@ const getUsers = async (req = request, res = response) => {
 };
 
 const createUser = async (req = request, res = response) => {
-  const {
-    userName,
-    firstName,
-    lastName,
-    email,
-    address,
-    password,
-    zipCode,
-    telephone,
-    adminPermissions,
-    image,
-  } = req.body;
+  const { email } = req.query;
 
-  const isDataClient =
-    !email ||
-    !password ||
-    !userName ||
-    !address ||
-    !telephone ||
-    !adminPermissions ||
-    !firstName ||
-    !zipCode ||
-    !lastName;
-
-  if (isDataClient) {
-    return res.status(400).send("missing data!");
+  if (!email.length) {
+    return res.status(400).send("No email provided");
   }
   try {
     const userExists = await User.findOne({ where: { email: email } });
 
     if (userExists !== null) {
-      return res.status(404).send("That user already exists, try a new one");
+      return res.status(200).send(userExists.dataValues);
     }
     const newUser = await User.create({
-      userName,
-      firstName,
-      lastName,
       email,
-      address,
-      password,
-      zipCode,
-      telephone,
-      adminPermissions,
-      image,
     });
-    res.status(201).send(newUser.dataValues && "User succesfully created");
+    res.status(201).send(newUser.dataValues);
   } catch (error) {
     res.status(500).json(error.message);
   }
 };
-
-/* const updateUser = async (req = request, res = response) => {
-  const { id } = req.params;
-  // pensar que queremos que se modifique del client: hay que restringir a que vengan si o si los datos, si no, hacetr una funcion que me divida los que si existen y los que no existen!
-  const {
-    userName,
-    firstName,
-    lastName,
-    email,
-    address,
-    password,
-    telephone,
-    adminPermissions,
-    image,
-  } = req.body;
-  try {
-    const user = await User.findByPk(id);
-    user.userName = userName;
-    user.address = address;
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.telephone = telephone;
-    user.email = email;
-    user.password = password;
-    user.adminPermissions = adminPermissions;
-    // pensar si viene una img, si no existe, por default se carga una con sequelize!
-    user.image = image;
-    user.save();
-    res.json(user);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-}; */
 
 const updateUser = async (req = request, res = response) => {
   try {

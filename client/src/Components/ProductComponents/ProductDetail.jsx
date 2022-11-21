@@ -7,6 +7,8 @@ import {
   deleteFromCart,
   getProductDetail,
   clearDetails,
+  postCartToDB,
+  getCartFromDB,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
@@ -18,6 +20,12 @@ const ProductDetail = (props) => {
   const product = useSelector((state) => state.details);
   const cartItems = useSelector((state) => state.shoppingCart);
   const productInCart = cartItems.find((e) => e.id === detailId);
+  const cartDB = useSelector((state) => state.cartDB);
+  const productInCartDB = cartDB?.cartProducts?.find(
+    (e) => e.product.id === detailId
+  );
+  let token = useSelector((state) => state.token);
+  let userId = JSON.parse(sessionStorage.getItem("userId"));
   //const favorites = useSelector((state) => state.favorites);
 
   useEffect(() => {
@@ -30,12 +38,24 @@ const ProductDetail = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
-    if (e.target.value === "+" || e.target.value === "add") {
-      dispatch(addToCart(detailId));
-    }
-    if (e.target.value === "-") {
-      dispatch(deleteFromCart(detailId));
+    if (token) {
+      if (e.target.value === "+" || e.target.value === "add") {
+        dispatch(
+          postCartToDB({ userId: userId, productId: detailId, amount: 1 })
+        );
+      }
+      if (e.target.value === "-") {
+        dispatch(
+          postCartToDB({ userId: userId, productId: detailId, amount: -1 })
+        );
+      }
+    } else {
+      if (e.target.value === "+" || e.target.value === "add") {
+        dispatch(addToCart(detailId));
+      }
+      if (e.target.value === "-") {
+        dispatch(deleteFromCart(detailId));
+      }
     }
   };
 
@@ -98,7 +118,11 @@ const ProductDetail = (props) => {
               -
             </button>
             <p className={styles.cantidad2}>
-              {productInCart?.amount ? productInCart.amount : 0}
+              {cartDB.cartProducts?.length
+                ? productInCartDB?.amount
+                : productInCart?.amount
+                ? productInCart.amount
+                : 0}
             </p>
             <button
               onClick={handleChange}

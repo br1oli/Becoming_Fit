@@ -9,8 +9,14 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { postProduct } from "../../Redux/Actions/UsersActions";
+import {
+  postProduct,
+  clearError,
+  clearSuccess,
+} from "../../Redux/Actions/UsersActions";
 import Style from "./ProductForm.module.css";
+import Success from "../Success/Success";
+import Error from "../Error/Error";
 
 function validador(input) {
   let errors = {};
@@ -39,9 +45,8 @@ function validador(input) {
   }
   if (!input.size) {
     errors.size = "Required";
-  }
-  else if (!input.size.length) {
-      errors.size = "Select at least one size from the list";
+  } else if (!input.size.length) {
+    errors.size = "Select at least one size from the list";
   }
   if (!input.rating) {
     errors.rating = "Required";
@@ -62,10 +67,13 @@ function validador(input) {
   if (!input.image) {
     errors.image = "Required";
   } else if (
-    !/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(input.image)) {
+    !/(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(
+      input.image
+    )
+  ) {
     errors.image = "Invalid Url";
   }
-    return errors;
+  return errors;
 }
 
 export default function ProductForm() {
@@ -103,8 +111,15 @@ export default function ProductForm() {
   const brandss = [...new Set(allProducts.map((e) => e.brand.name))];
   const categories = [...new Set(allProducts.map((e) => e.category.name))];
   const gender = [...new Set(allProducts.map((e) => e.gender))];
+  const response = useSelector((state) => state);
 
   const handleInputChange = (e) => {
+    if (response.error) {
+      dispatch(clearError());
+    }
+    if (response.success) {
+      dispatch(clearSuccess());
+    }
     if (e.target.name === "size") {
       setInput((prev) => ({
         ...prev,
@@ -115,46 +130,30 @@ export default function ProductForm() {
     }
     let errorObj = validador({ ...input, [e.target.name]: e.target.value });
     setErrors(errorObj);
-    console.log(input)
   };
 
   function handleSubmit(e) {
     e.preventDefault();
-    // if (
-    //   !input.name ||
-    //   !input.type ||
-    //   !input.color ||
-    //   !input.gender ||
-    //   !input.size ||
-    //   !input.rating ||
-    //   !input.price ||
-    //   !input.brand ||
-    //   !input.image ||
-    //   !input.category ||
-    //   !input.description
-    // ) {
-    //   alert("Incomplete form");
-    // } else {
-      setErrors({})
-      dispatch(postProduct(input));
-      setInput({
-        name: "",
-        type: "",
-        gender: "",
-        price: "",
-        image: "",
-        brand: "",
-        color: "",
-        description: "",
-        size: [],
-        category: "",
-        rating: "",
-      });
-    // useHistor()
+    setErrors({});
+    dispatch(postProduct(input));
+    setInput({
+      name: "",
+      type: "",
+      gender: "",
+      price: "",
+      image: "",
+      brand: "",
+      color: "",
+      description: "",
+      size: [],
+      category: "",
+      rating: "",
+    });
+    // useHistory()
   }
 
   let disabled = Object.entries(errors).length ? true : false;
-  
+
   return (
     <div style={{ margin: 15 }}>
       <Container>
@@ -235,15 +234,13 @@ export default function ProductForm() {
               </Row>
               <Row>
                 <Col>
-                <FloatingLabel
+                  <FloatingLabel
                     className="mb-3"
                     controlId="floatingimage"
                     label="Size"
                   >
                     <Form.Select name="size" onChange={handleInputChange}>
-                      <option value={"NULL"}
-                      >Choose
-                      </option>
+                      <option value={"NULL"}>Choose</option>
                       <option key={"XS"} value={"XS"}>
                         XS
                       </option>
@@ -396,6 +393,11 @@ export default function ProductForm() {
               >
                 Submit
               </Button>
+
+              {response.success.length ? (
+                <Success success={response.success} />
+              ) : null}
+              {response.error.length ? <Error error={response.error} /> : null}
             </div>
           </form>
         </Card>

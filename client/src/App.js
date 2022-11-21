@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
@@ -21,10 +21,25 @@ function App() {
   const dispatch = useDispatch();
   const { isLoading, isAuthenticated } = useAuth0();
   const allProducts = useSelector((state) => state.allProducts);
+  //AUTH0
+  const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useState([]);
+
   useEffect(() => {
-    if (!allProducts.length) {
-      dispatch(getProducts());
-    }
+    const generarToken = async () => {
+      try {
+        const tokenApi = await getAccessTokenSilently();
+        setToken(tokenApi);
+        sessionStorage.setItem("userToken", JSON.stringify(tokenApi));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    generarToken();
+  }, []);
+
+  useEffect(() => {
+    dispatch(getProducts());
   }, []);
 
   return (
