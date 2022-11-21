@@ -9,7 +9,7 @@ import logo from "../../Utils/logoFondoGris.png";
 import title from "../../Utils/Title.png";
 import FiltersSideBar from "./FiltersSideBar.jsx";
 import ShopSideBar from "./ShopCart/ShopSideBar.jsx";
-
+import UserSideBar from "./UserMenu/UserMenu.jsx";
 
 const NavBar = () => {
   return (
@@ -25,6 +25,7 @@ const NavBar = () => {
       <img src={title} alt="not found" width={240} height={80} />
       <SearchInput />
       <ShopSideBar />
+      <UserSideBar />
     </nav>
   );
 };
