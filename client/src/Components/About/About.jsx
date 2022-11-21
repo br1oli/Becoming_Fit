@@ -1,7 +1,7 @@
 import React from "react";
 import Styles from "./About.module.css";
 import { Link } from "react-router-dom";
-import { FaHome } from 'react-icons/fa'
+import { FaHome } from "react-icons/fa";
 
 const About = () => {
   return (
