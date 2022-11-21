@@ -56,7 +56,7 @@ const Footer = () => {
 
           <div className="col-md-2 mb-md-0 mb-2">
             <h5 id="info" className="text-uppercase">
-              Company
+              COMPANY
             </h5>
             <ul className="list-unstyled">
               <li>
@@ -82,7 +82,7 @@ const Footer = () => {
 
           <div className="col-md-5 mb-md-0 mb-2">
             <h5 id="info" className="text-uppercase">
-              Information
+              INFORMATION
             </h5>
             <ul className="list-unstyled text-secondary">
               <li>
