@@ -15,9 +15,9 @@ const Profile = ()=>{
 
   useEffect(()=>{
     const generarToken = async ()=>{
-        console.log(user)
+        console.log('ESTO ES EL USUARIO ' + user)
         try {
-        if(isAuthenticated && user.email === 'messinaluciano453@gmail.com'){
+        if(isAuthenticated){
           user.roles = 'admin'
           console.log("admin")
         }else{

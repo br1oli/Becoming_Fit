@@ -7,10 +7,29 @@ import { FaHome } from "react-icons/fa";
 import Footer from "../Footer/Footer";
 //AUTH0
 import { useAuth0 } from '@auth0/auth0-react'
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 
 const LandingPage = () => {
-  const {loginWithRedirect} = useAuth0();
+  const {loginWithRedirect, isAuthenticated} = useAuth0();
+  const history = useHistory()
+
+  useEffect(()=>{
+    const redireccionar = async ()=>{
+        try {
+        if(isAuthenticated){
+          history.push('/home')
+        }else{
+          console.log('NO ESTA AUTENTICADO')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+   
+  }
+  redireccionar()
+  })
 
   return (
     <div className={Style.landingContainer}>

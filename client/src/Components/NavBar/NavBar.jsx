@@ -5,7 +5,6 @@ import SearchInput from "./SearchBar.jsx";
 import styles from "./NavBar.module.css";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import HomeIcon from "@material-ui/icons/Home";
-// import ShoppingCart from "../ShoppCart/ShoppingCart";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useState } from "react";
