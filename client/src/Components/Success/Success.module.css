@@ -1,0 +1,12 @@
+.successContainer {
+  justify-self: center;
+  margin-top: 1.3rem;
+  padding: 0.8rem 2rem;
+  align-self: center;
+  border: 2px solid var(--success-color);
+  border-radius: 4px;
+}
+
+.successText {
+  color: var(--success-color);
+}

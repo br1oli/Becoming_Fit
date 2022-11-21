@@ -3,16 +3,23 @@ import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import "./ProductCard.css";
-import { addToCart } from "../../Redux/Actions/UsersActions";
-import { useDispatch } from "react-redux";
+import { addToCart, postCartToDB } from "../../Redux/Actions/UsersActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductCard = (props) => {
   let dispatch = useDispatch();
+  let token = useSelector((state) => state.token);
+  let userId = useSelector((state) => state.userStore);
 
   const handleChange = (e) => {
     e.preventDefault();
-
-    dispatch(addToCart(e.target.value));
+    if (token) {
+      dispatch(
+        postCartToDB({ userId: userId.id, productId: props.id, amount: 1 })
+      );
+    } else {
+      dispatch(addToCart(e.target.value));
+    }
   };
   return (
     <div className="row" style={{ width: "15rem" }}>
