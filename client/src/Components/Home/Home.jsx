@@ -14,7 +14,7 @@ const Home = () => {
     <div className={Styles.homeContainer}>
       {/* <div className={Styles.leftSide}></div> */}
 
-      {allProducts.length < 0 ? (
+      {allProducts.length > 0 ? (
         <div className={Styles.rightSide}>
           <div className={Styles.paginationContainer}>
             <Pagination />
