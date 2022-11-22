@@ -88,7 +88,7 @@ const Footer = () => {
               <li>
                 <Link
                   id="Link"
-                  to="/faqs"
+                  to="/termns&conditions"
                   className="text-secondary text-decoration-none"
                 >
                   Terms & Conditions
@@ -97,7 +97,7 @@ const Footer = () => {
               <li>
                 <Link
                   id="Link"
-                  to="privacypolicy"
+                  to="/privacypolicy"
                   className="text-secondary text-decoration-none"
                 >
                   Privacy Policy
@@ -106,7 +106,7 @@ const Footer = () => {
               <li>
                 <Link
                   id="Link"
-                  to="terms"
+                  to='/FAQs'
                   className="text-secondary text-decoration-none"
                 >
                   F.A.Qs

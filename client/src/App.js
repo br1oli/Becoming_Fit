@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts, getProductFromFavorites } from "./Redux/Actions/UsersActions";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
+import FAQs from './Components/FAQs/FAQs'
+import TermsConditions from './Components/Terms&Conditions/TermsConditions'
+import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy'
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./Components/Auth/LoginButton";
@@ -50,7 +53,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+     {/*  {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
+     <Route exact path="/termns&conditions" component={TermsConditions} />
+      <Route exact path="/FAQs" component={FAQs} />
+      <Route exact path="/privacypolicy" component={PrivacyPolicy} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/home" component={Home} />
