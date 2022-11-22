@@ -25,7 +25,6 @@
 
 
 .buttomHome{
-    /* border: 3px solid black; */
     display: flex;
     justify-content: flex-end;
     color: white;
@@ -45,7 +44,6 @@
 
 
 .becomingFit{
-    /* border: 1px solid black; */
     display: flex;   
     align-items: flex-end;
     flex-direction: column;
@@ -82,6 +80,7 @@
 
 .signIn:hover{
     color: rgb(154, 150, 150);
+    cursor: pointer;
 }
 
 .signUp{
