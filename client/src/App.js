@@ -6,7 +6,7 @@ import Footer from "./Components/Footer/Footer";
 import NavBar from "./Components/NavBar/NavBar";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "./Redux/Actions/UsersActions";
+import { getProducts, getProductFromFavorites } from "./Redux/Actions/UsersActions";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 //AUTH0
@@ -16,11 +16,13 @@ import Profile from "./Components/Auth/user-info";
 import LogoutButton from "./Components/Auth/LogoutButton";
 
 import FiltersSideBar from "./Components/NavBar/FiltersSideBar";
+import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 
 function App() {
   const dispatch = useDispatch();
   const { isLoading, isAuthenticated } = useAuth0();
   const allProducts = useSelector((state) => state.allProducts);
+  const favorites = useSelector((state) => state.favorites);
   //AUTH0
   const { getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([]);
@@ -42,6 +44,10 @@ function App() {
     dispatch(getProducts());
   }, []);
 
+  useEffect(() => {
+    dispatch(getProductFromFavorites())
+  },[])
+
   return (
     <BrowserRouter>
       {isAuthenticated ? <LogoutButton /> : <LoginButton />}
@@ -56,6 +62,7 @@ function App() {
       />
       <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
+      <Route exact path="/favorites"> <FavoritesProducts favorites={favorites}/> </Route>
     </BrowserRouter>
   );
 }
