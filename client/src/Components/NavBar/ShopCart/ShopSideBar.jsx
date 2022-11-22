@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import ShoppingCart from "../../ShoppingCart/ShoppingCart";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { HiShoppingCart } from "react-icons/hi";
+import Styles from "./ShopSideBar.module.css";
 
 function OffCanvas({ name, ...props }) {
   const [show, setShow] = useState(false);
@@ -12,9 +12,9 @@ function OffCanvas({ name, ...props }) {
 
   return (
     <>
-      <Button onClick={toggleShow}>
-        <ShoppingCartIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
-      </Button>
+      <div onClick={toggleShow}>
+        <HiShoppingCart className={Styles.icon} />
+      </div>
       <Offcanvas show={show} onHide={handleClose} {...props}>
         <Offcanvas.Header closeButton>YOUR CART</Offcanvas.Header>
         <Offcanvas.Body>

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import {
-  //filterByPrice,
   orderByPrice,
   getProducts,
   orderByName,
@@ -59,7 +58,10 @@ export default function Filters() {
   return (
     <div className={Style.filterContainer}>
       <div>
-        <select onChange={(e) => handleFilterCategory(e)}>
+        <select
+          className={Style.select}
+          onChange={(e) => handleFilterCategory(e)}
+        >
           <option value="all">ALL CATEGORIES</option>
           <option value="jacket">JACKETS</option>
           <option value="shoes">SHOES</option>
@@ -69,7 +71,7 @@ export default function Filters() {
       </div>
 
       <div>
-        <select onChange={(e) => handleFilterPrice(e)}>
+        <select className={Style.select} onChange={(e) => handleFilterPrice(e)}>
           <option value="all">ALL PRICES</option>
           <option value="<50"> less than 50 </option>
           <option value="50 - 100"> 50 - 100 </option>
@@ -78,7 +80,10 @@ export default function Filters() {
       </div>
 
       <div>
-        <select onChange={(e) => handleFilterGender(e)}>
+        <select
+          className={Style.select}
+          onChange={(e) => handleFilterGender(e)}
+        >
           <option value="all">ALL GENDERS</option>
           <option value="male">MALE</option>
           <option value="female">FEMALE</option>
@@ -87,7 +92,7 @@ export default function Filters() {
       </div>
 
       <div>
-        <select onChange={(e) => handleFilterSize(e)}>
+        <select className={Style.select} onChange={(e) => handleFilterSize(e)}>
           <option value="all">ALL SIZES</option>
           <option value="XS">XS</option>
           <option value="S">S</option>
@@ -99,7 +104,7 @@ export default function Filters() {
       </div>
 
       <div>
-        <select onChange={(e) => handleFilterBrand(e)}>
+        <select className={Style.select} onChange={(e) => handleFilterBrand(e)}>
           <option value="all">ALL BRANDS</option>
           <option value="adidas">ADIDAS</option>
           <option value="nike">NIKE</option>
@@ -110,7 +115,7 @@ export default function Filters() {
       </div>
 
       <div>
-        <select onChange={(e) => handleSortName(e)}>
+        <select className={Style.select} onChange={(e) => handleSortName(e)}>
           <option value="all">ORDER BY NAME</option>
           <option value="asc">A - Z</option>
           <option value="des">Z - A</option>
@@ -118,15 +123,17 @@ export default function Filters() {
       </div>
 
       <div>
-        <select onChange={(e) => handleSortPrice(e)}>
+        <select className={Style.select} onChange={(e) => handleSortPrice(e)}>
           <option value="all">ORDER BY PRICES</option>
           <option value="asc">LOWER PRICE</option>
           <option value="des">HIGHER PRICE</option>
         </select>
       </div>
-
+      <br />
       <div>
-        <button onClick={(e) => handleReload(e)}>REFRESH</button>
+        <button className={Style.select} onClick={(e) => handleReload(e)}>
+          REFRESH
+        </button>
       </div>
     </div>
   );
