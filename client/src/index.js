@@ -11,8 +11,6 @@ import Auth0ProviderWithHistory from "./Components/Auth/auth0-provider-with-hist
 
 dotenv.config();
 
-/* axios.defaults.baseURL = process.env.REACT_APP_API || "https://becomingfit-production.up.railway.app"; */
-
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(

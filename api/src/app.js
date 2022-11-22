@@ -6,6 +6,8 @@ const usersRoutes = require("./routes/users.routes");
 const productRoutes = require("./routes/products.routes");
 const detailRoute = require("./routes/details.routes");
 const categoriesRoutes = require("./routes/categories.routes");
+const cartRoutes = require("./routes/cart.routes");
+const favoritesRoutes = require("./routes/favorites.routes");
 
 // const PaymentController = require("./mercadoPago/Controllers/paymentController");
 // const PaymentService = require("./mercadoPago/Services/paymentServices");
@@ -14,7 +16,7 @@ const categoriesRoutes = require("./routes/categories.routes");
 require("./db.js");
 
 const server = express();
-const cors = require('cors');
+const cors = require("cors");
 
 server.name = "API";
 
@@ -38,6 +40,8 @@ server.use(usersRoutes);
 server.use(productRoutes);
 server.use(detailRoute);
 server.use(categoriesRoutes);
+server.use(cartRoutes);
+server.use(favoritesRoutes);
 
 server.get("/payment/new", (req, res) =>
   PaymentInstance.getMercadoPagoLink(req, res)

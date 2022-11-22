@@ -31,9 +31,23 @@ import {
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   CLEAR_CART,
+  POST_TO_CART_DB,
+  GET_CART_DB,
+  DELETE_CART,
+  DELETE_PRODUCT_CART,
+
+  //User
+  CREATE_USER,
+
+  //Favorites Products actions
+  ADD_PRODUCT_TO_FAVORITES,
+  GET_PRODUCT_FROM_FAVORITES,
+  REMOVE_ONE_FROM_FAVORITES,
+  REMOVE_ALL_FROM_FAVORITES,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
+const tokenStorage = JSON.parse(sessionStorage.getItem("userToken"));
 
 const initialState = {
   products: [],
@@ -50,6 +64,11 @@ const initialState = {
   indexFirsProduct: 0,
   //
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
+  userStore: [],
+  cartDB: [],
+  cartDbResponse: "",
+  token: tokenStorage !== null ? tokenStorage : "",
+  favorites: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -71,17 +90,6 @@ function rootReducer(state = initialState, action) {
         currentPage: 1,
         indexFirsProduct: 0,
         currentProducts: [...action.payload].slice(0, 6),
-      };
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
-      return {
-        ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
       };
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
@@ -279,7 +287,6 @@ function rootReducer(state = initialState, action) {
       });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
-
       let remainedProducts = state.shoppingCart.filter(
         (item) => item.id !== action.payload
       );
@@ -323,13 +330,63 @@ function rootReducer(state = initialState, action) {
       });
 
       return conditionalRemoveState;
+    case POST_TO_CART_DB:
+      return { ...state, cartDbResponse: action.payload };
+    case GET_CART_DB:
+      saveStorage("dbProducts", JSON.stringify(action.payload.cartProducts));
+      return {
+        ...state,
+        cartDB: action.payload,
+      };
+    case DELETE_CART:
+      deleteStorage("dbProducts");
+      return { ...state, cartDB: [], cartDbResponse: action.payload };
+    case DELETE_PRODUCT_CART:
+      return { ...state, cartDbResponse: action.payload };
+
     case CLEAR_CART:
-      return { ...state, shoppingCart: [] };
+      return { ...state, shoppingCart: [], cartDbResponse: "" };
+
     case CLEAR_DETAILS:
       return {
         ...state,
         details: [],
       };
+    case CREATE_USER:
+      sessionStorage.setItem("userId", JSON.stringify(action.payload.id));
+      return {
+        ...state,
+        userStore: action.payload,
+      };
+
+      // Favorites Products reducer functions 
+    case ADD_PRODUCT_TO_FAVORITES:
+
+      return {
+        ...state,
+        favorites:  [...state.favorites, action.payload]
+      }
+    
+      case GET_PRODUCT_FROM_FAVORITES:
+        return{
+          ...state,
+          favorites: action.payload
+        };
+
+      case REMOVE_ALL_FROM_FAVORITES:
+        
+        return{
+          ...state,
+          favorites: initialState.favorites,
+        };
+
+      case REMOVE_ONE_FROM_FAVORITES:
+      const removeOneProduct = state.favorites.filter((item) => item.id !== action.payload.id); 
+        return{
+          ...state,
+          favorites: removeOneProduct
+        }
+
     default:
       return state;
   }

@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "userAdress",
+    "userPhone",
     {
       id: {
         type: DataTypes.UUID,
@@ -13,21 +13,8 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
-      adress: {
+      phoneNumber: {
         type: DataTypes.STRING,
-        allowNull: false
-      },
-      city: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      postalCode: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      country: {
-        type: DataTypes.STRING,
-        allowNull: false
       },
     },
     {

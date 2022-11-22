@@ -7,6 +7,9 @@ import {
   deleteFromCart,
   getProductDetail,
   clearDetails,
+  postCartToDB,
+  getCartFromDB,
+  addProductToFavorites
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
@@ -18,6 +21,12 @@ const ProductDetail = (props) => {
   const product = useSelector((state) => state.details);
   const cartItems = useSelector((state) => state.shoppingCart);
   const productInCart = cartItems.find((e) => e.id === detailId);
+  const cartDB = useSelector((state) => state.cartDB);
+  const productInCartDB = cartDB?.cartProducts?.find(
+    (e) => e.product.id === detailId
+  );
+  let token = useSelector((state) => state.token);
+  let userId = JSON.parse(sessionStorage.getItem("userId"));
   //const favorites = useSelector((state) => state.favorites);
 
   useEffect(() => {
@@ -30,14 +39,30 @@ const ProductDetail = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
-    if (e.target.value === "+" || e.target.value === "add") {
-      dispatch(addToCart(detailId));
-    }
-    if (e.target.value === "-") {
-      dispatch(deleteFromCart(detailId));
+    if (token) {
+      if (e.target.value === "+" || e.target.value === "add") {
+        dispatch(
+          postCartToDB({ userId: userId, productId: detailId, amount: 1 })
+        );
+      }
+      if (e.target.value === "-") {
+        dispatch(
+          postCartToDB({ userId: userId, productId: detailId, amount: -1 })
+        );
+      }
+    } else {
+      if (e.target.value === "+" || e.target.value === "add") {
+        dispatch(addToCart(detailId));
+      }
+      if (e.target.value === "-") {
+        dispatch(deleteFromCart(detailId));
+      }
     }
   };
+
+  const handleFavorite = () => {
+    dispatch(addProductToFavorites(detailId));
+  }
 
   return (
     <div className={styles.primaryContainer}>
@@ -73,7 +98,7 @@ const ProductDetail = (props) => {
           />
 
           <p>
-            Yor favorite brand • <strong>{product.brand?.name}</strong>
+            Your favorite brand • <strong>{product.brand?.name}</strong>
           </p>
 
           <div className={styles.sizesDiv}>
@@ -98,7 +123,11 @@ const ProductDetail = (props) => {
               -
             </button>
             <p className={styles.cantidad2}>
-              {productInCart?.amount ? productInCart.amount : 0}
+              {cartDB.cartProducts?.length
+                ? productInCartDB?.amount
+                : productInCart?.amount
+                ? productInCart.amount
+                : 0}
             </p>
             <button
               onClick={handleChange}
@@ -120,7 +149,7 @@ const ProductDetail = (props) => {
             <button className={styles.add} onClick={handleChange} value="add">
               ADD TO CART
             </button>
-            <button className={styles.like}>♥</button>
+            <button onClick={handleFavorite} className={styles.like}>♥</button>
           </div>
 
           <p>Free shipping & special prices for members only</p>
