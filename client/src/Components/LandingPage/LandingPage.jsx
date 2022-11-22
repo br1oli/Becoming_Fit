@@ -6,16 +6,15 @@ import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import Footer from "../Footer/Footer";
 //AUTH0
-import { useAuth0 } from '@auth0/auth0-react'
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 const LandingPage = () => {
-  const {loginWithRedirect} = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <div className={Style.landingContainer}>
       <div className={Style.landingHeader}>
-      {/* <div onClick={() => loginWithRedirect({ appState: { returnTo: '/home' } })} className={Style.signIn}/>  */}
+        {/* <div onClick={() => loginWithRedirect({ appState: { returnTo: '/home' } })} className={Style.signIn}/>  */}
         <img src={logo} alt="not found" width={100} height={100} />
         <div className={Style.linkContainter}>
           <Link className={Style.buttomHome} to={"/home"}>
@@ -34,9 +33,14 @@ const LandingPage = () => {
 
         <div className={Style.loginButtoms}>
           <div className={Style.signInContainer}>
-            <Link to="signin" className={Style.signIn}>
+            <div
+              onClick={() =>
+                loginWithRedirect({ appState: { returnTo: "/home" } })
+              }
+              className={Style.signIn}
+            >
               Sign in
-            </Link>
+            </div>
           </div>
           <div className={Style.separatorContainer}>
             <h3 className={Style.separator}>|</h3>
