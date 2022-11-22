@@ -4,15 +4,11 @@ import {
   addToCart,
   deleteFromCart,
   deleteProductCartInDb,
-  getCartFromDB,
   postCartToDB,
 } from "../../Redux/Actions/UsersActions";
 import { NavLink } from "react-router-dom";
 import styles from "./CartItem.module.css";
 //AUTH0
-import { useAuth0 } from "@auth0/auth0-react";
-import { useState } from "react";
-import { useEffect } from "react";
 
 export default function CartItem({
   id,

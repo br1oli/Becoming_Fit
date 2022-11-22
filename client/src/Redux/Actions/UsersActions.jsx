@@ -13,8 +13,6 @@ import {
   ORDER_BY_PRICE,
   GET_DETAILS,
   CLEAR_DETAILS,
-  DELETE_OWN_REVIEW,
-  EDIT_OWN_REVIEW,
   SET_CURRENT_PAGE_PRODUCTS,
   ERROR,
   SUCCESS,
@@ -40,7 +38,7 @@ import {
 export function getProducts() {
   return async function (dispatch) {
     try {
-      let products = await axios(URL_PRODUCTS);
+      let products = await axios('/products');
       return dispatch({
         type: GET_PRODUCTS,
         payload: products.data,
