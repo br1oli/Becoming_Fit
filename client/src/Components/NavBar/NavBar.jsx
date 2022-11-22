@@ -16,9 +16,6 @@ const NavBar = () => {
     <nav className={styles.navContainer}>
       <img src={logo} alt="not found" width={80} height={80} />
       <FiltersSideBar />
-      <Link to={"/home"}>
-        <HomeIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
-      </Link>
       <Link to={"/productForm"}>
         <AddCircleIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
       </Link>
