@@ -2,15 +2,16 @@
     margin: 0;
     display: grid;
     grid-template: 
-    "navBar"
-    "rightSide"
+    "navBar "
+    "slider"
+    "body"
     "footer" 
 }
 
 .cardsContainer {
     display: grid;
     justify-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: auto;
     grid-area: cards;
     grid-gap: 0.5rem;
@@ -22,12 +23,29 @@
     grid-area: leftSide;
 }
 
+.bodyContainer {
+    grid-area: body;
+    margin: 0;
+    display: grid;
+    grid-template:
+    "leftSide rightSide" / 200px
+}
+
 .rightSide {
     grid-area: rightSide;
 }
 
+.leftSide {
+    grid-area: leftSide;
+    margin: 10px;
+}
+
 .paginationContainer {
     grid-area: pagination;
+}
+
+.sliderContainer {
+    grid-area: slider;
 }
 
 .shopContainer {
@@ -48,9 +66,10 @@
 }
 
 .loadingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    top: -20vh;
+    left: 25vh;
+    z-index: -1;
   }
 
 
