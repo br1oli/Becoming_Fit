@@ -29,6 +29,7 @@
 .leftSide {
     grid-area: leftSide;
     margin: 10px;
+    background-color: blueviolet;
 }
 
 .paginationContainer {
