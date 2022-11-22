@@ -26,6 +26,11 @@
     grid-area: rightSide;
 }
 
+.leftSide {
+    grid-area: leftSide;
+    margin: 10px;
+}
+
 .paginationContainer {
     grid-area: pagination;
 }

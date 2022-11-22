@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
 import Loading from "../../Utils/Loading.gif";
-import LogoutButton from "../Auth/LogoutButton";
+import Slider from "../Carousel/Slider";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createUser } from "../../Redux/Actions/UsersActions";
 
@@ -22,7 +22,9 @@ const Home = () => {
 
   return (
     <div className={Styles.homeContainer}>
-      {/* <div className={Styles.leftSide}></div> */}
+      {/* <div className={Styles.leftSide}>
+          <img src={ImagenSide} alt="not found" />
+        </div> */}
 
       {allProducts.length > 0 ? (
         <div className={Styles.rightSide}>

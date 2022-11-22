@@ -17,3 +17,12 @@
   color: #404040;
   border: 2px solid white;
 }
+
+.select option {
+  background-color: #404040;
+  color: white;
+}
+
+.select option:hover {
+  background-color: rgb(31, 93, 185);
+}
