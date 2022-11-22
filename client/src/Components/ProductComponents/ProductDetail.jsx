@@ -58,6 +58,10 @@ const ProductDetail = (props) => {
     }
   };
 
+  const handleFavorite = () => {
+    dispatch(addProductToFavorites(detailId));
+  }
+
   return (
     <div className={styles.primaryContainer}>
       <NavBar />
@@ -92,7 +96,7 @@ const ProductDetail = (props) => {
           />
 
           <p>
-            Yor favorite brand • <strong>{product.brand?.name}</strong>
+            Your favorite brand • <strong>{product.brand?.name}</strong>
           </p>
 
           <div className={styles.sizesDiv}>
@@ -143,7 +147,7 @@ const ProductDetail = (props) => {
             <button className={styles.add} onClick={handleChange} value="add">
               ADD TO CART
             </button>
-            <button className={styles.like}>♥</button>
+            <button onClick={handleFavorite} className={styles.like}>♥</button>
           </div>
 
           <p>Free shipping & special prices for members only</p>

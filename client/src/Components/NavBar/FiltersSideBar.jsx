@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 import Filters from "../Filters/Filters";
+import Styles from "./FiltersSideBar/FiltersSideBar.module.css";
 
 function FiltersSideBar({ name, ...props }) {
   const [show, setShow] = useState(false);
@@ -12,9 +12,9 @@ function FiltersSideBar({ name, ...props }) {
 
   return (
     <>
-      <Button onClick={handleShow}>
-        <TuneRoundedIcon />
-      </Button>
+      <div onClick={handleShow}>
+        <TuneRoundedIcon className={Styles.icon} />
+      </div>
       <Offcanvas show={show} onHide={handleClose} {...props}>
         <Offcanvas.Header closeButton>FILTERS</Offcanvas.Header>
         <Offcanvas.Body>

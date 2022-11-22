@@ -1,5 +1,19 @@
 .filterContainer {
   display: grid;
-  grid-gap: 20px;
-  margin: 20px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.select {
+  background-color: #404040;
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  color: white;
+}
+
+.select:hover {
+  background-color: rgb(31, 93, 185);
+  color: #404040;
+  border: 2px solid white;
 }

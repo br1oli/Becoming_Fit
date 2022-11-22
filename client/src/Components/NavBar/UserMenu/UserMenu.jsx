@@ -14,9 +14,9 @@ function UserMenu({ name, ...props }) {
 
   return (
     <>
-      <Button onClick={handleShow}>
-        <HiUserCircle />
-      </Button>
+      <div onClick={handleShow}>
+        <HiUserCircle className={Styles.icon} />
+      </div>
       <Offcanvas show={show} onHide={handleClose} {...props}>
         <Offcanvas.Header closeButton>FILTERS</Offcanvas.Header>
         <Offcanvas.Body className={Styles.bodyContain}>

@@ -38,6 +38,10 @@ function App() {
     dispatch(getProducts());
   }, []);
 
+  useEffect(() => {
+    dispatch(getProductFromFavorites())
+  },[])
+
   return (
     <BrowserRouter>
       {isAuthenticated ? <LogoutButton /> : <LoginButton />}
@@ -52,6 +56,7 @@ function App() {
       />
       <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
+      <Route exact path="/favorites"> <FavoritesProducts favorites={favorites}/> </Route>
     </BrowserRouter>
   );
 }

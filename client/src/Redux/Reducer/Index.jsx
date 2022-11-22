@@ -33,6 +33,12 @@ import {
 
   //User
   CREATE_USER,
+
+  //Favorites Products actions
+  ADD_PRODUCT_TO_FAVORITES,
+  GET_PRODUCT_FROM_FAVORITES,
+  REMOVE_ONE_FROM_FAVORITES,
+  REMOVE_ALL_FROM_FAVORITES,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -57,6 +63,7 @@ const initialState = {
   cartDB: [],
   cartDbResponse: "",
   token: tokenStorage !== null ? tokenStorage : "",
+  favorites: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -346,6 +353,35 @@ function rootReducer(state = initialState, action) {
         ...state,
         userStore: action.payload,
       };
+
+      // Favorites Products reducer functions 
+    case ADD_PRODUCT_TO_FAVORITES:
+
+      return {
+        ...state,
+        favorites:  [...state.favorites, action.payload]
+      }
+    
+      case GET_PRODUCT_FROM_FAVORITES:
+        return{
+          ...state,
+          favorites: action.payload
+        };
+
+      case REMOVE_ALL_FROM_FAVORITES:
+        
+        return{
+          ...state,
+          favorites: initialState.favorites,
+        };
+
+      case REMOVE_ONE_FROM_FAVORITES:
+      const removeOneProduct = state.favorites.filter((item) => item.id !== action.payload.id); 
+        return{
+          ...state,
+          favorites: removeOneProduct
+        }
+
     default:
       return state;
   }

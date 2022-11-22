@@ -5,6 +5,7 @@ const {
   updateUser,
 } = require("./users.controllers");
 const { getCart,postProductToCart , deleteCart, deleteCartProduct}= require('./cart.controllers')
+const { getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites } = require("./favorites.controllers");
 const { getOrders } = require("./order.controllers");
 const {
   getProducts,
@@ -33,5 +34,6 @@ module.exports = {
   getCategories,
   createCategory,
   deleteCategory,
-  getCart,postProductToCart , deleteCart, deleteCartProduct
+  getCart,postProductToCart , deleteCart, deleteCartProduct,
+  getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites
 };
