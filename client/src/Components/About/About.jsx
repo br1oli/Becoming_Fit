@@ -2,6 +2,7 @@ import React from "react";
 import Styles from "./About.module.css";
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import Footer from "../Footer/Footer";
 import BProfile from "../../Utils/Braian.png";
 import MProfile from "../../Utils/Mica.png";
 import BruProfile from "../../Utils/Bruno.png";
@@ -206,6 +207,9 @@ const About = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   );
