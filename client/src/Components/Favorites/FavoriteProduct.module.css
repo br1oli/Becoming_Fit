@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+
+.mainContainer{
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardsContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 85px;
+    grid-row-gap: 80px;
+}
+
+.titleDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+}
+
+.title{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.items{
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+}
+
+.button{
+    background: darken(light, 10%);
+    width: 10rem;
+    background-color:rgb(217, 215, 215);
+    padding: 0.3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+}
+
+.exploring{
+    display: flex;
+    justify-content: center;
+    font-size: 400;
+    font-weight: 200;
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+}
+.exploring:hover{
+    font-size: 500;
+}
+
+
+
+
+
+.suggestions{
+    padding: 5rem;
+    margin-bottom: 5rem;
+    }
+    .divSuggestions{
+     display: flex;
+     flex-direction: row;
+     justify-content:space-between;
+     margin-left: 5rem;
+    margin-right: 5rem;
+    }
+
+    .dealsDiv{
+        background-color:yellow;
+        color: black;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+      }
+    
+      .deals{
+        display: inline-block;
+        padding-right: rem;
+      }
+    
+      .join{
+        display: inline-block;
+    
+        padding: 10px;
+        display: inline-block;
+        outline: 0;
+        border: 0;
+        margin: -1px;
+        border-radius: 2px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: black;
+        cursor: pointer;
+      }
+      .join:hover {
+        background: black;
+        color: aliceblue;
+        transition: all 0.5s ease-in-out;
+      }

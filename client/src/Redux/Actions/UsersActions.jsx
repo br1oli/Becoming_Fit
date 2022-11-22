@@ -33,6 +33,12 @@ import {
 
   //User actions
   CREATE_USER,
+
+   //Favorites Products actions
+   ADD_PRODUCT_TO_FAVORITES,
+   GET_PRODUCT_FROM_FAVORITES,
+   REMOVE_ALL_FROM_FAVORITES,
+   REMOVE_ONE_FROM_FAVORITES,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -250,6 +256,77 @@ export const createUser = (email) => {
       return dispatch({
         type: CREATE_USER,
         payload: user.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+};
+
+//Favorites actions
+export function addProductToFavorites(idProduct) {
+  return async function (dispatch)  {
+    try {
+      const response = await axios.post(`/favorites?idProduct=${idProduct}`);
+      return dispatch({
+        type: ADD_PRODUCT_TO_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+      // return {
+      //   type: ERROR,
+      //   payload: error.response.data,
+      // };
+    }
+  };
+};
+
+export function getProductFromFavorites() {
+  return async function (dispatch)  {
+    try {
+      const response = await axios.get(`/favorites`);
+      return dispatch({
+        type: GET_PRODUCT_FROM_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+      // return {
+      //   type: ERROR,
+      //   payload: error.response.data,
+      // };
+    }
+  };
+};
+
+export function removeOneProductFromFavorites(id) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`/favorites?id=${id}`);
+      return dispatch({
+        type: REMOVE_ONE_FROM_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+};
+
+export function removeAllProductsFromFavorites() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete("/favoritesAll");
+      return dispatch({
+        type: REMOVE_ALL_FROM_FAVORITES,
+        payload: response.data,
       });
     } catch (error) {
       return {
