@@ -17,24 +17,7 @@ function UserMenu({ name, ...props }) {
   const dispatch = useDispatch();
   const { isLoading, isAuthenticated } = useAuth0();
   const favorites = useSelector((state) => state.favorites);
-  //AUTH0
-  const { getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState([]);
-
-  useEffect(() => {
-    const generarToken = async () => {
-      try {
-        const tokenApi = await getAccessTokenSilently();
-        setToken(tokenApi);
-        sessionStorage.setItem("userToken", JSON.stringify(tokenApi));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    generarToken();
-  }, []);
-
-
+ 
   useEffect(() => {
     dispatch(getProductFromFavorites());
   }, []);
