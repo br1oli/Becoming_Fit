@@ -22,6 +22,9 @@ function UserMenu({ name, ...props }) {
         <Offcanvas.Body className={Styles.bodyContain}>
           <h2>MY ACCOUNT</h2>
           <h2>SETTINGS</h2>
+          <Link to="/favorites">
+            <h2 className={Styles.userOptions}>FAVORITES</h2>
+          </Link>
           <h2>OPTIONS</h2>
           <LoginButton />
           <LogoutButton />

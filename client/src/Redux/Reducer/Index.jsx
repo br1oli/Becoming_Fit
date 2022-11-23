@@ -54,8 +54,8 @@ const initialState = {
   //pagination:
   currentProducts: [],
   currentPage: 1,
-  productsPerPage: 6,
-  indexLastProduct: 6,
+  productsPerPage: 9,
+  indexLastProduct: 9,
   indexFirsProduct: 0,
   //
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
@@ -354,33 +354,33 @@ function rootReducer(state = initialState, action) {
         userStore: action.payload,
       };
 
-      // Favorites Products reducer functions 
+    // Favorites Products reducer functions
     case ADD_PRODUCT_TO_FAVORITES:
-
       return {
         ...state,
-        favorites:  [...state.favorites, action.payload]
-      }
-    
-      case GET_PRODUCT_FROM_FAVORITES:
-        return{
-          ...state,
-          favorites: action.payload
-        };
+        favorites: [...state.favorites, action.payload],
+      };
 
-      case REMOVE_ALL_FROM_FAVORITES:
-        
-        return{
-          ...state,
-          favorites: initialState.favorites,
-        };
+    case GET_PRODUCT_FROM_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
+      };
 
-      case REMOVE_ONE_FROM_FAVORITES:
-      const removeOneProduct = state.favorites.filter((item) => item.id !== action.payload.id); 
-        return{
-          ...state,
-          favorites: removeOneProduct
-        }
+    case REMOVE_ALL_FROM_FAVORITES:
+      return {
+        ...state,
+        favorites: initialState.favorites,
+      };
+
+    case REMOVE_ONE_FROM_FAVORITES:
+      const removeOneProduct = state.favorites.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        favorites: removeOneProduct,
+      };
 
     default:
       return state;
