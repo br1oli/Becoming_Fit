@@ -9,7 +9,6 @@ import LoginButton from "../../Auth/LoginButton";
 import LogoutButton from "../../Auth/LogoutButton";
 import Styles from "./UserMenu.module.css";
 import {
-  getProducts,
   getProductFromFavorites,
 } from "../../../Redux/Actions/UsersActions";
 
@@ -17,7 +16,6 @@ function UserMenu({ name, ...props }) {
   ////////// AUTH0///////////////////
   const dispatch = useDispatch();
   const { isLoading, isAuthenticated } = useAuth0();
-  const allProducts = useSelector((state) => state.allProducts);
   const favorites = useSelector((state) => state.favorites);
   //AUTH0
   const { getAccessTokenSilently } = useAuth0();
@@ -36,9 +34,6 @@ function UserMenu({ name, ...props }) {
     generarToken();
   }, []);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
 
   useEffect(() => {
     dispatch(getProductFromFavorites());
@@ -77,6 +72,6 @@ function UserSideBar(props) {
       <UserMenu placement="end" {...props} />
     </>
   );
-}
+} 
 
 export default UserSideBar;
