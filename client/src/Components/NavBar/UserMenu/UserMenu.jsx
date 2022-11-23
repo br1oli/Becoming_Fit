@@ -23,7 +23,7 @@ function UserMenu({ name, ...props }) {
   const { getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const generarToken = async () => {
       try {
         const tokenApi = await getAccessTokenSilently();
@@ -34,7 +34,7 @@ function UserMenu({ name, ...props }) {
       }
     };
     generarToken();
-  }, []);
+  }, []); */
 
   useEffect(() => {
     dispatch(getProducts());

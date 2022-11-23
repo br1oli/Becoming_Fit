@@ -3,9 +3,16 @@
     display: grid;
     grid-template: 
     "navBar "
+    "filters"
     "slider"
     "body"
     "footer" 
+}
+
+.filtersContainer {
+    background-color: #404040;
+    grid-area: filters;
+    margin-bottom: 12px;
 }
 
 .cardsContainer {
