@@ -19,13 +19,11 @@ const postReview = async (req = request, res = response) => {
         console.log(req.body);
         if ( !idProduct || !reviewText || !rating ) return res.send({ message: "Incorrect data" });
         const findProduct = await Product.findByPk(idProduct)
-        console.log(findProduct, "soy el find")
         const addProductReview = await Review.create({
             description: reviewText,
             rating: rating
-        });  
-        console.log(addProductReview, "soy el add")
-        if (!addProductReview.length) throw new Error;
+        });          
+        if (!addProductReview) throw new Error;
         await findProduct.addReview(addProductReview);        
         res.status(200).send(addProductReview)
     } catch (error) {
@@ -36,6 +34,7 @@ const postReview = async (req = request, res = response) => {
 const deleteOneReview = async (req = request, res = response) => {
     try {
         let { id } = req.query;
+        console.log(id)
         const findReviewToDelete = await Review.findByPk(id);
         const deleteOne = await findReviewToDelete.destroy();
         res.status(200).send(findReviewToDelete.dataValues);
@@ -56,10 +55,10 @@ const deleteAllReviews = async (req = request, res = response) => {
   
 const putReview = async (req = request, res = response) => {
     try {
-    let { id } = req.params;
-    res.status(200).send(product);
+        let { id } = req.params;
+        res.status(200).send(product);
     } catch (error) {
-    res.status(500).send(error.message);
+        res.status(500).send(error.message);
     }
 };
   
