@@ -4,11 +4,19 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
+
 import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts, getProductFromFavorites} from "./Redux/Actions/UsersActions";
+
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
+import FAQs from './Components/FAQs/FAQs'
+import TermsConditions from './Components/Terms&Conditions/TermsConditions'
+import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy'
 //AUTH0
 import Profile from "./Components/Auth/user-info";
+
 import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 
 function App() {
@@ -16,6 +24,46 @@ function App() {
 
   return (
     <BrowserRouter>
+
+import LogoutButton from "./Components/Auth/LogoutButton";
+import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
+
+function App() {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+  const { isAuthenticated } = useAuth0();
+  //AUTH0
+  const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useState([]);
+
+  useEffect(() => {
+    const generarToken = async () => {
+      try {
+        const tokenApi = await getAccessTokenSilently();
+        setToken(tokenApi);
+        sessionStorage.setItem("userToken", JSON.stringify(tokenApi));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    generarToken();
+  }, []);
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getProductFromFavorites())
+  },[])
+
+  return (
+    <BrowserRouter>
+     {/*  {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
+     <Route exact path="/termns&conditions" component={TermsConditions} />
+      <Route exact path="/FAQs" component={FAQs} />
+      <Route exact path="/privacypolicy" component={PrivacyPolicy} />
+
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/home" component={Home} />

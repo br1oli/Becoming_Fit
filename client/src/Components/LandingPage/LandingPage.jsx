@@ -4,7 +4,6 @@ import logo from "../../Utils/logoFondoGris.png";
 import Style from "./LandingPage.module.css";
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import Footer from "../Footer/Footer";
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -25,7 +24,7 @@ const LandingPage = () => {
 
       <div className={Style.bodyContainer}>
         <div className={Style.becomingFit}>
-          <img src={Title} width={600} height={250} />
+          <img src={Title} alt='title' width={600} height={250} />
           <h5 className={Style.becomingFitSlogan}>
             Sports clothing for growing up yourself
           </h5>

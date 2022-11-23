@@ -1,5 +1,4 @@
-const { conn, Product } = require("./src/db.js");
-const dataJSON = require("./src/data.json");
+const { conn } = require("./src/db.js");
 const server = require("./src/app.js");
 const preChargeProducts = require("./src/helpers/preChargeProducts");
 const { PORT } = process.env;
