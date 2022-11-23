@@ -15,6 +15,7 @@ import {
   getProducts,
 } from "./Redux/Actions/UsersActions";
 
+
 function App() {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
@@ -41,6 +42,7 @@ function App() {
 
   return (
     <BrowserRouter>
+
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/home" component={Home} />
