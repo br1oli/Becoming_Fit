@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
@@ -20,10 +20,6 @@ import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 function App() {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
-  const { isAuthenticated } = useAuth0();
-  //AUTH0
-  const { getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState([]);
 
   useEffect(() => {
     const generarToken = async () => {
