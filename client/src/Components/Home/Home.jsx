@@ -28,7 +28,7 @@ const Home = () => {
       </div>
       <div className={Styles.bodyContainer}>
         <div className={Styles.leftSide}>
-          <img src={ImagenSide} alt="not found" />
+          <img src={ImgSide} alt="not found" />
         </div>
         {allProducts.length > 0 ? (
           <div className={Styles.rightSide}>
@@ -50,14 +50,14 @@ const Home = () => {
               <Pagination />
             </div>
           </div>
+        ) : (
+          <div className={Styles.loadingContainer}>
+            <img src={Loading} alt="not found" />
+          </div>
+        )}
+        <div className={Styles.footer}>
+          <Footer />
         </div>
-      ) : (
-        <div className={Styles.loadingContainer}>
-          <img src={Loading} alt="not found" />
-        </div>
-      )}
-      <div className={Styles.footer}>
-        <Footer />
       </div>
     </div>
   );
