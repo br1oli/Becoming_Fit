@@ -1,5 +1,5 @@
 .navContainer {
-    padding: 20px 20px;
+    padding: 20px 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -7,6 +7,7 @@
     width: 100%;
     max-width: 100%;
     background-color: #404040;
+    margin-bottom: 12px;
   }
   .title {
     display: flex;

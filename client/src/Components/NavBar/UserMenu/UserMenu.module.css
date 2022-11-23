@@ -15,3 +15,7 @@
     color: rgb(31, 93, 185);
     cursor: pointer;
 }
+
+.userOptions {
+    text-decoration: none;
+}

@@ -5,7 +5,8 @@ import Footer from "../Footer/Footer";
 import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
 import Loading from "../../Utils/Loading.gif";
-import LogoutButton from "../Auth/LogoutButton";
+import ImgSide from "../../Utils/ImagenSide.png";
+import Slider from "../Carousel/Slider";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createUser } from "../../Redux/Actions/UsersActions";
 
@@ -22,34 +23,39 @@ const Home = () => {
 
   return (
     <div className={Styles.homeContainer}>
-      {/* <div className={Styles.leftSide}></div> */}
-
-      {allProducts.length > 0 ? (
-        <div className={Styles.rightSide}>
-          <div className={Styles.paginationContainer}>
-            <Pagination />
-          </div>
-
-          <div className={Styles.cardsContainer}>
-            {currentProducts?.map((p) => {
-              return (
-                <ProductCard
-                  key={p.id}
-                  name={p.name}
-                  id={p.id}
-                  image={p.image}
-                  brand={p.brandName}
-                  price={p.price}
-                />
-              );
-            })}
-          </div>
+      <div className={Styles.sliderContainer}>
+        <Slider />
+      </div>
+      <div className={Styles.bodyContainer}>
+        <div className={Styles.leftSide}>
+          <img src={ImgSide} alt="not found" />
         </div>
-      ) : (
-        <div className={Styles.loadingContainer}>
-          <img src={Loading} alt="not found" />
-        </div>
-      )}
+        {allProducts.length > 0 ? (
+          <div className={Styles.rightSide}>
+            <div className={Styles.cardsContainer}>
+              {currentProducts?.map((p) => {
+                return (
+                  <ProductCard
+                    key={p.id}
+                    name={p.name}
+                    id={p.id}
+                    image={p.image}
+                    brand={p.brandName}
+                    price={p.price}
+                  />
+                );
+              })}
+            </div>
+            <div className={Styles.paginationContainer}>
+              <Pagination />
+            </div>
+          </div>
+        ) : (
+          <div className={Styles.loadingContainer}>
+            <img src={Loading} alt="not found" />
+          </div>
+        )}
+      </div>
       <div className={Styles.footer}>
         <Footer />
       </div>
