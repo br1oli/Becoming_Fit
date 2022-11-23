@@ -12,7 +12,7 @@ const LoginButton = ()=>{
         className='btn btn-primary btn-block'
         onClick={()=> loginWithRedirect({appState:{returnTo: '/home'}
         })}>
-            Log in
+            Sign in
         </Button>
     )
 }

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Slasher';
+    src: url("../../Utils/slasherfilm.ttf");
+}
+
 .aboutContainer {
     display: flex;
     flex-direction: column;
@@ -7,7 +12,7 @@
 .topContainer {
     padding: 20px 50px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     position: relative;
     width: 100%;
@@ -15,32 +20,47 @@
     background-color: #404040;
 }
 
+.logo {
+    width: 80px;
+    height: 80px;
+}
+
 .pharagraphContainer {
     margin: 40px;
     text-align: center;
-}
-
-.imgContainer {
-    margin: 10px;
+    font-size: 22px;
 }
 
 .colabsContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .oneColabContainer {
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
     margin: 10px;
     border: 3px solid rgb(52, 129, 231);
     border-radius: 25px;
-    padding: 10px 30px;
+    padding: 10px 10px;
+    width: 500px;
 }
 
 .twoColabsContainer {
     display: flex;
     flex-direction: row-reverse;
+}
+
+
+
+
+.linksContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 20px;
 }

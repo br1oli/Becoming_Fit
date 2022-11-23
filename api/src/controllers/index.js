@@ -3,6 +3,8 @@ const {
   createUser,
   deleteUser,
   updateUser,
+  getUserAct,
+  actUser
 } = require("./users.controllers");
 const { getOrders } = require("./order.controllers");
 const { getProducts } = require("./product.controllers");
@@ -22,4 +24,6 @@ module.exports = {
   getCategories,
   createCategory,
   deleteCategory,
+  getUserAct,
+  actUser,
 };

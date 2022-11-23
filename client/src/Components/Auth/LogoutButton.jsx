@@ -1,19 +1,29 @@
 // ESTE ESTABA EN UNA CARPETA AUTH EN COMPONENTS
 
-import React from 'react'
-import {useAuth0} from '@auth0/auth0-react'
-import { Button } from 'react-bootstrap';
+import react, { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "react-bootstrap";
 
-const LogoutButton = ()=>{
-  const {logout} = useAuth0();
-  return(
-    <Button className='btn btn-danger btn-block'
-    onClick={()=> logout({
-      returnTo:window.location.origin
-    })}>
-    Log Out
+const LogoutButton = () => {
+  const { logout, isAuthenticated } = useAuth0();
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      sessionStorage.removeItem("userToken");
+    }
+  }, [isAuthenticated]);
+
+  return (
+    <Button
+      className="btn btn-danger btn-block"
+      onClick={() =>
+        logout({
+          returnTo: window.location.origin,
+        })
+      }
+    >
+      Log Out
     </Button>
-  )
-}
+  );
+};
 
 export default LogoutButton;

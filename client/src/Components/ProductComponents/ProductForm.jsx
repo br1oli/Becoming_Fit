@@ -9,40 +9,44 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { postProduct } from "../../Redux/Actions/UsersActions";
+import {
+  postProduct,
+  clearError,
+  clearSuccess,
+} from "../../Redux/Actions/UsersActions";
 import Style from "./ProductForm.module.css";
+import Success from "../Success/Success";
+import Error from "../Error/Error";
 
 function validador(input) {
   let errors = {};
-
   if (!input.name) {
     errors.name = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.name)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.name)) {
     errors.name = "First letter must be uppercase";
   }
   if (!input.type) {
     errors.type = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.type)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.type)) {
     errors.type = "First letter must be uppercase";
   }
   if (!input.color) {
     errors.color = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.color)) {
     errors.color = "First letter must be uppercase";
   }
   if (!input.description) {
     errors.description = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.description)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,500}$/.test(input.description)) {
     errors.description = "First letter must be uppercase";
   }
-
   if (!input.gender) {
     errors.gender = "Required";
   }
   if (!input.size) {
     errors.size = "Required";
-  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.size)) {
-    errors.size = "Size must be a number";
+  } else if (!input.size.length) {
+    errors.size = "Select at least one size from the list";
   }
   if (!input.rating) {
     errors.rating = "Required";
@@ -84,7 +88,7 @@ export default function ProductForm() {
     brand: "",
     color: "",
     description: "",
-    size: "",
+    size: [],
     category: "",
     rating: "",
   });
@@ -107,47 +111,48 @@ export default function ProductForm() {
   const brandss = [...new Set(allProducts.map((e) => e.brand.name))];
   const categories = [...new Set(allProducts.map((e) => e.category.name))];
   const gender = [...new Set(allProducts.map((e) => e.gender))];
+  const response = useSelector((state) => state);
 
   const handleInputChange = (e) => {
-    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (response.error) {
+      dispatch(clearError());
+    }
+    if (response.success) {
+      dispatch(clearSuccess());
+    }
+    if (e.target.name === "size") {
+      setInput((prev) => ({
+        ...prev,
+        size: [...prev.size, e.target.value],
+      }));
+    } else {
+      setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
     let errorObj = validador({ ...input, [e.target.name]: e.target.value });
     setErrors(errorObj);
   };
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (
-      !input.name ||
-      !input.type ||
-      !input.color ||
-      !input.gender ||
-      !input.size ||
-      !input.rating ||
-      !input.price ||
-      !input.brand ||
-      !input.image ||
-      !input.category ||
-      !input.description
-    ) {
-      alert("Incomplete form");
-    } else {
-      dispatch(postProduct(input));
-      setInput({
-        name: "",
-        type: "",
-        gender: "",
-        price: "",
-        image: "",
-        brand: "",
-        color: "",
-        description: "",
-        size: "",
-        category: "",
-        rating: "",
-      });
-      alert("Activity created!!");
-    }
+    setErrors({});
+    dispatch(postProduct(input));
+    setInput({
+      name: "",
+      type: "",
+      gender: "",
+      price: "",
+      image: "",
+      brand: "",
+      color: "",
+      description: "",
+      size: [],
+      category: "",
+      rating: "",
+    });
+    // useHistory()
   }
+
+  let disabled = Object.entries(errors).length ? true : false;
 
   return (
     <div style={{ margin: 15 }}>
@@ -232,14 +237,29 @@ export default function ProductForm() {
                   <FloatingLabel
                     className="mb-3"
                     controlId="floatingimage"
-                    label="Size(cm)"
+                    label="Size"
                   >
-                    <Form.Control
-                      type={"text"}
-                      value={input.size}
-                      name="size"
-                      onChange={handleInputChange}
-                    />
+                    <Form.Select name="size" onChange={handleInputChange}>
+                      <option value={"NULL"}>Choose</option>
+                      <option key={"XS"} value={"XS"}>
+                        XS
+                      </option>
+                      <option key={"S"} value={"S"}>
+                        S
+                      </option>
+                      <option key={"M"} value={"M"}>
+                        M
+                      </option>
+                      <option key={"L"} value={"L"}>
+                        L
+                      </option>
+                      <option key={"XL"} value={"XL"}>
+                        XL
+                      </option>
+                      <option key={"XXL"} value={"XXL"}>
+                        XXL
+                      </option>
+                    </Form.Select>
                   </FloatingLabel>
                   {errors?.size ? (
                     <div className={Style.danger}>{errors.size}</div>
@@ -369,9 +389,15 @@ export default function ProductForm() {
                 style={{ float: "right" }}
                 type="submit"
                 onClick={handleSubmit}
+                disabled={disabled}
               >
                 Submit
               </Button>
+
+              {response.success.length ? (
+                <Success success={response.success} />
+              ) : null}
+              {response.error.length ? <Error error={response.error} /> : null}
             </div>
           </form>
         </Card>

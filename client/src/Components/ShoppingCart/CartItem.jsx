@@ -1,45 +1,58 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { addToCart, deleteFromCart } from "../../Redux/Actions/UsersActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  deleteFromCart,
+  deleteProductCartInDb,
+  getCartFromDB,
+  postCartToDB,
+} from "../../Redux/Actions/UsersActions";
 import { NavLink } from "react-router-dom";
 import styles from "./CartItem.module.css";
 //AUTH0
-import { useAuth0 } from '@auth0/auth0-react'
-import { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export default function CartItem({ data }) {
+export default function CartItem({
+  id,
+  name,
+  price,
+  image,
+  size,
+  brandName,
+  categoryName,
+  amount,
+  userId,
+}) {
   let dispatch = useDispatch();
-    //AUTH0
-    const { getAccessTokenSilently } = useAuth0();
-    const [token, setToken] = useState([])
-
-  useEffect(() => {
-    const generarToken = async () => {
-      try {
-        const tokenApi = await getAccessTokenSilently()
-        setToken(tokenApi)
-        console.log(`ESTO SERIA EL TOKEN API  ${tokenApi}`)
-        console.log(`ESTO SERIA EL TOKEN ${token}`)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    generarToken()
-  }, [])
-
-  let { id, name, price, image, size, brandName, categoryName, amount } = data;
+  let token = useSelector((state) => state.token);
+  /*  let { id, name, price, image, size, brandName, categoryName, amount } = data; */
   const handleChange = (e) => {
     e.preventDefault();
-    if (e.target.value === "+") {
-      dispatch(addToCart(id));
-    }
+    if (token) {
+      if (e.target.value === "+") {
+        dispatch(postCartToDB({ userId: userId, productId: id, amount: 1 }));
+      }
 
-    if (e.target.value === "-") {
-      dispatch(deleteFromCart(id));
-    }
+      if (e.target.value === "-") {
+        dispatch(postCartToDB({ userId: userId, productId: id, amount: -1 }));
+      }
+      if (e.target.value === "all") {
+        dispatch(deleteProductCartInDb(id));
+      }
+    } else {
+      if (e.target.value === "+") {
+        dispatch(addToCart(id));
+      }
 
-    if (e.target.value === "all") {
-      dispatch(deleteFromCart(id, true));
+      if (e.target.value === "-") {
+        dispatch(deleteFromCart(id));
+      }
+
+      if (e.target.value === "all") {
+        dispatch(deleteFromCart(id, true));
+      }
     }
   };
   return (

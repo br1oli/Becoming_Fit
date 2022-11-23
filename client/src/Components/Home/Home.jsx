@@ -1,43 +1,27 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Styles from "./Home.module.css";
-import Filters from "../Filters/Filters";
+import Footer from "../Footer/Footer";
 import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
-import LogoutButton from "../Auth/LogoutButton";
-import {useAuth0} from '@auth0/auth0-react'
-import { useEffect } from "react";
+import Loading from "../../Utils/Loading.gif";
+import { useAuth0 } from "@auth0/auth0-react";
+import { createUser } from "../../Redux/Actions/UsersActions";
 
 const Home = () => {
   const { currentProducts, allProducts } = useSelector((state) => state);
-  const {user, isAuthenticated, getAccessTokenSilently} = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
+  let dispatch = useDispatch();
 
-  useEffect(()=>{
-    const obtenerUsuario = async ()=>{
-        try {
-        if(isAuthenticated){
-          console.log('ESTO ES EL USUARIO ' + user)
-          console.log(`ESTO ES USER ${user.email}`)
-        }else{
-          console.log('NO ESTA AUTENTICADO')
-        }
-      } catch (error) {
-        console.log(error)
-      }
-   
-  }
-  obtenerUsuario()
-  })
+  useEffect(() => {
+    if (isAuthenticated === true && user !== undefined) {
+      dispatch(createUser(user.email));
+    }
+  }, [dispatch, isAuthenticated, user]);
 
-  
   return (
     <div className={Styles.homeContainer}>
-      <div className={Styles.leftSide}>
-        <div className={Styles.filtersContainer}>
-      {/* <LogoutButton/> */}
-          <Filters />
-        </div>
-      </div>
+      {/* <div className={Styles.leftSide}></div> */}
 
       {allProducts.length > 0 ? (
         <div className={Styles.rightSide}>
@@ -61,11 +45,13 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <>
-          <h1 className={Styles.loadingTitle}>Loading...</h1>
-          <div className={Styles.loading}></div>
-        </>
+        <div className={Styles.loadingContainer}>
+          <img src={Loading} alt="not found" />
+        </div>
       )}
+      <div className={Styles.footer}>
+        <Footer />
+      </div>
     </div>
   );
 };

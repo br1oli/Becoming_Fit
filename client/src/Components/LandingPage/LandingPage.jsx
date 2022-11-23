@@ -9,7 +9,7 @@ import Footer from "../Footer/Footer";
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-
+import LoginButton from '../Auth/LoginButton';
 
 const LandingPage = () => {
   const {loginWithRedirect, isAuthenticated} = useAuth0();
@@ -34,9 +34,9 @@ const LandingPage = () => {
   return (
     <div className={Style.landingContainer}>
       <div className={Style.landingHeader}>
-      {/* <div onClick={() => loginWithRedirect({ appState: { returnTo: '/home' } })} className={Style.signIn}/>  */}
         <img src={logo} alt="not found" width={100} height={100} />
         <div className={Style.linkContainter}>
+        <LoginButton/>
           <Link className={Style.buttomHome} to={"/home"}>
             <FaHome size={30} />
           </Link>

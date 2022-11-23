@@ -1,56 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SearchInput from "./SearchBar.jsx";
+import SearchInput from "./SearchBar/SearchBar.jsx";
 import styles from "./NavBar.module.css";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import HomeIcon from "@material-ui/icons/Home";
-import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import { useState } from "react";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import ShoppingCart from '../ShoppingCart/ShoppingCart';
-
-function OffCanvas({ name, ...props }) {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const toggleShow = () => setShow((s) => !s);
-
-  return (
-    <>
-      <Button onClick={toggleShow}>
-        <ShoppingCartIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
-      </Button>
-      <Offcanvas show={show} onHide={handleClose} {...props}>
-        <Offcanvas.Header closeButton>YOUR CART</Offcanvas.Header>
-        <Offcanvas.Body>
-        <ShoppingCart toggleShow={toggleShow} />
-        </Offcanvas.Body>
-      </Offcanvas>
-    </>
-  );
-}
-
-function SideBar(props) {
-  return (
-    <>
-      <OffCanvas placement="end" {...props} />
-    </>
-  );
-}
+import logo from "../../Utils/logoFondoGris.png";
+import title from "../../Utils/Title.png";
+import FiltersSideBar from "./FiltersSideBar.jsx";
+import ShopSideBar from "./ShopCart/ShopSideBar.jsx";
+import UserSideBar from "./UserMenu/UserMenu.jsx";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "../Auth/LoginButton.jsx";
+import LogoutButton from "../Auth/LogoutButton.jsx";
 
 const NavBar = () => {
+  const {isAuthenticated } = useAuth0();
   return (
     <nav className={styles.navContainer}>
+      <img src={logo} alt="not found" width={80} height={80} />
+      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+      <FiltersSideBar />
       <Link to={"/home"}>
         <HomeIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
       </Link>
       <Link to={"/productForm"}>
         <AddCircleIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
       </Link>
-      <h1 className={styles.title}>Becoming Fit</h1>
+      <img src={title} alt="not found" width={240} height={80} />
       <SearchInput />
-      <SideBar />
+      <ShopSideBar />
+      <UserSideBar />
     </nav>
   );
 };
