@@ -18,15 +18,6 @@ import Profile from "./Components/Auth/user-info";
 import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 
 function App() {
-  const favorites = useSelector((state) => state.favorites);
-
-  return (
-    <BrowserRouter>
-
-import LogoutButton from "./Components/Auth/LogoutButton";
-import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
-
-function App() {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
   const { isAuthenticated } = useAuth0();
@@ -57,7 +48,6 @@ function App() {
 
   return (
     <BrowserRouter>
-     {/*  {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
      <Route exact path="/termns&conditions" component={TermsConditions} />
       <Route exact path="/FAQs" component={FAQs} />
       <Route exact path="/privacypolicy" component={PrivacyPolicy} />
