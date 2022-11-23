@@ -8,6 +8,7 @@ import {
   getProductDetail,
   clearDetails,
   postCartToDB,
+  addProductToFavorites,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
