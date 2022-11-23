@@ -3,7 +3,10 @@ const { Product, Review, User } = require("../db");
 
 const getReviews = async (req = request, res = response) => {
     try {
-        const Reviews = await Review.findAll({ include: Product, User });
+        const Reviews = await Review.findAll({ include: {
+            model: Product,
+            attributes: ["id", "name"]
+        }});
         if(!Reviews.length){
             return res.status(404).send("No reviews added yet")
         }
@@ -16,7 +19,6 @@ const getReviews = async (req = request, res = response) => {
 const postReview = async (req = request, res = response) => {
     try {
         let { idProduct, reviewText, rating } = req.body;  
-        console.log(req.body);
         if ( !idProduct || !reviewText || !rating ) return res.send({ message: "Incorrect data" });
         const findProduct = await Product.findByPk(idProduct)
         const addProductReview = await Review.create({
