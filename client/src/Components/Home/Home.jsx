@@ -5,8 +5,8 @@ import Footer from "../Footer/Footer";
 import ProductCard from "../ProductComponents/ProductCard";
 import { Pagination } from "./Pagination";
 import Loading from "../../Utils/Loading.gif";
-import ImgSide from "../../Utils/ImagenSide.png";
 import Slider from "../Carousel/Slider";
+import ImgSide from "../../Utils/ImagenSide.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createUser } from "../../Redux/Actions/UsersActions";
 

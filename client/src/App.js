@@ -4,25 +4,21 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
-import { useDispatch, useSelector } from "react-redux";
-import { getProducts, getProductFromFavorites} from "./Redux/Actions/UsersActions";
+import { useSelector, useDispatch } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
-import FAQs from './Components/FAQs/FAQs'
-import TermsConditions from './Components/Terms&Conditions/TermsConditions'
-import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy'
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "./Components/Auth/LoginButton";
 import Profile from "./Components/Auth/user-info";
-import LogoutButton from "./Components/Auth/LogoutButton";
 import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
+import {
+  getProducts,
+} from "./Redux/Actions/UsersActions";
 
 function App() {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
-  const { isAuthenticated } = useAuth0();
-  //AUTH0
+   //AUTH0
   const { getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([]);
 
@@ -38,21 +34,13 @@ function App() {
     };
     generarToken();
   }, []);
-
+  
   useEffect(() => {
     dispatch(getProducts());
   }, []);
 
-  useEffect(() => {
-    dispatch(getProductFromFavorites())
-  },[])
-
   return (
     <BrowserRouter>
-     {/*  {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
-     <Route exact path="/termns&conditions" component={TermsConditions} />
-      <Route exact path="/FAQs" component={FAQs} />
-      <Route exact path="/privacypolicy" component={PrivacyPolicy} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/home" component={Home} />
@@ -64,7 +52,10 @@ function App() {
       />
       <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
-      <Route exact path="/favorites"> <FavoritesProducts favorites={favorites}/> </Route>
+      <Route exact path="/favorites">
+        {" "}
+        <FavoritesProducts favorites={favorites} />{" "}
+      </Route>
     </BrowserRouter>
   );
 }
