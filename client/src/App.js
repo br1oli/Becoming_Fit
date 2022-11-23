@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
-import Footer from "./Components/Footer/Footer";
 import NavBar from "./Components/NavBar/NavBar";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, getProductFromFavorites } from "./Redux/Actions/UsersActions";
+import { getProducts, getProductFromFavorites} from "./Redux/Actions/UsersActions";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 import FAQs from './Components/FAQs/FAQs'
@@ -17,15 +16,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./Components/Auth/LoginButton";
 import Profile from "./Components/Auth/user-info";
 import LogoutButton from "./Components/Auth/LogoutButton";
-
-import FiltersSideBar from "./Components/NavBar/FiltersSideBar";
 import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoading, isAuthenticated } = useAuth0();
-  const allProducts = useSelector((state) => state.allProducts);
   const favorites = useSelector((state) => state.favorites);
+  const { isAuthenticated } = useAuth0();
   //AUTH0
   const { getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([]);

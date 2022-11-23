@@ -1,6 +1,6 @@
 // ESTE ESTABA EN UNA CARPETA AUTH EN COMPONENTS
 
-import react from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import {Auth0Provider} from '@auth0/auth0-react'
 

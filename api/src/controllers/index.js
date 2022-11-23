@@ -20,6 +20,8 @@ const {
   deleteCategory,
 } = require("./categories.controllers");
 
+const { getReviews, postReview, deleteOneReview, putReview, deleteAllReviews } = require("./reviews.controllers");
+
 module.exports = {
   getUsers,
   createUser,
@@ -35,5 +37,6 @@ module.exports = {
   createCategory,
   deleteCategory,
   getCart,postProductToCart , deleteCart, deleteCartProduct,
-  getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites
+  getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites,
+  getReviews, postReview, deleteOneReview, putReview, deleteAllReviews
 };

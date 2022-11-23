@@ -4,8 +4,6 @@ import {
   deleteStorage,
 } from "../../localStorage/localStorageFunctions";
 import {
-  URL_PRODUCTS,
-  URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
   FILTER_PRICES,
   FILTER_CATEGORIES,
@@ -16,9 +14,6 @@ import {
   ORDER_BY_PRICE,
   GET_DETAILS,
   CLEAR_DETAILS,
-  POST_REVIEW,
-  DELETE_OWN_REVIEW,
-  EDIT_OWN_REVIEW,
   GET_NAME_PRODUCTS,
   SUCCESS,
   ERROR,
