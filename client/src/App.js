@@ -5,7 +5,7 @@ import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch } from "react-redux";
-import { getProducts } from "./Redux/Actions/UsersActions";
+import { getProducts, getProductFromFavorites} from "./Redux/Actions/UsersActions";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 import FAQs from './Components/FAQs/FAQs'
@@ -16,9 +16,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./Components/Auth/LoginButton";
 import Profile from "./Components/Auth/user-info";
 import LogoutButton from "./Components/Auth/LogoutButton";
+import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 
 function App() {
   const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
   const { isAuthenticated } = useAuth0();
   //AUTH0
   const { getAccessTokenSilently } = useAuth0();
