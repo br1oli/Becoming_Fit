@@ -16,17 +16,13 @@ const getReviews = async (req = request, res = response) => {
     }
   };
 
-
-  
 const postReview = async (req = request, res = response) => {
     try {
         let { idProduct } = req.query; 
-
+        console.log(idProduct)
         let { rating, comment, recommend, title, quality } = req.body;
-        //if ( !idProduct || !rating || !comment || !recommend || !sentence || !quality ) return res.send({ message: "Incorrect data" });
         const findProduct = await Product.findByPk(idProduct);
-        const [addProductReview, created] = await Review.findOrCreate({
-            
+        const [addProductReview, created] = await Review.findOrCreate({            
             include: { model: Product },
             where: {
                 productId: idProduct,
@@ -38,20 +34,19 @@ const postReview = async (req = request, res = response) => {
                 title: title, 
                 quality: quality
             }
-        });         
+        }); 
+        if (created === false) return res.status(500).send("Already created");  
         res.status(200).send(addProductReview)
     } catch (error) {
         res.status(500).send(error.message);
     }
-};  
-
-
+};
 
 const deleteOneReview = async (req = request, res = response) => {
     try {
         let { id } = req.query;
+        console.log(id)
         const findReviewToDelete = await Review.findByPk(id);
-        console.log(findReviewToDelete);
         const deleteOne = await findReviewToDelete.destroy();
         res.status(200).send(findReviewToDelete.dataValues);
     } catch (error) {
@@ -59,8 +54,6 @@ const deleteOneReview = async (req = request, res = response) => {
     }
 };  
   
-
-
 const deleteAllReviews = async (req = request, res = response) => {
     try {
         let findall = await Review.findAll();
@@ -71,13 +64,10 @@ const deleteAllReviews = async (req = request, res = response) => {
     }
 };
   
-
-
 const putReview = async (req = request, res = response) => {
-    const { idReview } = req.body;
-    const { newRating, newComment, newRecommend, newTitle, newQuality } = req.body;
+    const { idReview, newRating, newComment, newRecommend, newTitle, newQuality } = req.body;
     try {        
-        const targetReview = await Review.findByPk(idReview);
+        const targetReview = await Review.findByPk(idReview); 
         const updateReview = await targetReview.update({ rating: newRating, 
             comment: newComment, 
             recommend: newRecommend, 
@@ -85,7 +75,7 @@ const putReview = async (req = request, res = response) => {
             quality: newQuality
         })
         await updateReview.save();  
-        res.send("Review successfully updated");
+        res.send("Review updated successfully");
     } catch (error) {
         res.json( error.message );
     }
