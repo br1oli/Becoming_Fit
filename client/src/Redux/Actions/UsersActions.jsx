@@ -37,6 +37,12 @@ import {
    GET_PRODUCT_FROM_FAVORITES,
    REMOVE_ALL_FROM_FAVORITES,
    REMOVE_ONE_FROM_FAVORITES,
+
+  //Reviews Products actions
+  ADD_REVIEW_TO_PRODUCT,
+  GET_REVIEWS,
+  EDIT_REVIEW,
+  REMOVE_ONE_REVIEW
 } from "./Const";
 
 // ----- PRODUCTS
@@ -324,6 +330,75 @@ export function removeAllProductsFromFavorites() {
       const response = await axios.delete("/favoritesAll");
       return dispatch({
         type: REMOVE_ALL_FROM_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+};
+
+// Reviews Products Actions
+export function addReviewToProduct(idProduct, input) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`/reviews?idProduct=${idProduct}`, input);
+      return dispatch({
+        type: ADD_REVIEW_TO_PRODUCT,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+};
+
+export function getReviews() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`/reviews`);
+      return dispatch({
+        type: GET_REVIEWS,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+};
+
+export function editReviews() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`/reviews`);
+      return dispatch({
+        type: EDIT_REVIEW,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+};
+
+export function removeReviews() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`/reviews`);
+      return dispatch({
+        type: REMOVE_ONE_REVIEW,
         payload: response.data,
       });
     } catch (error) {
