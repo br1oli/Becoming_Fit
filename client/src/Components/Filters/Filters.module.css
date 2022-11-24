@@ -1,28 +1,27 @@
 .filterContainer {
-  display: grid;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .select {
   background-color: #404040;
-  width: 200px;
-  height: 40px;
+  width: 160px;
+  height: 30px;
+  font-size: 12px;
   text-align: center;
-  color: white;
+  color: #a0a0a0;
+  outline: none;
+  border: none;
 }
 
 .select:hover {
-  background-color: rgb(31, 93, 185);
-  color: #404040;
-  border: 2px solid white;
+  color: white;
 }
 
 .select option {
   background-color: #404040;
+  border-radius: 10px;
   color: white;
-}
-
-.select option:hover {
-  background-color: rgb(31, 93, 185);
 }

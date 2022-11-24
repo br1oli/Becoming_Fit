@@ -17,7 +17,7 @@ function UserMenu({ name, ...props }) {
   const dispatch = useDispatch();
   const { isLoading, isAuthenticated } = useAuth0();
   const favorites = useSelector((state) => state.favorites);
- 
+
   useEffect(() => {
     dispatch(getProductFromFavorites());
   }, []);
