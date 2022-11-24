@@ -30,9 +30,11 @@ import {
   GET_CART_DB,
   DELETE_CART,
   DELETE_PRODUCT_CART,
+  ERROR_CART,
 
   //User
   CREATE_USER,
+  SET_TOKEN,
 
   //Favorites Products actions
   ADD_PRODUCT_TO_FAVORITES,
@@ -44,11 +46,10 @@ import {
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
-  REMOVE_ONE_REVIEW
+  REMOVE_ONE_REVIEW,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
-const tokenStorage = JSON.parse(sessionStorage.getItem("userToken"));
 
 const initialState = {
   products: [],
@@ -68,9 +69,9 @@ const initialState = {
   userStore: [],
   cartDB: [],
   cartDbResponse: "",
-  token: tokenStorage !== null ? tokenStorage : "",
+  token: "",
   favorites: [],
-  reviews: []
+  reviews: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -264,33 +265,60 @@ function rootReducer(state = initialState, action) {
     // Shopping cart reducer functions
     case ADD_PRODUCT_TO_CART:
       let newItem = state.allProducts.find(
-        (item) => item.id === action.payload
+        (item) => item.id === action.payload.id
       );
-
       let itemInCart = state.shoppingCart.find(
-        (item) => item.id === newItem.id
+        (item) =>
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
       );
 
-      let conditionalAddState = itemInCart
-        ? {
-            ...state,
-            shoppingCart: state.shoppingCart.map((item) =>
-              item.id === newItem.id
-                ? { ...item, amount: item.amount + 1 }
-                : item
-            ),
-          }
-        : {
-            ...state,
-            shoppingCart: [...state.shoppingCart, { ...newItem, amount: 1 }],
-          };
+      let productToAdd = {
+        id: newItem.id,
+        name: newItem.name,
+        type: newItem.type,
+        color: action.payload.color,
+        gender: newItem.gender,
+        size: action.payload.size,
+        rating: newItem.rating,
+        price: newItem.price,
+        description: newItem.description,
+        image: newItem.image,
+        brandName: newItem.brandName,
+        categoryName: newItem.categoryName,
+      };
+
+      let conditionalAddState =
+        itemInCart && itemInCart.amount
+          ? {
+              ...state,
+              shoppingCart: state.shoppingCart.map((item) =>
+                item === itemInCart
+                  ? { ...item, amount: item.amount + 1 }
+                  : item
+              ),
+            }
+          : {
+              ...state,
+              shoppingCart: [
+                ...state.shoppingCart,
+                { ...productToAdd, amount: 1 },
+              ],
+            };
       saveStorage("shoppCart", {
         ...conditionalAddState.shoppingCart,
       });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
+      let itemToRemove = state.shoppingCart.find(
+        (item) =>
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
+      );
       let remainedProducts = state.shoppingCart.filter(
-        (item) => item.id !== action.payload
+        (item) => item !== itemToRemove
       );
 
       if (remainedProducts.length === 0) {
@@ -307,7 +335,10 @@ function rootReducer(state = initialState, action) {
       };
     case REMOVE_ONE_FROM_CART:
       let itemToDelete = state.shoppingCart.find(
-        (item) => item.id === action.payload
+        (item) =>
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
       );
 
       let conditionalRemoveState =
@@ -315,7 +346,7 @@ function rootReducer(state = initialState, action) {
           ? {
               ...state,
               shoppingCart: state.shoppingCart.map((item) =>
-                item.id === action.payload
+                item === itemToDelete
                   ? { ...item, amount: item.amount - 1 }
                   : item
               ),
@@ -323,7 +354,7 @@ function rootReducer(state = initialState, action) {
           : {
               ...state,
               shoppingCart: state.shoppingCart.filter(
-                (item) => item.id !== action.payload
+                (item) => item !== itemToDelete
               ),
             };
 
@@ -335,19 +366,41 @@ function rootReducer(state = initialState, action) {
     case POST_TO_CART_DB:
       return { ...state, cartDbResponse: action.payload };
     case GET_CART_DB:
-      saveStorage("dbProducts", JSON.stringify(action.payload.cartProducts));
+      let cartDBObj = action.payload.cartProducts.map((e) => {
+        return {
+          id: e.product.id,
+          name: e.product.name,
+          type: e.product.type,
+          color: e.color,
+          gender: e.product.gender,
+          size: e.size,
+          rating: e.product.rating,
+          price: e.product.price,
+          description: e.product.description,
+          image: e.product.image,
+          brandName: e.product.brandName,
+          categoryName: e.product.categoryName,
+          amount: e.amount,
+        };
+      });
+
+      saveStorage("shoppCart", cartDBObj);
       return {
         ...state,
         cartDB: action.payload,
       };
+
     case DELETE_CART:
-      deleteStorage("dbProducts");
       return { ...state, cartDB: [], cartDbResponse: action.payload };
+
     case DELETE_PRODUCT_CART:
       return { ...state, cartDbResponse: action.payload };
 
     case CLEAR_CART:
       return { ...state, shoppingCart: [], cartDbResponse: "" };
+
+    case ERROR_CART:
+      return { ...state, errorCart: action.payload };
 
     case CLEAR_DETAILS:
       return {
@@ -355,10 +408,16 @@ function rootReducer(state = initialState, action) {
         details: [],
       };
     case CREATE_USER:
-      sessionStorage.setItem("userId", JSON.stringify(action.payload.id));
+      saveStorage("userEmail", action.payload.email);
       return {
         ...state,
         userStore: action.payload,
+      };
+
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
       };
 
     // Favorites Products reducer functions
@@ -389,31 +448,31 @@ function rootReducer(state = initialState, action) {
         favorites: removeOneProduct,
       };
 
-      // Reviews Products reducer functions
-      case ADD_REVIEW_TO_PRODUCT:
-        console.log(state.reviews);
-        return{
-          ...state,
-          reviews: [...state.reviews, action.payload],
-        }
-      
-      case GET_REVIEWS:
-        return{
-          ...state,
-          reviews: action.payload
-        }
-
-      case EDIT_REVIEW:
-        return{
-          ...state,
-          reviews: action.payload
-        }
-
-      case REMOVE_ONE_REVIEW:
-      return{
+    // Reviews Products reducer functions
+    case ADD_REVIEW_TO_PRODUCT:
+      console.log(state.reviews);
+      return {
         ...state,
-        reviews: action.payload
-      }
+        reviews: [...state.reviews, action.payload],
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case EDIT_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case REMOVE_ONE_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
 
     default:
       return state;

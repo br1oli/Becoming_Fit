@@ -6,7 +6,7 @@ const getCart = async (req = require, res = response) => {
     let { userId } = req.query;
     let cartUser = await Cart.findOne({
       where: {
-        userId: userId,
+        userEmail: userId,
       },
       include: {
         model: CartProduct,
@@ -42,9 +42,9 @@ const getCart = async (req = require, res = response) => {
 //y si llega a 0 eliminar el producto, en amount
 
 const postProductToCart = async (req = request, res = response) => {
-  const { userId, productId, amount } = req.body;
-  if (!userId && !productId)
-    return res.status(404).send("No se enviaron los datos correctos");
+  const { userId, productId, amount, color, size } = req.body;
+
+  if (!userId || !productId) return res.status(404).send("Incorrect data");
   try {
     const user = await User.findByPk(userId);
 
@@ -52,7 +52,7 @@ const postProductToCart = async (req = request, res = response) => {
 
     const [cart, createdCart] = await Cart.findOrCreate({
       where: {
-        userId: userId,
+        userEmail: userId,
       },
       defaults: {
         total: parseInt(product.price),
@@ -62,14 +62,22 @@ const postProductToCart = async (req = request, res = response) => {
     const [cartProduct, createdCartProduct] = await CartProduct.findOrCreate({
       include: [{ model: Product }, { model: Cart }],
       where: {
-        [Op.and]: [{ productId: productId }, { cartId: cart.id }],
+        [Op.and]: [
+          { productId: productId },
+          { cartId: cart.id },
+          { color: color },
+          { size: size },
+        ],
       },
       defaults: {
         amount: amount ? amount : 1,
+        color: color,
+        size: size,
         cartId: cart.id,
         productId: productId,
       },
     });
+
     if (cartProduct.amount === 1 && amount === -1) {
       await cart.update({
         total:
@@ -79,7 +87,7 @@ const postProductToCart = async (req = request, res = response) => {
       });
       await cartProduct.destroy();
 
-      return res.send("El producto se elimino");
+      return res.send("The product was deleted");
     }
 
     if (!createdCart && !createdCartProduct) {
@@ -98,9 +106,7 @@ const postProductToCart = async (req = request, res = response) => {
       await cart.save();
       await cartProduct.save();
       return res.send(
-        amount === -1
-          ? "Se resto un producto al carrito"
-          : "Se agrego un producto similar"
+        amount === -1 ? "One product less" : "One more product added"
       );
     }
     if (!createdCart && createdCartProduct) {
@@ -110,7 +116,7 @@ const postProductToCart = async (req = request, res = response) => {
           : cart.total + parseInt(product.price),
       });
       await cart.save();
-      return res.send("Se agrego un producto diferente");
+      return res.send("New product added");
     }
 
     if (
@@ -125,7 +131,7 @@ const postProductToCart = async (req = request, res = response) => {
       await product.createCartProduct(cartProduct);
     }
 
-    return res.send("Se agrego un producto al carrito");
+    return res.send("Product added");
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -133,11 +139,11 @@ const postProductToCart = async (req = request, res = response) => {
 
 const deleteCartProduct = async (req = request, res = response) => {
   try {
-    const { productId } = req.query;
+    const { productId, color, size } = req.query;
 
     let productDestroy = await CartProduct.findOne({
       where: {
-        productId: productId,
+        [Op.and]: [{ productId: productId }, { color: color }, { size: size }],
       },
       include: [
         {

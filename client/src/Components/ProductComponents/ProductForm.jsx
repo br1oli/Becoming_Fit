@@ -56,11 +56,11 @@ function validador(input) {
   } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.price)) {
     errors.price = "Price must be a number";
   }
-  if (!input.brand) {
-    errors.brand = "Required";
+  if (!input.brandName) {
+    errors.brandName = "Required";
   }
-  if (!input.category) {
-    errors.category = "Required";
+  if (!input.categoryName) {
+    errors.categoryName = "Required";
   } else if (input.price < 0 || input.price > 1000000) {
     errors.price = "Exceeds reasonable limits";
   }
@@ -85,11 +85,11 @@ export default function ProductForm() {
     gender: "",
     price: "",
     image: "",
-    brand: "",
+    brandName: "",
     color: "",
     description: "",
     size: [],
-    category: "",
+    categoryName: "",
     rating: "",
   });
 
@@ -99,11 +99,11 @@ export default function ProductForm() {
     gender: "",
     price: "",
     image: "",
-    brand: "",
+    brandName: "",
     color: "",
     description: "",
     size: "",
-    category: "",
+    categoryName: "",
     rating: "",
   });
 
@@ -123,7 +123,7 @@ export default function ProductForm() {
     if (e.target.name === "size") {
       setInput((prev) => ({
         ...prev,
-        size: [...prev.size, e.target.value],
+        size: [...prev.size, e.target.value].join(", "),
       }));
     } else {
       setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -142,11 +142,11 @@ export default function ProductForm() {
       gender: "",
       price: "",
       image: "",
-      brand: "",
+      brandName: "",
       color: "",
       description: "",
       size: [],
-      category: "",
+      categoryName: "",
       rating: "",
     });
     // useHistory()
@@ -316,19 +316,19 @@ export default function ProductForm() {
                 </Col>
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Marca">
-                    <Form.Select name="brand" onChange={handleInputChange}>
+                    <Form.Select name="brandName" onChange={handleInputChange}>
                       <option value={"NULL"}>Choose</option>
                       {brandss?.map((e) => {
                         return (
-                          <option key={e} value={e} name="brand">
+                          <option key={e} value={e} name="brandName">
                             {e}
                           </option>
                         );
                       })}
                     </Form.Select>
                   </FloatingLabel>
-                  {errors?.brand ? (
-                    <div className={Style.danger}>{errors.brand}</div>
+                  {errors?.brandName ? (
+                    <div className={Style.danger}>{errors.brandName}</div>
                   ) : null}
                 </Col>
               </Row>
@@ -352,19 +352,22 @@ export default function ProductForm() {
               <Row>
                 <Col>
                   <FloatingLabel controlId="floatingCategoies" label="Category">
-                    <Form.Select onChange={handleInputChange} name="category">
+                    <Form.Select
+                      onChange={handleInputChange}
+                      name="categoryName"
+                    >
                       <option value={"NULL"}>Choose</option>
                       {categories?.map((e) => {
                         return (
-                          <option key={e} value={e} name="category">
+                          <option key={e} value={e} name="categoryName">
                             {e}
                           </option>
                         );
                       })}
                     </Form.Select>
                   </FloatingLabel>
-                  {errors?.category ? (
-                    <div className={Style.danger}>{errors.category}</div>
+                  {errors?.categoryName ? (
+                    <div className={Style.danger}>{errors.categoryName}</div>
                   ) : null}
                 </Col>
               </Row>
@@ -396,8 +399,9 @@ export default function ProductForm() {
 
               {response.success.length ? (
                 <Success success={response.success} />
+              ) : response.error.length ? (
+                <Error error={response.error} />
               ) : null}
-              {response.error.length ? <Error error={response.error} /> : null}
             </div>
           </form>
         </Card>

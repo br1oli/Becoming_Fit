@@ -8,27 +8,27 @@ const createProductInDb = async (
   size,
   rating,
   price,
-  brand,
-  category,
+  brandName,
+  categoryName,
   description,
   image
 ) => {
   try {
     const [instanceCategory, createdCategory] = await Category.findOrCreate({
       where: {
-        name: category,
+        name: categoryName,
       },
       defaults: {
-        name: category,
+        name: categoryName,
       },
     });
 
     const [instaceBrand, createdBrand] = await Brand.findOrCreate({
       where: {
-        name: brand,
+        name: brandName,
       },
       defaults: {
-        name: brand,
+        name: brandName,
       },
     });
 
@@ -47,6 +47,8 @@ const createProductInDb = async (
         size,
         rating,
         price,
+        brandName,
+        categoryName,
         description,
         image,
       },

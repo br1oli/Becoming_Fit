@@ -39,8 +39,8 @@ const createProduct = async (req = request, res = response) => {
       gender,
       size,
       rating,
-      brand,
-      category,
+      brandName,
+      categoryName,
       price,
       description,
       image,
@@ -56,8 +56,8 @@ const createProduct = async (req = request, res = response) => {
       !size ||
       !rating ||
       !price ||
-      !brand ||
-      !category ||
+      !brandName ||
+      !categoryName ||
       !description ||
       !image
     ) {
@@ -77,8 +77,8 @@ const createProduct = async (req = request, res = response) => {
       size,
       rating,
       price,
-      brand,
-      category,
+      brandName,
+      categoryName,
       description,
       image
     );
@@ -129,7 +129,7 @@ const updateProduct = async (req = request, res = response) => {
 
 const deleteProductFromDb = async (req = request, res = response) => {
   const { id } = req.params;
-  if(!id){
+  if (!id) {
     return res.status(404).send("¡ID is needed to remove product!");
   }
   try {
@@ -138,7 +138,7 @@ const deleteProductFromDb = async (req = request, res = response) => {
         id,
       },
     });
-    res.status(200).send(`Product with ID:${id} was successfully removed`)
+    res.status(200).send(`Product with ID:${id} was successfully removed`);
   } catch (error) {
     res.status(500).send(error.message);
   }

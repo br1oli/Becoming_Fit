@@ -7,6 +7,6 @@ const { PORT } = process.env;
 conn.sync({ force: true }).then(async () => {
   await preChargeProducts();
   server.listen(process.env.PORT, () => {
-    console.log (`%s listening at ${PORT}`); // eslint-disable-line no-console
-    }); 
+    console.log(`%s listening at ${PORT}`); // eslint-disable-line no-console
+  });
 });
