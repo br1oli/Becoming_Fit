@@ -39,6 +39,12 @@ import {
   GET_PRODUCT_FROM_FAVORITES,
   REMOVE_ONE_FROM_FAVORITES,
   REMOVE_ALL_FROM_FAVORITES,
+
+  //Review Products actions
+  ADD_REVIEW_TO_PRODUCT,
+  GET_REVIEWS,
+  EDIT_REVIEW,
+  REMOVE_ONE_REVIEW
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -64,6 +70,7 @@ const initialState = {
   cartDbResponse: "",
   token: tokenStorage !== null ? tokenStorage : "",
   favorites: [],
+  reviews: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -381,6 +388,32 @@ function rootReducer(state = initialState, action) {
         ...state,
         favorites: removeOneProduct,
       };
+
+      // Reviews Products reducer functions
+      case ADD_REVIEW_TO_PRODUCT:
+        console.log(state.reviews);
+        return{
+          ...state,
+          reviews: [...state.reviews, action.payload],
+        }
+      
+      case GET_REVIEWS:
+        return{
+          ...state,
+          reviews: action.payload
+        }
+
+      case EDIT_REVIEW:
+        return{
+          ...state,
+          reviews: action.payload
+        }
+
+      case REMOVE_ONE_REVIEW:
+      return{
+        ...state,
+        reviews: action.payload
+      }
 
     default:
       return state;

@@ -131,6 +131,13 @@ margin-left: 5rem;
 margin-right: 20rem;
 }
 
+.title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
 .review{
   margin-right: 20rem;
   display: flex;

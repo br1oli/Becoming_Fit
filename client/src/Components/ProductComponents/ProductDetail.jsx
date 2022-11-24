@@ -9,10 +9,13 @@ import {
   clearDetails,
   postCartToDB,
   addProductToFavorites,
+  getReviews
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
 import NavBar from "../NavBar/NavBar";
+import ProductReviews from "../Reviews/ProductReviews";
+import Footer from "../Footer/Footer"
 
 const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
@@ -33,6 +36,7 @@ const ProductDetail = (props) => {
 
     return () => {
       dispatch(clearDetails());
+      dispatch(getReviews())
     };
   }, []);
 
@@ -224,37 +228,33 @@ const ProductDetail = (props) => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <h3 className={styles.title}>Review this product</h3>
-        <div className={styles.review}>
-          <div className={styles.rangeContainer}>
-            <label htmlFor="exampleFormControlInput1" className="form-label">
-              {" "}
-              <strong>Rate this product</strong>
-            </label>
-            <input
-              type="range"
-              className={styles.range}
-              min="0"
-              max="5"
-              step="any"
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlTextarea1" className="form-label">
-              Add a short description of the product base on your experience
-            </label>
-            <textarea
-              className="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              placeholder="Write your review here"
-            ></textarea>
-            <button type="submit" className={styles.buttonReview}>
-              Add Review
-            </button>
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="panelsStayOpen-headingOne">
+                <button
+                  className="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseOne"
+                  aria-expanded="true"
+                  aria-controls="panelsStayOpen-collapseOne"
+                >
+                  <strong>Reviews</strong>
+                </button>
+              </h2>
+              <div
+                id="panelsStayOpen-collapseOne"
+                className="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingOne"
+              >
+                <div className="accordion-body">
+                  <div className={styles.bodyReview}>
+                    <ProductReviews infoProduct={product} idProduct={detailId}/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -301,6 +301,7 @@ const ProductDetail = (props) => {
           </NavLink>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
