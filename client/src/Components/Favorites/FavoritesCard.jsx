@@ -7,7 +7,6 @@ import { removeOneProductFromFavorites, addToCart } from "../../Redux/Actions/Us
 
 const FavoriteCard = ( {data, favoriteId} ) => {
     const dispatch = useDispatch();
-    let { id, name, price, image } = data;
 
     const removeItem = (e) => {
         e.preventDefault()
@@ -16,19 +15,19 @@ const FavoriteCard = ( {data, favoriteId} ) => {
 
     const addItemToCart = (e) => {
         e.preventDefault()
-        dispatch(addToCart(id))
+        dispatch(addToCart(data?.id))
     }
 
     return (
         <div className={styles.mainContainer}>
             <p className={styles.remove}>
-                <button style={{background: "none"}} className={styles.button} value={id} onClick={removeItem}>x</button>
+                <button style={{background: "none"}} className={styles.button} value={data?.id} onClick={removeItem}>x</button>
             </p>
-            <img className={styles.image} src={image}/>
-            <NavLink to={`/home/${id}`}>
-                <p className={styles.name}>{name}</p>
+            <img className={styles.image} src={data?.image}/>
+            <NavLink to={`/home/${data?.id}`}>
+                <p className={styles.name}>{data?.name}</p>
             </NavLink>
-            <p className={styles.price}>US {price}</p>
+            <p className={styles.price}>US {data?.price}</p>
             <button value="add" className={styles.add} onClick={addItemToCart}>
                 ADD TO CART
             </button>
