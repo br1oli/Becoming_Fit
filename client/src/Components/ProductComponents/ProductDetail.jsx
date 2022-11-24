@@ -168,9 +168,8 @@ const ProductDetail = (props) => {
                   return (
                     <div key={index}>
                       <Button
-                        value={color}
+                        value={color.trim()}
                         variant="outlined"
-                        href="#outlined-buttons"
                         onClick={handleColor}
                       >
                         {color}
@@ -187,9 +186,8 @@ const ProductDetail = (props) => {
                   return (
                     <div key={index}>
                       <Button
-                        value={size}
+                        value={size.trim()}
                         variant="outlined"
-                        href="#outlined-buttons"
                         onClick={handleSize}
                       >
                         {size}

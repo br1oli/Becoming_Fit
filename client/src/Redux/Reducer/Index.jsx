@@ -384,6 +384,8 @@ function rootReducer(state = initialState, action) {
         };
       });
 
+      //let organizedResponse = action.payload.cartProducts.sort((a, b)=> (a.id - b.id));
+
       saveStorage("shoppCart", cartDBObj);
       return {
         ...state,

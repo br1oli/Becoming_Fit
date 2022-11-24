@@ -75,7 +75,7 @@ export default function ShoppingCart({ toggleShow }) {
             </div>
 
             {reduxCart.cartDB?.cartProducts
-              ?.sort((a, b) => a.product.name.localeCompare(b.product.name))
+              ?.sort((a, b) => a.id - b.id)
               .map((e, index) => (
                 <CartItem
                   key={index}
