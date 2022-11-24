@@ -28,21 +28,23 @@ import {
   DELETE_CART,
   GET_CART_DB,
   DELETE_PRODUCT_CART,
+  ERROR_CART,
 
   //User actions
   CREATE_USER,
+  SET_TOKEN,
 
-   //Favorites Products actions
-   ADD_PRODUCT_TO_FAVORITES,
-   GET_PRODUCT_FROM_FAVORITES,
-   REMOVE_ALL_FROM_FAVORITES,
-   REMOVE_ONE_FROM_FAVORITES,
+  //Favorites Products actions
+  ADD_PRODUCT_TO_FAVORITES,
+  GET_PRODUCT_FROM_FAVORITES,
+  REMOVE_ALL_FROM_FAVORITES,
+  REMOVE_ONE_FROM_FAVORITES,
 
   //Reviews Products actions
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
-  REMOVE_ONE_REVIEW
+  REMOVE_ONE_REVIEW,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -50,7 +52,7 @@ import {
 export function getProducts() {
   return async function (dispatch) {
     try {
-      let products = await axios('/products');
+      let products = await axios("/products");
       return dispatch({
         type: GET_PRODUCTS,
         payload: products.data,
@@ -193,18 +195,18 @@ export const clearSuccess = () => {
 export const addToCart = (values) => {
   return { type: ADD_PRODUCT_TO_CART, payload: values };
 };
-export const deleteFromCart = (id, all = false) => {
+export const deleteFromCart = (values, all = false) => {
   if (all) {
-    return { type: REMOVE_ALL_FROM_CART, payload: id };
+    return { type: REMOVE_ALL_FROM_CART, payload: values };
   } else {
-    return { type: REMOVE_ONE_FROM_CART, payload: id };
+    return { type: REMOVE_ONE_FROM_CART, payload: values };
   }
 };
 
 export const clearCart = () => {
   return { type: CLEAR_CART };
 };
-export const postCartToDB = (values /* userId, idProduct, amount */) => {
+export const postCartToDB = (values) => {
   return async function (dispatch) {
     try {
       const response = await axios.post("/cart", values);
@@ -220,7 +222,7 @@ export const getCartFromDB = (userId) => {
       const response = await axios.get(`/cart?userId=${userId}`);
       return dispatch({ type: GET_CART_DB, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error.response?.data });
+      return dispatch({ type: ERROR_CART, payload: error.response?.data });
     }
   };
 };
@@ -230,19 +232,19 @@ export const clearCartInDb = (cartId) => {
       const response = await axios.delete(`/cart?cartId=${cartId}`);
       return dispatch({ type: DELETE_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error.response.data });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
-export const deleteProductCartInDb = (productId) => {
+export const deleteProductCartInDb = (values) => {
   return async function (dispatch) {
     try {
       const response = await axios.delete(
-        `/cartProduct?productId=${productId}`
+        `/cartProduct?productId=${values.productId}&color=${values.color}&size=${values.size}`
       );
       return dispatch({ type: DELETE_PRODUCT_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error.response.data });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
@@ -250,6 +252,8 @@ export const deleteProductCartInDb = (productId) => {
 export function clearDetails() {
   return { type: CLEAR_DETAILS };
 }
+
+// User actions
 
 // User actions
 
@@ -262,17 +266,24 @@ export const createUser = (email) => {
         payload: user.data,
       });
     } catch (error) {
-      return {
+      return dispatch({
         type: ERROR,
         payload: error.response.data,
-      };
+      });
     }
+  };
+};
+
+export const setTokenInStore = (token) => {
+  return {
+    type: SET_TOKEN,
+    payload: token,
   };
 };
 
 //Favorites actions
 export function addProductToFavorites(idProduct) {
-  return async function (dispatch)  {
+  return async function (dispatch) {
     try {
       const response = await axios.post(`/favorites?idProduct=${idProduct}`);
       return dispatch({
@@ -287,10 +298,10 @@ export function addProductToFavorites(idProduct) {
       // };
     }
   };
-};
+}
 
 export function getProductFromFavorites() {
-  return async function (dispatch)  {
+  return async function (dispatch) {
     try {
       const response = await axios.get(`/favorites`);
       return dispatch({
@@ -305,7 +316,7 @@ export function getProductFromFavorites() {
       // };
     }
   };
-};
+}
 
 export function removeOneProductFromFavorites(id) {
   return async (dispatch) => {
@@ -322,7 +333,7 @@ export function removeOneProductFromFavorites(id) {
       };
     }
   };
-};
+}
 
 export function removeAllProductsFromFavorites() {
   return async (dispatch) => {
@@ -339,13 +350,16 @@ export function removeAllProductsFromFavorites() {
       };
     }
   };
-};
+}
 
 // Reviews Products Actions
 export function addReviewToProduct(idProduct, input) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`/reviews?idProduct=${idProduct}`, input);
+      const response = await axios.post(
+        `/reviews?idProduct=${idProduct}`,
+        input
+      );
       return dispatch({
         type: ADD_REVIEW_TO_PRODUCT,
         payload: response.data,
@@ -357,7 +371,7 @@ export function addReviewToProduct(idProduct, input) {
       };
     }
   };
-};
+}
 
 export function getReviews() {
   return async (dispatch) => {
@@ -374,7 +388,7 @@ export function getReviews() {
       };
     }
   };
-};
+}
 
 export function editReviews() {
   return async (dispatch) => {
@@ -391,7 +405,7 @@ export function editReviews() {
       };
     }
   };
-};
+}
 
 export function removeReviews() {
   return async (dispatch) => {
@@ -408,4 +422,4 @@ export function removeReviews() {
       };
     }
   };
-};
+}

@@ -4,6 +4,7 @@ import {
   addToCart,
   deleteFromCart,
   deleteProductCartInDb,
+  getCartFromDB,
   postCartToDB,
 } from "../../Redux/Actions/UsersActions";
 import { NavLink } from "react-router-dom";
@@ -15,6 +16,7 @@ export default function CartItem({
   name,
   price,
   image,
+  color,
   size,
   brandName,
   categoryName,
@@ -23,31 +25,52 @@ export default function CartItem({
 }) {
   let dispatch = useDispatch();
   let token = useSelector((state) => state.token);
-  /*  let { id, name, price, image, size, brandName, categoryName, amount } = data; */
-  const handleChange = (e) => {
+
+  const handleChange = async (e) => {
     e.preventDefault();
     if (token) {
       if (e.target.value === "+") {
-        dispatch(postCartToDB({ userId: userId, productId: id, amount: 1 }));
+        await dispatch(
+          postCartToDB({
+            userId: userId,
+            productId: id,
+            amount: 1,
+            color: color,
+            size: size,
+          })
+        );
+        dispatch(getCartFromDB(userId));
       }
 
       if (e.target.value === "-") {
-        dispatch(postCartToDB({ userId: userId, productId: id, amount: -1 }));
+        await dispatch(
+          postCartToDB({
+            userId: userId,
+            productId: id,
+            amount: -1,
+            color: color,
+            size: size,
+          })
+        );
+        dispatch(getCartFromDB(userId));
       }
       if (e.target.value === "all") {
-        dispatch(deleteProductCartInDb(id));
+        await dispatch(
+          deleteProductCartInDb({ productId: id, color: color, size: size })
+        );
+        dispatch(getCartFromDB(userId));
       }
     } else {
       if (e.target.value === "+") {
-        dispatch(addToCart(id));
+        dispatch(addToCart({ id: id, color: color, size: size }));
       }
 
       if (e.target.value === "-") {
-        dispatch(deleteFromCart(id));
+        dispatch(deleteFromCart({ id: id, color: color, size: size }));
       }
 
       if (e.target.value === "all") {
-        dispatch(deleteFromCart(id, true));
+        dispatch(deleteFromCart({ id: id, color: color, size: size }, true));
       }
     }
   };
@@ -67,9 +90,11 @@ export default function CartItem({
         <button className={styles.btnCart} value="+" onClick={handleChange}>
           +
         </button>
-        <button className={styles.btnCart} value="-" onClick={handleChange}>
-          -
-        </button>
+        {amount > 1 ? (
+          <button className={styles.btnCart} value="-" onClick={handleChange}>
+            -
+          </button>
+        ) : null}
         <button className={styles.btnCart} value="all" onClick={handleChange}>
           DELETE
         </button>

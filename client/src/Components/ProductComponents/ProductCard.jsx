@@ -3,24 +3,15 @@ import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import "./ProductCard.css";
-import { addToCart, postCartToDB, addProductToFavorites } from "../../Redux/Actions/UsersActions";
+import {
+  addToCart,
+  postCartToDB,
+  addProductToFavorites,
+} from "../../Redux/Actions/UsersActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProductCard = (props) => {
   let dispatch = useDispatch();
-  let token = useSelector((state) => state.token);
-  let userId = useSelector((state) => state.userStore);
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    if (token) {
-      dispatch(
-        postCartToDB({ userId: userId.id, productId: props.id, amount: 1 })
-      );
-    } else {
-      dispatch(addToCart(e.target.value));
-    }
-  };
 
   const handleFavorite = async (e) => {
     await dispatch(addProductToFavorites(e.target.value));
@@ -40,10 +31,11 @@ const ProductCard = (props) => {
 
               <Card.Text className="Price">US {props.price}</Card.Text>
               <div className="buttons">
-                <button value={props.id} className="add" onClick={handleChange}>
-                  Add to Cart
-                </button>
-                <button value={props.id} onClick={handleFavorite} className="like">
+                <button
+                  value={props.id}
+                  onClick={handleFavorite}
+                  className="like"
+                >
                   ♥
                 </button>
               </div>

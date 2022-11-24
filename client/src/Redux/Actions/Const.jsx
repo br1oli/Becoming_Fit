@@ -38,9 +38,11 @@ export const POST_TO_CART_DB = "POST_TO_CART_DB";
 export const GET_CART_DB = "GET_CART_DB";
 export const DELETE_CART = "DELETE_CART";
 export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
+export const ERROR_CART = "ERROR_CART";
 
 //User actions
 export const CREATE_USER = "CREATE_USER";
+export const SET_TOKEN = "SET_TOKEN";
 
 // Favorites consts
 export const ADD_PRODUCT_TO_FAVORITES = "ADD_PRODUCT_TO_FAVORITES";

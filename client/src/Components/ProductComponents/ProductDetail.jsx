@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ProductDetail.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,63 +9,134 @@ import {
   clearDetails,
   postCartToDB,
   addProductToFavorites,
-  getReviews
+  getCartFromDB,
+  getReviews,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
 import NavBar from "../NavBar/NavBar";
 import ProductReviews from "../Reviews/ProductReviews";
-import Footer from "../Footer/Footer"
+import Footer from "../Footer/Footer";
+import Button from "@mui/material/Button";
 
 const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
   const dispatch = useDispatch();
   const product = useSelector((state) => state.details);
   const cartItems = useSelector((state) => state.shoppingCart);
-  const productInCart = cartItems.find((e) => e.id === detailId);
   const cartDB = useSelector((state) => state.cartDB);
-  const productInCartDB = cartDB?.cartProducts?.find(
-    (e) => e.product.id === detailId
-  );
   let token = useSelector((state) => state.token);
-  let userId = JSON.parse(sessionStorage.getItem("userId"));
+  let userId = useSelector((state) => state.userStore.email);
+  let [selectedSize, setSelectedSize] = useState("");
+  let [selectedColor, setSelectedColor] = useState("");
+
+  const productInCart = cartItems.find(
+    (e) =>
+      e.id === detailId &&
+      selectedColor &&
+      selectedSize &&
+      e.color === selectedColor &&
+      e.size === selectedSize
+  );
+  const productInCartDB = cartDB?.cartProducts?.find(
+    (e) =>
+      e.product.id === detailId &&
+      selectedColor &&
+      selectedSize &&
+      e.color === selectedColor &&
+      e.size === selectedSize
+  );
   //const favorites = useSelector((state) => state.favorites);
+
+  const gettingTheAmountOfProducts = () => {
+    if (token.length) {
+      if (cartDB.cartProducts?.length && productInCartDB?.amount) {
+        return productInCartDB.amount;
+      } else return 0;
+    } else {
+      if (cartItems.length && productInCart?.amount) {
+        return productInCart.amount;
+      } else return 0;
+    }
+  };
 
   useEffect(() => {
     dispatch(getProductDetail(detailId));
 
     return () => {
       dispatch(clearDetails());
-      dispatch(getReviews())
+      dispatch(getReviews());
     };
   }, []);
 
-  const handleChange = (e) => {
+  const handleColor = (e) => {
     e.preventDefault();
-    if (token) {
+    setSelectedColor(e.target.attributes.value.value);
+  };
+  const handleSize = (e) => {
+    e.preventDefault();
+    setSelectedSize(e.target.attributes.value.value);
+  };
+
+  const handleChange = async (e) => {
+    e.preventDefault();
+
+    if (token.length) {
+      if (selectedColor && selectedSize) {
+        if (e.target.value === "+" || e.target.value === "add") {
+          await dispatch(
+            postCartToDB({
+              userId: userId,
+              productId: detailId,
+              amount: 1,
+              color: selectedColor,
+              size: selectedSize,
+            })
+          );
+          dispatch(getCartFromDB(userId));
+        }
+        if (e.target.value === "-") {
+          await dispatch(
+            postCartToDB({
+              userId: userId,
+              productId: detailId,
+              amount: -1,
+              color: selectedColor,
+              size: selectedSize,
+            })
+          );
+          dispatch(getCartFromDB(userId));
+        }
+      } else {
+        return alert("Choose color and size, please.");
+      }
+    } else if (selectedColor && selectedSize && !token.length) {
       if (e.target.value === "+" || e.target.value === "add") {
         dispatch(
-          postCartToDB({ userId: userId, productId: detailId, amount: 1 })
+          addToCart({
+            id: detailId,
+            size: selectedSize,
+            color: selectedColor,
+          })
         );
       }
       if (e.target.value === "-") {
         dispatch(
-          postCartToDB({ userId: userId, productId: detailId, amount: -1 })
+          deleteFromCart({
+            id: detailId,
+            color: selectedColor,
+            size: selectedSize,
+          })
         );
       }
     } else {
-      if (e.target.value === "+" || e.target.value === "add") {
-        dispatch(addToCart(detailId));
-      }
-      if (e.target.value === "-") {
-        dispatch(deleteFromCart(detailId));
-      }
+      return alert("Choose color and size, please.");
     }
   };
 
   const handleFavorite = () => {
     dispatch(addProductToFavorites(detailId));
-  }
+  };
 
   return (
     <div className={styles.primaryContainer}>
@@ -90,31 +161,46 @@ const ProductDetail = (props) => {
 
           <p className={styles.rating}> ★ ★ ★ ★ ★ {product.rating}</p>
 
-          <p>Choose a color</p>
-          <p>
-            <strong>{product.color}</strong>
-          </p>
-          <img
-            className={styles.imgColor}
-            alt={product.name}
-            src={product.image}
-          />
+          <div className={styles.sizesDiv}>
+            <p>Choose a color</p>
+            {product.color && product.color?.split(", ").length
+              ? product?.color?.split(",").map((color, index) => {
+                  return (
+                    <div key={index}>
+                      <Button
+                        value={color.trim()}
+                        variant="outlined"
+                        onClick={handleColor}
+                      >
+                        {color}
+                      </Button>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
+          <div className={styles.sizesDiv}>
+            <p>Choose your size</p>
+            {product.size && product.size?.split(", ").length
+              ? product?.size?.split(",").map((size, index) => {
+                  return (
+                    <div key={index}>
+                      <Button
+                        value={size.trim()}
+                        variant="outlined"
+                        onClick={handleSize}
+                      >
+                        {size}
+                      </Button>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
 
           <p>
             Your favorite brand • <strong>{product.brand?.name}</strong>
           </p>
-
-          <div className={styles.sizesDiv}>
-            <select className={styles.sizes}>
-              <option value="all">Sizes</option>
-              <option value="XS">XS</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-            </select>
-            <p>Size Guide</p>
-          </div>
 
           <p>Cantidad</p>
           <div className={styles.cantidad}>
@@ -125,13 +211,7 @@ const ProductDetail = (props) => {
             >
               -
             </button>
-            <p className={styles.cantidad2}>
-              {cartDB.cartProducts?.length
-                ? productInCartDB?.amount
-                : productInCart?.amount
-                ? productInCart.amount
-                : 0}
-            </p>
+            <p className={styles.cantidad2}>{gettingTheAmountOfProducts()}</p>
             <button
               onClick={handleChange}
               value="+"
@@ -152,7 +232,9 @@ const ProductDetail = (props) => {
             <button className={styles.add} onClick={handleChange} value="add">
               ADD TO CART
             </button>
-            <button onClick={handleFavorite} className={styles.like}>♥</button>
+            <button onClick={handleFavorite} className={styles.like}>
+              ♥
+            </button>
           </div>
 
           <p>Free shipping & special prices for members only</p>
@@ -249,12 +331,14 @@ const ProductDetail = (props) => {
               >
                 <div className="accordion-body">
                   <div className={styles.bodyReview}>
-                    <ProductReviews infoProduct={product} idProduct={detailId}/>
+                    <ProductReviews
+                      infoProduct={product}
+                      idProduct={detailId}
+                    />
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -301,7 +385,7 @@ const ProductDetail = (props) => {
           </NavLink>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

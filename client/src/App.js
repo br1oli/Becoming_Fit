@@ -13,14 +13,16 @@ import Profile from "./Components/Auth/user-info";
 import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 import {
   getProducts,
+  getCartFromDB,
+  createUser,
+  setTokenInStore,
 } from "./Redux/Actions/UsersActions";
-
 
 function App() {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
-   //AUTH0
-  const { getAccessTokenSilently } = useAuth0();
+  //AUTH0
+  const { getAccessTokenSilently, user, isAuthenticated } = useAuth0();
   const [token, setToken] = useState([]);
 
   useEffect(() => {
@@ -28,21 +30,29 @@ function App() {
       try {
         const tokenApi = await getAccessTokenSilently();
         setToken(tokenApi);
-        sessionStorage.setItem("userToken", JSON.stringify(tokenApi));
       } catch (error) {
         console.log(error);
       }
     };
     generarToken();
   }, []);
-  
+
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+    if (token.length) {
+      dispatch(setTokenInStore(token));
+    }
+  }, [token]);
+
+  useEffect(async () => {
+    if (isAuthenticated === true && user !== undefined) {
+      await dispatch(createUser(user.email));
+      dispatch(getCartFromDB(user.email));
+    }
+  }, [dispatch, isAuthenticated, user]);
 
   return (
     <BrowserRouter>
-
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/home" component={Home} />
