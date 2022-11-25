@@ -23,7 +23,8 @@ import FormComplete from "./Components/Form/Form";
 
 function App() {
   const dispatch = useDispatch();
-  const { getAccessTokenSilently, user, isLoading, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, user, isLoading, isAuthenticated } =
+    useAuth0();
   const favorites = useSelector((state) => state.favorites);
   //AUTH0
   const [token, setToken] = useState([]);
@@ -47,11 +48,14 @@ function App() {
     }
   }, [token]);
 
-  useEffect(async () => {
-    if (isAuthenticated === true && user !== undefined) {
-      await dispatch(createUser(user.email));
-      dispatch(getCartFromDB(user.email));
-    }
+  useEffect(() => {
+    const settingUserAndCartDB = async () => {
+      if (isAuthenticated === true && user !== undefined) {
+        await dispatch(createUser(user.email));
+        dispatch(getCartFromDB(user.email));
+      }
+    };
+    settingUserAndCartDB();
   }, [dispatch, isAuthenticated, user]);
 
   return (

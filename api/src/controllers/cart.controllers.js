@@ -157,7 +157,6 @@ const postProductToCart = async (req = request, res = response) => {
 
     return res.send("Product added");
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
   }
 };

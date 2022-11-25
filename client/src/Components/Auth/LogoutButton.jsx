@@ -6,11 +6,6 @@ import { Button } from "react-bootstrap";
 
 const LogoutButton = () => {
   const { logout, isAuthenticated } = useAuth0();
-  useEffect(() => {
-    if (isAuthenticated === false) {
-      sessionStorage.removeItem("userToken");
-    }
-  }, [isAuthenticated]);
 
   return (
     <Button
