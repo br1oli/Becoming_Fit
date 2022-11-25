@@ -3,11 +3,7 @@ import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import "./ProductCard.css";
-import {
-  addToCart,
-  postCartToDB,
-  addProductToFavorites,
-} from "../../Redux/Actions/UsersActions";
+import { addProductToFavorites } from "../../Redux/Actions/UsersActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProductCard = (props) => {
