@@ -4,7 +4,7 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 //AUTH0
@@ -17,12 +17,13 @@ import {
   createUser,
   setTokenInStore,
 } from "./Redux/Actions/UsersActions";
+import FormComplete from "./Components/Form/Form";
 
 function App() {
   const dispatch = useDispatch();
+  const { getAccessTokenSilently, user, isLoading, isAuthenticated } = useAuth0();
   const favorites = useSelector((state) => state.favorites);
   //AUTH0
-  const { getAccessTokenSilently, user, isAuthenticated } = useAuth0();
   const [token, setToken] = useState([]);
 
   useEffect(() => {
@@ -53,6 +54,8 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
+      <Route exact path="/complete" component={FormComplete} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/home" component={Home} />

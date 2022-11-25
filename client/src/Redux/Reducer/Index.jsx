@@ -34,19 +34,18 @@ import {
 
   //User
   CREATE_USER,
-  SET_TOKEN,
-
-  //Favorites Products actions
   ADD_PRODUCT_TO_FAVORITES,
   GET_PRODUCT_FROM_FAVORITES,
-  REMOVE_ONE_FROM_FAVORITES,
   REMOVE_ALL_FROM_FAVORITES,
-
-  //Review Products actions
+  REMOVE_ONE_FROM_FAVORITES,
+  SET_TOKEN,
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
   REMOVE_ONE_REVIEW,
+  UPDATE_USER,
+  GET_USER_ACT,
+  UPDATE_USER_INFO,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -70,8 +69,6 @@ const initialState = {
   cartDB: [],
   cartDbResponse: "",
   token: "",
-  favorites: [],
-  reviews: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -476,9 +473,30 @@ function rootReducer(state = initialState, action) {
         reviews: action.payload,
       };
 
+
+      case UPDATE_USER:
+        return{
+          ...state,
+          usuarios: action.payload
+        };
+      
+        case GET_USER_ACT:
+          console.log("entre al reducer");
+          return{
+            ...state,
+            usuarios: action.payload,
+          }
+
+          case UPDATE_USER_INFO:
+          return{
+            ...state,
+            usuarios: action.payload,
+          }
+
     default:
       return state;
-  }
+  };
+
 }
 
 export default rootReducer;

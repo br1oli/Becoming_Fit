@@ -33,18 +33,18 @@ import {
   //User actions
   CREATE_USER,
   SET_TOKEN,
-
-  //Favorites Products actions
   ADD_PRODUCT_TO_FAVORITES,
   GET_PRODUCT_FROM_FAVORITES,
-  REMOVE_ALL_FROM_FAVORITES,
   REMOVE_ONE_FROM_FAVORITES,
-
-  //Reviews Products actions
+  REMOVE_ALL_FROM_FAVORITES,
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
   REMOVE_ONE_REVIEW,
+  UPDATE_USER,
+  UPDATE_USER_INFO,
+  GET_USER_ACT,
+  URL_USER_ACT,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -60,7 +60,7 @@ export function getProducts() {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error.data,
       };
     }
   };
@@ -414,6 +414,70 @@ export function removeReviews() {
       return dispatch({
         type: REMOVE_ONE_REVIEW,
         payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+export const actUser = (payload) => {
+	return async function (dispatch) {
+    try {
+      const response = await axios.post(
+        "/usuarios", payload);
+        return dispatch({
+          type: UPDATE_USER,
+          payload: response.data
+        })
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+	}
+}
+
+
+export const changeUserInfo = (email, payload) => {
+	return async function (dispatch) {
+    try {
+      const response = await axios.put(
+        `/usuarios?email=${email}`, payload);
+        return dispatch({
+          type: UPDATE_USER_INFO,
+          payload: response.data
+        })
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+	}
+}
+
+// export const updateProduct = (id, data)=>{
+//   return async function(dispatch){
+//     return axios.put(`http://localhost:8000/products/${id}`, data,{ headers: authHeader() })
+//       .then(response =>{
+//           dispatch({type: UPDATE_PRODUCT, payload: response.data})
+//       }).catch(err=> console.log(err))
+//   }
+// }
+
+export function getUserAct(email) {
+  return async function (dispatch) {
+    try {
+      console.log("entra a la accion del get", email)
+      let userProfile = await axios(`${URL_USER_ACT}?email=${email}`);
+      return dispatch({
+        type: GET_USER_ACT,
+        payload: userProfile.data,
       });
     } catch (error) {
       return {

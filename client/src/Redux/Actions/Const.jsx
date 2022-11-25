@@ -1,5 +1,6 @@
 export const URL_PRODUCTS = "/products";
 export const URL_PRODUCTS_QUERY = "/products?name=";
+export const URL_USER_ACT = "/usuarios";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
 
@@ -55,3 +56,6 @@ export const ADD_REVIEW_TO_PRODUCT = "ADD_REVIEW_TO_PRODUCT";
 export const GET_REVIEWS = "GET_REVIEWS";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const REMOVE_ONE_REVIEW = "REMOVE_ONE_REVIEW";
+export const UPDATE_USER = "UPDATE_USER";
+export const GET_USER_ACT = "GET_USER_ACT";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO"
