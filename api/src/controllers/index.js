@@ -3,9 +3,11 @@ const {
   createUser,
   deleteUser,
   updateUser,
-  getUserAct,
-  actUser,
-  updateProfile,
+  createUserProfile,
+  deleteUserProfile,
+  getAllUserProfiles,
+  getUserProfileByEmail,
+  updateUserProfile
 } = require("./users.controllers");
 const { getCart,postProductToCart , deleteCart, deleteCartProduct}= require('./cart.controllers')
 const { getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites } = require("./favorites.controllers");
@@ -42,7 +44,9 @@ module.exports = {
   getCart,postProductToCart , deleteCart, deleteCartProduct,
   getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites,
   getReviews, postReview, deleteOneReview, putReview, deleteAllReviews,
-  getUserAct,
-  actUser,
-  updateProfile,
+  createUserProfile,
+  deleteUserProfile,
+  getAllUserProfiles,
+  getUserProfileByEmail,
+  updateUserProfile
 };

@@ -12,7 +12,6 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false,
         unique: true,
-        primaryKey: true
       },
       adminPermissions: {
         type: DataTypes.BOOLEAN,

@@ -34,19 +34,29 @@ import {
 
   //User actions
   CREATE_USER,
-  SET_TOKEN,
+  GET_ALL_USERS,
+  UPDATE_USER,
+  DELETE_USER,
+  SET_TOKEN, 
+
+  //User profile actions  
+  GET_ALL_USER_PROFILES,
+  GET_USER_PROFILE_BY_EMAIL,
+  CREATE_USER_PROFILE,
+  UPDATE_USER_PROFILE,
+  DELETE_USER_PROFILE,
+
+  //Favorites actions
   ADD_PRODUCT_TO_FAVORITES,
   GET_PRODUCT_FROM_FAVORITES,
   REMOVE_ONE_FROM_FAVORITES,
   REMOVE_ALL_FROM_FAVORITES,
+
+  //Reviews actions
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
-  REMOVE_ONE_REVIEW,
-  UPDATE_USER,
-  UPDATE_USER_INFO,
-  GET_USER_ACT,
-  URL_USER_ACT,
+  REMOVE_ONE_REVIEW  
 } from "./Const";
 
 // ----- PRODUCTS
@@ -101,6 +111,32 @@ export function getNameProducts(name) {
     }
   };
 }
+
+export function postProduct(payload) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(URL_PRODUCTS, payload);
+      return dispatch({
+        type: SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+// export const updateProduct = (id, data)=>{
+//   return async function(dispatch){
+//     return axios.put(`http://localhost:8000/products/${id}`, data,{ headers: authHeader() })
+//       .then(response =>{
+//           dispatch({type: UPDATE_PRODUCT, payload: response.data})
+//       }).catch(err=> console.log(err))
+//   }
+// }
 
 // --- FILTERS
 
@@ -168,12 +204,66 @@ export const setProductsPerPage = (currentPage) => {
 
 // --- REVIEWS
 
-export function postProduct(payload) {
+export function addReviewToProduct(idProduct, input) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(URL_PRODUCTS, payload);
+      const response = await axios.post(
+        `/reviews?idProduct=${idProduct}`,
+        input
+      );
       return dispatch({
-        type: SUCCESS,
+        type: ADD_REVIEW_TO_PRODUCT,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+export function getReviews() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`/reviews`);
+      return dispatch({
+        type: GET_REVIEWS,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+export function editReviews() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`/reviews`);
+      return dispatch({
+        type: EDIT_REVIEW,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+export function removeReviews() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`/reviews`);
+      return dispatch({
+        type: REMOVE_ONE_REVIEW,
         payload: response.data,
       });
     } catch (error) {
@@ -269,8 +359,6 @@ export function paymentOrder(userEmail) {
 
 // User actions
 
-// User actions
-
 export const createUser = (email) => {
   return async function (dispatch) {
     try {
@@ -288,12 +376,150 @@ export const createUser = (email) => {
   };
 };
 
+export function getAllUsers() {
+  return async function (dispatch) {
+    try {
+      let users = await axios.get("/user");
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: users.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+  };
+}
+
+export function updateUser(email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`/user/${email}`);
+      return dispatch({
+        type: UPDATE_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+export function deleteUser(email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`/user/${email}`);
+      return dispatch({
+        type: DELETE_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
 export const setTokenInStore = (token) => {
   return {
     type: SET_TOKEN,
     payload: token,
   };
 };
+
+//User Profile Actions
+
+export function getAllUserProfiles(email) {
+  return async function (dispatch) {
+    try {
+      let userProfiles = await axios.get(`/userProfile?email=${email}`);
+      return dispatch({
+        type: GET_ALL_USER_PROFILES,
+        payload: userProfiles.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+export function getUserProfileByEmail(email) {
+  return async function (dispatch) {
+    try {
+      let userProfile = await axios(`/userProfile?email=${email}`);
+      return dispatch({
+        type: GET_USER_PROFILE_BY_EMAIL,
+        payload: userProfile.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
+
+export const createUserProfile = (payload) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post('/userProfile', payload);
+      return dispatch({
+        type: CREATE_USER_PROFILE,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+  };
+};
+
+export const updateUserProfile = (email, payload) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/userProfile?email=${email}`, payload);
+      return dispatch({
+        type: UPDATE_USER_PROFILE,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+  };
+};
+
+export function deleteUserProfile (getUserProfileByEmail) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`/userProfile?email=${email}`);
+      return dispatch({
+        type: DELETE_USER_PROFILE,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}
 
 //Favorites actions
 export function addProductToFavorites(idProduct, idUser) {
@@ -368,135 +594,6 @@ export function removeAllProductsFromFavorites() {
   };
 }
 
-// Reviews Products Actions
-export function addReviewToProduct(idProduct, input) {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(
-        `/reviews?idProduct=${idProduct}`,
-        input
-      );
-      return dispatch({
-        type: ADD_REVIEW_TO_PRODUCT,
-        payload: response.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}
 
-export function getReviews() {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(`/reviews`);
-      return dispatch({
-        type: GET_REVIEWS,
-        payload: response.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}
 
-export function editReviews() {
-  return async (dispatch) => {
-    try {
-      const response = await axios.put(`/reviews`);
-      return dispatch({
-        type: EDIT_REVIEW,
-        payload: response.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}
 
-export function removeReviews() {
-  return async (dispatch) => {
-    try {
-      const response = await axios.delete(`/reviews`);
-      return dispatch({
-        type: REMOVE_ONE_REVIEW,
-        payload: response.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}
-
-export const actUser = (payload) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.post("/usuarios", payload);
-      return dispatch({
-        type: UPDATE_USER,
-        payload: response.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.data,
-      };
-    }
-  };
-};
-
-export const changeUserInfo = (email, payload) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.put(`/usuarios?email=${email}`, payload);
-      return dispatch({
-        type: UPDATE_USER_INFO,
-        payload: response.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.data,
-      };
-    }
-  };
-};
-
-// export const updateProduct = (id, data)=>{
-//   return async function(dispatch){
-//     return axios.put(`http://localhost:8000/products/${id}`, data,{ headers: authHeader() })
-//       .then(response =>{
-//           dispatch({type: UPDATE_PRODUCT, payload: response.data})
-//       }).catch(err=> console.log(err))
-//   }
-// }
-
-export function getUserAct(email) {
-  return async function (dispatch) {
-    try {
-      console.log("entra a la accion del get", email);
-      let userProfile = await axios(`${URL_USER_ACT}?email=${email}`);
-      return dispatch({
-        type: GET_USER_ACT,
-        payload: userProfile.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
-      };
-    }
-  };
-}

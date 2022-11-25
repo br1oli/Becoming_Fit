@@ -3,8 +3,8 @@ import {
   saveStorage,
   deleteStorage,
 } from "../../localStorage/localStorageFunctions";
-import {
-  GET_PRODUCTS,
+
+import {  
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -14,12 +14,22 @@ import {
   ORDER_BY_PRICE,
   GET_DETAILS,
   CLEAR_DETAILS,
-  GET_NAME_PRODUCTS,
+  
   SUCCESS,
   ERROR,
   CLEAR_ERROR,
   CLEAR_SUCCESS,
   SET_CURRENT_PAGE_PRODUCTS,
+
+  //Favorites
+  ADD_PRODUCT_TO_FAVORITES,
+  GET_PRODUCT_FROM_FAVORITES,
+  REMOVE_ALL_FROM_FAVORITES,
+  REMOVE_ONE_FROM_FAVORITES,
+
+  //Products
+  GET_PRODUCTS,
+  GET_NAME_PRODUCTS,
 
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
@@ -32,43 +42,53 @@ import {
   DELETE_PRODUCT_CART,
   ERROR_CART,
 
-  //User
-  CREATE_USER,
-  ADD_PRODUCT_TO_FAVORITES,
-  GET_PRODUCT_FROM_FAVORITES,
-  REMOVE_ALL_FROM_FAVORITES,
-  REMOVE_ONE_FROM_FAVORITES,
-  SET_TOKEN,
+  //Review
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
   REMOVE_ONE_REVIEW,
+
+  //User
+  CREATE_USER,
+  GET_ALL_USERS,
   UPDATE_USER,
-  GET_USER_ACT,
-  UPDATE_USER_INFO,
+  DELETE_USER,
+  SET_TOKEN, 
+
+  //UserProfile
+  GET_ALL_USER_PROFILES,
+  GET_USER_PROFILE_BY_EMAIL,
+  CREATE_USER_PROFILE,
+  UPDATE_USER_PROFILE,
+  DELETE_USER_PROFILE,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
 
-const initialState = {
-  products: [],
-  allProducts: [],
-  allBrands: [],
-  details: [],
+const initialState = {  
   error: "",
   success: "",
+  //cart:
+  cartDB: [],
+  cartDbResponse: "",
+  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],  
   //pagination:
   currentProducts: [],
   currentPage: 1,
   productsPerPage: 9,
   indexLastProduct: 9,
   indexFirsProduct: 0,
-  //
-  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
-  userStore: [],
-  cartDB: [],
-  cartDbResponse: "",
-  token: "",
+  //product:
+  products: [],
+  allProducts: [],
+  allBrands: [],
+  details: [],
+  //user:
+  userStore: [], 
+  usersStore: [], 
+  token: "",  
+  userProfiles: [],
+  userProfile: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -406,18 +426,64 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: [],
       };
+    //Users
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+      };
     case CREATE_USER:
       saveStorage("userEmail", action.payload.email);
       return {
         ...state,
         userStore: action.payload,
       };
-
-    case SET_TOKEN:
+    case GET_ALL_USERS:    
+      saveStorage("userEmail", action.payload);
       return {
         ...state,
-        token: action.payload,
+        usersStore: action.payload,
       };
+    case UPDATE_USER:
+      return {
+        ...state,
+        userStore: action.payload
+      }
+    case DELETE_USER:
+      return {
+        ...state,
+        usersStore: state.usersStore.filter(
+          (u) => u !== action.payload
+        )
+      }
+    //User Profile 
+    case GET_ALL_USER_PROFILES:
+      return {
+        ...state,
+        userProfiles: action.payload 
+      }
+    case GET_USER_PROFILE_BY_EMAIL:
+      return {
+        ...state,
+        userProfile: action.payload, 
+      }
+    case CREATE_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload 
+      };        
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
+      }
+    case DELETE_USER_PROFILE:
+      return {
+        ...state,
+        userProfiles: state.userProfiles.filter(
+          (u) => u !== action.payload
+        )
+      }
 
     // Favorites Products reducer functions
     case ADD_PRODUCT_TO_FAVORITES:
@@ -449,7 +515,6 @@ function rootReducer(state = initialState, action) {
 
     // Reviews Products reducer functions
     case ADD_REVIEW_TO_PRODUCT:
-      console.log(state.reviews);
       return {
         ...state,
         reviews: [...state.reviews, action.payload],
@@ -472,27 +537,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
-
-
-      case UPDATE_USER:
-        return{
-          ...state,
-          usuarios: action.payload
-        };
-      
-        case GET_USER_ACT:
-          console.log("entre al reducer");
-          return{
-            ...state,
-            usuarios: action.payload,
-          }
-
-          case UPDATE_USER_INFO:
-          return{
-            ...state,
-            usuarios: action.payload,
-          }
-
+    
     default:
       return state;
   };
