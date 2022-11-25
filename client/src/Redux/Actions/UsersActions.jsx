@@ -282,10 +282,10 @@ export const setTokenInStore = (token) => {
 };
 
 //Favorites actions
-export function addProductToFavorites(idProduct) {
-  return async function (dispatch) {
+export function addProductToFavorites(idProduct, idUser) {
+  return async function (dispatch)  {
     try {
-      const response = await axios.post(`/favorites?idProduct=${idProduct}`);
+      const response = await axios.post(`/favorites?idProduct=${idProduct}&idUser=${idUser}`);
       return dispatch({
         type: ADD_PRODUCT_TO_FAVORITES,
         payload: response.data,
