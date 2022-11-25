@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
+  clearCartInDb,
   deleteFromCart,
   deleteProductCartInDb,
   getCartFromDB,
@@ -24,7 +25,7 @@ export default function CartItem({
   userId,
 }) {
   let dispatch = useDispatch();
-  let token = useSelector((state) => state.token);
+  let { token, cartDB } = useSelector((state) => state);
 
   const handleChange = async (e) => {
     e.preventDefault();
@@ -53,6 +54,9 @@ export default function CartItem({
           })
         );
         dispatch(getCartFromDB(userId));
+        if (!cartDB.cartProducts.length) {
+          dispatch(clearCartInDb(cartDB.id));
+        }
       }
       if (e.target.value === "all") {
         await dispatch(
@@ -82,6 +86,7 @@ export default function CartItem({
           <h4 className={styles.titleCart}>{name}</h4>
         </NavLink>
         <p>{size}</p>
+        <p>{color}</p>
         <p>{brandName}</p>
         <p>{categoryName}</p>
         <h5>

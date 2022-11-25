@@ -7,10 +7,8 @@ import { Pagination } from "./Pagination";
 import Loading from "../../Utils/Loading.gif";
 import Slider from "../Carousel/Slider";
 import ImgSide from "../../Utils/ImagenSide.png";
-import { postCartToDB, clearCart } from "../../Redux/Actions/UsersActions";
+import { postCartToDB } from "../../Redux/Actions/UsersActions";
 import Filters from "../Filters/Filters.jsx";
-import { useAuth0 } from "@auth0/auth0-react";
-import { createUser } from "../../Redux/Actions/UsersActions";
 
 const Home = () => {
   const {
@@ -18,27 +16,30 @@ const Home = () => {
     allProducts,
     token,
     shoppingCart,
-    cartDB,
     userStore,
+    cartDB,
   } = useSelector((state) => state);
 
   let dispatch = useDispatch();
 
-  useEffect(async () => {
-    if (token.length && shoppingCart.length) {
-      for (let i = 0; i < shoppingCart.length; i++) {
-        await dispatch(
-          postCartToDB({
-            userId: userStore.email,
-            productId: shoppingCart[i].id,
-            amount: shoppingCart[i].amount,
-            color: shoppingCart[i].color,
-            size: shoppingCart[i].size,
-          })
-        );
+  useEffect(() => {
+    const fillDBWithLocalCart = async () => {
+      if (token && userStore?.email && shoppingCart.length) {
+        for (let i = 0; i < shoppingCart.length; i++) {
+          await dispatch(
+            postCartToDB({
+              userId: userStore.email,
+              productId: shoppingCart[i].id,
+              amount: shoppingCart[i].amount,
+              color: shoppingCart[i].color,
+              size: shoppingCart[i].size,
+            })
+          );
+        }
       }
-    }
-  }, [dispatch]);
+    };
+    fillDBWithLocalCart();
+  }, [dispatch, token, shoppingCart]);
 
   return (
     <div className={Styles.homeContainer}>
