@@ -384,8 +384,7 @@ function rootReducer(state = initialState, action) {
         };
       });
 
-      //let organizedResponse = action.payload.cartProducts.sort((a, b)=> (a.id - b.id));
-
+     
       saveStorage("shoppCart", cartDBObj);
       return {
         ...state,
@@ -393,6 +392,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case DELETE_CART:
+      deleteStorage("shoppCart");
       return { ...state, cartDB: [], cartDbResponse: action.payload };
 
     case DELETE_PRODUCT_CART:
