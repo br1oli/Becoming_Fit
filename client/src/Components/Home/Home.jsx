@@ -9,6 +9,8 @@ import Slider from "../Carousel/Slider";
 import ImgSide from "../../Utils/ImagenSide.png";
 import { postCartToDB, clearCart } from "../../Redux/Actions/UsersActions";
 import Filters from "../Filters/Filters.jsx";
+import { useAuth0 } from "@auth0/auth0-react";
+import { createUser } from "../../Redux/Actions/UsersActions";
 
 const Home = () => {
   const {

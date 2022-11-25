@@ -5,17 +5,37 @@ import Style from "./LandingPage.module.css";
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 //AUTH0
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react'
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import LoginButton from '../Auth/LoginButton';
 
 const LandingPage = () => {
-  const { loginWithRedirect } = useAuth0();
+  const {loginWithRedirect, isAuthenticated} = useAuth0();
+  const history = useHistory()
+
+  useEffect(()=>{
+    const redireccionar = async ()=>{
+        try {
+        if(isAuthenticated){
+          history.push('/home')
+        }else{
+          console.log('NO ESTA AUTENTICADO')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+   
+  }
+  redireccionar()
+  })
 
   return (
     <div className={Style.landingContainer}>
       <div className={Style.landingHeader}>
-        {/* <div onClick={() => loginWithRedirect({ appState: { returnTo: '/home' } })} className={Style.signIn}/>  */}
         <img src={logo} alt="not found" width={100} height={100} />
         <div className={Style.linkContainter}>
+        <LoginButton/>
           <Link className={Style.buttomHome} to={"/home"}>
             <FaHome size={30} />
           </Link>

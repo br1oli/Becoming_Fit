@@ -1,5 +1,6 @@
 const { response, request } = require("express");
-const { User } = require("../db");
+// const { default: Profile } = require("../../../client/src/Components/Auth/user-info");
+const { User, UserProfile } = require("../db");
 const { updateUserInDb } = require("../helpers/updateUser");
 
 const getUsers = async (req = request, res = response) => {
@@ -87,9 +88,83 @@ const deleteUser = async (req = request, res = response) => {
   }
 };
 
+
+const getUserAct = async (req = request, res = response) => {
+  // traigo todos los clientes de la db y los envio:
+  const { email } = req.query
+  try {
+    let usersFromDb = await UserProfile.findOne({ where: { email: email } });
+    if (!usersFromDb) {
+      return res.status(404).send("No users found");
+    }
+    res.status(200).send(usersFromDb.dataValues);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message);
+  }
+};
+
+const actUser = async (req = request, res = response) => {
+  const { name,
+    email,
+    adress,
+    country,
+    city,
+    zipCode,
+    phone } = req.body
+
+  try {
+    const userExists = await UserProfile.findOne({ where: { email: email } });
+
+    if (userExists !== null) {
+      return res.status(200).send(userExists.dataValues);
+    } else {
+      const newUser = await UserProfile.create({
+        name,
+        email,
+        phone,
+        adress,
+        country,
+        city,
+        zipCode
+      });
+      res.status(201).send(newUser.dataValues);
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message);
+  }
+};
+
+const updateProfile = async (req = request, res = response) => {
+  let emailId = req.query.email;
+  // console.log("email id", req.query)
+  let { newName, newCountry, newCity, newZipCode, newPhone, newAdress } = req.body;
+  try {
+    const targetReview = await UserProfile.findByPk(emailId);
+    // console.log("target review", targetReview)
+    const updateReview = await targetReview.update({
+      name: newName,
+      country: newCountry,
+      city: newCity,
+      zipCode: newZipCode,
+      phone: newPhone,
+      adress: newAdress
+    });
+    console.log("esto es el coso", updateReview)
+    await updateReview.save();
+    res.status(200).send('Se actualizo la informacion con exito')
+  } catch (error) {
+    res.status(404).send('No se pudo actualizar la informacion')
+  }
+};
+
 module.exports = {
+  actUser,
   getUsers,
   createUser,
   deleteUser,
   updateUser,
+  getUserAct,
+  updateProfile,
 };

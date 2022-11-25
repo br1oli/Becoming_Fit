@@ -4,6 +4,7 @@ import {
   clearCart,
   clearCartInDb,
   getCartFromDB,
+  postCartToDB,
 } from "../../Redux/Actions/UsersActions";
 import CartItem from "./CartItem";
 import styles from "./ShoppingCart.module.css";
@@ -12,11 +13,33 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { deleteStorage } from "../../localStorage/localStorageFunctions";
 import { useEffect } from "react";
 import Success from "../Success/Success";
+import Error from "../Error/Error";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router-dom";
 
 export default function ShoppingCart({ toggleShow }) {
+  let {user, isAuthenticated } = useAuth0();
   let reduxCart = useSelector((state) => state);
   let userId = useSelector((state) => state.userStore.email);
   let dispatch = useDispatch();
+  let history = useHistory()
+  useEffect(() => {
+    if (
+      isAuthenticated === true &&
+      reduxCart.shoppingCart.length &&
+      !reduxCart.cartDB.cartProducts?.length
+    ) {
+      for (let i = 0; i < reduxCart.shoppingCart.length; i++) {
+        dispatch(
+          postCartToDB({
+            userId: userId,
+            productId: reduxCart.shoppingCart[i].id,
+            amount: reduxCart.shoppingCart[i].amount,
+          })
+        );
+      }
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (reduxCart.token.length) {
@@ -48,6 +71,24 @@ export default function ShoppingCart({ toggleShow }) {
     deleteStorage("shoppCart");
     dispatch(clearCart());
   };
+
+  const payOrRegister = (e) =>{
+
+    try {
+      if(!user.address || user.phone){
+      e.preventDefault()
+    history.push('/complete')
+      }else{
+        e.preventDefault()
+        // history.push('/pasarela')
+        alert("LINK A LA PASARELA DE PAGOS")
+        
+      }
+    } catch (error) {
+      console.log(error)
+    }
+ 
+  }
 
   return (
     <>
