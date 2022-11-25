@@ -40,40 +40,6 @@ const createUser = async (req = request, res = response) => {
   }
 };
 
-const updateUser = async (req = request, res = response) => {
-  try {
-    let { id } = req.params;
-    let {
-      userName,
-      firstName,
-      lastName,
-      email,
-      address,
-      password,
-      telephone,
-      adminPermissions,
-      image,
-    } = req.body;
-
-    let update = await updateUserInDb(
-      id,
-      userName,
-      firstName,
-      lastName,
-      email,
-      address,
-      password,
-      telephone,
-      adminPermissions,
-      image
-    );
-
-    res.status(200).send(update);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
 const deleteUser = async (req = request, res = response) => {
   const { id } = req.params;
   try {
@@ -175,7 +141,6 @@ const updateUserProfile = async (req = request, res = response) => {
       phone: newPhone,
       adress: newAdress
     });
-    console.log("esto es el coso", updateReview)
     await updateReview.save();
     res.status(200).send('Se actualizo la informacion con exito')
   } catch (error) {
@@ -187,7 +152,6 @@ module.exports = {
   getUsers,
   createUser,
   deleteUser,
-  updateUser,
   createUserProfile,
   deleteUserProfile,
   getAllUserProfiles,

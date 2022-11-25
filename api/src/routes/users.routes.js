@@ -3,7 +3,6 @@ const {
   createUser,
   deleteUser,
   getUsers,
-  updateUser,
   createUserProfile,
   deleteUserProfile,
   getAllUserProfiles,
@@ -14,7 +13,6 @@ const {
 const router = Router();
 router.get("/user", getUsers); //getUsers
 router.post("/user", createUser); //createUsers
-router.put("/user/:email", updateUser); //updateUser
 router.delete("/user/:email", deleteUser); //deleteUser
 router.get("/userProfiles", getAllUserProfiles); //getAllUserProfiles
 router.get("/userProfile", getUserProfileByEmail); //getUserProfileByEmail
