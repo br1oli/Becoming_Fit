@@ -40,6 +40,8 @@ export const GET_CART_DB = "GET_CART_DB";
 export const DELETE_CART = "DELETE_CART";
 export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
 export const ERROR_CART = "ERROR_CART";
+export const PAYMENT_ORDER = "PAYMENT_ORDER";
+export const ERROR_PAYMENT = "ERROR_PAYMENT";
 
 //User actions
 export const CREATE_USER = "CREATE_USER";
@@ -58,4 +60,4 @@ export const EDIT_REVIEW = "EDIT_REVIEW";
 export const REMOVE_ONE_REVIEW = "REMOVE_ONE_REVIEW";
 export const UPDATE_USER = "UPDATE_USER";
 export const GET_USER_ACT = "GET_USER_ACT";
-export const UPDATE_USER_INFO = "UPDATE_USER_INFO"
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
