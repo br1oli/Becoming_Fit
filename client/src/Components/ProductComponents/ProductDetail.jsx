@@ -17,7 +17,10 @@ import ProductCardIndex from "./ProductCard";
 import NavBar from "../NavBar/NavBar";
 import ProductReviews from "../Reviews/ProductReviews";
 import Footer from "../Footer/Footer";
-import Button from "@mui/material/Button";
+import {
+  RadioButtonsColorGroup,
+  RadioButtonsSizeGroup,
+} from "../ShoppingCart/Size&ColorController";
 
 const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
@@ -71,11 +74,11 @@ const ProductDetail = (props) => {
 
   const handleColor = (e) => {
     e.preventDefault();
-    setSelectedColor(e.target.attributes.value.value);
+    setSelectedColor(e.target.value);
   };
   const handleSize = (e) => {
     e.preventDefault();
-    setSelectedSize(e.target.attributes.value.value);
+    setSelectedSize(e.target.value);
   };
 
   const handleChange = async (e) => {
@@ -136,7 +139,7 @@ const ProductDetail = (props) => {
 
   const handleFavorite = () => {
     dispatch(addProductToFavorites(detailId, userId));
-  }
+  };
 
   return (
     <div className={styles.primaryContainer}>
@@ -162,40 +165,20 @@ const ProductDetail = (props) => {
           <p className={styles.rating}> ★ ★ ★ ★ ★ {product.rating}</p>
 
           <div className={styles.sizesDiv}>
-            <p>Choose a color</p>
-            {product.color && product.color?.split(", ").length
-              ? product?.color?.split(",").map((color, index) => {
-                  return (
-                    <div key={index}>
-                      <Button
-                        value={color.trim()}
-                        variant="outlined"
-                        onClick={handleColor}
-                      >
-                        {color}
-                      </Button>
-                    </div>
-                  );
-                })
-              : null}
+            {product.color && product.color?.split(", ").length ? (
+              <RadioButtonsColorGroup
+                color={product.color}
+                handleColor={handleColor}
+              />
+            ) : null}
           </div>
           <div className={styles.sizesDiv}>
-            <p>Choose your size</p>
-            {product.size && product.size?.split(", ").length
-              ? product?.size?.split(",").map((size, index) => {
-                  return (
-                    <div key={index}>
-                      <Button
-                        value={size.trim()}
-                        variant="outlined"
-                        onClick={handleSize}
-                      >
-                        {size}
-                      </Button>
-                    </div>
-                  );
-                })
-              : null}
+            {product.size && product.size?.split(", ").length ? (
+              <RadioButtonsSizeGroup
+                size={product.size}
+                handleSize={handleSize}
+              />
+            ) : null}
           </div>
 
           <p>
@@ -249,7 +232,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
-                  style={{background: "black", color: "white"}}
+                  style={{ background: "black", color: "white" }}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"
@@ -275,7 +258,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
-                  style={{background: "black", color: "white"}}
+                  style={{ background: "black", color: "white" }}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"
@@ -317,7 +300,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
-                  style={{background: "black", color: "white"}}
+                  style={{ background: "black", color: "white" }}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"

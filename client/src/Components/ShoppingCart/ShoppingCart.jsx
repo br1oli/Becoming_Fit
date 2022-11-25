@@ -130,7 +130,7 @@ export default function ShoppingCart({ toggleShow }) {
                   userId={userId}
                 />
               ))}
-            <button onClick={handleBuyOrder} className={styles.btnPay}>
+            <button /* onClick={handleBuyOrder} */ className={styles.btnPay}>
               Buy it all!
             </button>
           </div>
