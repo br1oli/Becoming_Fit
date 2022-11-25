@@ -7,6 +7,8 @@ import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useSelector, useDispatch } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
+
+import AdminDashboardUI from './Components/Admin/AminUI/AdminDashboardUI'
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
@@ -42,6 +44,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Route exact path="/admin" component={AdminDashboardUI} />
 
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
