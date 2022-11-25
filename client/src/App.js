@@ -7,6 +7,8 @@ import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
+
+import AdminDashboardUI from './Components/Admin/AminUI/AdminDashboardUI'
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
@@ -54,6 +56,8 @@ function App() {
 
   return (
     <BrowserRouter>
+
+      <Route exact path="/admin" component={AdminDashboardUI} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/complete" component={FormComplete} />
       <Route exact path="/profile" component={Profile} />
