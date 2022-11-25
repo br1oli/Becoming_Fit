@@ -44,3 +44,4 @@ export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
 export const CREATE_USER = "CREATE_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const GET_USER_ACT = "GET_USER_ACT";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO"

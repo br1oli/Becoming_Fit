@@ -39,7 +39,8 @@ import {
   //User
   CREATE_USER,
   UPDATE_USER,
-  GET_USER_ACT
+  GET_USER_ACT,
+  UPDATE_USER_INFO
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -362,6 +363,13 @@ function rootReducer(state = initialState, action) {
         };
       
         case GET_USER_ACT:
+          console.log("entre al reducer");
+          return{
+            ...state,
+            usuarios: action.payload,
+          }
+
+          case UPDATE_USER_INFO:
           return{
             ...state,
             usuarios: action.payload,

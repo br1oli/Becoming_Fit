@@ -7,32 +7,80 @@ import 'react-json-pretty/themes/monikai.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { getUserAct } from '../../Redux/Actions/UsersActions'
+import { changeUserInfo, getUserAct } from '../../Redux/Actions/UsersActions'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import LoginButton from './LoginButton'
 import LogoutButton from './LogoutButton'
 
 const Profile = () => {
+  const { usuarios } = useSelector((state) => state)
+
+  useEffect(() => {
+    const data = async () => {
+      try {
+        await dispatch(getUserAct(usuarios.email))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    data()
+  }, [usuarios.length])
+
   // const roles = process.env.REACT_APP_AUTH0_ROLE_ID;
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([])
   const dispatch = useDispatch()
-  const {usuarios} = useSelector((state) => state)
   const history = useHistory()
-  
+  const [input, setInput] = useState({
+    name: "",
+    zipCode: "",
+    country: "",
+    city: "",
+    phone: "",
+    adress: [],
+  });
 
-  const back = () =>{
+  function handleChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    console.log(input);
+  }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!input.name ||  input.adress.length < 1 || !input.country   || !input.city || !input.zipCode || !input.phone) {
+        return alert('Incompletes fields.')
+    }
+    dispatch(changeUserInfo( usuarios.email, input))
+    //  dispatch(getUserAct(usuarios.email))
+    setInput({
+        name: '',
+        zipCode: '',
+        adress: [],
+        city: "",
+        country: "",
+        phone: "",
+    })
+
+    console.log(user)
+    alert('Informacion actualizada con exito!')
+    history.push('/profile')
+}
+
+  const back = () => {
     history.push('/complete')
   }
-  useEffect(()=>{
-  },[user])
+
 
   useEffect(() => {
     const generarToken = async () => {
       try {
         if (isAuthenticated === true) {
-          user.roles = user? 'admin': null
+          user.roles = user ? 'admin' : null
           await dispatch(getUserAct(user.email))
         } else {
           console.log("no")
@@ -45,90 +93,117 @@ const Profile = () => {
 
     }
     generarToken()
-  },[user])
-
-  // useEffect(()=>{
-  //   const actInfo = async ()=>{
-  //     try {
-  //       user.name = usuarios.name
-  //       user.email = usuarios.email
-  //       user.address = usuarios.address
-  //       user.country = usuarios.country
-  //       user.city = usuarios.city
-  //       user.zipCode = usuarios.zipCode
-  //       user.phone = usuarios.phone
-  //       console.log("user", user)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   actInfo()
-  // },[user])
-
-  // if(usuarios){
-  //   try {
-  //           user.name = usuarios.name
-  //           user.email = usuarios.email
-  //           user.address = usuarios.address
-  //           user.country = usuarios.country
-  //           user.city = usuarios.city
-  //           user.zipCode = usuarios.zipCode
-  //           user.phone = usuarios.phone
-  //           console.log("user", user)
-  //         } catch (error) {
-  //           console.log(error)
-  //         }
-  //       }
-  
+  }, [user])
 
 
-console.log("adress", usuarios.adress)
-  return (
+  useEffect(() => {
+    const data = async () => {
+      try {
+        await dispatch(getUserAct(user.email))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    data()
+  }, [usuarios.length])
+
     
+  return (
     isAuthenticated ? <div>
-      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-      <img src={user.picture} alt={user.name} />
-      <br/>
-      <label>Name:</label>
-      <h2> {user.name} </h2>
-      <label>Email:</label>
-      <p>{user.email}</p>
+      <form onSubmit={e => handleSubmit(e)}>
+        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        <img src={user.picture} alt={user.name} />
+        <br />
+        <div>
+          
+          <label>Email:</label>
+          <label>{usuarios.email}:</label>
+          <br/>
+          <input value = {usuarios.email}
+            type = "text"
+            name = "email"
+            disabled = "disabled"/>
+        </div>
+        <div>
+          <label>Name:</label>
+          <label>{usuarios.name}</label>
+          <br/>
+          <input value={input.name}
+            type="text"
+            name="name"
+            placeholder='Change your name...'
+            onChange={handleChange} />
+        </div>
+        <div>
+          <label>Country:</label>
+          <label>{usuarios.country}</label>
+          <br/>
+          <input value={input.country}
+            type="text"
+            name="country"
+            placeholder='Change your country...'
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>City:</label>
+          <label>{usuarios.city}</label>
+          <br/>
+          <input value={input.city}
+            type="text"
+            name="city"
+            placeholder='Change your city...'
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Zip Code:</label>
+          <label>{usuarios.zipCode}</label>
+          <br/>
+          <input value={input.zipCode}
+            type="number"
+            name="zipCode"
+            placeholder='Change your zip code...'
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Phone:</label>
+          <label>{usuarios.phone}</label>
+          <br/>
+          <input value={input.phone}
+            type="number"
+            name="phone"
+            placeholder='Change your phone...'
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Adress:</label>
+          <label>{usuarios.adress}</label>
+          <br/>
+          <input
+            value={input.adress}
+            type="text"
+            name="adress"
+            placeholder='Change your adress...'
+            onChange={handleChange}
+          />
+        </div>
+        <br />
+        <br />
+        {/* <JSONPretty data={usuarios} /> */}
 
-
-      <label>Country:</label>
-      {usuarios.country}
-      <br/>
-      <label>City:</label>
-      {usuarios.city}
-      <br/>
-      <label>Zip Code:</label>
-      {usuarios.zipCode}
-      <br/>
-      <label>Phone:</label>
-      {usuarios.phone}
-      <br/>
-      <br/>
-      <label>Info</label>
-      <JSONPretty data={user} />
-      <label>Token</label>
-      <JSONPretty data={token} />
-
-
-      <h4>{usuarios.adress}</h4>
-      {usuarios.adress?.map(p => {
-								return (
-									<option
-										value={p}
-										name='adress'
-										key={usuarios.adress.indexOf(p)}
-									>{p}</option>
-
-								)
-							})}
-      {/* <JSONPretty data={usuarios} /> */}
-
-      <button onClick={back}>Volver</button>
-    </div> : <h1>Necesitas estar autenticado para ingresar aqui</h1>
+        <button onClick={back}>Volver</button>
+        <button className='submit1' type="submit">Save</button>
+        <br />
+        <label>Info</label>
+        <JSONPretty data={user} />
+        <label>Token</label>
+        <JSONPretty data={token} />
+      </form>
+    </div>
+      : <h1>Necesitas estar autenticado para ingresar aqui</h1>
   )
 }
 

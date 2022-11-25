@@ -14,7 +14,7 @@ const FormComplete = () => {
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         name: "",
-        // email: "",
+        email: "",
         zipCode: "",
         country: "",
         city: "",
@@ -54,8 +54,8 @@ const FormComplete = () => {
         let errors = {};
         if (!input.name) {
             errors.name = "Enter a name";
-        // } else if (!input.email) {
-        //     errors.description = "Enter a valid email";
+          } else if (!input.email) {
+           errors.description = "Enter a valid email";
         }
         else if (!input.country) {
             errors.genres = "Enter a valid country";
@@ -77,25 +77,10 @@ const FormComplete = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!input.name ||  input.adress.length < 1 || !input.country || !input.city || !input.zipCode || !input.phone) {
+        if (!input.name ||  input.adress.length < 1 || !input.country || !input.email || !input.city || !input.zipCode || !input.phone) {
             return alert('Incompletes fields.')
         }
         dispatch(actUser(input))
-        // let inputName = input.name
-        // user.name = inputName
-        // let inputEmail = input.email
-        // user.email = inputEmail
-        // let inputAdress = input.adress
-        // user.adress = inputAdress
-        // let inputCountry = input.country
-        // user.country = inputCountry
-        // let inputCity = input.city
-        // user.city = inputCity
-        // let zipCode = input.zipCode
-        // user.zipCode = zipCode
-        // let inputPhone = input.phone
-        // user.phone = inputPhone
-
         setInput({
             name: '',
             email: '',
@@ -115,20 +100,10 @@ const FormComplete = () => {
     }
 
     function handleChange(e) {
-        if (e.target.name === 'adress') {
-            setInput(
-                {
-                    ...input,
-                    adress: e.target.value.split(' ')
-                }
-            )
-
-        } else {
             setInput({
                 ...input,
                 [e.target.name]: e.target.value,
             });
-        }
         setErrors(
             validate({
                 ...input,
@@ -137,18 +112,6 @@ const FormComplete = () => {
         );
     }
 
-    const handleSelectAdress = (e) => {
-        e.preventDefault()
-        if (!input.adress.includes(e.target.value)) {
-            setInput({
-                ...input,
-                [e.target.name]: e.target.value,
-                adress: [...input.adress.concat(e.target.value)]
-            })
-        } else {
-            console.log('Adress ya agregada.')
-        }
-    }
 
     return (
         isAuthenticated &&
@@ -167,7 +130,7 @@ const FormComplete = () => {
             </div>
 
             <div>
-                <label>Email:    '</label>
+                <label>Email:</label>
                 <label>{user.email}</label>
             </div>
 
@@ -217,7 +180,7 @@ const FormComplete = () => {
                     value={input.adress}
                     name="adress"
                     autoComplete="off"
-                    onChange={e => handleSelectAdress(e)}
+                    onChange={e => handleChange(e)}
                     placeholder="Describa el juego..."
                 />
                 {errors.description && <p className="error">{errors.description}</p>}

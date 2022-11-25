@@ -6,13 +6,13 @@ module.exports = (sequelize) => {
   sequelize.define(
     "userProfile",
     {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
-        unique: true,
-        allowNull: true,
-      },
+      // id: {
+      //   type: DataTypes.UUID,
+      //   primaryKey: true,
+      //   defaultValue: DataTypes.UUIDV4,
+      //   unique: true,
+      //   allowNull: true,
+      // },
       userName: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -33,6 +33,7 @@ module.exports = (sequelize) => {
       },
       email: {
         type: DataTypes.STRING,
+        primaryKey: true,
       },
       phone: {
         type: DataTypes.STRING,

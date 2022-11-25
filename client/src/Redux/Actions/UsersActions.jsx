@@ -36,6 +36,7 @@ import {
   UPDATE_USER,
   GET_USER_ACT,
   URL_USER_ACT,
+  UPDATE_USER_INFO
 } from "./Const";
 
 // ----- PRODUCTS
@@ -278,13 +279,41 @@ export const actUser = (payload) => {
         payload: error.data,
       };
     }
-	
 	}
 }
+
+
+export const changeUserInfo = (email, payload) => {
+	return async function (dispatch) {
+    try {
+      const response = await axios.put(
+        `/usuarios?email=${email}`, payload);
+        return dispatch({
+          type: UPDATE_USER_INFO,
+          payload: response.data
+        })
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+	}
+}
+
+// export const updateProduct = (id, data)=>{
+//   return async function(dispatch){
+//     return axios.put(`http://localhost:8000/products/${id}`, data,{ headers: authHeader() })
+//       .then(response =>{
+//           dispatch({type: UPDATE_PRODUCT, payload: response.data})
+//       }).catch(err=> console.log(err))
+//   }
+// }
 
 export function getUserAct(email) {
   return async function (dispatch) {
     try {
+      console.log("entra a la accion del get", email)
       let userProfile = await axios(`${URL_USER_ACT}?email=${email}`);
       return dispatch({
         type: GET_USER_ACT,
