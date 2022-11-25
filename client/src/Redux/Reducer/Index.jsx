@@ -51,7 +51,6 @@ import {
   //User
   CREATE_USER,
   GET_ALL_USERS,
-  UPDATE_USER,
   DELETE_USER,
   SET_TOKEN, 
 
@@ -439,16 +438,10 @@ function rootReducer(state = initialState, action) {
         userStore: action.payload,
       };
     case GET_ALL_USERS:    
-      saveStorage("userEmail", action.payload);
       return {
         ...state,
         usersStore: action.payload,
       };
-    case UPDATE_USER:
-      return {
-        ...state,
-        userStore: action.payload
-      }
     case DELETE_USER:
       return {
         ...state,

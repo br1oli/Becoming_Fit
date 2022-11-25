@@ -35,7 +35,6 @@ import {
   //User actions
   CREATE_USER,
   GET_ALL_USERS,
-  UPDATE_USER,
   DELETE_USER,
   SET_TOKEN, 
 
@@ -388,23 +387,6 @@ export function getAllUsers() {
       return {
         type: ERROR,
         payload: error.data,
-      };
-    }
-  };
-}
-
-export function updateUser(email) {
-  return async (dispatch) => {
-    try {
-      const response = await axios.put(`/user/${email}`);
-      return dispatch({
-        type: UPDATE_USER,
-        payload: response.data,
-      });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.response.data,
       };
     }
   };
