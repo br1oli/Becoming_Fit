@@ -73,6 +73,16 @@ export default function ShoppingCart({ toggleShow }) {
     dispatch(clearCart());
   };
 
+  const handleBuyOrder = (e) => {
+    e.preventDefault();
+    if (reduxCart.token.length) {
+      console.log(reduxCart.cartDB.userEmail);
+      dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+    }
+    deleteStorage("shoppCart");
+    dispatch(clearCart());
+  };
+
   const payOrRegister = (e) => {
     try {
       if (!user.address || user.phone) {
