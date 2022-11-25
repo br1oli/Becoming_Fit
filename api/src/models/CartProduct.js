@@ -5,7 +5,6 @@ module.exports = (sequelize) => {
     {
       amount: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       color: {
         type: DataTypes.STRING,

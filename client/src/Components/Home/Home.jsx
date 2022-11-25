@@ -23,7 +23,7 @@ const Home = () => {
   let dispatch = useDispatch();
 
   useEffect(async () => {
-    if (token.length && shoppingCart.length && !cartDB.cartProducts?.length) {
+    if (token.length && shoppingCart.length) {
       for (let i = 0; i < shoppingCart.length; i++) {
         await dispatch(
           postCartToDB({
@@ -35,7 +35,6 @@ const Home = () => {
           })
         );
       }
-      dispatch(clearCart());
     }
   }, [dispatch]);
 

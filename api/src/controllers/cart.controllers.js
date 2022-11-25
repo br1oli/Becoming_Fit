@@ -42,8 +42,8 @@ const getCart = async (req = require, res = response) => {
 //y si llega a 0 eliminar el producto, en amount
 
 const postProductToCart = async (req = request, res = response) => {
+  console.log(req.body);
   const { userId, productId, amount, color, size } = req.body;
-
   if (!userId || !productId) return res.status(404).send("Incorrect data");
   try {
     const user = await User.findByPk(userId);
@@ -59,7 +59,7 @@ const postProductToCart = async (req = request, res = response) => {
       },
     });
 
-    const [cartProduct, createdCartProduct] = await CartProduct.findOrCreate({
+    const foundCartProduct = await CartProduct.findOne({
       include: [{ model: Product }, { model: Cart }],
       where: {
         [Op.and]: [
@@ -69,47 +69,84 @@ const postProductToCart = async (req = request, res = response) => {
           { size: size },
         ],
       },
-      defaults: {
-        amount: amount ? amount : 1,
-        color: color,
-        size: size,
-        cartId: cart.id,
-        productId: productId,
-      },
     });
 
-    if (cartProduct.amount === 1 && amount === -1) {
+    if (!foundCartProduct) {
+      const [cartProduct, createdCartProduct] = await CartProduct.findOrCreate({
+        include: [{ model: Product }, { model: Cart }],
+        where: {
+          [Op.and]: [
+            { productId: productId },
+            { cartId: cart.id },
+            { color: color },
+            { size: size },
+            { amount: amount },
+          ],
+        },
+        defaults: {
+          amount: amount ? amount : 1,
+          color: color,
+          size: size,
+          cartId: cart.id,
+          productId: productId,
+        },
+      });
+
+      if (
+        user &&
+        product &&
+        cart &&
+        cartProduct &&
+        createdCart &&
+        createdCartProduct
+      ) {
+        await cart.addCartProduct(cartProduct);
+        await product.createCartProduct(cartProduct);
+      }
+    }
+
+    if (foundCartProduct?.amount === 1 && amount === -1) {
       await cart.update({
         total:
           cart.total - parseInt(product.price) === 0
             ? 0
             : cart.total - parseInt(product.price),
       });
-      await cartProduct.destroy();
+      await foundCartProduct.destroy();
 
       return res.send("The product was deleted");
     }
 
-    if (!createdCart && !createdCartProduct) {
+    if (!createdCart && foundCartProduct) {
       //update en el caso de que no sea el primer producto
+
+      const gettingTotal = () => {
+        if (amount > 1) {
+          return cart.total + parseInt(product.price) * amount;
+        }
+        if (amount === 1) {
+          return cart.total + parseInt(product.price);
+        }
+        if (amount === -1) {
+          return cart.total - parseInt(product.price);
+        }
+      };
+
       await cart.update({
-        total:
-          amount === 1
-            ? cart.total + parseInt(product.price) * amount
-            : amount === -1
-            ? cart.total - parseInt(product.price)
-            : cart.total + parseInt(product.price),
+        total: gettingTotal(),
       });
-      await cartProduct.update({
-        amount: amount ? cartProduct.amount + amount : cartProduct.amount + 1,
+      await foundCartProduct.update({
+        amount: amount
+          ? foundCartProduct.amount + amount
+          : foundCartProduct.amount + 1,
       });
       await cart.save();
-      await cartProduct.save();
+      await foundCartProduct.save();
       return res.send(
         amount === -1 ? "One product less" : "One more product added"
       );
     }
-    if (!createdCart && createdCartProduct) {
+    if (!createdCart && !foundCartProduct) {
       await cart.update({
         total: amount
           ? cart.total + parseInt(product.price) * amount
@@ -119,20 +156,9 @@ const postProductToCart = async (req = request, res = response) => {
       return res.send("New product added");
     }
 
-    if (
-      user &&
-      product &&
-      cart &&
-      cartProduct &&
-      createdCart &&
-      createdCartProduct
-    ) {
-      await cart.addCartProduct(cartProduct);
-      await product.createCartProduct(cartProduct);
-    }
-
     return res.send("Product added");
   } catch (error) {
+    console.log(error);
     res.status(500).send(error.message);
   }
 };
