@@ -1,5 +1,5 @@
 const { response, request } = require("express");
-const { Product, Review, User } = require("../db");
+const { Product, Review, User, Op } = require("../db");
 
 const getReviews = async (req = request, res = response) => {
     try {
@@ -21,16 +21,26 @@ const getReviews = async (req = request, res = response) => {
 const postReview = async (req = request, res = response) => {
     try {
         let { idProduct } = req.query; 
+        let { idUser } = req.body;
 
         let { rating, comment, recommend, title, quality } = req.body;
         //if ( !idProduct || !rating || !comment || !recommend || !sentence || !quality ) return res.send({ message: "Incorrect data" });
         const findProduct = await Product.findByPk(idProduct);
+        const findUser = await User.findByPk(idUser);
         const [addProductReview, created] = await Review.findOrCreate({
             
-            include: { model: Product },
+            include: [{ model: Product }, { model: User }],
             where: {
-                productId: idProduct,
-            },
+                [Op.and]: [
+                  { productId: idProduct },
+                  { userEmail: idUser },
+                  { rating: rating },
+                  { comment: comment },
+                  { recommend: recommend },
+                  { title: title },
+                  { quality: quality },
+                ],
+              },
             defaults:{
                 rating: rating, 
                 comment: comment, 
@@ -38,12 +48,14 @@ const postReview = async (req = request, res = response) => {
                 title: title, 
                 quality: quality
             }
-        });         
+        });  
+        await findProduct.createReview(addProductReview) 
+        await findUser.addReview(addProductReview)    
         res.status(200).send(addProductReview)
     } catch (error) {
         res.status(500).send(error.message);
     }
-};  
+};
 
 
 
