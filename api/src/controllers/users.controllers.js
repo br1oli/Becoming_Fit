@@ -113,27 +113,6 @@ const actUser = async (req = request, res = response) => {
     zipCode,
     phone } = req.body
 
-  // if (!email.length) {
-  //   return res.status(400).send("No email provided");
-  // }
-  // if (!name.length) {
-  //   return res.status(400).send("No name provided");
-  // }
-  // if (!adress.length) {
-  //   return res.status(400).send("No adress provided");
-  // }
-  // if (!country.length) {
-  //   return res.status(400).send("No country provided");
-  // }
-  // if (!city.length) {
-  //   return res.status(400).send("No city provided");
-  // }
-  // if (!zipCode.length) {
-  //   return res.status(400).send("No zipCode provided");
-  // }
-  // if (!phone.length) {
-  //   return res.status(400).send("No phone provided");
-  // }
 
   try {
     const userExists = await UserProfile.findOne({ where: { email: email } });
@@ -160,23 +139,27 @@ const actUser = async (req = request, res = response) => {
 
 const updateProfile = async (req = request, res = response) => {
   let emailId = req.query.email;
-  // console.log("email id", req.query)
-  let { newName, newCountry, newCity, newZipCode, newPhone, newAdress } = req.body;
+  console.log("email id", req.query)
+  let { name, country, city, zipCode, phone, adress } = req.body;
   try {
-    const targetReview = await UserProfile.findByPk(emailId);
+    // const targetReview = await UserProfile.findByPk(emailId);
     // console.log("target review", targetReview)
-    const updateReview = await targetReview.update({
-      name: newName,
-      country: newCountry,
-      city: newCity,
-      zipCode: newZipCode,
-      phone: newPhone,
-      adress: newAdress
-    });
+    const updateReview = await UserProfile.update({
+      name,
+      country,
+      city,
+      zipCode,
+      phone,
+      adress
+    }, {
+      where: {
+          email: emailId,
+      }
+  });
     console.log("esto es el coso", updateReview)
-    await updateReview.save();
     res.status(200).send('Se actualizo la informacion con exito')
   } catch (error) {
+    console.log("esto es el error", error)
     res.status(404).send('No se pudo actualizar la informacion')
   }
 };

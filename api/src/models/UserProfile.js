@@ -39,8 +39,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       adress: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
       },
+      // direccion: {
+      //   type: DataTypes.STRING,
+      // },
       country: {
         type: DataTypes.STRING,
       },

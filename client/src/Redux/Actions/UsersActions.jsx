@@ -301,15 +301,6 @@ export const changeUserInfo = (email, payload) => {
 	}
 }
 
-// export const updateProduct = (id, data)=>{
-//   return async function(dispatch){
-//     return axios.put(`http://localhost:8000/products/${id}`, data,{ headers: authHeader() })
-//       .then(response =>{
-//           dispatch({type: UPDATE_PRODUCT, payload: response.data})
-//       }).catch(err=> console.log(err))
-//   }
-// }
-
 export function getUserAct(email) {
   return async function (dispatch) {
     try {

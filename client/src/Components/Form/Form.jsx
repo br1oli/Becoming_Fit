@@ -19,7 +19,7 @@ const FormComplete = () => {
         country: "",
         city: "",
         phone: "",
-        adress: [],
+        adress: "",
     });
 
 
@@ -77,7 +77,7 @@ const FormComplete = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!input.name ||  input.adress.length < 1 || !input.country || !input.email || !input.city || !input.zipCode || !input.phone) {
+        if (!input.name || !input.adress || !input.country || !input.email || !input.city || !input.zipCode || !input.phone) {
             return alert('Incompletes fields.')
         }
         dispatch(actUser(input))
@@ -85,7 +85,7 @@ const FormComplete = () => {
             name: '',
             email: '',
             zipCode: '',
-            adress: [],
+            adress: "",
             city: "",
             country: "",
             phone: "",
@@ -103,13 +103,15 @@ const FormComplete = () => {
             setInput({
                 ...input,
                 [e.target.name]: e.target.value,
-            });
+            }
+            );
         setErrors(
             validate({
                 ...input,
                 [e.target.name]: e.target.value,
             })
         );
+        console.log(input)
     }
 
 

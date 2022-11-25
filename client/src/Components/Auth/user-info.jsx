@@ -38,7 +38,7 @@ const Profile = () => {
     country: "",
     city: "",
     phone: "",
-    adress: [],
+    adress: "",
   });
 
   function handleChange(e) {
@@ -60,7 +60,7 @@ const Profile = () => {
     setInput({
         name: '',
         zipCode: '',
-        adress: [],
+        adress: "",
         city: "",
         country: "",
         phone: "",
