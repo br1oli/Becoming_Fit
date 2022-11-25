@@ -87,8 +87,8 @@ Brand.hasMany(Product /* {foreignKey: 'brandId'} */);
 Product.belongsTo(Brand);
 //-----------------------Relacion user,Review,Product--------------------------
 
-// User.hasMany(Review);
-// Review.belongsTo(User);
+User.hasMany(Review);
+Review.belongsTo(User);
 
 Product.hasMany(Review);
 Review.belongsTo(Product);
@@ -104,11 +104,11 @@ ProductInventory.belongsTo(
 
 //---------------------------------------------Relaciones Favorites-------------------------------------
 
-User.hasOne(Favorites);
-Favorites.belongsTo(User);
+User.hasMany(FavoritesProduct);
+FavoritesProduct.belongsTo(User);
 
-Favorites.hasMany(FavoritesProduct);
-FavoritesProduct.belongsTo(Favorites);
+// Favorites.hasMany(FavoritesProduct);
+// FavoritesProduct.belongsTo(Favorites);
 
 Product.hasOne(FavoritesProduct);
 FavoritesProduct.belongsTo(Product);

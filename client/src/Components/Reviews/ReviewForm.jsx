@@ -45,6 +45,7 @@ const ReviewForm = ({idProduct}) => {
       reviewPosted();
       const handleClose = () => setShow(false);
       handleClose();
+      window.location.reload()
     };
     
     return (

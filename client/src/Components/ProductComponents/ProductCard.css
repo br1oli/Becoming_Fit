@@ -49,23 +49,10 @@
   margin-top: -5px;
 }
 
-.add {
-  background: darken($light, 10%);
-  padding: 10px;
-  display: inline-block;
-  outline: 0;
-  border: 0;
-  margin: -1px;
-  border-radius: 2px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: $white;
-  cursor: pointer;
-}
-.add:hover {
-  background: black;
-  color: aliceblue;
-  transition: all 0.5s ease-in-out;
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 .like {

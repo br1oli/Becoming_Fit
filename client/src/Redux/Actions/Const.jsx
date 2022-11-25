@@ -1,5 +1,6 @@
 export const URL_PRODUCTS = "/products";
 export const URL_PRODUCTS_QUERY = "/products?name=";
+export const URL_USER_ACT = "/usuarios";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
 
@@ -38,9 +39,11 @@ export const POST_TO_CART_DB = "POST_TO_CART_DB";
 export const GET_CART_DB = "GET_CART_DB";
 export const DELETE_CART = "DELETE_CART";
 export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
+export const ERROR_CART = "ERROR_CART";
 
 //User actions
 export const CREATE_USER = "CREATE_USER";
+export const SET_TOKEN = "SET_TOKEN";
 
 // Favorites consts
 export const ADD_PRODUCT_TO_FAVORITES = "ADD_PRODUCT_TO_FAVORITES";
@@ -53,3 +56,6 @@ export const ADD_REVIEW_TO_PRODUCT = "ADD_REVIEW_TO_PRODUCT";
 export const GET_REVIEWS = "GET_REVIEWS";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const REMOVE_ONE_REVIEW = "REMOVE_ONE_REVIEW";
+export const UPDATE_USER = "UPDATE_USER";
+export const GET_USER_ACT = "GET_USER_ACT";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO"

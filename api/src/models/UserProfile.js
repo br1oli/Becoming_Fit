@@ -6,26 +6,48 @@ module.exports = (sequelize) => {
   sequelize.define(
     "userProfile",
     {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
-        unique: true,
-        allowNull: false,
-      },
+      // id: {
+      //   type: DataTypes.UUID,
+      //   primaryKey: true,
+      //   defaultValue: DataTypes.UUIDV4,
+      //   unique: true,
+      //   allowNull: true,
+      // },
       userName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       firstName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       phoneNumber: {
+        type: DataTypes.STRING,
+      },
+      name: {
+        type: DataTypes.STRING,
+      },
+      email: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+      },
+      phone: {
+        type: DataTypes.STRING,
+      },
+      adress: {
+        type: DataTypes.STRING,
+      },
+      country: {
+        type: DataTypes.STRING,
+      },
+      city: {
+        type: DataTypes.STRING,
+      },
+      zipCode: {
         type: DataTypes.STRING,
       },
     },
