@@ -87,8 +87,8 @@ Brand.hasMany(Product /* {foreignKey: 'brandId'} */);
 Product.belongsTo(Brand);
 //-----------------------Relacion user,Review,Product--------------------------
 
-// User.hasMany(Review);
-// Review.belongsTo(User);
+User.hasMany(Review);
+Review.belongsTo(User);
 
 Product.hasMany(Review);
 Review.belongsTo(Product);
