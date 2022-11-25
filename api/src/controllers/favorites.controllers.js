@@ -6,11 +6,10 @@ const { Op } = require("sequelize");
 const postFavorites = async (req = request, res = response) => {
   try {
     let { idProduct } = req.query;
-    let { idUser } = req.query;
+    let { idUser } = req.body;
     
     if (!idProduct)return res.send({ message: "Incorrect data" });
     const [addProductFavorite, createdAddProductFavorite] = await FavoritesProduct.findOrCreate({
-      //include: { model: Product },
       include:  [{model: Product}, {model: User}],
       where: {
         productId: idProduct,
@@ -21,10 +20,8 @@ const postFavorites = async (req = request, res = response) => {
       }
     });
 
-    //addProductFavorite.setUser()
       res.status(200).send(addProductFavorite)
   
-  //} catch ({message, original: {detail}}) {
   } catch (error) {
     res.status(500).send(error.message);
   }
