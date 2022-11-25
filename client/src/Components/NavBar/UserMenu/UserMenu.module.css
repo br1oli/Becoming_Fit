@@ -19,3 +19,9 @@
 .userOptions {
     text-decoration: none;
 }
+
+.loginButton {
+    display: flex;
+    justify-content: flex-start;
+    margin: 40px 0 0 10px;
+}
