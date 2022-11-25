@@ -99,6 +99,7 @@ const getUserAct = async (req = request, res = response) => {
     }
     res.status(200).send(usersFromDb.dataValues);
   } catch (error) {
+    console.log(error)
     res.status(500).json(error.message);
   }
 };
@@ -152,6 +153,7 @@ const actUser = async (req = request, res = response) => {
       res.status(201).send(newUser.dataValues);
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json(error.message);
   }
 };

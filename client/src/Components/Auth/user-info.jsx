@@ -107,7 +107,7 @@ const Profile = () => {
     data()
   }, [usuarios.length])
 
-    
+    console.log("esto es el usuario", usuarios);
   return (
     isAuthenticated ? <div>
       <form onSubmit={e => handleSubmit(e)}>
