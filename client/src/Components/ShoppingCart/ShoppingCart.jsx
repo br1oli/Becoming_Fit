@@ -72,6 +72,16 @@ export default function ShoppingCart({ toggleShow }) {
     deleteStorage("shoppCart");
     dispatch(clearCart());
   };
+  
+    const handleBuyOrder = (e) => {
+    e.preventDefault();
+    if (reduxCart.token.length) {
+      console.log(reduxCart.cartDB.userEmail);
+      dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+    }
+    deleteStorage("shoppCart");
+    dispatch(clearCart());
+  };
 
   const payOrRegister = (e) => {
     try {
@@ -130,7 +140,7 @@ export default function ShoppingCart({ toggleShow }) {
                   userId={userId}
                 />
               ))}
-            <button /* onClick={handleBuyOrder} */ className={styles.btnPay}>
+            <button onClick={handleBuyOrder} className={styles.btnPay}>
               Buy it all!
             </button>
           </div>
