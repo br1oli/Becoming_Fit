@@ -4,23 +4,28 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
+
+import AdminDashboardUI from './Components/Admin/AminUI/AdminDashboardUI'
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
 import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 import {
   getProducts,
+  getCartFromDB,
+  createUser,
+  setTokenInStore,
 } from "./Redux/Actions/UsersActions";
-
+import FormComplete from "./Components/Form/Form";
 
 function App() {
   const dispatch = useDispatch();
+  const { getAccessTokenSilently, user, isLoading, isAuthenticated } = useAuth0();
   const favorites = useSelector((state) => state.favorites);
-   //AUTH0
-  const { getAccessTokenSilently } = useAuth0();
+  //AUTH0
   const [token, setToken] = useState([]);
 
   useEffect(() => {
@@ -28,21 +33,33 @@ function App() {
       try {
         const tokenApi = await getAccessTokenSilently();
         setToken(tokenApi);
-        sessionStorage.setItem("userToken", JSON.stringify(tokenApi));
       } catch (error) {
         console.log(error);
       }
     };
     generarToken();
   }, []);
-  
+
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+    if (token.length) {
+      dispatch(setTokenInStore(token));
+    }
+  }, [token]);
+
+  useEffect(async () => {
+    if (isAuthenticated === true && user !== undefined) {
+      await dispatch(createUser(user.email));
+      dispatch(getCartFromDB(user.email));
+    }
+  }, [dispatch, isAuthenticated, user]);
 
   return (
     <BrowserRouter>
 
+      <Route exact path="/admin" component={AdminDashboardUI} />
+      {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
+      <Route exact path="/complete" component={FormComplete} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
       <Route exact path="/home" component={Home} />

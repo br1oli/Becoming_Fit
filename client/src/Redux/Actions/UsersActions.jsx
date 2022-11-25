@@ -28,21 +28,25 @@ import {
   DELETE_CART,
   GET_CART_DB,
   DELETE_PRODUCT_CART,
+  ERROR_CART,
+  PAYMENT_ORDER,
+  ERROR_PAYMENT,
 
   //User actions
   CREATE_USER,
-
-   //Favorites Products actions
-   ADD_PRODUCT_TO_FAVORITES,
-   GET_PRODUCT_FROM_FAVORITES,
-   REMOVE_ALL_FROM_FAVORITES,
-   REMOVE_ONE_FROM_FAVORITES,
-
-  //Reviews Products actions
+  SET_TOKEN,
+  ADD_PRODUCT_TO_FAVORITES,
+  GET_PRODUCT_FROM_FAVORITES,
+  REMOVE_ONE_FROM_FAVORITES,
+  REMOVE_ALL_FROM_FAVORITES,
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
-  REMOVE_ONE_REVIEW
+  REMOVE_ONE_REVIEW,
+  UPDATE_USER,
+  UPDATE_USER_INFO,
+  GET_USER_ACT,
+  URL_USER_ACT,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -50,7 +54,7 @@ import {
 export function getProducts() {
   return async function (dispatch) {
     try {
-      let products = await axios('/products');
+      let products = await axios("/products");
       return dispatch({
         type: GET_PRODUCTS,
         payload: products.data,
@@ -58,7 +62,7 @@ export function getProducts() {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error.data,
       };
     }
   };
@@ -193,18 +197,18 @@ export const clearSuccess = () => {
 export const addToCart = (values) => {
   return { type: ADD_PRODUCT_TO_CART, payload: values };
 };
-export const deleteFromCart = (id, all = false) => {
+export const deleteFromCart = (values, all = false) => {
   if (all) {
-    return { type: REMOVE_ALL_FROM_CART, payload: id };
+    return { type: REMOVE_ALL_FROM_CART, payload: values };
   } else {
-    return { type: REMOVE_ONE_FROM_CART, payload: id };
+    return { type: REMOVE_ONE_FROM_CART, payload: values };
   }
 };
 
 export const clearCart = () => {
   return { type: CLEAR_CART };
 };
-export const postCartToDB = (values /* userId, idProduct, amount */) => {
+export const postCartToDB = (values) => {
   return async function (dispatch) {
     try {
       const response = await axios.post("/cart", values);
@@ -220,7 +224,7 @@ export const getCartFromDB = (userId) => {
       const response = await axios.get(`/cart?userId=${userId}`);
       return dispatch({ type: GET_CART_DB, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error.response?.data });
+      return dispatch({ type: ERROR_CART, payload: error.response?.data });
     }
   };
 };
@@ -230,19 +234,19 @@ export const clearCartInDb = (cartId) => {
       const response = await axios.delete(`/cart?cartId=${cartId}`);
       return dispatch({ type: DELETE_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error.response.data });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
-export const deleteProductCartInDb = (productId) => {
+export const deleteProductCartInDb = (values) => {
   return async function (dispatch) {
     try {
       const response = await axios.delete(
-        `/cartProduct?productId=${productId}`
+        `/cartProduct?productId=${values.productId}&color=${values.color}&size=${values.size}`
       );
       return dispatch({ type: DELETE_PRODUCT_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error.response.data });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
@@ -250,6 +254,20 @@ export const deleteProductCartInDb = (productId) => {
 export function clearDetails() {
   return { type: CLEAR_DETAILS };
 }
+
+export function paymentOrder(userEmail) {
+  return async function (dispatch) {
+    try {
+      console.log("soy el user de la action", userEmail);
+      const response = await axios.post(`/payment/new?userEmail=${userEmail}`);
+      return dispatch({ type: PAYMENT_ORDER, payload: response.data.url });
+    } catch (error) {
+      return dispatch({ type: ERROR_PAYMENT, payload: error.response.data });
+    }
+  };
+}
+
+// User actions
 
 // User actions
 
@@ -262,19 +280,28 @@ export const createUser = (email) => {
         payload: user.data,
       });
     } catch (error) {
-      return {
+      return dispatch({
         type: ERROR,
         payload: error.response.data,
-      };
+      });
     }
   };
 };
 
+export const setTokenInStore = (token) => {
+  return {
+    type: SET_TOKEN,
+    payload: token,
+  };
+};
+
 //Favorites actions
-export function addProductToFavorites(idProduct) {
-  return async function (dispatch)  {
+export function addProductToFavorites(idProduct, idUser) {
+  return async function (dispatch) {
     try {
-      const response = await axios.post(`/favorites?idProduct=${idProduct}`);
+      const response = await axios.post(
+        `/favorites?idProduct=${idProduct}&idUser=${idUser}`
+      );
       return dispatch({
         type: ADD_PRODUCT_TO_FAVORITES,
         payload: response.data,
@@ -287,10 +314,10 @@ export function addProductToFavorites(idProduct) {
       // };
     }
   };
-};
+}
 
 export function getProductFromFavorites() {
-  return async function (dispatch)  {
+  return async function (dispatch) {
     try {
       const response = await axios.get(`/favorites`);
       return dispatch({
@@ -305,7 +332,7 @@ export function getProductFromFavorites() {
       // };
     }
   };
-};
+}
 
 export function removeOneProductFromFavorites(id) {
   return async (dispatch) => {
@@ -322,7 +349,7 @@ export function removeOneProductFromFavorites(id) {
       };
     }
   };
-};
+}
 
 export function removeAllProductsFromFavorites() {
   return async (dispatch) => {
@@ -339,13 +366,16 @@ export function removeAllProductsFromFavorites() {
       };
     }
   };
-};
+}
 
 // Reviews Products Actions
 export function addReviewToProduct(idProduct, input) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`/reviews?idProduct=${idProduct}`, input);
+      const response = await axios.post(
+        `/reviews?idProduct=${idProduct}`,
+        input
+      );
       return dispatch({
         type: ADD_REVIEW_TO_PRODUCT,
         payload: response.data,
@@ -357,7 +387,7 @@ export function addReviewToProduct(idProduct, input) {
       };
     }
   };
-};
+}
 
 export function getReviews() {
   return async (dispatch) => {
@@ -374,7 +404,7 @@ export function getReviews() {
       };
     }
   };
-};
+}
 
 export function editReviews() {
   return async (dispatch) => {
@@ -391,7 +421,7 @@ export function editReviews() {
       };
     }
   };
-};
+}
 
 export function removeReviews() {
   return async (dispatch) => {
@@ -408,4 +438,65 @@ export function removeReviews() {
       };
     }
   };
+}
+
+export const actUser = (payload) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post("/usuarios", payload);
+      return dispatch({
+        type: UPDATE_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+  };
 };
+
+export const changeUserInfo = (email, payload) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/usuarios?email=${email}`, payload);
+      return dispatch({
+        type: UPDATE_USER_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.data,
+      };
+    }
+  };
+};
+
+// export const updateProduct = (id, data)=>{
+//   return async function(dispatch){
+//     return axios.put(`http://localhost:8000/products/${id}`, data,{ headers: authHeader() })
+//       .then(response =>{
+//           dispatch({type: UPDATE_PRODUCT, payload: response.data})
+//       }).catch(err=> console.log(err))
+//   }
+// }
+
+export function getUserAct(email) {
+  return async function (dispatch) {
+    try {
+      console.log("entra a la accion del get", email);
+      let userProfile = await axios(`${URL_USER_ACT}?email=${email}`);
+      return dispatch({
+        type: GET_USER_ACT,
+        payload: userProfile.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error.response.data,
+      };
+    }
+  };
+}

@@ -1,5 +1,5 @@
 const { response, request } = require("express");
-const { Product, Review, User } = require("../db");
+const { Product, Review, User, Op } = require("../db");
 
 const getReviews = async (req = request, res = response) => {
     try {
@@ -16,17 +16,29 @@ const getReviews = async (req = request, res = response) => {
     }
   };
 
+
+  
 const postReview = async (req = request, res = response) => {
     try {
         let { idProduct } = req.query; 
-        console.log(idProduct)
-        let { rating, comment, recommend, title, quality } = req.body;
+        let { idUser, rating, comment, recommend, title, quality } = req.body;
+        
         const findProduct = await Product.findByPk(idProduct);
-        const [addProductReview, created] = await Review.findOrCreate({            
-            include: { model: Product },
+        const findUser = await User.findByPk(idUser);
+        const [addProductReview, created] = await Review.findOrCreate({
+            
+            include: [{ model: Product }, { model: User }],
             where: {
-                productId: idProduct,
-            },
+                [Op.and]: [
+                  { productId: idProduct },
+                  { userEmail: idUser },
+                  { rating: rating },
+                  { comment: comment },
+                  { recommend: recommend },
+                  { title: title },
+                  { quality: quality },
+                ],
+              },
             defaults:{
                 rating: rating, 
                 comment: comment, 
@@ -34,8 +46,9 @@ const postReview = async (req = request, res = response) => {
                 title: title, 
                 quality: quality
             }
-        }); 
-        if (created === false) return res.status(500).send("Already created");  
+        });  
+        await findProduct.createReview(addProductReview) 
+        await findUser.addReview(addProductReview)    
         res.status(200).send(addProductReview)
     } catch (error) {
         res.status(500).send(error.message);
@@ -45,7 +58,6 @@ const postReview = async (req = request, res = response) => {
 const deleteOneReview = async (req = request, res = response) => {
     try {
         let { id } = req.query;
-        console.log(id)
         const findReviewToDelete = await Review.findByPk(id);
         const deleteOne = await findReviewToDelete.destroy();
         res.status(200).send(findReviewToDelete.dataValues);
@@ -53,7 +65,7 @@ const deleteOneReview = async (req = request, res = response) => {
         res.status(500).send(error.message);
     }
 };  
-  
+
 const deleteAllReviews = async (req = request, res = response) => {
     try {
         let findall = await Review.findAll();
@@ -63,11 +75,12 @@ const deleteAllReviews = async (req = request, res = response) => {
         res.status(500).send(error.message);
     }
 };
-  
+
 const putReview = async (req = request, res = response) => {
-    const { idReview, newRating, newComment, newRecommend, newTitle, newQuality } = req.body;
+    const { idReview } = req.body;
+    const { newRating, newComment, newRecommend, newTitle, newQuality } = req.body;
     try {        
-        const targetReview = await Review.findByPk(idReview); 
+        const targetReview = await Review.findByPk(idReview);
         const updateReview = await targetReview.update({ rating: newRating, 
             comment: newComment, 
             recommend: newRecommend, 
@@ -75,7 +88,7 @@ const putReview = async (req = request, res = response) => {
             quality: newQuality
         })
         await updateReview.save();  
-        res.send("Review updated successfully");
+        res.send("Review successfully updated");
     } catch (error) {
         res.json( error.message );
     }
