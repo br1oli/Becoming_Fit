@@ -12,10 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ProductCard = (props) => {
   let dispatch = useDispatch();
+  let userId = useSelector((state) => state.userStore.email);
 
   const handleFavorite = async (e) => {
     await dispatch(addProductToFavorites(e.target.value, userId));
-    console.log(userId)
   };
 
   return (
