@@ -42,7 +42,6 @@ const getCart = async (req = require, res = response) => {
 //y si llega a 0 eliminar el producto, en amount
 
 const postProductToCart = async (req = request, res = response) => {
-  console.log(req.body);
   const { userId, productId, amount, color, size } = req.body;
   if (!userId || !productId) return res.status(404).send("Incorrect data");
   try {
