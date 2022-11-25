@@ -135,8 +135,8 @@ const ProductDetail = (props) => {
   };
 
   const handleFavorite = () => {
-    dispatch(addProductToFavorites(detailId));
-  };
+    dispatch(addProductToFavorites(detailId, userId));
+  }
 
   return (
     <div className={styles.primaryContainer}>
@@ -249,6 +249,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
+                  style={{background: "black", color: "white"}}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"
@@ -274,6 +275,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
+                  style={{background: "black", color: "white"}}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"
@@ -315,6 +317,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
+                  style={{background: "black", color: "white"}}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"

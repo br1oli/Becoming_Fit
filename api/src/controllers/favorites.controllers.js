@@ -1,21 +1,30 @@
 const { response, request } = require("express");
-const { Product, FavoritesProduct } = require("../db");
+const { Product, FavoritesProduct, User } = require("../db");
+const { Op } = require("sequelize");
 
 
 const postFavorites = async (req = request, res = response) => {
   try {
     let { idProduct } = req.query;
-
+    let { idUser } = req.query;
+    
+    if (!idProduct)return res.send({ message: "Incorrect data" });
     const [addProductFavorite, createdAddProductFavorite] = await FavoritesProduct.findOrCreate({
-      include: { model: Product },
+      //include: { model: Product },
+      include:  [{model: Product}, {model: User}],
       where: {
         productId: idProduct,
+        userId: idUser,
+      },
+      defaults: {
+
       }
     });
 
-    if (!idProduct)return res.send({ message: "Incorrect data" });
+    //addProductFavorite.setUser()
       res.status(200).send(addProductFavorite)
   
+  //} catch ({message, original: {detail}}) {
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -24,7 +33,8 @@ const postFavorites = async (req = request, res = response) => {
 
 const getFavorites = async (req = request, res = response) => {
     try {
-      const favorites = await FavoritesProduct.findAll({ include: Product });
+      const { userId }= req.query 
+      const favorites = await FavoritesProduct.findAll({ include: [Product, User], where: [{userId: userId}] });
       if(!favorites.length){
         return res.status(404).send("No products added yet")
       }

@@ -14,7 +14,8 @@ const ProductCard = (props) => {
   let dispatch = useDispatch();
 
   const handleFavorite = async (e) => {
-    await dispatch(addProductToFavorites(e.target.value));
+    await dispatch(addProductToFavorites(e.target.value, userId));
+    console.log(userId)
   };
 
   return (

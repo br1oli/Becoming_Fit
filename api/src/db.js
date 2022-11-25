@@ -104,11 +104,11 @@ ProductInventory.belongsTo(
 
 //---------------------------------------------Relaciones Favorites-------------------------------------
 
-User.hasOne(Favorites);
-Favorites.belongsTo(User);
+User.hasMany(FavoritesProduct);
+FavoritesProduct.belongsTo(User);
 
-Favorites.hasMany(FavoritesProduct);
-FavoritesProduct.belongsTo(Favorites);
+// Favorites.hasMany(FavoritesProduct);
+// FavoritesProduct.belongsTo(Favorites);
 
 Product.hasOne(FavoritesProduct);
 FavoritesProduct.belongsTo(Product);
