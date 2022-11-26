@@ -1,11 +1,13 @@
-import { React, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { Button, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { createUserProfile } from "../../Redux/Actions/UsersActions";
-import { useSelector } from "react-redux";
+
+import { React, useState } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+import { Button, Form } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { createUserProfile } from '../../Redux/Actions/UsersActions';
+import { useSelector } from 'react-redux';
+
 const FormComplete = () => {
   const { usuarios } = useSelector((state) => state);
   const history = useHistory();
@@ -79,6 +81,26 @@ const FormComplete = () => {
       !input.phone
     ) {
       return alert("Incompletes fields.");
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (!input.name ||  input.adress.length < 1 || !input.country || !input.email || !input.city || !input.zipCode || !input.phone) {
+            return alert('Incompletes fields.')
+        }
+        dispatch(createUserProfile(input))
+        setInput({
+            name: '',
+            email: '',
+            zipCode: '',
+            adress: [],
+            city: "",
+            country: "",
+            phone: "",
+        })
+        console.log(user)
+        alert('Informacion cargada con exito!')
+        history.push('/profile')
+
     }
     dispatch(createUserProfile(input));
     setInput({

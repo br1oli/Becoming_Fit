@@ -10,7 +10,6 @@ import {
   postCartToDB,
   addProductToFavorites,
   getCartFromDB,
-  getReviews,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
@@ -52,7 +51,6 @@ const ProductDetail = (props) => {
       e.color === selectedColor &&
       e.size === selectedSize
   );
-  //const favorites = useSelector((state) => state.favorites);
 
   //esta funcion devuelve la cantidad de productos agregados con mismo talle y color
   //dependiendo de si hay token o no
@@ -70,10 +68,8 @@ const ProductDetail = (props) => {
 
   useEffect(() => {
     dispatch(getProductDetail(detailId));
-
     return () => {
       dispatch(clearDetails());
-      dispatch(getReviews());
     };
   }, []);
 

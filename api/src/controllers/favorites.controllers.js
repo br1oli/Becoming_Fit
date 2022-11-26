@@ -7,16 +7,21 @@ const postFavorites = async (req = request, res = response) => {
   try {
     let { idProduct } = req.query;
     let { idUser } = req.body;
-    
+
+    const findProduct = await Product.findByPk(idProduct);
+    const findUser = await User.findByPk(idUser);
+
     if (!idProduct)return res.send({ message: "Incorrect data" });
+
     const [addProductFavorite, createdAddProductFavorite] = await FavoritesProduct.findOrCreate({
       include:  [{model: Product}, {model: User}],
       where: {
         productId: idProduct,
-        userId: idUser,
+        userEmail: idUser,
       },
       defaults: {
-
+        productId: idProduct,
+        userEmail: findUser.dataValues.email,
       }
     });
 
@@ -30,8 +35,12 @@ const postFavorites = async (req = request, res = response) => {
 
 const getFavorites = async (req = request, res = response) => {
     try {
-      const { userId }= req.query 
-      const favorites = await FavoritesProduct.findAll({ include: [Product, User], where: [{userId: userId}] });
+      const { userEmail }= req.query 
+      const whereClause = userEmail ? [{userEmail: userEmail}] : null
+      const favorites = await FavoritesProduct.findAll(
+        { include: [Product, User], 
+          where: whereClause 
+        });
       if(!favorites.length){
         return res.status(404).send("No products added yet")
       }

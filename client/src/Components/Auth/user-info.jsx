@@ -1,20 +1,17 @@
 // ESTE ESTABA EN UNA CARPETA AUTH EN COMPONENTS
 
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import JSONPretty from "react-json-pretty";
-import "react-json-pretty/themes/monikai.css";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import {
-  getUserProfileByEmail,
-  updateUserProfile,
-} from "../../Redux/Actions/UsersActions";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import LoginButton from "./LoginButton";
-import LogoutButton from "./LogoutButton";
+import React from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+import JSONPretty from 'react-json-pretty'
+import 'react-json-pretty/themes/monikai.css'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { updateUserProfile, getUserProfileByEmail } from '../../Redux/Actions/UsersActions'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom';
+import LoginButton from './LoginButton'
+import LogoutButton from './LogoutButton'
 
 const Profile = () => {
   const usuarios = useSelector((state) => state.usuarios);
@@ -23,8 +20,8 @@ const Profile = () => {
   useEffect(() => {
     const data = async () => {
       try {
-        if (user) {
-          await dispatch(getUserProfileByEmail(usuarios.email));
+        if(user){
+          await dispatch(getUserProfileByEmail(usuarios.email))
         }
       } catch (error) {
         console.log(error);
@@ -42,8 +39,8 @@ const Profile = () => {
     const generarToken = async () => {
       try {
         if (isAuthenticated === true) {
-          user.roles = user ? "admin" : null;
-          await dispatch(getUserProfileByEmail(user.email));
+          user.roles = user ? 'admin' : null
+          await dispatch(getUserProfileByEmail(user.email))
         } else {
           console.log("no");
         }
@@ -85,8 +82,8 @@ const Profile = () => {
     ) {
       return alert("Incompletes fields.");
     }
-    await dispatch(updateUserProfile(usuarios.email, input));
-    dispatch(getUserProfileByEmail(usuarios.email));
+    await dispatch(updateUserProfile( usuarios.email, input))
+      dispatch(getUserProfileByEmail(usuarios.email))
     setInput({
       name: "",
       zipCode: "",
@@ -108,7 +105,7 @@ const Profile = () => {
   useEffect(() => {
     const data = async () => {
       try {
-        await dispatch(getUserProfileByEmail(user?.email));
+        await dispatch(getUserProfileByEmail(user?.email))
       } catch (error) {
         console.log(error);
       }
