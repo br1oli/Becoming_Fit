@@ -3,10 +3,13 @@ const { Product, Review, User, Op } = require("../db");
 
 const getReviews = async (req = request, res = response) => {
     try {
-        const Reviews = await Review.findAll({ include: {
+        const Reviews = await Review.findAll({ include: [{
             model: Product,
-            attributes: ["id", "name"]
-        }});
+            attributes: ["id", "name", "rating"]
+        }, {
+            model: User,
+            attributes: ["email", "adminPermissions"]
+        }]});
         if(!Reviews.length){
             return res.status(404).send("No reviews added yet")
         }
@@ -18,38 +21,64 @@ const getReviews = async (req = request, res = response) => {
 
 
   
-const postReview = async (req = request, res = response) => {
+  const postReview = async (req = request, res = response) => {
     try {
         let { idProduct } = req.query; 
         let { idUser, rating, comment, recommend, title, quality } = req.body;
+        //if ( !idProduct || !rating || !comment || !recommend || !sentence || !quality ) return res.send({ message: "Incorrect data" });
         
         const findProduct = await Product.findByPk(idProduct);
         const findUser = await User.findByPk(idUser);
-        const [addProductReview, created] = await Review.findOrCreate({
+        //console.log(findUser);
+        // const findReview = await Review.findOne({include: [{ model: Product }, { model: User}],
+        //     where: {
+        //         [Op.and]: [
+        //             { productId: idProduct },
+        //             { userEmail: findUser.dataValues.email },
+        //             { rating: rating },
+        //             { comment: comment },
+        //             { recommend: recommend },
+        //             { title: title },
+        //             { quality: quality },
+        //         ],
+        //     }});
             
-            include: [{ model: Product }, { model: User }],
+        //if (!findReview) {
+        //let addProductReview = await Review.create({
+            let [addProductReview, created] = await Review.findOrCreate({
+            include: [{ model: Product }, { model: User}],
             where: {
                 [Op.and]: [
-                  { productId: idProduct },
-                  { userEmail: idUser },
-                  { rating: rating },
-                  { comment: comment },
-                  { recommend: recommend },
-                  { title: title },
-                  { quality: quality },
+                    { productId: idProduct },
+                    { userEmail: findUser.dataValues.email },
+                    { rating: rating },
+                    { comment: comment },
+                    { recommend: recommend },
+                    { title: title },
+                    { quality: quality },
                 ],
-              },
-            defaults:{
+            },
+            defaults:
+            {
+                productId: idProduct,
+                userEmail: findUser.dataValues.email,
                 rating: rating, 
                 comment: comment, 
                 recommend: recommend, 
                 title: title, 
                 quality: quality
-            }
-        });  
-        await findProduct.createReview(addProductReview) 
-        await findUser.addReview(addProductReview)    
-        res.status(200).send(addProductReview)
+            },
+            
+        }); 
+        
+            await findProduct.addReview(addProductReview) 
+            await findUser.addReview(addProductReview)  
+            
+            let prueba = await addProductReview;
+        console.log(prueba);
+        return res.status(200).send(prueba);
+    //}
+    //res.status(200).send(findReview)
     } catch (error) {
         res.status(500).send(error.message);
     }

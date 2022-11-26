@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { actUser } from '../../Redux/Actions/UsersActions';
+import { createUserProfile } from '../../Redux/Actions/UsersActions';
 import { useSelector } from 'react-redux';
 const FormComplete = () => {
     const {usuarios} = useSelector((state) => state)
@@ -80,7 +80,7 @@ const FormComplete = () => {
         if (!input.name ||  input.adress.length < 1 || !input.country || !input.email || !input.city || !input.zipCode || !input.phone) {
             return alert('Incompletes fields.')
         }
-        dispatch(actUser(input))
+        dispatch(createUserProfile(input))
         setInput({
             name: '',
             email: '',

@@ -7,7 +7,7 @@ import 'react-json-pretty/themes/monikai.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { changeUserInfo, getUserAct } from '../../Redux/Actions/UsersActions'
+import { updateUserProfile, getUserProfileByEmail } from '../../Redux/Actions/UsersActions'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import LoginButton from './LoginButton'
@@ -21,7 +21,7 @@ const Profile = () => {
     const data = async () => {
       try {
         if(user){
-          await dispatch(getUserAct(usuarios.email))
+          await dispatch(getUserProfileByEmail(usuarios.email))
         }
       } catch (error) {
         console.log(error)
@@ -40,7 +40,7 @@ const Profile = () => {
       try {
         if (isAuthenticated === true) {
           user.roles = user ? 'admin' : null
-          await dispatch(getUserAct(user.email))
+          await dispatch(getUserProfileByEmail(user.email))
         } else {
           console.log("no")
         }
@@ -78,8 +78,8 @@ const Profile = () => {
     if (!input.name ||  !input.adress || !input.country   || !input.city || !input.zipCode || !input.phone) {
         return alert('Incompletes fields.')
     }
-    await dispatch(changeUserInfo( usuarios.email, input))
-      dispatch(getUserAct(usuarios.email))
+    await dispatch(updateUserProfile( usuarios.email, input))
+      dispatch(getUserProfileByEmail(usuarios.email))
     setInput({
         name: '',
         zipCode: '',
@@ -104,7 +104,7 @@ const Profile = () => {
   useEffect(() => {
     const data = async () => {
       try {
-        await dispatch(getUserAct(user?.email))
+        await dispatch(getUserProfileByEmail(user?.email))
       } catch (error) {
         console.log(error)
       }

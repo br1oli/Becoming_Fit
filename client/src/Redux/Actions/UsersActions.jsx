@@ -203,12 +203,15 @@ export const setProductsPerPage = (currentPage) => {
 
 // --- REVIEWS
 
-export function addReviewToProduct(idProduct, input) {
+export function addReviewToProduct(idProduct, idUser, input) {
   return async (dispatch) => {
+    console.log("POST REV",idProduct);
     try {
       const response = await axios.post(
-        `/reviews?idProduct=${idProduct}`,
-        input
+        `/reviews?idProduct=${idProduct}`, {
+          ...input,
+          idUser
+        }
       );
       return dispatch({
         type: ADD_REVIEW_TO_PRODUCT,
@@ -455,7 +458,7 @@ export function getUserProfileByEmail(email) {
 export const createUserProfile = (payload) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post('/userProfile', payload);
+      const response = await axios.post("/userProfile", payload);
       return dispatch({
         type: CREATE_USER_PROFILE,
         payload: response.data,
@@ -486,7 +489,7 @@ export const updateUserProfile = (email, payload) => {
   };
 };
 
-export function deleteUserProfile (getUserProfileByEmail) {
+export function deleteUserProfile (email) {
   return async (dispatch) => {
     try {
       const response = await axios.delete(`/userProfile?email=${email}`);
@@ -508,7 +511,10 @@ export function addProductToFavorites(idProduct, idUser) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        `/favorites?idProduct=${idProduct}&idUser=${idUser}`
+        `/favorites?idProduct=${idProduct}`,
+        {
+          idUser
+        }
       );
       return dispatch({
         type: ADD_PRODUCT_TO_FAVORITES,
@@ -524,10 +530,10 @@ export function addProductToFavorites(idProduct, idUser) {
   };
 }
 
-export function getProductFromFavorites() {
+export function getProductFromFavorites(userEmail) {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`/favorites`);
+      const response = await axios.get(`/favorites?userEmail=${userEmail}`);
       return dispatch({
         type: GET_PRODUCT_FROM_FAVORITES,
         payload: response.data,
