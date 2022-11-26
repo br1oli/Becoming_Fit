@@ -36,9 +36,9 @@ import {
   CREATE_USER,
   GET_ALL_USERS,
   DELETE_USER,
-  SET_TOKEN, 
+  SET_TOKEN,
 
-  //User profile actions  
+  //User profile actions
   GET_ALL_USER_PROFILES,
   GET_USER_PROFILE_BY_EMAIL,
   CREATE_USER_PROFILE,
@@ -55,7 +55,7 @@ import {
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
-  REMOVE_ONE_REVIEW  
+  REMOVE_ONE_REVIEW,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -489,6 +489,7 @@ export const updateUserProfile = (email, payload) => {
   };
 };
 
+
 export function deleteUserProfile (email) {
   return async (dispatch) => {
     try {
@@ -581,7 +582,3 @@ export function removeAllProductsFromFavorites() {
     }
   };
 }
-
-
-
-

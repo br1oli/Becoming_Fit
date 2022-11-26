@@ -27,6 +27,8 @@ export default function CartItem({
   let dispatch = useDispatch();
   let { token, cartDB } = useSelector((state) => state);
 
+  //handle que se le pasa a los botones del carrito, si hay un toquen se comunica con la base de datos 
+  //sino, store
   const handleChange = async (e) => {
     e.preventDefault();
     if (token) {
@@ -54,16 +56,20 @@ export default function CartItem({
           })
         );
         dispatch(getCartFromDB(userId));
+        //si el usuario fue eliminando de a un producto y el carrito quedo vacio entonces limpia la db
         if (!cartDB.cartProducts.length) {
           dispatch(clearCartInDb(cartDB.id));
         }
       }
+      //si se cumple este condicional elimina solo el producto, no limpia db
       if (e.target.value === "all") {
         await dispatch(
           deleteProductCartInDb({ productId: id, color: color, size: size })
         );
         dispatch(getCartFromDB(userId));
       }
+
+      //si no hay token trabaja con el store
     } else {
       if (e.target.value === "+") {
         dispatch(addToCart({ id: id, color: color, size: size }));

@@ -54,7 +54,9 @@ const postProductToCart = async (req = request, res = response) => {
         userEmail: userId,
       },
       defaults: {
-        total: parseInt(product.price),
+        total: amount
+          ? parseInt(product.price) * amount
+          : parseInt(product.price),
       },
     });
 
