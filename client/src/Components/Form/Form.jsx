@@ -6,8 +6,9 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import Loading from "../../Utils/Loading.gif";
+import { createUserProfile } from '../../Redux/Actions/UsersActions';
 const FormComplete = () => {
-    const usuarios = useSelector((state) => state.usuarios)
+    const usuarios = useSelector((state) => state.userProfile)
     const history = useHistory()
     const dispatch = useDispatch()
     const { user, isAuthenticated } = useAuth0();
@@ -109,7 +110,7 @@ const FormComplete = () => {
         if (!input.name ||  input.adress.length < 1 || !input.country || !input.email || !input.city || !input.zipCode || !input.phone || !input.adress) {
             return alert('Incompletes fields.')
         }
-        dispatch(actUser(input))
+        dispatch(createUserProfile(input))
         setButtonEnabled(false)
         alert('Your data has been sent...')
         await Cargando()

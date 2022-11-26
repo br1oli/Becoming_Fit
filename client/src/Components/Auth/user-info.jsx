@@ -15,7 +15,7 @@ import LogoutButton from './LogoutButton'
 import Loading from "../../Utils/Loading.gif";
 
 const Profile = () => {
-  const usuarios = useSelector((state) => state.usuarios);
+  const usuarios = useSelector((state) => state.userProfile);
   console.log(usuarios, "USUARIOS STORE");
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Profile = () => {
             country: "",
             phone: "",
         })
-        history.push('/profile')
+        
     }, 3500)
   }
 
@@ -143,7 +143,7 @@ useEffect(() => {
   const data = async () => {
     try {
       if(user){
-        await dispatch(getUserProfileByEmail(user.email))
+        await dispatch(getUserProfileByEmail(usuarios.email))
       }
     } catch (error) {
       console.log(error)

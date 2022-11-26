@@ -57,8 +57,7 @@ const deleteUser = async (req = request, res = response) => {
 
 const createUserProfile = async (req = request, res = response) => {
   const { name, email, adress, country, city, zipCode, phone } = req.body;
-
-
+  console.log("🚀 ~ file: users.controllers.js ~ line 60 ~ createUserProfile ~ req", req)
 
   try {
     const userExists = await UserProfile.findOne({
@@ -131,11 +130,11 @@ const getUserProfileByEmail = async (req = request, res = response) => {
 const updateUserProfile = async (req = request, res = response) => {
   let {email} = req.params;
   let  {name, country, city, zipCode, phone, adress}  = req.body;
-
-  const targetReview = await UserProfile.findByPk(email);
-  console.log("target review", targetReview)
+  console.log("🚀 ~ file: users.controllers.js ~ line 141 ~ updateProfile ~ req", req.body)
+  const targetUserProfile = await UserProfile.findByPk(email);
+  console.log("target review", targetUserProfile)
   try {
-    const updateReview = await targetReview.update({
+    const updateReview = await targetUserProfile.update({
       name: name,
       country: country,
       city: city,
@@ -143,12 +142,36 @@ const updateUserProfile = async (req = request, res = response) => {
       phone: phone,
       adress: adress
     });
+    console.log("esto es el coso", updateReview)
     await updateReview.save();
-    res.status(200).send("Se actualizo la informacion con exito");
+    res.status(200).send('Se actualizo la informacion con exito')
   } catch (error) {
-    res.status(404).send("No se pudo actualizar la informacion");
+    res.status(404).send('No se pudo actualizar la informacion')
   }
 };
+
+// const updateUserProfile = async (req = request, res = response) => {
+//   let {email} = req.params;
+//   let  {name, country, city, zipCode, phone, adress}  = req.body;
+//   console.log("🚀 ~ file: users.controllers.js ~ line 141 ~ updateProfile ~ req", req.body)
+//   const targetReview = await UserProfile.findByPk(email);
+//   console.log("target review", targetReview)
+//   try {
+//     const updateReview = await targetReview.update({
+//       name: name,
+//       country: country,
+//       city: city,
+//       zipCode: zipCode,
+//       phone: phone,
+//       adress: adress
+//     });
+//     console.log("esto es el coso", updateReview)
+//     await updateReview.save();
+//     res.status(200).send('Se actualizo la informacion con exito')
+//   } catch (error) {
+//     res.status(404).send('No se pudo actualizar la informacion')
+//   }
+// };
 
 module.exports = {
   getUsers,
