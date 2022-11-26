@@ -205,14 +205,12 @@ export const setProductsPerPage = (currentPage) => {
 
 export function addReviewToProduct(idProduct, idUser, input) {
   return async (dispatch) => {
-    console.log("POST REV",idProduct);
+    console.log("POST REV", idProduct);
     try {
-      const response = await axios.post(
-        `/reviews?idProduct=${idProduct}`, {
-          ...input,
-          idUser
-        }
-      );
+      const response = await axios.post(`/reviews?idProduct=${idProduct}`, {
+        ...input,
+        idUser,
+      });
       return dispatch({
         type: ADD_REVIEW_TO_PRODUCT,
         payload: response.data,
@@ -350,7 +348,6 @@ export function clearDetails() {
 export function paymentOrder(userEmail) {
   return async function (dispatch) {
     try {
-      console.log("soy el user de la action", userEmail);
       const response = await axios.post(`/payment/new?userEmail=${userEmail}`);
       return dispatch({ type: PAYMENT_ORDER, payload: response.data.url });
     } catch (error) {
@@ -489,8 +486,7 @@ export const updateUserProfile = (email, payload) => {
   };
 };
 
-
-export function deleteUserProfile (email) {
+export function deleteUserProfile(email) {
   return async (dispatch) => {
     try {
       const response = await axios.delete(`/userProfile?email=${email}`);
@@ -511,12 +507,9 @@ export function deleteUserProfile (email) {
 export function addProductToFavorites(idProduct, idUser) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        `/favorites?idProduct=${idProduct}`,
-        {
-          idUser
-        }
-      );
+      const response = await axios.post(`/favorites?idProduct=${idProduct}`, {
+        idUser,
+      });
       return dispatch({
         type: ADD_PRODUCT_TO_FAVORITES,
         payload: response.data,
