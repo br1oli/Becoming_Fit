@@ -6,13 +6,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "userProfile",
     {
-      // id: {
-      //   type: DataTypes.UUID,
-      //   primaryKey: true,
-      //   defaultValue: DataTypes.UUIDV4,
-      //   unique: true,
-      //   allowNull: true,
-      // },
       name: {
         type: DataTypes.STRING,
       },
