@@ -4,7 +4,7 @@ import {
   deleteStorage,
 } from "../../localStorage/localStorageFunctions";
 
-import {  
+import {
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -14,7 +14,6 @@ import {
   ORDER_BY_PRICE,
   GET_DETAILS,
   CLEAR_DETAILS,
-  
   SUCCESS,
   ERROR,
   CLEAR_ERROR,
@@ -52,7 +51,7 @@ import {
   CREATE_USER,
   GET_ALL_USERS,
   DELETE_USER,
-  SET_TOKEN, 
+  SET_TOKEN,
 
   //UserProfile
   GET_ALL_USER_PROFILES,
@@ -64,13 +63,13 @@ import {
 
 const dataStorage = getStorage("shoppCart");
 
-const initialState = {  
+const initialState = {
   error: "",
   success: "",
   //cart:
   cartDB: [],
   cartDbResponse: "",
-  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],  
+  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -83,11 +82,11 @@ const initialState = {
   allBrands: [],
   details: [],
   //user:
-  userStore: [], 
-  usersStore: [], 
-  token: "",  
+  userStore: [],
+  usersStore: [],
+  token: "",
   userProfiles: [],
-  userProfile: []
+  userProfile: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -379,36 +378,17 @@ function rootReducer(state = initialState, action) {
       });
 
       return conditionalRemoveState;
+
+    //Cart from DB manage
     case POST_TO_CART_DB:
       return { ...state, cartDbResponse: action.payload };
     case GET_CART_DB:
-      let cartDBObj = action.payload.cartProducts.map((e) => {
-        return {
-          id: e.product.id,
-          name: e.product.name,
-          type: e.product.type,
-          color: e.color,
-          gender: e.product.gender,
-          size: e.size,
-          rating: e.product.rating,
-          price: e.product.price,
-          description: e.product.description,
-          image: e.product.image,
-          brandName: e.product.brandName,
-          categoryName: e.product.categoryName,
-          amount: e.amount,
-        };
-      });
-
-     
-      saveStorage("shoppCart", cartDBObj);
       return {
         ...state,
         cartDB: action.payload,
       };
 
     case DELETE_CART:
-      deleteStorage("shoppCart");
       return { ...state, cartDB: [], cartDbResponse: action.payload };
 
     case DELETE_PRODUCT_CART:
@@ -432,12 +412,11 @@ function rootReducer(state = initialState, action) {
         token: action.payload,
       };
     case CREATE_USER:
-      saveStorage("userEmail", action.payload.email);
       return {
         ...state,
         userStore: action.payload,
       };
-    case GET_ALL_USERS:    
+    case GET_ALL_USERS:
       return {
         ...state,
         usersStore: action.payload,
@@ -445,38 +424,34 @@ function rootReducer(state = initialState, action) {
     case DELETE_USER:
       return {
         ...state,
-        usersStore: state.usersStore.filter(
-          (u) => u !== action.payload
-        )
-      }
-    //User Profile 
+        usersStore: state.usersStore.filter((u) => u !== action.payload),
+      };
+    //User Profile
     case GET_ALL_USER_PROFILES:
       return {
         ...state,
-        userProfiles: action.payload 
-      }
+        userProfiles: action.payload,
+      };
     case GET_USER_PROFILE_BY_EMAIL:
       return {
         ...state,
-        userProfile: action.payload, 
-      }
+        userProfile: action.payload,
+      };
     case CREATE_USER_PROFILE:
       return {
         ...state,
-        userProfile: action.payload 
-      };        
+        userProfile: action.payload,
+      };
     case UPDATE_USER_PROFILE:
       return {
         ...state,
         userProfile: action.payload,
-      }
+      };
     case DELETE_USER_PROFILE:
       return {
         ...state,
-        userProfiles: state.userProfiles.filter(
-          (u) => u !== action.payload
-        )
-      }
+        userProfiles: state.userProfiles.filter((u) => u !== action.payload),
+      };
 
     // Favorites Products reducer functions
     case ADD_PRODUCT_TO_FAVORITES:
@@ -530,11 +505,10 @@ function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
-    
+
     default:
       return state;
-  };
-
+  }
 }
 
 export default rootReducer;

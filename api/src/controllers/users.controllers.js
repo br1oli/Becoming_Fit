@@ -1,6 +1,5 @@
 const { response, request } = require("express");
 const { User, UserProfile } = require("../db");
-const { updateUserInDb } = require("../helpers/updateUser");
 
 // User
 
@@ -57,13 +56,7 @@ const deleteUser = async (req = request, res = response) => {
 // User Profile
 
 const createUserProfile = async (req = request, res = response) => {
-  const { name,
-    email,
-    adress,
-    country,
-    city,
-    zipCode,
-    phone } = req.body
+  const { name, email, adress, country, city, zipCode, phone } = req.body;
 
   try {
     const userExists = await UserProfile.findOne({ where: { email: email } });
@@ -77,18 +70,18 @@ const createUserProfile = async (req = request, res = response) => {
         adress,
         country,
         city,
-        zipCode
+        zipCode,
       });
       res.status(201).send(newUser.dataValues);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json(error.message);
   }
 };
 
 const deleteUserProfile = async (req = request, res = response) => {
-  const { email } = req.query
+  const { email } = req.query;
   try {
     await UserProfile.destroy({
       where: {
@@ -115,7 +108,7 @@ const getAllUserProfiles = async (req = request, res = response) => {
 };
 
 const getUserProfileByEmail = async (req = request, res = response) => {
-  const { email } = req.query
+  const { email } = req.query;
   try {
     let usersFromDb = await UserProfile.findOne({ where: { email: email } });
     if (!usersFromDb) {
@@ -123,14 +116,15 @@ const getUserProfileByEmail = async (req = request, res = response) => {
     }
     res.status(200).send(usersFromDb.dataValues);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json(error.message);
   }
 };
 
 const updateUserProfile = async (req = request, res = response) => {
   let emailId = req.query.email;
-  let { newName, newCountry, newCity, newZipCode, newPhone, newAdress } = req.body;
+  let { newName, newCountry, newCity, newZipCode, newPhone, newAdress } =
+    req.body;
   try {
     const targetReview = await UserProfile.findByPk(emailId);
     const updateReview = await targetReview.update({
@@ -139,12 +133,12 @@ const updateUserProfile = async (req = request, res = response) => {
       city: newCity,
       zipCode: newZipCode,
       phone: newPhone,
-      adress: newAdress
+      adress: newAdress,
     });
     await updateReview.save();
-    res.status(200).send('Se actualizo la informacion con exito')
+    res.status(200).send("Se actualizo la informacion con exito");
   } catch (error) {
-    res.status(404).send('No se pudo actualizar la informacion')
+    res.status(404).send("No se pudo actualizar la informacion");
   }
 };
 
@@ -156,5 +150,5 @@ module.exports = {
   deleteUserProfile,
   getAllUserProfiles,
   getUserProfileByEmail,
-  updateUserProfile
+  updateUserProfile,
 };

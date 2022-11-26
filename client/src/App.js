@@ -8,14 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 
-import AdminDashboardUI from './Components/Admin/AminUI/AdminDashboardUI'
+import AdminDashboardUI from "./Components/Admin/AminUI/AdminDashboardUI";
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
 import FavoritesProducts from "./Components/Favorites/FavoritesProducts";
 import {
   getProducts,
-  getCartFromDB,
   createUser,
   setTokenInStore,
 } from "./Redux/Actions/UsersActions";
@@ -23,8 +22,7 @@ import FormComplete from "./Components/Form/Form";
 
 function App() {
   const dispatch = useDispatch();
-  const { getAccessTokenSilently, user, isLoading, isAuthenticated } =
-    useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const favorites = useSelector((state) => state.favorites);
   //AUTH0
   const [token, setToken] = useState([]);
@@ -43,24 +41,14 @@ function App() {
 
   useEffect(() => {
     dispatch(getProducts());
-    if (token.length) {
+    if (token.length && user !== undefined) {
       dispatch(setTokenInStore(token));
+      dispatch(createUser(user.email));
     }
   }, [token]);
 
-  useEffect(() => {
-    const settingUserAndCartDB = async () => {
-      if (isAuthenticated === true && user !== undefined) {
-        await dispatch(createUser(user.email));
-        dispatch(getCartFromDB(user.email));
-      }
-    };
-    settingUserAndCartDB();
-  }, [dispatch, isAuthenticated, user]);
-
   return (
     <BrowserRouter>
-
       <Route exact path="/admin" component={AdminDashboardUI} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/complete" component={FormComplete} />

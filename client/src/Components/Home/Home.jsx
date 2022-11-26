@@ -7,21 +7,16 @@ import { Pagination } from "./Pagination";
 import Loading from "../../Utils/Loading.gif";
 import Slider from "../Carousel/Slider";
 import ImgSide from "../../Utils/ImagenSide.png";
-import { postCartToDB } from "../../Redux/Actions/UsersActions";
+import { getCartFromDB, postCartToDB } from "../../Redux/Actions/UsersActions";
 import Filters from "../Filters/Filters.jsx";
 
 const Home = () => {
-  const {
-    currentProducts,
-    allProducts,
-    token,
-    shoppingCart,
-    userStore,
-    cartDB,
-  } = useSelector((state) => state);
+  const { currentProducts, allProducts, token, shoppingCart, userStore } =
+    useSelector((state) => state);
 
   let dispatch = useDispatch();
 
+  //filling the database in case the user has selected products before login
   useEffect(() => {
     const fillDBWithLocalCart = async () => {
       if (token && userStore?.email && shoppingCart.length) {
@@ -36,10 +31,11 @@ const Home = () => {
             })
           );
         }
+        dispatch(getCartFromDB(userStore.email));
       }
     };
     fillDBWithLocalCart();
-  }, [dispatch, token, shoppingCart]);
+  }, [dispatch, token, shoppingCart, userStore]);
 
   return (
     <div className={Styles.homeContainer}>
