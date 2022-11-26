@@ -10,11 +10,12 @@ const LogoutButton = () => {
   return (
     <Button
       className="btn btn-danger btn-block"
-      onClick={() =>
+      onClick={() => {
         logout({
           returnTo: window.location.origin,
-        })
-      }
+        });
+        localStorage.clear();
+      }}
     >
       Log Out
     </Button>

@@ -20,6 +20,9 @@ import { HiUserCircle } from "react-icons/hi";
 import Styles from "./UserMenu.module.css";
 
 export default function UserSideBar() {
+  //en este sideBar solo se deberian renderizar las opciones si hay un token en el store
+  //si no hay un token que solo se muestre el boton de login
+
   ////////// AUTH0///////////////////
   const dispatch = useDispatch();
   const { /* isLoading */ isAuthenticated } = useAuth0();

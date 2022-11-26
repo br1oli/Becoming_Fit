@@ -21,25 +21,6 @@ const getCart = async (req = require, res = response) => {
     res.status(500).send(error.message);
   }
 };
-/*
-    post recibe por body = {
-        idUser: id de usuario actual
-        idproduct: id del producto seleccionado
-        amount: (opcion) cantidada de productos que ingresan al carro,
-         se deberia multiplicar el precio 
-    }
-    carga de a uno o varios articulos del mismo tipo y distino, actualiza el total de cart
-    aparte debe haber una ruta delete
- ver de optimizar:
-*/
-//ejemplo de ruta: http://localhost:3001/productToCart
-/* {
-  "idUser":4,
-  "idProduct":6,
-  "amount":12
-} */
-//restar total producttocart ruta
-//y si llega a 0 eliminar el producto, en amount
 
 const postProductToCart = async (req = request, res = response) => {
   const { userId, productId, amount, color, size } = req.body;
@@ -101,8 +82,8 @@ const postProductToCart = async (req = request, res = response) => {
         createdCart &&
         createdCartProduct
       ) {
-        await cart.addCartProduct(cartProduct);
-        await product.createCartProduct(cartProduct);
+        await product.addCartProduct(cartProduct);
+        await cart.createCartProduct(cartProduct);
       }
     }
 
