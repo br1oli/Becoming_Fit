@@ -166,7 +166,6 @@ useEffect(() => {
           <label>Email:</label>
           <label>{usuarios && Object.values(usuarios)?.length && usuarios.email}:</label>
           <br/>
-          {/* <input value = {usuarios && Object.values(usuarios)?.length && usuarios.email}
             type = "text"
             name = "email"
             disabled = "disabled"/> */}
