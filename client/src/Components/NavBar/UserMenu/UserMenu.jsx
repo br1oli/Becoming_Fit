@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../../Auth/LoginButton";
 import LogoutButton from "../../Auth/LogoutButton";
-import { useDispatch } from "react-redux";
-import { getProductFromFavorites } from "../../../Redux/Actions/UsersActions";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -25,9 +24,6 @@ export default function UserSideBar() {
   const { /* isLoading */ isAuthenticated } = useAuth0();
   /*  const favorites = useSelector((state) => state.favorites); */
 
-  useEffect(() => {
-    dispatch(getProductFromFavorites());
-  }, [dispatch]);
 
   const [state, setState] = React.useState({
     top: false,
