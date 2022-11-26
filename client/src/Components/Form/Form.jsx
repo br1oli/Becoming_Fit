@@ -4,7 +4,6 @@ import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { actUser } from '../../Redux/Actions/UsersActions';
 import { useSelector } from 'react-redux';
 import Loading from "../../Utils/Loading.gif";
 const FormComplete = () => {
