@@ -7,7 +7,7 @@ import 'react-json-pretty/themes/monikai.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { changeUserInfo, getUserAct } from '../../Redux/Actions/UsersActions'
+import { updateUserProfile, getUserProfileByEmail } from '../../Redux/Actions/UsersActions'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import LoginButton from './LoginButton'
@@ -15,17 +15,17 @@ import LogoutButton from './LogoutButton'
 import Loading from "../../Utils/Loading.gif";
 
 const Profile = () => {
-  const usuarios  = useSelector((state) => state.usuarios)
-  console.log(usuarios, "USUARIOS STORE")
+  const usuarios = useSelector((state) => state.usuarios);
+  console.log(usuarios, "USUARIOS STORE");
 
   useEffect(() => {
     const data = async () => {
       try {
         if(user){
-          await dispatch(getUserAct(usuarios.email))
+          await dispatch(getUserProfileByEmail(usuarios.email))
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
     data()
@@ -37,22 +37,22 @@ const Profile = () => {
 
 
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState([])
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const [token, setToken] = useState([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     const generarToken = async () => {
       try {
         if (isAuthenticated === true) {
           user.roles = user ? 'admin' : null
-          await dispatch(getUserAct(user.email))
+          await dispatch(getUserProfileByEmail(user.email))
         } else {
-          console.log("no")
+          console.log("no");
         }
-        const tokenApi = await getAccessTokenSilently()
-        setToken(tokenApi)
+        const tokenApi = await getAccessTokenSilently();
+        setToken(tokenApi);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
       
     }
@@ -108,23 +108,30 @@ const Profile = () => {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!input.name ||  !input.adress || !input.country   || !input.city || !input.zipCode || !input.phone) {
-        return alert('Incompletes fields.')
+    e.preventDefault();
+    if (
+      !input.name ||
+      !input.adress ||
+      !input.country ||
+      !input.city ||
+      !input.zipCode ||
+      !input.phone
+    ) {
+      return alert("Incompletes fields.");
     }
-    await dispatch(getUserAct(user.email))
+    await dispatch(getUserProfileByEmail(user.email))
     console.log("user email USER FORM 121", user.email);
-     await dispatch(changeUserInfo(usuarios.email, input))
+     await dispatch(updateUserProfile(usuarios.email, input))
      console.log("email usuario.email", usuarios.email)
       await Cargando()
     setInput({
-        name: '',
-        zipCode: '',
-        adress: "",
-        city: "",
-        country: "",
-        phone: "",
-    })
+      name: "",
+      zipCode: "",
+      adress: "",
+      city: "",
+      country: "",
+      phone: "",
+    });
 
     // console.log("input enviado",input)
     // alert('Informacion actualizada con exito!')
@@ -136,7 +143,7 @@ useEffect(() => {
   const data = async () => {
     try {
       if(user){
-        await dispatch(getUserAct(user.email))
+        await dispatch(getUserProfileByEmail(user.email))
       }
     } catch (error) {
       console.log(error)
@@ -174,7 +181,6 @@ useEffect(() => {
         <img src={user.picture} alt={user.name} />
         <br />
         <div>
-          
           <label>Email:</label>
           <label>{usuarios && Object.values(usuarios)?.length && usuarios.email}:</label>
           <br/>
@@ -185,13 +191,17 @@ useEffect(() => {
         </div>
         <div>
           <label>Name:</label>
-          <label>{usuarios && Object.values(usuarios)?.length && usuarios.name}</label>
-          <br/>
-          <input value={input.name}
+          <label>
+            {usuarios && Object.values(usuarios)?.length && usuarios.name}
+          </label>
+          <br />
+          <input
+            value={input.name}
             type="text"
             name="name"
-            placeholder='Change your name...'
-            onChange={handleChange} />
+            placeholder="Change your name..."
+            onChange={handleChange}
+          />
         </div>
         <div>
           <label>Country:</label>
@@ -200,7 +210,7 @@ useEffect(() => {
           <input value={input.country}
             type="text"
             name="country"
-            placeholder='Change your country...'
+            placeholder="Change your country..."
             onChange={handleChange}
           />
         </div>
@@ -212,7 +222,7 @@ useEffect(() => {
           <input value={input.city}
             type="text"
             name="city"
-            placeholder='Change your city...'
+            placeholder="Change your city..."
             onChange={handleChange}
           />
         </div>
@@ -223,7 +233,7 @@ useEffect(() => {
           <input value={input.zipCode}
             type="number"
             name="zipCode"
-            placeholder='Change your zip code...'
+            placeholder="Change your zip code..."
             onChange={handleChange}
           />
         </div>
@@ -234,7 +244,7 @@ useEffect(() => {
           <input value={input.phone}
             type="number"
             name="phone"
-            placeholder='Change your phone...'
+            placeholder="Change your phone..."
             onChange={handleChange}
           />
         </div>
@@ -246,7 +256,7 @@ useEffect(() => {
             value={input.adress}
             type="text"
             name="adress"
-            placeholder='Change your adress...'
+            placeholder="Change your adress..."
             onChange={handleChange}
           />
         </div>
@@ -255,7 +265,9 @@ useEffect(() => {
         {/* <JSONPretty data={usuarios} /> */}
 
         <button onClick={back}>Volver</button>
-        <button className='submit1' type="submit">Save</button>
+        <button className="submit1" type="submit">
+          Save
+        </button>
         <br />
         <label>Info</label>
         <JSONPretty data={user} />
@@ -263,8 +275,8 @@ useEffect(() => {
         <JSONPretty data={token} />
       </form>
     </div>
-      : <h1>Necesitas estar autenticado para ingresar aqui</h1>
+    :  <h1>Necesitas estar autenticado para ingresar aqui</h1>
   )
-}
+};
 
 export default Profile;

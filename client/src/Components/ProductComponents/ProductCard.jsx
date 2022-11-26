@@ -3,18 +3,15 @@ import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import "./ProductCard.css";
-import {
-  addToCart,
-  postCartToDB,
-  addProductToFavorites,
-} from "../../Redux/Actions/UsersActions";
+import { addProductToFavorites } from "../../Redux/Actions/UsersActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProductCard = (props) => {
   let dispatch = useDispatch();
+  let userId = useSelector((state) => state.userStore.email);
 
   const handleFavorite = async (e) => {
-    await dispatch(addProductToFavorites(e.target.value));
+    await dispatch(addProductToFavorites(e.target.value, userId));
   };
 
   return (
@@ -22,6 +19,15 @@ const ProductCard = (props) => {
       <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3">
         <div className="Contenedor">
           <Card className="Card" style={{ width: "15rem" }}>
+            <div className="buttons">
+              <button
+                value={props.id}
+                onClick={handleFavorite}
+                className="like"
+              >
+                ♥
+              </button>
+            </div>
             <NavLink to={`/home/${props.id}`}>
               <Card.Img className="Image" variant="top" src={props.image} />
             </NavLink>
@@ -30,15 +36,6 @@ const ProductCard = (props) => {
               <Card.Text className="Description">{props.brandName}</Card.Text>
 
               <Card.Text className="Price">US {props.price}</Card.Text>
-              <div className="buttons">
-                <button
-                  value={props.id}
-                  onClick={handleFavorite}
-                  className="like"
-                >
-                  ♥
-                </button>
-              </div>
             </Card.Body>
           </Card>
         </div>

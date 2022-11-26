@@ -5,6 +5,7 @@ import {
   clearCartInDb,
   getCartFromDB,
   postCartToDB,
+  paymentOrder,
 } from "../../Redux/Actions/UsersActions";
 import CartItem from "./CartItem";
 import styles from "./ShoppingCart.module.css";
@@ -18,28 +19,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 
 export default function ShoppingCart({ toggleShow }) {
-  let {user, isAuthenticated } = useAuth0();
+  let { user } = useAuth0();
   let reduxCart = useSelector((state) => state);
   let userId = useSelector((state) => state.userStore.email);
   let dispatch = useDispatch();
-  let history = useHistory()
-  useEffect(() => {
-    if (
-      isAuthenticated === true &&
-      reduxCart.shoppingCart.length &&
-      !reduxCart.cartDB.cartProducts?.length
-    ) {
-      for (let i = 0; i < reduxCart.shoppingCart.length; i++) {
-        dispatch(
-          postCartToDB({
-            userId: userId,
-            productId: reduxCart.shoppingCart[i].id,
-            amount: reduxCart.shoppingCart[i].amount,
-          })
-        );
-      }
-    }
-  }, [isAuthenticated]);
+  let history = useHistory();
+  let paymentLink = useSelector((state) => state.paymentLink);
 
   useEffect(() => {
     if (reduxCart.token.length) {
@@ -72,23 +57,45 @@ export default function ShoppingCart({ toggleShow }) {
     dispatch(clearCart());
   };
 
-  const payOrRegister = (e) =>{
+  const handleBuyOrder = (e) => {
+    e.preventDefault();
+    if (reduxCart.token.length) {
+      try {
+        /*  if (!user.address || user.phone) {
+          e.preventDefault();
+          history.push("/complete");
+        } else { */
+        dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+        deleteStorage("shoppCart");
+        dispatch(clearCart());
+        /*  } */
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
+    /*     e.preventDefault();
+    if (reduxCart.token.length) {
+      dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+    }
+    deleteStorage("shoppCart");
+    dispatch(clearCart()); */
+  };
+
+  const payOrRegister = (e) => {
     try {
-      if(!user.address || user.phone){
-      e.preventDefault()
-    history.push('/complete')
-      }else{
-        e.preventDefault()
+      if (!user.address || user.phone) {
+        e.preventDefault();
+        history.push("/complete");
+      } else {
+        e.preventDefault();
         // history.push('/pasarela')
-        alert("LINK A LA PASARELA DE PAGOS")
-        
+        alert("LINK A LA PASARELA DE PAGOS");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
- 
-  }
+  };
 
   return (
     <>
@@ -132,7 +139,15 @@ export default function ShoppingCart({ toggleShow }) {
                   userId={userId}
                 />
               ))}
-            <button className={styles.btnPay}>Buy it all!</button>
+            <div>
+              {paymentLink ? (
+                <a href={paymentLink}>Go to pay!</a>
+              ) : (
+                <button onClick={handleBuyOrder} className={styles.btnPay}>
+                  Buy it all!
+                </button>
+              )}
+            </div>
           </div>
         </>
       ) : reduxCart.token.length && !reduxCart.cartDB.cartProducts?.length ? (

@@ -101,7 +101,7 @@
     cursor: pointer;
   }
   .submit:hover {
-    background: white;
+    background: black;
     color: aliceblue;
     transition: all 0.5s ease-in-out;
   }
@@ -123,7 +123,7 @@
 
   .popUp {
     background: darken(light, 10%);
-    background-color: rgb(187, 186, 186);
+    background-color: rgb(143, 143, 143);
     width: 14rem;
     padding: 10px;
     display: inline-block;
@@ -137,7 +137,7 @@
     cursor: pointer;
   }
   .popUp:hover {
-    background: white;
+    background: black;
     color: aliceblue;
     transition: all 0.5s ease-in-out;
   }

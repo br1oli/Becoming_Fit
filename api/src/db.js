@@ -87,8 +87,8 @@ Brand.hasMany(Product /* {foreignKey: 'brandId'} */);
 Product.belongsTo(Brand);
 //-----------------------Relacion user,Review,Product--------------------------
 
-// User.hasMany(Review);
-// Review.belongsTo(User);
+User.hasMany(Review);
+Review.belongsTo(User);
 
 Product.hasMany(Review);
 Review.belongsTo(Product);
@@ -104,11 +104,11 @@ ProductInventory.belongsTo(
 
 //---------------------------------------------Relaciones Favorites-------------------------------------
 
-User.hasOne(Favorites);
-Favorites.belongsTo(User);
+User.hasMany(FavoritesProduct);
+FavoritesProduct.belongsTo(User);
 
-Favorites.hasMany(FavoritesProduct);
-FavoritesProduct.belongsTo(Favorites);
+// Favorites.hasMany(FavoritesProduct);
+// FavoritesProduct.belongsTo(Favorites);
 
 Product.hasOne(FavoritesProduct);
 FavoritesProduct.belongsTo(Product);
@@ -132,9 +132,6 @@ UserAdress.belongsTo(User);
 User.hasMany(PaymentMethod /* { foreignKey: "userIdPayment" } */);
 PaymentMethod.belongsTo(User);
 
-//User.hasMany(CartProduct /* { through: "User_CartProduct" } */);
-//CartProduct.belongsTo(User /* { through: "User_CartProduct" } */);
-
 User.hasMany(PaymentDetail /*  { through: "User_PaymentDetail" } */);
 PaymentDetail.belongsTo(User /* { through: "User_PaymentDetail" } */);
 
@@ -142,9 +139,6 @@ Product.hasMany(PurchasedProduct /* { through: "Product_PurchasedProduct" } */);
 PurchasedProduct.belongsTo(
   Product /* { through: "Product_PurchasedProduct" } */
 );
-
-//Product_category.hasMany(Product, { through: "ProductCategory_Product" });
-//Product.belongsTo(Product_category, { through: "ProductCategory_Product" });A
 
 PaymentDetail.hasOne(
   PurchaseDetail /* {through: "PaymentDetail_PurchaseDetail"} */
@@ -162,9 +156,6 @@ PurchaseDetail.belongsTo(User);
 // relation user-profile user-phone
 User.hasOne(UserProfile);
 UserProfile.belongsTo(User);
-
-User.hasMany(UserPhone);
-UserPhone.belongsTo(User);
 
 //-------------------------------------Relacion usuario-Reviews---------------------------------
 

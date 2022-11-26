@@ -3,8 +3,8 @@ import {
   saveStorage,
   deleteStorage,
 } from "../../localStorage/localStorageFunctions";
+
 import {
-  GET_PRODUCTS,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -14,12 +14,21 @@ import {
   ORDER_BY_PRICE,
   GET_DETAILS,
   CLEAR_DETAILS,
-  GET_NAME_PRODUCTS,
   SUCCESS,
   ERROR,
   CLEAR_ERROR,
   CLEAR_SUCCESS,
   SET_CURRENT_PAGE_PRODUCTS,
+
+  //Favorites
+  ADD_PRODUCT_TO_FAVORITES,
+  GET_PRODUCT_FROM_FAVORITES,
+  REMOVE_ALL_FROM_FAVORITES,
+  REMOVE_ONE_FROM_FAVORITES,
+
+  //Products
+  GET_PRODUCTS,
+  GET_NAME_PRODUCTS,
 
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
@@ -31,44 +40,55 @@ import {
   DELETE_CART,
   DELETE_PRODUCT_CART,
   ERROR_CART,
+  PAYMENT_ORDER,
 
-  //User
-  CREATE_USER,
-  ADD_PRODUCT_TO_FAVORITES,
-  GET_PRODUCT_FROM_FAVORITES,
-  REMOVE_ALL_FROM_FAVORITES,
-  REMOVE_ONE_FROM_FAVORITES,
-  SET_TOKEN,
+  //Review
   ADD_REVIEW_TO_PRODUCT,
   GET_REVIEWS,
   EDIT_REVIEW,
   REMOVE_ONE_REVIEW,
-  UPDATE_USER,
-  GET_USER_ACT,
-  UPDATE_USER_INFO,
+
+  //User
+  CREATE_USER,
+  GET_ALL_USERS,
+  DELETE_USER,
+  SET_TOKEN,
+
+  //UserProfile
+  GET_ALL_USER_PROFILES,
+  GET_USER_PROFILE_BY_EMAIL,
+  CREATE_USER_PROFILE,
+  UPDATE_USER_PROFILE,
+  DELETE_USER_PROFILE,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
 
 const initialState = {
-  products: [],
-  allProducts: [],
-  allBrands: [],
-  details: [],
   error: "",
   success: "",
+  //cart:
+  cartDB: [],
+  cartDbResponse: "",
+  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
+  paymentLink: "",
   //pagination:
   currentProducts: [],
   currentPage: 1,
   productsPerPage: 9,
   indexLastProduct: 9,
   indexFirsProduct: 0,
-  //
-  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
+  //product:
+  products: [],
+  allProducts: [],
+  allBrands: [],
+  details: [],
+  //user:
   userStore: [],
-  cartDB: [],
-  cartDbResponse: "",
+  usersStore: [],
   token: "",
+  userProfiles: [],
+  userProfile: [],
   usuarios: [],
 };
 
@@ -361,30 +381,11 @@ function rootReducer(state = initialState, action) {
       });
 
       return conditionalRemoveState;
+
+    //Cart from DB manage
     case POST_TO_CART_DB:
       return { ...state, cartDbResponse: action.payload };
     case GET_CART_DB:
-      let cartDBObj = action.payload.cartProducts.map((e) => {
-        return {
-          id: e.product.id,
-          name: e.product.name,
-          type: e.product.type,
-          color: e.color,
-          gender: e.product.gender,
-          size: e.size,
-          rating: e.product.rating,
-          price: e.product.price,
-          description: e.product.description,
-          image: e.product.image,
-          brandName: e.product.brandName,
-          categoryName: e.product.categoryName,
-          amount: e.amount,
-        };
-      });
-
-      //let organizedResponse = action.payload.cartProducts.sort((a, b)=> (a.id - b.id));
-
-      saveStorage("shoppCart", cartDBObj);
       return {
         ...state,
         cartDB: action.payload,
@@ -407,17 +408,58 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: [],
       };
-    case CREATE_USER:
-      saveStorage("userEmail", action.payload.email);
+
+    case PAYMENT_ORDER:
       return {
         ...state,
-        userStore: action.payload,
+        paymentLink: action.payload,
       };
-
+    //Users
     case SET_TOKEN:
       return {
         ...state,
         token: action.payload,
+      };
+    case CREATE_USER:
+      return {
+        ...state,
+        userStore: action.payload,
+      };
+    case GET_ALL_USERS:
+      return {
+        ...state,
+        usersStore: action.payload,
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        usersStore: state.usersStore.filter((u) => u !== action.payload),
+      };
+    //User Profile
+    case GET_ALL_USER_PROFILES:
+      return {
+        ...state,
+        userProfiles: action.payload,
+      };
+    case GET_USER_PROFILE_BY_EMAIL:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    case CREATE_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    case DELETE_USER_PROFILE:
+      return {
+        ...state,
+        userProfiles: state.userProfiles.filter((u) => u !== action.payload),
       };
 
     // Favorites Products reducer functions
@@ -450,7 +492,6 @@ function rootReducer(state = initialState, action) {
 
     // Reviews Products reducer functions
     case ADD_REVIEW_TO_PRODUCT:
-      console.log(state.reviews);
       return {
         ...state,
         reviews: [...state.reviews, action.payload],
@@ -474,30 +515,9 @@ function rootReducer(state = initialState, action) {
         reviews: action.payload,
       };
 
-
-      case UPDATE_USER:
-        return{
-          ...state,
-          usuarios: action.payload
-        };
-      
-        case GET_USER_ACT:
-          console.log("entre al reducer");
-          return{
-            ...state,
-            usuarios: action.payload,
-          }
-
-          case UPDATE_USER_INFO:
-          return{
-            ...state,
-            usuarios: action.payload,
-          }
-
     default:
       return state;
-  };
-
+  }
 }
 
 export default rootReducer;

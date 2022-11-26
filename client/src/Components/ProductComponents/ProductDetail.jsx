@@ -10,14 +10,14 @@ import {
   postCartToDB,
   addProductToFavorites,
   getCartFromDB,
-  getReviews,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
 import NavBar from "../NavBar/NavBar";
 import ProductReviews from "../Reviews/ProductReviews";
 import Footer from "../Footer/Footer";
-import Button from "@mui/material/Button";
+import { RadioButtonsColorGroup } from "../ShoppingCart/Size&ColorRButtons.jsx";
+import { RadioButtonsSizeGroup } from "../ShoppingCart/Size&ColorRButtons.jsx";
 
 const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
@@ -27,9 +27,12 @@ const ProductDetail = (props) => {
   const cartDB = useSelector((state) => state.cartDB);
   let token = useSelector((state) => state.token);
   let userId = useSelector((state) => state.userStore.email);
+
+  //Local states for color and size
   let [selectedSize, setSelectedSize] = useState("");
   let [selectedColor, setSelectedColor] = useState("");
 
+  //Finding equal product un store cart
   const productInCart = cartItems.find(
     (e) =>
       e.id === detailId &&
@@ -38,6 +41,8 @@ const ProductDetail = (props) => {
       e.color === selectedColor &&
       e.size === selectedSize
   );
+
+  //finding equal product in cartDB store
   const productInCartDB = cartDB?.cartProducts?.find(
     (e) =>
       e.product.id === detailId &&
@@ -46,8 +51,9 @@ const ProductDetail = (props) => {
       e.color === selectedColor &&
       e.size === selectedSize
   );
-  //const favorites = useSelector((state) => state.favorites);
 
+  //esta funcion devuelve la cantidad de productos agregados con mismo talle y color
+  //dependiendo de si hay token o no
   const gettingTheAmountOfProducts = () => {
     if (token.length) {
       if (cartDB.cartProducts?.length && productInCartDB?.amount) {
@@ -62,26 +68,27 @@ const ProductDetail = (props) => {
 
   useEffect(() => {
     dispatch(getProductDetail(detailId));
-
     return () => {
       dispatch(clearDetails());
-      dispatch(getReviews());
     };
-  }, []);
+  }, [dispatch, detailId]);
 
+  //handle que se le pasa a los radiobuttons de color y size
   const handleColor = (e) => {
     e.preventDefault();
     setSelectedColor(e.target.attributes.value.value);
   };
   const handleSize = (e) => {
     e.preventDefault();
-    setSelectedSize(e.target.attributes.value.value);
+    setSelectedSize(e.target.value);
   };
 
+  //handle de los botones del detail
   const handleChange = async (e) => {
     e.preventDefault();
-
+    //si existe un token usa las actions que llaman a la db
     if (token.length) {
+      //solo se despachan si hay un color y un size
       if (selectedColor && selectedSize) {
         if (e.target.value === "+" || e.target.value === "add") {
           await dispatch(
@@ -108,8 +115,12 @@ const ProductDetail = (props) => {
           dispatch(getCartFromDB(userId));
         }
       } else {
+        //cambiar alert por pop up
         return alert("Choose color and size, please.");
       }
+
+      //si no hay un toque aca maneja el store y guarda los productos en el local storage
+      //solo si hay un color y un talle
     } else if (selectedColor && selectedSize && !token.length) {
       if (e.target.value === "+" || e.target.value === "add") {
         dispatch(
@@ -135,7 +146,7 @@ const ProductDetail = (props) => {
   };
 
   const handleFavorite = () => {
-    dispatch(addProductToFavorites(detailId));
+    dispatch(addProductToFavorites(detailId, userId));
   };
 
   return (
@@ -162,40 +173,20 @@ const ProductDetail = (props) => {
           <p className={styles.rating}> ★ ★ ★ ★ ★ {product.rating}</p>
 
           <div className={styles.sizesDiv}>
-            <p>Choose a color</p>
-            {product.color && product.color?.split(", ").length
-              ? product?.color?.split(",").map((color, index) => {
-                  return (
-                    <div key={index}>
-                      <Button
-                        value={color.trim()}
-                        variant="outlined"
-                        onClick={handleColor}
-                      >
-                        {color}
-                      </Button>
-                    </div>
-                  );
-                })
-              : null}
+            {product.color && product.color?.split(", ").length ? (
+              <RadioButtonsColorGroup
+                color={product.color}
+                handleColor={handleColor}
+              />
+            ) : null}
           </div>
           <div className={styles.sizesDiv}>
-            <p>Choose your size</p>
-            {product.size && product.size?.split(", ").length
-              ? product?.size?.split(",").map((size, index) => {
-                  return (
-                    <div key={index}>
-                      <Button
-                        value={size.trim()}
-                        variant="outlined"
-                        onClick={handleSize}
-                      >
-                        {size}
-                      </Button>
-                    </div>
-                  );
-                })
-              : null}
+            {product.size && product.size?.split(", ").length ? (
+              <RadioButtonsSizeGroup
+                size={product.size}
+                handleSize={handleSize}
+              />
+            ) : null}
           </div>
 
           <p>
@@ -241,7 +232,7 @@ const ProductDetail = (props) => {
         </div>
       </div>
 
-      <h3 className={styles.detailsTitle}></h3>
+      {/* <h3 className={styles.detailsTitle}></h3> */}
       <div className={styles.thirdContainer}>
         <div className={styles.accordion}>
           <div className="accordion" id="accordionPanelsStayOpenExample">
@@ -249,6 +240,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
+                  style={{ background: "black", color: "white" }}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"
@@ -274,6 +266,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
+                  style={{ background: "black", color: "white" }}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"
@@ -315,6 +308,7 @@ const ProductDetail = (props) => {
               <h2 className="accordion-header" id="panelsStayOpen-headingOne">
                 <button
                   className="accordion-button"
+                  style={{ background: "black", color: "white" }}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"

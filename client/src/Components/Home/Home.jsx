@@ -7,38 +7,35 @@ import { Pagination } from "./Pagination";
 import Loading from "../../Utils/Loading.gif";
 import Slider from "../Carousel/Slider";
 import ImgSide from "../../Utils/ImagenSide.png";
-import { postCartToDB, clearCart } from "../../Redux/Actions/UsersActions";
+import { getCartFromDB, postCartToDB } from "../../Redux/Actions/UsersActions";
 import Filters from "../Filters/Filters.jsx";
-import { useAuth0 } from "@auth0/auth0-react";
-import { createUser } from "../../Redux/Actions/UsersActions";
 
 const Home = () => {
-  const {
-    currentProducts,
-    allProducts,
-    token,
-    shoppingCart,
-    cartDB,
-    userStore,
-  } = useSelector((state) => state);
+  const { currentProducts, allProducts, token, shoppingCart, userStore } =
+    useSelector((state) => state);
 
   let dispatch = useDispatch();
 
-  useEffect(async () => {
-    if (token.length && shoppingCart.length) {
-      for (let i = 0; i < shoppingCart.length; i++) {
-        await dispatch(
-          postCartToDB({
-            userId: userStore.email,
-            productId: shoppingCart[i].id,
-            amount: shoppingCart[i].amount,
-            color: shoppingCart[i].color,
-            size: shoppingCart[i].size,
-          })
-        );
+  //filling the database in case the user has selected products before login
+  useEffect(() => {
+    const fillDBWithLocalCart = async () => {
+      if (token && userStore?.email && shoppingCart.length) {
+        for (let i = 0; i < shoppingCart.length; i++) {
+          await dispatch(
+            postCartToDB({
+              userId: userStore.email,
+              productId: shoppingCart[i].id,
+              amount: shoppingCart[i].amount,
+              color: shoppingCart[i].color,
+              size: shoppingCart[i].size,
+            })
+          );
+        }
+        dispatch(getCartFromDB(userStore.email));
       }
-    }
-  }, [dispatch]);
+    };
+    fillDBWithLocalCart();
+  }, [dispatch, token, shoppingCart, userStore]);
 
   return (
     <div className={Styles.homeContainer}>

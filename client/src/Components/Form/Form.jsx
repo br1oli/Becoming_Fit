@@ -26,33 +26,30 @@ const FormComplete = () => {
         adress: "",
     });
 
-
-
-    useEffect(() => {
-        const relleno = async () => {
-            try {
-                if (isAuthenticated) {
-                    console.log("AHORA SI ESTOY AUTENTICADO")
-                    setInput({
-                        ...input,
-                        name: user.name,
-                        email: user.email,
-                        // zipCode: usuarios.zipCode? usuarios.zipCode: "",
-                        // country: usuarios.country? usuarios.country: "",
-                        // city: usuarios.city? usuarios.city: "",
-                        // phone: usuarios.phone? usuarios.phone: "",
-                        // adress: usuarios.adress? usuarios.adress: [],
-                    })
-                } else {
-                    console.log('NO ESTA AUTENTICADO')
-                }
-            } catch (error) {
-                console.log(error)
-            }
+  useEffect(() => {
+    const relleno = async () => {
+      try {
+        if (isAuthenticated) {
+          console.log("AHORA SI ESTOY AUTENTICADO");
+          setInput({
+            ...input,
+            name: user.name,
+            email: user.email,
+            // zipCode: usuarios.zipCode? usuarios.zipCode: "",
+            // country: usuarios.country? usuarios.country: "",
+            // city: usuarios.city? usuarios.city: "",
+            // phone: usuarios.phone? usuarios.phone: "",
+            // adress: usuarios.adress? usuarios.adress: [],
+          });
+        } else {
+          console.log("NO ESTA AUTENTICADO");
         }
-        relleno()
-    }, [user])
-
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    relleno();
+  }, [user]);
 
     function validate(input) {
         let errors = {};
@@ -252,5 +249,3 @@ const FormComplete = () => {
 }
 
 export default FormComplete;
-
-//

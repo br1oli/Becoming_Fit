@@ -42,7 +42,6 @@ const getCart = async (req = require, res = response) => {
 //y si llega a 0 eliminar el producto, en amount
 
 const postProductToCart = async (req = request, res = response) => {
-  console.log(req.body);
   const { userId, productId, amount, color, size } = req.body;
   if (!userId || !productId) return res.status(404).send("Incorrect data");
   try {
@@ -55,7 +54,9 @@ const postProductToCart = async (req = request, res = response) => {
         userEmail: userId,
       },
       defaults: {
-        total: parseInt(product.price),
+        total: amount
+          ? parseInt(product.price) * amount
+          : parseInt(product.price),
       },
     });
 
@@ -158,7 +159,6 @@ const postProductToCart = async (req = request, res = response) => {
 
     return res.send("Product added");
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
   }
 };

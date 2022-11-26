@@ -1,13 +1,17 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addReviewToProduct } from "../../Redux/Actions/UsersActions";
+import { addReviewToProduct, getReviews } from "../../Redux/Actions/UsersActions";
 import styles from "./ProductReviews.module.css";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const ReviewForm = ({idProduct}) => {
+  let idUser = useSelector((state) => state.userStore.email);
+
     //Bootstrap
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -18,25 +22,31 @@ const ReviewForm = ({idProduct}) => {
     const state = useSelector(state => state.allProducts)
     const reviews = useSelector(state => state.reviews)
     const [ input, setInput ] = useState({
-        rating: "",
+        rating: "0",
         comment: "",
-        //recommend: "",
+        recommend: "Yes",
         title: "",
-        quality: ""
+        quality: "0"
     });
+    const { user, isAuthenticated } = useAuth0();
 
     const handleChange = (e) => {
         e.preventDefault(e);
-        setInput((prev) => ({...prev, [e.target.name]: e.target.value}))
+        
+        // setInput((prev) => ({...prev, [e.target.name]: e.target.value}))
+        setInput({
+          ...input,
+          [e.target.name]: e.target.value
+        })
     };
 
     const handleSubmit = (e) => {
       e.preventDefault(e);
-      dispatch(addReviewToProduct(idProduct, input))
+      dispatch(addReviewToProduct(idProduct, idUser, input))
       setInput({
         rating: "",
         comment: "",
-        //recommend: "",
+        recommend: "Yes",
         title: "",
         quality: ""
       });
@@ -45,14 +55,23 @@ const ReviewForm = ({idProduct}) => {
       reviewPosted();
       const handleClose = () => setShow(false);
       handleClose();
+      window.location.reload()
     };
+
     
     return (
         
         <>
-        <Button className={styles.popUp} variant="primary" onClick={handleShow}>
-          WRITE A REVIEW
-        </Button>
+        {
+            isAuthenticated ? (
+
+              <Button className={styles.popUp} variant="primary" onClick={handleShow}>
+                WRITE A REVIEW
+              </Button>
+            ) : (
+                <p>Join our club to give us a feedback!</p>
+            )
+        }
   
         <Modal show={show} onHide={handleClose}>
 
@@ -72,21 +91,25 @@ const ReviewForm = ({idProduct}) => {
               </Form.Group>
 
               <Form.Group  controlId="exampleForm.ControlInput1">
-                <Form.Label>Would you recommend this product?</Form.Label>
-                {/* <Form.Control
-                  type="radio" name="recommend" value={input.recommend} onChange={handleChange} placeholder="Yes"
-                />
-                <Form.Control
-                  type="radio" name="recommend" value={input.recommend} onChange={handleChange} placeholder="No"
-                /> */}
-              </Form.Group>
-
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>How was your experience?</Form.Label>
-                <Form.Control as="textarea" rows={3} name="comment" value={input.comment} onChange={ handleChange} className={styles.comment} placeholder={"Write your comment"} />
+                <div>Would you recommend this product?</div>
+                <Form.Label>
+                  Yes
+                  <input
+                    type="radio" 
+                    checked={input.recommend === 'Yes'}
+                    name="recommend" value={'Yes'} onChange={handleChange} placeholder="Yes"
+                  />
+                </Form.Label>
+                <Form.Label>
+                  No
+                  <input
+                    checked={input.recommend === 'No'}
+                    type="radio" 
+                    name="recommend" 
+                    value={'No'} onChange={handleChange} placeholder="No"
+                  />
+                </Form.Label>
+                
               </Form.Group>
 
               <Form.Group
@@ -94,7 +117,15 @@ const ReviewForm = ({idProduct}) => {
                 controlId="exampleForm.ControlTextarea1"
               >
                 <Form.Label>Write a short description of this product/ eg. Great fit pants</Form.Label>
-                <Form.Control as="textarea" rows={1} name="title" value={input.title} onChange={ handleChange} className={styles.sentence} placeholder={"Write your description"} />
+                <Form.Control as="textarea" rows={1} name="title" value={input.title} onChange={ handleChange} className={styles.sentence} placeholder={"Write a short title"} />
+              </Form.Group>
+
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>How was your experience?</Form.Label>
+                <Form.Control as="textarea" rows={4} name="comment" value={input.comment} onChange={ handleChange} className={styles.comment} placeholder={"Write your description"} />
               </Form.Group>
 
                <Form.Group  controlId="exampleForm.ControlInput1">

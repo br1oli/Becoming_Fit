@@ -1,0 +1,42 @@
+.dashboardContainer{
+    width: 100vw;
+    height: 100vh;
+}
+
+.dashboardBody{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.sideContainer{
+    width: 17vw;
+    height: 100vh;
+}
+
+.rightBody{
+    display: grid;
+    grid-template-rows: 2fr 4fr;
+    width: 83vw;
+    height: 100vh;
+}
+
+.rowOne{
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 83vw;
+    height: 40vh;
+    padding: 10px;
+    margin-right: 2px;
+}
+.dashboardOne{
+    border: 1px solid black;
+
+    
+}
+
+.rowTwo{
+    border: 1px solid red;
+}

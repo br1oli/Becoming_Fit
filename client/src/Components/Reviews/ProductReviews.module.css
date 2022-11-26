@@ -4,6 +4,10 @@
     justify-content: center
   }
   
+  .filledReview{
+    display: flex;
+    flex-direction: row;
+  }
   
   
   .emptyReview{
@@ -35,9 +39,9 @@
     cursor: pointer;
   }
   .popUp:hover {
-    background: white;
+    background: black;
     color: aliceblue;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
   
   .modalContainer{
@@ -126,24 +130,110 @@
     justify-content:flex-start;
     align-items:flex-start;
     flex-direction: column;
-    width: max-content;
     border: 1px solid gray;
     margin-bottom: 2rem;
     padding: 1rem;
   }
 
-  .buttons{
-    margin-left: 80%;
+  .overallReview{
+    margin-right: 7rem;
   }
 
-.overallRating{
+  .divReview p{
+    margin-bottom: 0;
+  }  
+
+  .heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .heading p{
+    margin-right: 90%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .edit{
+    background: darken(light, 10%);
+    background-color: rgb(156, 156, 156);
+    width: max-content;
+    padding: 0.5rem;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin-left:  25rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    border: 0.1px solid white;
+    border-radius: 3px;
+    margin-right: 0.2rem;
+  }
+  .edit:hover {
+    background: black;
+    color: aliceblue;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .delete{
+    background: darken(light, 10%);
+    background-color: rgb(156, 156, 156);
+    width: max-content;
+    padding: 0.4rem;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    border: 0.1px solid white;
+    border-radius: 3px;
+  }
+  .delete:hover {
+    background: black;
+    color: aliceblue;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .overallRating{
     width: max-content;
     height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding-left: 3rem;
     padding-right: 3rem;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
-    background-color: rgb(215, 215, 215);
+    margin-bottom: 4rem;
+    background-color: rgb(231, 231, 231);
     font-size: larger;
     color: black;
-}
+    }
+    
+    .overallQuality{
+    width: max-content;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    background-color: rgb(231, 231, 231);
+    font-size: larger;
+    color: black;
+    }
+    
+    .eachReview{
+    width: 60%;
+    /* box-shadow: 0px 0px 20px 0px rgb(162, 162, 162); */
+    }
