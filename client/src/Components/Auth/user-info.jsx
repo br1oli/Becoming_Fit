@@ -16,7 +16,7 @@ import Loading from "../../Utils/Loading.gif";
 
 const Profile = () => {
   const usuarios = useSelector((state) => state.userProfile);
-  console.log(usuarios, "USUARIOS STORE");
+ 
 
   useEffect(() => {
     const data = async () => {
@@ -30,7 +30,6 @@ const Profile = () => {
     }
     data()
     setTimeout(() => {
-      console.log("Delayed for 3 second.");
     }, 3000)
   }, [])
 
@@ -82,7 +81,6 @@ const Profile = () => {
   const Cargando = async ()=>{
     setTimeout(() => {
         setIsLoading(false)
-        // setButtonEnabled(true)
         alert('Informacion cargada con exito!')
         setInput({
             name: "",
@@ -110,9 +108,7 @@ const Profile = () => {
       return alert("Incompletes fields.");
     }
     await dispatch(getUserProfileByEmail(user.email))
-    console.log("user email USER FORM 121", user.email);
      await dispatch(updateUserProfile(usuarios.email, input))
-     console.log("email usuario.email", usuarios.email)
       await Cargando()
     setInput({
       name: "",
@@ -123,7 +119,7 @@ const Profile = () => {
       phone: "",
     });
 
-    // console.log("input enviado",input)
+    
     // alert('Informacion actualizada con exito!')
     // history.push('/profile')
     window.location.reload()
