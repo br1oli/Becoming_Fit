@@ -10,7 +10,6 @@ import {
   postCartToDB,
   addProductToFavorites,
   getCartFromDB,
-  getReviews,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
@@ -46,7 +45,6 @@ const ProductDetail = (props) => {
       e.color === selectedColor &&
       e.size === selectedSize
   );
-  //const favorites = useSelector((state) => state.favorites);
 
   const gettingTheAmountOfProducts = () => {
     if (token.length) {
@@ -62,10 +60,8 @@ const ProductDetail = (props) => {
 
   useEffect(() => {
     dispatch(getProductDetail(detailId));
-
     return () => {
       dispatch(clearDetails());
-      dispatch(getReviews());
     };
   }, []);
 

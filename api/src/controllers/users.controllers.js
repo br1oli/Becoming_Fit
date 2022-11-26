@@ -1,6 +1,5 @@
 const { response, request } = require("express");
 const { User, UserProfile } = require("../db");
-const { updateUserInDb } = require("../helpers/updateUser");
 
 // User
 

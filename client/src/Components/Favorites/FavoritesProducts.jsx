@@ -11,9 +11,12 @@ import Footer from "../Footer/Footer";
 
 const FavoritesProducts = ({favorites}) => {
     const dispatch = useDispatch();
+    // const userId = useSelector((state) => state.userStore.email);
+
+    const userId = useSelector((state) => state.userStore.email);
     useEffect(() => {
-        dispatch(getProductFromFavorites())
-    },[])
+        userId && dispatch(getProductFromFavorites(userId))
+    },[userId])
 
     const clearFavorites = (e) => {
         e.preventDefault()
@@ -64,7 +67,7 @@ const FavoritesProducts = ({favorites}) => {
             <h1 className={styles.deals}>
                 Join our merbers club & get 10% off on your first purchase
             </h1>
-            <NavLink className={styles.link} to={"/home/newUser"}>
+            <NavLink className={styles.link} to={"/"}>
                 <button className={styles.join}>Join us!</button>
             </NavLink>
             </div>
