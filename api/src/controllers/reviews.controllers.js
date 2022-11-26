@@ -29,22 +29,7 @@ const getReviews = async (req = request, res = response) => {
         
         const findProduct = await Product.findByPk(idProduct);
         const findUser = await User.findByPk(idUser);
-        //console.log(findUser);
-        // const findReview = await Review.findOne({include: [{ model: Product }, { model: User}],
-        //     where: {
-        //         [Op.and]: [
-        //             { productId: idProduct },
-        //             { userEmail: findUser.dataValues.email },
-        //             { rating: rating },
-        //             { comment: comment },
-        //             { recommend: recommend },
-        //             { title: title },
-        //             { quality: quality },
-        //         ],
-        //     }});
-            
-        //if (!findReview) {
-        //let addProductReview = await Review.create({
+    
             let [addProductReview, created] = await Review.findOrCreate({
             include: [{ model: Product }, { model: User}],
             where: {
@@ -75,10 +60,9 @@ const getReviews = async (req = request, res = response) => {
             await findUser.addReview(addProductReview)  
             
             let prueba = await addProductReview;
-        console.log(prueba);
+
         return res.status(200).send(prueba);
-    //}
-    //res.status(200).send(findReview)
+   
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -86,10 +70,12 @@ const getReviews = async (req = request, res = response) => {
 
 const deleteOneReview = async (req = request, res = response) => {
     try {
-        let { id } = req.query;
-        const findReviewToDelete = await Review.findByPk(id);
+        let  { idReview }  = req.query;
+        console.log(req.query);
+        const findReviewToDelete = await Review.findByPk(idReview);
         const deleteOne = await findReviewToDelete.destroy();
-        res.status(200).send(findReviewToDelete.dataValues);
+
+        res.status(200).send("Review successfully deleted");
     } catch (error) {
         res.status(500).send(error.message);
     }

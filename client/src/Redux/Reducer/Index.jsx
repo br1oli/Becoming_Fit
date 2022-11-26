@@ -509,9 +509,12 @@ function rootReducer(state = initialState, action) {
       };
 
     case REMOVE_ONE_REVIEW:
+      const removeOneReview = state.reviews.filter(
+        (item) => item.id !== action.payload.id
+      );
       return {
         ...state,
-        reviews: action.payload,
+        reviews: removeOneReview,
       };
 
     default:
