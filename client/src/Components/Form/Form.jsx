@@ -85,7 +85,6 @@ const FormComplete = () => {
         setTimeout(() => {
             setIsLoading(false)
             setButtonEnabled(true)
-            // alert('Informacion cargada con exito!')
             setInput({
                 name: "",
                 email: "",
@@ -96,13 +95,7 @@ const FormComplete = () => {
                 phone: "",
             })
             history.push('/profile')
-        }, 3000)
-        // return(
-            //     <div>
-            //         <img src={Loading} alt="not found" />
-            //     </div>
-            // )
-        }
+        }, 3000)}
 
 
     const handleSubmit = async (e) => {
