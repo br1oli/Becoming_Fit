@@ -40,6 +40,7 @@ import {
   DELETE_CART,
   DELETE_PRODUCT_CART,
   ERROR_CART,
+  PAYMENT_ORDER,
 
   //Review
   ADD_REVIEW_TO_PRODUCT,
@@ -70,6 +71,7 @@ const initialState = {
   cartDB: [],
   cartDbResponse: "",
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
+  paymentLink: "",
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -404,6 +406,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         details: [],
+      };
+
+    case PAYMENT_ORDER:
+      return {
+        ...state,
+        paymentLink: action.payload,
       };
     //Users
     case SET_TOKEN:

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProductsPerPage } from "../../Redux/Actions/UsersActions";
 
 export const Pagination = () => {
-  const { products, productsPerPage, currentPage, currentProducts } =
+  const { products, productsPerPage, currentPage /* currentProducts */ } =
     useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -30,13 +30,8 @@ export const Pagination = () => {
     <nav className={Styles.paginadoContainer}>
       <ul className={Styles.paginado}>
         <a
-          className={
-            Styles.numberArrow
-            /* (Styles.numberArrow,
-            {
-              disabled: currentPage === 1,
-            }) */
-          }
+          href="#"
+          className={Styles.numberArrow}
           onClick={() => handlePagination(currentPage - 1)}
         >
           Previous
@@ -45,11 +40,11 @@ export const Pagination = () => {
         {pagesNumbers.map((number) => (
           <li className={Styles.numberLi} key={number}>
             <a
+              href="#"
               className={`${Styles.number} ${
                 number === currentPage ? Styles.current : ""
               }`}
               key={number}
-              href="#"
               onClick={() => handlePagination(number)}
             >
               {number}
@@ -58,13 +53,7 @@ export const Pagination = () => {
         ))}
 
         <a
-          className={
-            Styles.numberArrow
-            /*  (Styles.numberArrow,
-            {
-              disabled: currentProducts?.length < 6,
-            }) */
-          }
+          className={Styles.numberArrow}
           href="#"
           onClick={() => handlePagination(currentPage + 1)}
         >
