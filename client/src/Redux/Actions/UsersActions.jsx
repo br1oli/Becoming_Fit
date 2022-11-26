@@ -489,7 +489,6 @@ export const updateUserProfile = (email, payload) => {
   };
 };
 
-
 export function deleteUserProfile (email) {
   return async (dispatch) => {
     try {
