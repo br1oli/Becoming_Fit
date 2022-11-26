@@ -1,10 +1,10 @@
 const { response, request } = require("express");
-// const { default: Profile } = require("../../../client/src/Components/Auth/user-info");
 const { User, UserProfile } = require("../db");
 const { updateUserInDb } = require("../helpers/updateUser");
 
+// User
+
 const getUsers = async (req = request, res = response) => {
-  // traigo todos los clientes de la db y los envio:
   try {
     let usersFromDb = await User.findAll();
 
@@ -40,40 +40,6 @@ const createUser = async (req = request, res = response) => {
   }
 };
 
-const updateUser = async (req = request, res = response) => {
-  try {
-    let { id } = req.params;
-    let {
-      userName,
-      firstName,
-      lastName,
-      email,
-      address,
-      password,
-      telephone,
-      adminPermissions,
-      image,
-    } = req.body;
-
-    let update = await updateUserInDb(
-      id,
-      userName,
-      firstName,
-      lastName,
-      email,
-      address,
-      password,
-      telephone,
-      adminPermissions,
-      image
-    );
-
-    res.status(200).send(update);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
 const deleteUser = async (req = request, res = response) => {
   const { id } = req.params;
   try {
@@ -88,23 +54,9 @@ const deleteUser = async (req = request, res = response) => {
   }
 };
 
+// User Profile
 
-const getUserAct = async (req = request, res = response) => {
-  // traigo todos los clientes de la db y los envio:
-  const { email } = req.query
-  try {
-    let usersFromDb = await UserProfile.findOne({ where: { email: email } });
-    if (!usersFromDb) {
-      return res.status(404).send("No users found");
-    }
-    res.status(200).send(usersFromDb.dataValues);
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error.message);
-  }
-};
-
-const actUser = async (req = request, res = response) => {
+const createUserProfile = async (req = request, res = response) => {
   const { name,
     email,
     adress,
@@ -115,7 +67,6 @@ const actUser = async (req = request, res = response) => {
 
   try {
     const userExists = await UserProfile.findOne({ where: { email: email } });
-
     if (userExists !== null) {
       return res.status(200).send(userExists.dataValues);
     } else {
@@ -136,13 +87,52 @@ const actUser = async (req = request, res = response) => {
   }
 };
 
-const updateProfile = async (req = request, res = response) => {
+const deleteUserProfile = async (req = request, res = response) => {
+  const { email } = req.query
+  try {
+    await UserProfile.destroy({
+      where: {
+        email,
+      },
+    });
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+const getAllUserProfiles = async (req = request, res = response) => {
+  try {
+    let usersFromDb = await UserProfile.findAll();
+    if (!usersFromDb.length) {
+      return res.status(404).send("No user profiles found");
+    }
+    usersFromDb = usersFromDb.map((user) => user.dataValues);
+    res.status(200).send(usersFromDb);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+const getUserProfileByEmail = async (req = request, res = response) => {
+  const { email } = req.query
+  try {
+    let usersFromDb = await UserProfile.findOne({ where: { email: email } });
+    if (!usersFromDb) {
+      return res.status(404).send("No users found");
+    }
+    res.status(200).send(usersFromDb.dataValues);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message);
+  }
+};
+
+const updateUserProfile = async (req = request, res = response) => {
   let emailId = req.query.email;
-  // console.log("email id", req.query)
   let { newName, newCountry, newCity, newZipCode, newPhone, newAdress } = req.body;
   try {
     const targetReview = await UserProfile.findByPk(emailId);
-    // console.log("target review", targetReview)
     const updateReview = await targetReview.update({
       name: newName,
       country: newCountry,
@@ -151,7 +141,6 @@ const updateProfile = async (req = request, res = response) => {
       phone: newPhone,
       adress: newAdress
     });
-    console.log("esto es el coso", updateReview)
     await updateReview.save();
     res.status(200).send('Se actualizo la informacion con exito')
   } catch (error) {
@@ -160,11 +149,12 @@ const updateProfile = async (req = request, res = response) => {
 };
 
 module.exports = {
-  actUser,
   getUsers,
   createUser,
   deleteUser,
-  updateUser,
-  getUserAct,
-  updateProfile,
+  createUserProfile,
+  deleteUserProfile,
+  getAllUserProfiles,
+  getUserProfileByEmail,
+  updateUserProfile
 };

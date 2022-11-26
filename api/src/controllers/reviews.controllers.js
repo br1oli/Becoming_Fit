@@ -21,10 +21,8 @@ const getReviews = async (req = request, res = response) => {
 const postReview = async (req = request, res = response) => {
     try {
         let { idProduct } = req.query; 
-        let { idUser } = req.body;
-
-        let { rating, comment, recommend, title, quality } = req.body;
-        //if ( !idProduct || !rating || !comment || !recommend || !sentence || !quality ) return res.send({ message: "Incorrect data" });
+        let { idUser, rating, comment, recommend, title, quality } = req.body;
+        
         const findProduct = await Product.findByPk(idProduct);
         const findUser = await User.findByPk(idUser);
         const [addProductReview, created] = await Review.findOrCreate({
@@ -57,21 +55,16 @@ const postReview = async (req = request, res = response) => {
     }
 };
 
-
-
 const deleteOneReview = async (req = request, res = response) => {
     try {
         let { id } = req.query;
         const findReviewToDelete = await Review.findByPk(id);
-        console.log(findReviewToDelete);
         const deleteOne = await findReviewToDelete.destroy();
         res.status(200).send(findReviewToDelete.dataValues);
     } catch (error) {
         res.status(500).send(error.message);
     }
 };  
-  
-
 
 const deleteAllReviews = async (req = request, res = response) => {
     try {
@@ -82,8 +75,6 @@ const deleteAllReviews = async (req = request, res = response) => {
         res.status(500).send(error.message);
     }
 };
-  
-
 
 const putReview = async (req = request, res = response) => {
     const { idReview } = req.body;

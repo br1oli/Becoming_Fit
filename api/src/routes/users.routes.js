@@ -3,19 +3,21 @@ const {
   createUser,
   deleteUser,
   getUsers,
-  updateUser,
-  actUser,
-  getUserAct,
-  updateProfile
+  createUserProfile,
+  deleteUserProfile,
+  getAllUserProfiles,
+  getUserProfileByEmail,
+  updateUserProfile
 } = require("../controllers");
 
 const router = Router();
-router.get("/user", getUsers);
-router.post("/user", createUser);
-router.put("/user/:id", updateUser);
-router.delete("/user/:id", deleteUser);
-router.get("/usuarios", getUserAct)
-router.post("/usuarios", actUser)
-router.put("/usuarios", updateProfile)
+router.get("/user", getUsers); //getUsers
+router.post("/user", createUser); //createUsers
+router.delete("/user/:email", deleteUser); //deleteUser
+router.get("/userProfiles", getAllUserProfiles); //getAllUserProfiles
+router.get("/userProfile", getUserProfileByEmail); //getUserProfileByEmail
+router.post("/userProfile", createUserProfile); //createUserProfile
+router.put("/userProfile", updateUserProfile); //updateUserProfile
+router.delete("/userProfile", deleteUserProfile); //deleteUserProfile
 
 module.exports = router;

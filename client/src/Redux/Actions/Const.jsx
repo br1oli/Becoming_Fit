@@ -1,6 +1,5 @@
 export const URL_PRODUCTS = "/products";
 export const URL_PRODUCTS_QUERY = "/products?name=";
-export const URL_USER_ACT = "/usuarios";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
 
@@ -44,8 +43,20 @@ export const PAYMENT_ORDER = "PAYMENT_ORDER";
 export const ERROR_PAYMENT = "ERROR_PAYMENT";
 
 //User actions
-export const CREATE_USER = "CREATE_USER";
 export const SET_TOKEN = "SET_TOKEN";
+export const CREATE_USER = "CREATE_USER";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const UPDATE_USER = "UPDATE_USER";
+export const DELETE_USER = "DELETE_USER";
+
+//User profile actions
+export const URL_USER_PROFILE = "/userProfile";
+export const URL_USER_PROFILES = "/userProfiles";
+export const GET_ALL_USER_PROFILES = "GET_ALL_USER_PROFILES";
+export const GET_USER_PROFILE_BY_EMAIL = "GET_USER_PROFILE_BY_EMAIL";
+export const CREATE_USER_PROFILE = "CREATE_USER_PROFILE";
+export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
+export const DELETE_USER_PROFILE = "DELETE_USER_PROFILE";
 
 // Favorites consts
 export const ADD_PRODUCT_TO_FAVORITES = "ADD_PRODUCT_TO_FAVORITES";
@@ -58,6 +69,4 @@ export const ADD_REVIEW_TO_PRODUCT = "ADD_REVIEW_TO_PRODUCT";
 export const GET_REVIEWS = "GET_REVIEWS";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const REMOVE_ONE_REVIEW = "REMOVE_ONE_REVIEW";
-export const UPDATE_USER = "UPDATE_USER";
-export const GET_USER_ACT = "GET_USER_ACT";
-export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+
