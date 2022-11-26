@@ -61,16 +61,6 @@ const Profile = () => {
   
   const [isLoading, setIsLoading] = useState(true);
 
-  // const Cargando = async()=>{
-  //   setTimeout(() => {
-  //       setIsLoading(true)
-  
-  //       history.push('/profile')
-  //   }, 5000)
-  // }
-  // const roles = process.env.REACT_APP_AUTH0_ROLE_ID;
-
-
   const [input, setInput] = useState({
     name: "",
     zipCode: "",
@@ -151,7 +141,6 @@ useEffect(() => {
   }
   data()
   setTimeout(() => {
-    console.log("Delayed for 3 second.");
   }, 3000)
 }, [])
 
@@ -161,12 +150,9 @@ useEffect(() => {
 
   
   setTimeout(() => {
-    console.log("Delayed for 3 second.");
     setIsLoading(false)
   }, 3000)
 
-    console.log("esto es el usuario en la store", usuarios);
-    // console.log("esto es el INPUT", input);
 
   return (
     isLoading === true ? <div>
@@ -216,7 +202,6 @@ useEffect(() => {
         </div>
         <div>
           <label>City:</label>
-          {/* <label>{usuarios && Object.values(usuarios)?.length && usuarios.city}</label> */}
           <label>{usuarios.city}</label>
           <br/>
           <input value={input.city}
@@ -262,7 +247,6 @@ useEffect(() => {
         </div>
         <br />
         <br />
-        {/* <JSONPretty data={usuarios} /> */}
 
         <button onClick={back}>Volver</button>
         <button className="submit1" type="submit">
