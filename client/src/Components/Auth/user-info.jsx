@@ -1,7 +1,7 @@
 // ESTE ESTABA EN UNA CARPETA AUTH EN COMPONENTS
 
 import React from 'react'
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0, User } from '@auth0/auth0-react'
 import JSONPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/monikai.css'
 import { useState } from 'react'
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import LoginButton from './LoginButton'
 import LogoutButton from './LogoutButton'
+import Loading from "../../Utils/Loading.gif";
 
 const Profile = () => {
   const usuarios  = useSelector((state) => state.usuarios)
@@ -28,9 +29,13 @@ const Profile = () => {
       }
     }
     data()
+    setTimeout(() => {
+      console.log("Delayed for 3 second.");
+    }, 3000)
   }, [])
 
-  // const roles = process.env.REACT_APP_AUTH0_ROLE_ID;
+
+
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([])
   const dispatch = useDispatch()
@@ -49,10 +54,21 @@ const Profile = () => {
       } catch (error) {
         console.log(error)
       }
-  
+      
     }
     generarToken()
   }, [user])
+  
+  const [isLoading, setIsLoading] = useState(true);
+
+  // const Cargando = async()=>{
+  //   setTimeout(() => {
+  //       setIsLoading(true)
+  
+  //       history.push('/profile')
+  //   }, 5000)
+  // }
+  // const roles = process.env.REACT_APP_AUTH0_ROLE_ID;
 
 
   const [input, setInput] = useState({
@@ -69,7 +85,25 @@ const Profile = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
-    console.log(input);
+  }
+
+  
+
+  const Cargando = async ()=>{
+    setTimeout(() => {
+        setIsLoading(false)
+        // setButtonEnabled(true)
+        alert('Informacion cargada con exito!')
+        setInput({
+            name: "",
+            zipCode: "",
+            adress: "",
+            city: "",
+            country: "",
+            phone: "",
+        })
+        history.push('/profile')
+    }, 3500)
   }
 
 
@@ -78,8 +112,11 @@ const Profile = () => {
     if (!input.name ||  !input.adress || !input.country   || !input.city || !input.zipCode || !input.phone) {
         return alert('Incompletes fields.')
     }
-    await dispatch(changeUserInfo( usuarios.email, input))
-      dispatch(getUserAct(usuarios.email))
+    await dispatch(getUserAct(user.email))
+    console.log("user email USER FORM 121", user.email);
+     await dispatch(changeUserInfo(usuarios.email, input))
+     console.log("email usuario.email", usuarios.email)
+      await Cargando()
     setInput({
         name: '',
         zipCode: '',
@@ -89,32 +126,48 @@ const Profile = () => {
         phone: "",
     })
 
-    console.log(user)
-    alert('Informacion actualizada con exito!')
-    history.push('/profile')
+    // console.log("input enviado",input)
+    // alert('Informacion actualizada con exito!')
+    // history.push('/profile')
+    window.location.reload()
 }
+
+useEffect(() => {
+  const data = async () => {
+    try {
+      if(user){
+        await dispatch(getUserAct(user.email))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  data()
+  setTimeout(() => {
+    console.log("Delayed for 3 second.");
+  }, 3000)
+}, [])
 
   const back = () => {
     history.push('/complete')
   }
 
+  
+  setTimeout(() => {
+    console.log("Delayed for 3 second.");
+    setIsLoading(false)
+  }, 3000)
 
-
-
-  useEffect(() => {
-    const data = async () => {
-      try {
-        await dispatch(getUserAct(user?.email))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    data()
-  }, [])
-
-    console.log("esto es el usuario", usuarios);
+    console.log("esto es el usuario en la store", usuarios);
+    // console.log("esto es el INPUT", input);
 
   return (
+    isLoading === true ? <div>
+                            <div>
+                              <img src={Loading} alt="not found" />
+                            </div>
+                          </div> 
+    :
     isAuthenticated ? <div>
       <form onSubmit={e => handleSubmit(e)}>
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
@@ -125,10 +178,10 @@ const Profile = () => {
           <label>Email:</label>
           <label>{usuarios && Object.values(usuarios)?.length && usuarios.email}:</label>
           <br/>
-          <input value = {usuarios && Object.values(usuarios)?.length && usuarios.email}
+          {/* <input value = {usuarios && Object.values(usuarios)?.length && usuarios.email}
             type = "text"
             name = "email"
-            disabled = "disabled"/>
+            disabled = "disabled"/> */}
         </div>
         <div>
           <label>Name:</label>
@@ -142,7 +195,7 @@ const Profile = () => {
         </div>
         <div>
           <label>Country:</label>
-          <label>{usuarios && Object.values(usuarios)?.length && usuarios.country}</label>
+          <label>{usuarios.country}</label>
           <br/>
           <input value={input.country}
             type="text"
@@ -153,7 +206,8 @@ const Profile = () => {
         </div>
         <div>
           <label>City:</label>
-          <label>{usuarios && Object.values(usuarios)?.length && usuarios.city}</label>
+          {/* <label>{usuarios && Object.values(usuarios)?.length && usuarios.city}</label> */}
+          <label>{usuarios.city}</label>
           <br/>
           <input value={input.city}
             type="text"
@@ -164,7 +218,7 @@ const Profile = () => {
         </div>
         <div>
           <label>Zip Code:</label>
-          <label>{usuarios && Object.values(usuarios)?.length && usuarios.zipCode}</label>
+          <label>{usuarios.zipCode}</label>
           <br/>
           <input value={input.zipCode}
             type="number"
@@ -175,7 +229,7 @@ const Profile = () => {
         </div>
         <div>
           <label>Phone:</label>
-          <label>{usuarios && Object.values(usuarios)?.length && usuarios.phone}</label>
+          <label>{usuarios.phone}</label>
           <br/>
           <input value={input.phone}
             type="number"
@@ -186,7 +240,7 @@ const Profile = () => {
         </div>
         <div>
           <label>Adress:</label>
-          <label>{usuarios && Object.values(usuarios)?.length && usuarios.adress}</label>
+          <label>{usuarios.adress}</label>
           <br/>
           <input
             value={input.adress}

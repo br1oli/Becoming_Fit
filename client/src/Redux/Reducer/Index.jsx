@@ -69,6 +69,7 @@ const initialState = {
   cartDB: [],
   cartDbResponse: "",
   token: "",
+  usuarios: [],
 };
 
 function rootReducer(state = initialState, action) {

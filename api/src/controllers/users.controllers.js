@@ -1,6 +1,6 @@
 const { response, request } = require("express");
 // const { default: Profile } = require("../../../client/src/Components/Auth/user-info");
-const { User, UserProfile } = require("../db");
+const { User, UserProfile, Op } = require("../db");
 const { updateUserInDb } = require("../helpers/updateUser");
 
 const getUsers = async (req = request, res = response) => {
@@ -113,11 +113,27 @@ const actUser = async (req = request, res = response) => {
     zipCode,
     phone } = req.body
 
+
   try {
-    const userExists = await UserProfile.findOne({ where: { email: email } });
+    // const userExists = await UserProfile.findOne({ 
+    //   where: {[Op.and] : 
+    //                   [
+    //                     {name : name},
+    //                     {email: email},
+    //                     {adress: adress},
+    //                     {country: country},
+    //                     {city: city},
+    //                     {zipCode: zipCode},
+    //                     {phone: phone},
+    //                   ]
+                        
+    //                     ,} });
+    const userExists = await UserProfile.findOne({
+      where: {email : email}
+    })
 
     if (userExists !== null) {
-      return res.status(200).send(userExists.dataValues);
+      return res.status(200).send(userExists);
     } else {
       const newUser = await UserProfile.create({
         name,
@@ -128,7 +144,8 @@ const actUser = async (req = request, res = response) => {
         city,
         zipCode
       });
-      res.status(201).send(newUser.dataValues);
+      return res.status(201).send(newUser)
+      console.log(newUser,"me devuelve el post")
     }
   } catch (error) {
     console.log(error)
@@ -137,19 +154,19 @@ const actUser = async (req = request, res = response) => {
 };
 
 const updateProfile = async (req = request, res = response) => {
-  let emailId = req.query.email;
-  // console.log("email id", req.query)
-  let { newName, newCountry, newCity, newZipCode, newPhone, newAdress } = req.body;
+  let {email} = req.params;
+  let  {name, country, city, zipCode, phone, adress}  = req.body;
+  console.log("🚀 ~ file: users.controllers.js ~ line 141 ~ updateProfile ~ req", req.body)
+  const targetReview = await UserProfile.findByPk(email);
+  console.log("target review", targetReview)
   try {
-    const targetReview = await UserProfile.findByPk(emailId);
-    // console.log("target review", targetReview)
     const updateReview = await targetReview.update({
-      name: newName,
-      country: newCountry,
-      city: newCity,
-      zipCode: newZipCode,
-      phone: newPhone,
-      adress: newAdress
+      name: name,
+      country: country,
+      city: city,
+      zipCode: zipCode,
+      phone: phone,
+      adress: adress
     });
     console.log("esto es el coso", updateReview)
     await updateReview.save();

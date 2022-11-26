@@ -13,21 +13,6 @@ module.exports = (sequelize) => {
       //   unique: true,
       //   allowNull: true,
       // },
-      userName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      firstName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      lastName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      phoneNumber: {
-        type: DataTypes.STRING,
-      },
       name: {
         type: DataTypes.STRING,
       },

@@ -16,6 +16,6 @@ router.put("/user/:id", updateUser);
 router.delete("/user/:id", deleteUser);
 router.get("/usuarios", getUserAct)
 router.post("/usuarios", actUser)
-router.put("/usuarios", updateProfile)
+router.put("/usuarios/:email", updateProfile)
 
 module.exports = router;
