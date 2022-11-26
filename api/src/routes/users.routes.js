@@ -17,7 +17,7 @@ router.delete("/user/:email", deleteUser); //deleteUser
 router.get("/userProfiles", getAllUserProfiles); //getAllUserProfiles
 router.get("/userProfile", getUserProfileByEmail); //getUserProfileByEmail
 router.post("/userProfile", createUserProfile); //createUserProfile
-router.put("/userProfile", updateUserProfile); //updateUserProfile
+router.put("/userProfile/:email", updateUserProfile); //updateUserProfile
 router.delete("/userProfile", deleteUserProfile); //deleteUserProfile
 
 module.exports = router;

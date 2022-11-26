@@ -89,6 +89,7 @@ const initialState = {
   token: "",
   userProfiles: [],
   userProfile: [],
+  usuarios: [],
 };
 
 function rootReducer(state = initialState, action) {

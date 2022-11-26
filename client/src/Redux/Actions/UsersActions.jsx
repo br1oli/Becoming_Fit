@@ -471,7 +471,7 @@ export const createUserProfile = (payload) => {
 export const updateUserProfile = (email, payload) => {
   return async function (dispatch) {
     try {
-      const response = await axios.put(`/userProfile?email=${email}`, payload);
+      const response = await axios.put(`/userProfile/${email}`, payload);
       return dispatch({
         type: UPDATE_USER_PROFILE,
         payload: response.data,
