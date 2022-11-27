@@ -313,7 +313,7 @@ function rootReducer(state = initialState, action) {
               ...state,
               shoppingCart: state.shoppingCart.map((item) =>
                 item === itemInCart
-                  ? { ...item, amount: item.amount + 1 }
+                  ? { ...item, amount: item.amount + action.payload.amount }
                   : item
               ),
             }
@@ -321,7 +321,7 @@ function rootReducer(state = initialState, action) {
               ...state,
               shoppingCart: [
                 ...state.shoppingCart,
-                { ...productToAdd, amount: 1 },
+                { ...productToAdd, amount: action.payload.amount },
               ],
             };
       saveStorage("shoppCart", {
