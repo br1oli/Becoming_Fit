@@ -1,5 +1,3 @@
-// ESTE ESTABA EN UNA CARPETA AUTH EN COMPONENTS
-
 import React from 'react'
 import { useAuth0, User } from '@auth0/auth0-react'
 import JSONPretty from 'react-json-pretty'
@@ -13,6 +11,51 @@ import { useHistory } from 'react-router-dom';
 import LoginButton from './LoginButton'
 import LogoutButton from './LogoutButton'
 import Loading from "../../Utils/Loading.gif";
+import Style from "./user-info.module.css"
+
+
+function validador(input) {
+  let errors = {};
+  if (!input.name) {
+    errors.name = "Required";
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.name)) {
+    errors.name = "First letter must be uppercase";
+  }
+  if (!input.zipCode) {
+    errors.zipCode = "Required";
+  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.zipCode)) {
+    errors.zipCode = "First letter must be uppercase";
+  }
+  if (!input.country) {
+    errors.country = "Required";
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.country)) {
+    errors.country = "First letter must be uppercase";
+  }
+  if (!input.city) {
+    errors.city = "Required";
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.city)) {
+    errors.city = "First letter must be uppercase";
+  }
+  if (!input.phone) {
+    errors.phone = "Required";
+  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.phone)) {
+    errors.phone = "First letter must be uppercase";
+  } 
+  if (!input.adress) {
+    errors.adress = "Required";
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,500}$/.test(input.adress)) {
+    errors.adress = "First letter must be uppercase";
+    }
+  return errors;
+}
+
+// name: "",
+//     zipCode: "",
+//     country: "",
+//     city: "",
+//     phone: "",
+//     adress: "",
+
 
 const Profile = () => {
   const usuarios = useSelector((state) => state.userProfile);
@@ -69,11 +112,22 @@ const Profile = () => {
     adress: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    zipCode: "",
+    country: "",
+    city: "",
+    phone: "",
+    adress: "",
+  });
+
   function handleChange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
+    let errorObj = validador({ ...input, [e.target.name]: e.target.value });
+    setErrors(errorObj);
   }
 
   
@@ -141,6 +195,15 @@ useEffect(() => {
 }, [])
 
   const back = () => {
+    // if(input.name.length ||
+    // input.zipCode.length ||
+    // input.adress.length ||
+    // input.city.length ||
+    // input.country.length ||
+    // input.phone.length){
+    //   alert("Are you sure you want to come back?, the data you have entered will be lost.")
+    // }else{
+    // }
     history.push('/complete')
   }
 
@@ -165,23 +228,28 @@ useEffect(() => {
         </div>
         <br />
         <div>
-          <label>Email:</label>
+          <label>Email:   </label>
           <label>{usuarios && Object.values(usuarios)?.length && usuarios.email}:</label>
           <br/>
         </div>
         <div>
-          <label>Name:</label>
+          <label>Name:    </label>
           <label>
             {usuarios && Object.values(usuarios)?.length && usuarios.name}
           </label>
           <br />
-          <input
-            value={input.name}
-            type="text"
-            name="name"
-            placeholder="Change your name..."
-            onChange={handleChange}
-          />
+          <div>
+            <input
+              value={input.name}
+              type="text"
+              name="name"
+              placeholder="Change your name..."
+              onChange={handleChange}
+            />
+        {errors?.name ? (
+                    <div className={Style.danger}>{errors.name}</div>
+                  ) : null}
+          </div>
         </div>
         <div>
           <label>Country:</label>
@@ -193,6 +261,9 @@ useEffect(() => {
             placeholder="Change your country..."
             onChange={handleChange}
           />
+          {errors?.country ? (
+                    <div className={Style.danger}>{errors.country}</div>
+                  ) : null}
         </div>
         <div>
           <label>City:</label>
@@ -204,6 +275,9 @@ useEffect(() => {
             placeholder="Change your city..."
             onChange={handleChange}
           />
+          {errors?.city ? (
+                    <div className={Style.danger}>{errors.city}</div>
+                  ) : null}
         </div>
         <div>
           <label>Zip Code:</label>
@@ -215,6 +289,9 @@ useEffect(() => {
             placeholder="Change your zip code..."
             onChange={handleChange}
           />
+          {errors?.zipCode ? (
+                    <div className={Style.danger}>{errors.zipCode}</div>
+                  ) : null}
         </div>
         <div>
           <label>Phone:</label>
@@ -226,6 +303,9 @@ useEffect(() => {
             placeholder="Change your phone..."
             onChange={handleChange}
           />
+          {errors?.phone ? (
+                    <div className={Style.danger}>{errors.phone}</div>
+                  ) : null}
         </div>
         <div>
           <label>Adress:</label>
@@ -238,6 +318,9 @@ useEffect(() => {
             placeholder="Change your adress..."
             onChange={handleChange}
           />
+          {errors?.adress ? (
+                    <div className={Style.danger}>{errors.adress}</div>
+                  ) : null}
         </div>
         <br />
         <br />
@@ -248,8 +331,8 @@ useEffect(() => {
         </button>
         <br />
         <label>Info</label>
-        <JSONPretty data={user} />
         <label>Token</label>
+        <JSONPretty data={user} />
         <JSONPretty data={token} />
       </form>
     </div>
