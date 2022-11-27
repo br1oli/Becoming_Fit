@@ -1,5 +1,5 @@
 const { response, request } = require("express");
-const { User, UserProfile } = require("../db");
+const { User, UserProfile, Op } = require("../db");
 
 // User
 
@@ -59,9 +59,12 @@ const createUserProfile = async (req = request, res = response) => {
   const { name, email, adress, country, city, zipCode, phone } = req.body;
 
   try {
-    const userExists = await UserProfile.findOne({ where: { email: email } });
+    const userExists = await UserProfile.findOne({
+       where: {email : email}
+    })
+
     if (userExists !== null) {
-      return res.status(200).send(userExists.dataValues);
+      return res.status(200).send(userExists);
     } else {
       const newUser = await UserProfile.create({
         name,
@@ -72,10 +75,10 @@ const createUserProfile = async (req = request, res = response) => {
         city,
         zipCode,
       });
-      res.status(201).send(newUser.dataValues);
+      return res.status(201).send(newUser)
+  
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json(error.message);
   }
 };
@@ -108,6 +111,7 @@ const getAllUserProfiles = async (req = request, res = response) => {
 };
 
 const getUserProfileByEmail = async (req = request, res = response) => {
+  
   const { email } = req.query;
   try {
     let usersFromDb = await UserProfile.findOne({ where: { email: email } });
@@ -122,25 +126,29 @@ const getUserProfileByEmail = async (req = request, res = response) => {
 };
 
 const updateUserProfile = async (req = request, res = response) => {
-  let emailId = req.query.email;
-  let { newName, newCountry, newCity, newZipCode, newPhone, newAdress } =
-    req.body;
+  let {email} = req.params;
+  let  {name, country, city, zipCode, phone, adress}  = req.body;
+
+  const targetUserProfile = await UserProfile.findByPk(email);
+
   try {
-    const targetReview = await UserProfile.findByPk(emailId);
-    const updateReview = await targetReview.update({
-      name: newName,
-      country: newCountry,
-      city: newCity,
-      zipCode: newZipCode,
-      phone: newPhone,
-      adress: newAdress,
+    const updateUserProfile = await targetUserProfile.update({
+      name: name,
+      country: country,
+      city: city,
+      zipCode: zipCode,
+      phone: phone,
+      adress: adress
     });
-    await updateReview.save();
-    res.status(200).send("Se actualizo la informacion con exito");
+  
+    await updateUserProfile.save();
+    res.status(200).send('Se actualizo la informacion con exito')
   } catch (error) {
-    res.status(404).send("No se pudo actualizar la informacion");
+    res.status(404).send('No se pudo actualizar la informacion')
   }
 };
+
+
 
 module.exports = {
   getUsers,

@@ -1,7 +1,7 @@
 // ESTE ESTABA EN UNA CARPETA AUTH EN COMPONENTS
 
 import React from 'react'
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0, User } from '@auth0/auth0-react'
 import JSONPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/monikai.css'
 import { useState } from 'react'
@@ -12,10 +12,11 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import LoginButton from './LoginButton'
 import LogoutButton from './LogoutButton'
+import Loading from "../../Utils/Loading.gif";
 
 const Profile = () => {
-  const usuarios = useSelector((state) => state.usuarios);
-  console.log(usuarios, "USUARIOS STORE");
+  const usuarios = useSelector((state) => state.userProfile);
+ 
 
   useEffect(() => {
     const data = async () => {
@@ -26,11 +27,14 @@ const Profile = () => {
       } catch (error) {
         console.log(error);
       }
-    };
-    data();
-  }, []);
+    }
+    data()
+    setTimeout(() => {
+    }, 3000)
+  }, [])
 
-  // const roles = process.env.REACT_APP_AUTH0_ROLE_ID;
+
+
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([]);
   const dispatch = useDispatch();
@@ -49,9 +53,12 @@ const Profile = () => {
       } catch (error) {
         console.log(error);
       }
-    };
-    generarToken();
-  }, [user]);
+      
+    }
+    generarToken()
+  }, [user])
+  
+  const [isLoading, setIsLoading] = useState(true);
 
   const [input, setInput] = useState({
     name: "",
@@ -67,8 +74,26 @@ const Profile = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
-    console.log(input);
   }
+
+  
+
+  const Cargando = async ()=>{
+    setTimeout(() => {
+        setIsLoading(false)
+        alert('Informacion cargada con exito!')
+        setInput({
+            name: "",
+            zipCode: "",
+            adress: "",
+            city: "",
+            country: "",
+            phone: "",
+        })
+        
+    }, 3500)
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,8 +107,9 @@ const Profile = () => {
     ) {
       return alert("Incompletes fields.");
     }
-    await dispatch(updateUserProfile( usuarios.email, input))
-      dispatch(getUserProfileByEmail(usuarios.email))
+    await dispatch(getUserProfileByEmail(user.email))
+     await dispatch(updateUserProfile(usuarios.email, input))
+      await Cargando()
     setInput({
       name: "",
       zipCode: "",
@@ -93,48 +119,56 @@ const Profile = () => {
       phone: "",
     });
 
-    console.log(user);
-    alert("Informacion actualizada con exito!");
-    history.push("/profile");
-  };
+    
+    // alert('Informacion actualizada con exito!')
+    // history.push('/profile')
+    window.location.reload()
+}
+
+useEffect(() => {
+  const data = async () => {
+    try {
+      if(user){
+        await dispatch(getUserProfileByEmail(usuarios.email))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  data()
+  setTimeout(() => {
+  }, 3000)
+}, [])
 
   const back = () => {
-    history.push("/complete");
-  };
+    history.push('/complete')
+  }
 
-  useEffect(() => {
-    const data = async () => {
-      try {
-        await dispatch(getUserProfileByEmail(user?.email))
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    data();
-  }, []);
+  
+  setTimeout(() => {
+    setIsLoading(false)
+  }, 3000)
 
-  console.log("esto es el usuario", usuarios);
 
-  return isAuthenticated ? (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
+  return (
+    isLoading === true ? <div>
+                            <div>
+                              <img src={Loading} alt="not found" />
+                            </div>
+                          </div> 
+    :
+    isAuthenticated ? <div>
+      <form onSubmit={e => handleSubmit(e)}>
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
         <img src={user.picture} alt={user.name} />
         <br />
         <div>
           <label>Email:</label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.email}:
-          </label>
-          <br />
-          <input
-            value={
-              usuarios && Object.values(usuarios)?.length && usuarios.email
-            }
-            type="text"
-            name="email"
-            disabled="disabled"
-          />
+          <label>{usuarios && Object.values(usuarios)?.length && usuarios.email}:</label>
+          <br/>
+            type = "text"
+            name = "email"
+            disabled = "disabled"/> */}
         </div>
         <div>
           <label>Name:</label>
@@ -152,12 +186,9 @@ const Profile = () => {
         </div>
         <div>
           <label>Country:</label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.country}
-          </label>
-          <br />
-          <input
-            value={input.country}
+          <label>{usuarios.country}</label>
+          <br/>
+          <input value={input.country}
             type="text"
             name="country"
             placeholder="Change your country..."
@@ -166,12 +197,9 @@ const Profile = () => {
         </div>
         <div>
           <label>City:</label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.city}
-          </label>
-          <br />
-          <input
-            value={input.city}
+          <label>{usuarios.city}</label>
+          <br/>
+          <input value={input.city}
             type="text"
             name="city"
             placeholder="Change your city..."
@@ -180,12 +208,9 @@ const Profile = () => {
         </div>
         <div>
           <label>Zip Code:</label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.zipCode}
-          </label>
-          <br />
-          <input
-            value={input.zipCode}
+          <label>{usuarios.zipCode}</label>
+          <br/>
+          <input value={input.zipCode}
             type="number"
             name="zipCode"
             placeholder="Change your zip code..."
@@ -194,12 +219,9 @@ const Profile = () => {
         </div>
         <div>
           <label>Phone:</label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.phone}
-          </label>
-          <br />
-          <input
-            value={input.phone}
+          <label>{usuarios.phone}</label>
+          <br/>
+          <input value={input.phone}
             type="number"
             name="phone"
             placeholder="Change your phone..."
@@ -208,10 +230,8 @@ const Profile = () => {
         </div>
         <div>
           <label>Adress:</label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.adress}
-          </label>
-          <br />
+          <label>{usuarios.adress}</label>
+          <br/>
           <input
             value={input.adress}
             type="text"
@@ -222,7 +242,6 @@ const Profile = () => {
         </div>
         <br />
         <br />
-        {/* <JSONPretty data={usuarios} /> */}
 
         <button onClick={back}>Volver</button>
         <button className="submit1" type="submit">
@@ -235,9 +254,8 @@ const Profile = () => {
         <JSONPretty data={token} />
       </form>
     </div>
-  ) : (
-    <h1>Necesitas estar autenticado para ingresar aqui</h1>
-  );
+    :  <h1>Necesitas estar autenticado para ingresar aqui</h1>
+  )
 };
 
 export default Profile;

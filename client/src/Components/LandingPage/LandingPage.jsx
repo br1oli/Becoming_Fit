@@ -8,7 +8,6 @@ import { FaHome } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import LoginButton from "../Auth/LoginButton";
 
 const LandingPage = () => {
   const { loginWithRedirect, isAuthenticated } = useAuth0();

@@ -40,6 +40,7 @@ import {
   DELETE_CART,
   DELETE_PRODUCT_CART,
   ERROR_CART,
+  PAYMENT_ORDER,
 
   //Review
   ADD_REVIEW_TO_PRODUCT,
@@ -70,6 +71,7 @@ const initialState = {
   cartDB: [],
   cartDbResponse: "",
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
+  paymentLink: "",
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -87,6 +89,7 @@ const initialState = {
   token: "",
   userProfiles: [],
   userProfile: [],
+  usuarios: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -405,6 +408,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: [],
       };
+
+    case PAYMENT_ORDER:
+      return {
+        ...state,
+        paymentLink: action.payload,
+      };
     //Users
     case SET_TOKEN:
       return {
@@ -501,9 +510,12 @@ function rootReducer(state = initialState, action) {
       };
 
     case REMOVE_ONE_REVIEW:
+      const removeOneReview = state.reviews.filter(
+        (item) => item.id !== action.payload.id
+      );
       return {
         ...state,
-        reviews: action.payload,
+        reviews: removeOneReview,
       };
 
     default:

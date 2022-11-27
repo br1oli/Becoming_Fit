@@ -4,8 +4,6 @@ import { getNameProducts } from "../../../Redux/Actions/UsersActions";
 import { AiOutlineSearch } from "react-icons/ai";
 
 import Styles from "./SearchBar.module.css";
-import SearchIcon from "@material-ui/icons/Search";
-import { StylesContext } from "@material-ui/styles";
 
 const SearchInput = (props) => {
   const [input, setInput] = useState("");
@@ -44,18 +42,3 @@ const SearchInput = (props) => {
 };
 
 export default SearchInput;
-{
-  /* <form onSubmit={(e) => handleSubmit(e)} className={style.formSearch}>
-      <input
-        className={style.input}
-        type={"text"}
-        name="products"
-        value={input}
-        placeholder="Search"
-        onChange={(e) => handleChange(e)}
-      />
-      <button className={style.submit} type={"submit"}>
-        <SearchIcon style={{ fontSize: 28 }} />
-      </button>
-    </form> */
-}

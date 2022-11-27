@@ -24,6 +24,7 @@ export default function ShoppingCart({ toggleShow }) {
   let userId = useSelector((state) => state.userStore.email);
   let dispatch = useDispatch();
   let history = useHistory();
+  let paymentLink = useSelector((state) => state.paymentLink);
 
   useEffect(() => {
     if (reduxCart.token.length) {
@@ -59,11 +60,26 @@ export default function ShoppingCart({ toggleShow }) {
   const handleBuyOrder = (e) => {
     e.preventDefault();
     if (reduxCart.token.length) {
-      console.log(reduxCart.cartDB.userEmail);
+      try {
+        /*  if (!user.address || user.phone) {
+          e.preventDefault();
+          history.push("/complete");
+        } else { */
+        dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+        deleteStorage("shoppCart");
+        dispatch(clearCart());
+        /*  } */
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    /*     e.preventDefault();
+    if (reduxCart.token.length) {
       dispatch(paymentOrder(reduxCart.cartDB.userEmail));
     }
     deleteStorage("shoppCart");
-    dispatch(clearCart());
+    dispatch(clearCart()); */
   };
 
   const payOrRegister = (e) => {
@@ -123,9 +139,15 @@ export default function ShoppingCart({ toggleShow }) {
                   userId={userId}
                 />
               ))}
-             <button onClick={handleBuyOrder} className={styles.btnPay}>
-              Buy it all!
-            </button> 
+            <div>
+              {paymentLink ? (
+                <a href={paymentLink}>Go to pay!</a>
+              ) : (
+                <button onClick={handleBuyOrder} className={styles.btnPay}>
+                  Buy it all!
+                </button>
+              )}
+            </div>
           </div>
         </>
       ) : reduxCart.token.length && !reduxCart.cartDB.cartProducts?.length ? (

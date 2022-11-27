@@ -28,10 +28,10 @@ class PaymentController {
         productList
       );
 
-      return res.redirect(checkout.init_point);
+      //return res.redirect(checkout.init_point);
       //si es exitoso los llevamos a la url de Mercado Pago
 
-      //return res.json({ url: checkout.init_point });
+      return res.json({ url: checkout.init_point });
       // o si queres devolver la url al front
     } catch (err) {
       // si falla devolvemos un status 500

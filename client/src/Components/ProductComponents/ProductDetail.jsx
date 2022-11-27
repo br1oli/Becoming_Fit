@@ -71,7 +71,7 @@ const ProductDetail = (props) => {
     return () => {
       dispatch(clearDetails());
     };
-  }, []);
+  }, [dispatch, detailId]);
 
   //handle que se le pasa a los radiobuttons de color y size
   const handleColor = (e) => {
@@ -232,7 +232,7 @@ const ProductDetail = (props) => {
         </div>
       </div>
 
-      <h3 className={styles.detailsTitle}></h3>
+      {/* <h3 className={styles.detailsTitle}></h3> */}
       <div className={styles.thirdContainer}>
         <div className={styles.accordion}>
           <div className="accordion" id="accordionPanelsStayOpenExample">

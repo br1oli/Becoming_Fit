@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../../Auth/LoginButton";
 import LogoutButton from "../../Auth/LogoutButton";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductFromFavorites } from "../../../Redux/Actions/UsersActions";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -20,14 +19,14 @@ import { HiUserCircle } from "react-icons/hi";
 import Styles from "./UserMenu.module.css";
 
 export default function UserSideBar() {
+  //en este sideBar solo se deberian renderizar las opciones si hay un token en el store
+  //si no hay un token que solo se muestre el boton de login
+
   ////////// AUTH0///////////////////
   const dispatch = useDispatch();
-  const { isLoading, isAuthenticated } = useAuth0();
-  const favorites = useSelector((state) => state.favorites);
+  const { /* isLoading */ isAuthenticated } = useAuth0();
+  /*  const favorites = useSelector((state) => state.favorites); */
 
-  useEffect(() => {
-    dispatch(getProductFromFavorites());
-  }, []);
 
   const [state, setState] = React.useState({
     top: false,
@@ -55,14 +54,12 @@ export default function UserSideBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <Link>
-          <ListItemButton>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText>MY ACCOUNT</ListItemText>
-          </ListItemButton>
-        </Link>
+        <ListItemButton>
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText>MY ACCOUNT</ListItemText>
+        </ListItemButton>
 
         <Link to="/favorites">
           <ListItemButton>
@@ -73,23 +70,20 @@ export default function UserSideBar() {
           </ListItemButton>
         </Link>
 
-        <Link>
-          <ListItemButton>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText>SETTINGS</ListItemText>
-          </ListItemButton>
-        </Link>
+        <ListItemButton>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText>SETTINGS</ListItemText>
+        </ListItemButton>
 
-        <Link>
-          <ListItemButton>
-            <ListItemIcon>
-              <TuneIcon />
-            </ListItemIcon>
-            <ListItemText>OPTIONS</ListItemText>
-          </ListItemButton>
-        </Link>
+        <ListItemButton>
+          <ListItemIcon>
+            <TuneIcon />
+          </ListItemIcon>
+          <ListItemText>OPTIONS</ListItemText>
+        </ListItemButton>
+
         <div className={Styles.loginButton}>
           {isAuthenticated ? <LogoutButton /> : <LoginButton />}
         </div>

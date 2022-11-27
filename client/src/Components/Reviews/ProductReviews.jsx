@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ProductReviews.module.css"
 import ReviewForm from "./ReviewForm";
-import { editReviews, removeReviews } from "../../Redux/Actions/UsersActions"
+import { editReviews, removeOneReview } from "../../Redux/Actions/UsersActions"
 import { useAuth0 } from "@auth0/auth0-react";
 
 const ProductReviews = ({ idProduct, infoProduct }) => {
@@ -21,8 +21,9 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
     const handleEdit = () => {
         dispatch(editReviews())
     };
-    const handleDelete = () => {
-        dispatch(removeReviews())
+    const handleDelete = (e) => {
+        dispatch(removeOneReview(e.target.value))
+        window.location.reload()
     };
 
 
@@ -73,7 +74,7 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
                                                 <h5><strong>{review.title}</strong></h5>
                                                 <div>
                                                     <button style={{magin: "none"}} className={styles.edit} onClick={handleEdit}>Edit</button>
-                                                    <button className={styles.delete} onClick={handleDelete}>x</button><br/>
+                                                    <button className={styles.delete} value={review.id} onClick={handleDelete}>x</button><br/>
                                                 </div>
                                             </div>
                                             <p>Reviewed by {/*userName*/}</p>

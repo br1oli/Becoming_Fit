@@ -88,7 +88,7 @@ export function getProductDetail(detailId) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -105,7 +105,7 @@ export function getNameProducts(name) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -122,7 +122,7 @@ export function postProduct(payload) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -205,14 +205,11 @@ export const setProductsPerPage = (currentPage) => {
 
 export function addReviewToProduct(idProduct, idUser, input) {
   return async (dispatch) => {
-    console.log("POST REV",idProduct);
     try {
-      const response = await axios.post(
-        `/reviews?idProduct=${idProduct}`, {
-          ...input,
-          idUser
-        }
-      );
+      const response = await axios.post(`/reviews?idProduct=${idProduct}`, {
+        ...input,
+        idUser,
+      });
       return dispatch({
         type: ADD_REVIEW_TO_PRODUCT,
         payload: response.data,
@@ -220,7 +217,7 @@ export function addReviewToProduct(idProduct, idUser, input) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -237,7 +234,7 @@ export function getReviews() {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -254,16 +251,16 @@ export function editReviews() {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
 }
 
-export function removeReviews() {
+export function removeOneReview(idReview) {
   return async (dispatch) => {
     try {
-      const response = await axios.delete(`/reviews`);
+      const response = await axios.delete(`/reviews?idReview=${idReview}`);
       return dispatch({
         type: REMOVE_ONE_REVIEW,
         payload: response.data,
@@ -271,7 +268,7 @@ export function removeReviews() {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -306,7 +303,7 @@ export const postCartToDB = (values) => {
       const response = await axios.post("/cart", values);
       return dispatch({ type: POST_TO_CART_DB, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error.response.data });
+      return dispatch({ type: ERROR, payload: error });
     }
   };
 };
@@ -326,7 +323,7 @@ export const clearCartInDb = (cartId) => {
       const response = await axios.delete(`/cart?cartId=${cartId}`);
       return dispatch({ type: DELETE_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR_CART, payload: error.response.data });
+      return dispatch({ type: ERROR_CART, payload: error });
     }
   };
 };
@@ -338,7 +335,7 @@ export const deleteProductCartInDb = (values) => {
       );
       return dispatch({ type: DELETE_PRODUCT_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR_CART, payload: error.response.data });
+      return dispatch({ type: ERROR_CART, payload: error });
     }
   };
 };
@@ -350,11 +347,10 @@ export function clearDetails() {
 export function paymentOrder(userEmail) {
   return async function (dispatch) {
     try {
-      console.log("soy el user de la action", userEmail);
       const response = await axios.post(`/payment/new?userEmail=${userEmail}`);
       return dispatch({ type: PAYMENT_ORDER, payload: response.data.url });
     } catch (error) {
-      return dispatch({ type: ERROR_PAYMENT, payload: error.response.data });
+      return dispatch({ type: ERROR_PAYMENT, payload: error });
     }
   };
 }
@@ -372,7 +368,7 @@ export const createUser = (email) => {
     } catch (error) {
       return dispatch({
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       });
     }
   };
@@ -406,7 +402,7 @@ export function deleteUser(email) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -432,7 +428,7 @@ export function getAllUserProfiles(email) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -449,7 +445,7 @@ export function getUserProfileByEmail(email) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -475,7 +471,7 @@ export const createUserProfile = (payload) => {
 export const updateUserProfile = (email, payload) => {
   return async function (dispatch) {
     try {
-      const response = await axios.put(`/userProfile?email=${email}`, payload);
+      const response = await axios.put(`/userProfile/${email}`, payload);
       return dispatch({
         type: UPDATE_USER_PROFILE,
         payload: response.data,
@@ -489,7 +485,7 @@ export const updateUserProfile = (email, payload) => {
   };
 };
 
-export function deleteUserProfile (email) {
+export function deleteUserProfile(email) {
   return async (dispatch) => {
     try {
       const response = await axios.delete(`/userProfile?email=${email}`);
@@ -500,7 +496,7 @@ export function deleteUserProfile (email) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -510,22 +506,18 @@ export function deleteUserProfile (email) {
 export function addProductToFavorites(idProduct, idUser) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        `/favorites?idProduct=${idProduct}`,
-        {
-          idUser
-        }
-      );
+      const response = await axios.post(`/favorites?idProduct=${idProduct}`, {
+        idUser,
+      });
       return dispatch({
         type: ADD_PRODUCT_TO_FAVORITES,
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
-      // return {
-      //   type: ERROR,
-      //   payload: error.response.data,
-      // };
+      return {
+        type: ERROR,
+        payload: error,
+      };
     }
   };
 }
@@ -539,11 +531,10 @@ export function getProductFromFavorites(userEmail) {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
-      // return {
-      //   type: ERROR,
-      //   payload: error.response.data,
-      // };
+      return {
+        type: ERROR,
+        payload: error,
+      };
     }
   };
 }
@@ -559,7 +550,7 @@ export function removeOneProductFromFavorites(id) {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
@@ -576,7 +567,7 @@ export function removeAllProductsFromFavorites() {
     } catch (error) {
       return {
         type: ERROR,
-        payload: error.response.data,
+        payload: error,
       };
     }
   };
