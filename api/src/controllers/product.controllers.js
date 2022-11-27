@@ -26,7 +26,7 @@ const getProducts = async (req = request, res = response) => {
     }
     res.status(200).send(products);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(error.message); 
   }
 };
 

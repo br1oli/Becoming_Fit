@@ -5,19 +5,14 @@ import {
 } from "../../localStorage/localStorageFunctions";
 
 import {
+  CLEAR_RESPONSE,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
   FILTER_BRAND,
   FILTER_SIZE,
   ORDER_BY_NAME,
-  ORDER_BY_PRICE,
-  GET_DETAILS,
-  CLEAR_DETAILS,
-  SUCCESS,
-  ERROR,
-  CLEAR_ERROR,
-  CLEAR_SUCCESS,
+  ORDER_BY_PRICE,  
   SET_CURRENT_PAGE_PRODUCTS,
 
   //Favorites
@@ -28,7 +23,10 @@ import {
 
   //Products
   GET_PRODUCTS,
-  GET_NAME_PRODUCTS,
+  GET_NAME_PRODUCTS,  
+  POST_PRODUCT,
+  GET_DETAILS,
+  CLEAR_DETAILS,
 
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
@@ -65,8 +63,9 @@ import {
 const dataStorage = getStorage("shoppCart");
 
 const initialState = {
-  error: "",
-  success: "",
+  // error: {},
+  // success: {}, 
+  backResponse: "",
   //cart:
   cartDB: [],
   cartDbResponse: "",
@@ -94,6 +93,11 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case CLEAR_RESPONSE: 
+      return {
+        ...state,
+        backResponse: ""
+      }
     case GET_PRODUCTS:
       return {
         ...state,
@@ -112,6 +116,11 @@ function rootReducer(state = initialState, action) {
         indexFirsProduct: 0,
         currentProducts: [...action.payload].slice(0, 6),
       };
+    case POST_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
       state.indexLastProduct = state.currentPage * state.productsPerPage;
@@ -424,6 +433,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userStore: action.payload,
+        usersStore: [...state.usersStore, action.payload]
       };
     case GET_ALL_USERS:
       return {
@@ -450,6 +460,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userProfile: action.payload,
+        userProfiles: [...state.userProfiles, action.payload]
       };
     case UPDATE_USER_PROFILE:
       return {

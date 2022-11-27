@@ -1,9 +1,15 @@
 import axios from "axios";
 import {
+  //Products
   URL_PRODUCTS,
   URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
   GET_NAME_PRODUCTS,
+  POST_PRODUCT,
+  DELETE_PRODUCT,
+  EDIT_PRODUCT,
+
+  //Filters & Sorts
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -15,9 +21,7 @@ import {
   CLEAR_DETAILS,
   SET_CURRENT_PAGE_PRODUCTS,
   ERROR,
-  SUCCESS,
-  CLEAR_SUCCESS,
-  CLEAR_ERROR,
+  CLEAR_RESPONSE,
 
   //Shopping Cart actions
   ADD_PRODUCT_TO_CART,
@@ -63,16 +67,16 @@ import {
 export function getProducts() {
   return async function (dispatch) {
     try {
-      let products = await axios("/products");
+      let products = await axios.get("/products");
       return dispatch({
         type: GET_PRODUCTS,
         payload: products.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.data,
-      };
+      return dispatch({
+        type: GET_PRODUCTS,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -86,10 +90,10 @@ export function getProductDetail(detailId) {
         payload: json.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: GET_DETAILS,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -103,10 +107,10 @@ export function getNameProducts(name) {
         payload: products.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: GET_NAME_PRODUCTS,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -116,14 +120,14 @@ export function postProduct(payload) {
     try {
       const response = await axios.post(URL_PRODUCTS, payload);
       return dispatch({
-        type: SUCCESS,
+        type: POST_PRODUCT,
         payload: response.data,
       });
-    } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+    } catch (error) {  
+      return dispatch({
+        type: POST_PRODUCT,
+        payload: error.response.data
+      })
     }
   };
 }
@@ -215,10 +219,10 @@ export function addReviewToProduct(idProduct, idUser, input) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: ADD_REVIEW_TO_PRODUCT,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -232,10 +236,10 @@ export function getReviews() {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: GET_REVIEWS,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -249,10 +253,10 @@ export function editReviews() {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: EDIT_REVIEW,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -266,26 +270,23 @@ export function removeOneReview(idReview) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: REMOVE_ONE_REVIEW,
+        payload: error.response.data,
+      });
     }
   };
 }
 //// Cleaning responses from back, ejecutarlos con los handleChange de los inputs
-export const clearError = () => {
-  return { type: CLEAR_ERROR };
-};
-
-export const clearSuccess = () => {
-  return { type: CLEAR_SUCCESS };
+export const clearResponse = () => {
+  return { type: CLEAR_RESPONSE };
 };
 
 // Shopping cart actions
 export const addToCart = (values) => {
   return { type: ADD_PRODUCT_TO_CART, payload: values };
 };
+
 export const deleteFromCart = (values, all = false) => {
   if (all) {
     return { type: REMOVE_ALL_FROM_CART, payload: values };
@@ -297,13 +298,14 @@ export const deleteFromCart = (values, all = false) => {
 export const clearCart = () => {
   return { type: CLEAR_CART };
 };
+
 export const postCartToDB = (values) => {
   return async function (dispatch) {
     try {
       const response = await axios.post("/cart", values);
       return dispatch({ type: POST_TO_CART_DB, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR, payload: error });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
@@ -313,7 +315,7 @@ export const getCartFromDB = (userId) => {
       const response = await axios.get(`/cart?userId=${userId}`);
       return dispatch({ type: GET_CART_DB, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR_CART, payload: error.response?.data });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
@@ -323,7 +325,7 @@ export const clearCartInDb = (cartId) => {
       const response = await axios.delete(`/cart?cartId=${cartId}`);
       return dispatch({ type: DELETE_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR_CART, payload: error });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
@@ -335,7 +337,7 @@ export const deleteProductCartInDb = (values) => {
       );
       return dispatch({ type: DELETE_PRODUCT_CART, payload: response.data });
     } catch (error) {
-      return dispatch({ type: ERROR_CART, payload: error });
+      return dispatch({ type: ERROR_CART, payload: error.response.data });
     }
   };
 };
@@ -350,7 +352,7 @@ export function paymentOrder(userEmail) {
       const response = await axios.post(`/payment/new?userEmail=${userEmail}`);
       return dispatch({ type: PAYMENT_ORDER, payload: response.data.url });
     } catch (error) {
-      return dispatch({ type: ERROR_PAYMENT, payload: error });
+      return dispatch({ type: ERROR_PAYMENT, payload: error.response.data });
     }
   };
 }
@@ -367,8 +369,8 @@ export const createUser = (email) => {
       });
     } catch (error) {
       return dispatch({
-        type: ERROR,
-        payload: error,
+        type: CREATE_USER,
+        payload: error.response.data,
       });
     }
   };
@@ -383,10 +385,10 @@ export function getAllUsers() {
         payload: users.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.data,
-      };
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -400,10 +402,10 @@ export function deleteUser(email) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: DELETE_USER,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -426,10 +428,10 @@ export function getAllUserProfiles(email) {
         payload: userProfiles.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: GET_ALL_USER_PROFILES,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -443,10 +445,10 @@ export function getUserProfileByEmail(email) {
         payload: userProfile.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: GET_USER_PROFILE_BY_EMAIL,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -460,10 +462,10 @@ export const createUserProfile = (payload) => {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.data,
-      };
+      return dispatch({
+        type: CREATE_USER_PROFILE,
+        payload: error.response.data,
+      });
     }
   };
 };
@@ -477,10 +479,10 @@ export const updateUserProfile = (email, payload) => {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error.data,
-      };
+      return dispatch({
+        type: UPDATE_USER_PROFILE,
+        payload: error.response.data,
+      });
     }
   };
 };
@@ -494,10 +496,10 @@ export function deleteUserProfile(email) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: DELETE_USER_PROFILE,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -514,10 +516,10 @@ export function addProductToFavorites(idProduct, idUser) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: ADD_PRODUCT_TO_FAVORITES,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -531,10 +533,10 @@ export function getProductFromFavorites(userEmail) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: GET_PRODUCT_FROM_FAVORITES,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -548,10 +550,10 @@ export function removeOneProductFromFavorites(id) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: REMOVE_ONE_FROM_FAVORITES,
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -565,10 +567,10 @@ export function removeAllProductsFromFavorites() {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: REMOVE_ALL_FROM_FAVORITES,
+        payload: error.response.data,
+      });
     }
   };
 }

@@ -9,14 +9,9 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  postProduct,
-  clearError,
-  clearSuccess,
-} from "../../Redux/Actions/UsersActions";
+import { clearResponse, postProduct } from "../../Redux/Actions/UsersActions";
 import Style from "./ProductForm.module.css";
 import Success from "../Success/Success";
-import Error from "../Error/Error";
 
 function validador(input) {
   let errors = {};
@@ -111,15 +106,9 @@ export default function ProductForm() {
   const brandss = [...new Set(allProducts.map((e) => e.brand.name))];
   const categories = [...new Set(allProducts.map((e) => e.category.name))];
   const gender = [...new Set(allProducts.map((e) => e.gender))];
-  const response = useSelector((state) => state);
+  const response = useSelector((state) => state.backResponse);
 
   const handleInputChange = (e) => {
-    if (response.error) {
-      dispatch(clearError());
-    }
-    if (response.success) {
-      dispatch(clearSuccess());
-    }
     if (e.target.name === "size") {
       setInput((prev) => ({
         ...prev,
@@ -149,7 +138,8 @@ export default function ProductForm() {
       categoryName: "",
       rating: "",
     });
-    // useHistory()
+    dispatch(clearReponse())
+    window.location.reload()
   }
 
   let disabled = Object.entries(errors).length ? true : false;
@@ -397,11 +387,12 @@ export default function ProductForm() {
                 Submit
               </Button>
 
-              {response.success.length ? (
-                <Success success={response.success} />
-              ) : response.error.length ? (
-                <Error error={response.error} />
-              ) : null}
+              {response.length ? (
+                <Success success={response} />
+              ) : (
+                null
+              )
+              }
             </div>
           </form>
         </Card>
