@@ -28,9 +28,10 @@ const ProductDetail = (props) => {
   let token = useSelector((state) => state.token);
   let userId = useSelector((state) => state.userStore.email);
 
-  //Local states for color and size
+  //Local states for amount, color and size
   let [selectedSize, setSelectedSize] = useState("");
   let [selectedColor, setSelectedColor] = useState("");
+  let [amount, setAmount] = useState(0);
 
   //Finding equal product un store cart
   const productInCart = cartItems.find(
@@ -51,21 +52,6 @@ const ProductDetail = (props) => {
       e.color === selectedColor &&
       e.size === selectedSize
   );
-
-  //esta funcion devuelve la cantidad de productos agregados con mismo talle y color
-  //dependiendo de si hay token o no
-  const gettingTheAmountOfProducts = () => {
-    if (token.length) {
-      if (cartDB.cartProducts?.length && productInCartDB?.amount) {
-        return productInCartDB.amount;
-      } else return 0;
-    } else {
-      if (cartItems.length && productInCart?.amount) {
-        return productInCart.amount;
-      } else return 0;
-    }
-  };
-
   useEffect(() => {
     dispatch(getProductDetail(detailId));
     return () => {
@@ -82,63 +68,55 @@ const ProductDetail = (props) => {
     e.preventDefault();
     setSelectedSize(e.target.value);
   };
+  //handleAmount dependiendo del value
+  const handleAmount = (e) => {
+    e.preventDefault();
+    if (e.target.value === "+") {
+      setAmount(amount + 1);
+    }
+    if (e.target.value === "-") {
+      setAmount(amount - 1);
+    }
+  };
 
   //handle de los botones del detail
   const handleChange = async (e) => {
     e.preventDefault();
     //si existe un token usa las actions que llaman a la db
     if (token.length) {
-      //solo se despachan si hay un color y un size
-      if (selectedColor && selectedSize) {
-        if (e.target.value === "+" || e.target.value === "add") {
+      //solo se despachan si hay un amount, color y un size
+      if (selectedColor && selectedSize && amount) {
+        if (e.target.value === "add") {
           await dispatch(
             postCartToDB({
               userId: userId,
               productId: detailId,
-              amount: 1,
+              amount: amount,
               color: selectedColor,
               size: selectedSize,
             })
           );
           dispatch(getCartFromDB(userId));
-        }
-        if (e.target.value === "-") {
-          await dispatch(
-            postCartToDB({
-              userId: userId,
-              productId: detailId,
-              amount: -1,
-              color: selectedColor,
-              size: selectedSize,
-            })
-          );
-          dispatch(getCartFromDB(userId));
+          setAmount(0);
         }
       } else {
         //cambiar alert por pop up
         return alert("Choose color and size, please.");
       }
 
-      //si no hay un toque aca maneja el store y guarda los productos en el local storage
-      //solo si hay un color y un talle
-    } else if (selectedColor && selectedSize && !token.length) {
-      if (e.target.value === "+" || e.target.value === "add") {
+      //si no hay un token, aca maneja el store y guarda los productos en el local storage
+      //solo si hay un amount, color y un talle
+    } else if (!token.length && selectedColor && selectedSize && amount) {
+      if (e.target.value === "add") {
         dispatch(
           addToCart({
             id: detailId,
             size: selectedSize,
             color: selectedColor,
+            amount: amount,
           })
         );
-      }
-      if (e.target.value === "-") {
-        dispatch(
-          deleteFromCart({
-            id: detailId,
-            color: selectedColor,
-            size: selectedSize,
-          })
-        );
+        setAmount(0);
       }
     } else {
       return alert("Choose color and size, please.");
@@ -196,15 +174,28 @@ const ProductDetail = (props) => {
           <p>Cantidad</p>
           <div className={styles.cantidad}>
             <button
-              onClick={handleChange}
+              onClick={handleAmount}
               value="-"
               className={styles.cantidad1}
+              /* habilito el boton de menos solo si se selecciono un color un talle y cantidad mayor a 0*/
+              disabled={
+                selectedColor && selectedSize && amount > 0 ? false : true
+              }
             >
               -
             </button>
-            <p className={styles.cantidad2}>{gettingTheAmountOfProducts()}</p>
+            <p className={styles.cantidad2}>
+              {/* si hay un token se fija en los datos de la base de datos, sino en los datos del shoppingCart si el producto tiene amount entonces renderiza el amount del producto, sino renderiza el estado local de amount */}
+              {token.length
+                ? productInCartDB && productInCartDB.amount
+                  ? productInCartDB.amount + amount
+                  : amount
+                : productInCart && productInCart.amount
+                ? productInCart.amount + amount
+                : amount}
+            </p>
             <button
-              onClick={handleChange}
+              onClick={handleAmount}
               value="+"
               className={styles.cantidad1}
             >
