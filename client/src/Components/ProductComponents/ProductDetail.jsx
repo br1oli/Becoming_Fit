@@ -4,7 +4,6 @@ import styles from "./ProductDetail.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   addToCart,
-  deleteFromCart,
   getProductDetail,
   clearDetails,
   postCartToDB,
