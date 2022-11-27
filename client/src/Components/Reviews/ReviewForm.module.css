@@ -141,3 +141,12 @@
     color: aliceblue;
     transition: all 0.5s ease-in-out;
   }
+
+  .errors{
+    display: flex;
+    justify-content: flex-start;
+    font-size: smaller;
+    margin: 1px solid brown;
+    margin-left: 4rem;
+    color: brown;
+}

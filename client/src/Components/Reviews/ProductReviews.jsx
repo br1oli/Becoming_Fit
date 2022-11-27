@@ -11,7 +11,8 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
     const auth = useSelector((state) => state.token);
     const [ isReviewAvailable, setIsReviewAvailable ] = useState(false)
     const idReview = useSelector((state) => state.reviews);
-    //const userName = user.given_name
+    //const userName = user.name
+    //console.log(user.name);
 
     useEffect(()=>{
         setIsReviewAvailable(isAuthenticated)
@@ -77,7 +78,7 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
                                                     <button className={styles.delete} value={review.id} onClick={handleDelete}>x</button><br/>
                                                 </div>
                                             </div>
-                                            <p>Reviewed by {/*userName*/}</p>
+                                            <p>Reviewed by </p>
 
                                             <p><strong>Rating</strong></p>
                                             <p> ★ ★ ★ ★ ★ {review.rating}</p>
