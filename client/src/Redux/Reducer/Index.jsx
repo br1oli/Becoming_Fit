@@ -278,16 +278,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         success: "",
       };
-    case ERROR:
-      return {
-        ...state,
-        error: action.payload,
-      };
-    case CLEAR_ERROR:
-      return {
-        ...state,
-        error: "",
-      };
 
     // Shopping cart reducer functions
     case ADD_PRODUCT_TO_CART:

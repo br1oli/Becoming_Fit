@@ -2,9 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProducts } from "../../../Redux/Actions";
-// import ProductCard from "./ProductCard";
-// REALIZAR EL COMPONENTE ANTES DE DESCOMENTAR
+import { getProducts } from "../../../Redux/Actions/UsersActions";
+import ProductsListCard from "./ProductsListCard";
 
 const ProductsList = () => {
     const dispatch = useDispatch();
@@ -47,14 +46,18 @@ const ProductsList = () => {
             <div>
                 <div>
                     {/* Acá hay que hacer el map y renderizar las cards */}
+                    {productList.map((p) => (
+                        <ProductsListCard 
+                        key={p.id}
+                        name={p.name}
+                        id={p.id}
+                        image={p.image}
+                        price={p.price} />
+                    ))}
                 </div>
             </div>
-
         </div>
-
-
-        </section>
-
-        
+        </section>        
     )
 } 
+export default ProductsList

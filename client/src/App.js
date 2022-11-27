@@ -3,12 +3,14 @@ import { BrowserRouter, Route } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
+import NotFound from "./Components/NotFound/NotFound";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
-
+//Admin
 import AdminDashboardUI from "./Components/Admin/AminUI/AdminDashboardUI";
+import ProductList from "./Components/Admin/ProductsDashboard/ProductsList";
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
@@ -50,6 +52,7 @@ function App() {
   return (
     <BrowserRouter>
       <Route exact path="/admin" component={AdminDashboardUI} />
+      <Route exact path="/admin/productList" component={ProductList} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/complete" component={FormComplete} />
       <Route exact path="/profile" component={Profile} />
@@ -67,6 +70,7 @@ function App() {
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}
       </Route>
+      <Route path="*" component={NotFound} />
     </BrowserRouter>
   );
 }
