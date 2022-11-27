@@ -7,6 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useAuth0 } from "@auth0/auth0-react";
+//Material UI
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import StarIcon from '@mui/icons-material/Star';
+
 
 
 const ReviewForm = ({idProduct}) => {
@@ -22,13 +27,28 @@ const ReviewForm = ({idProduct}) => {
     const state = useSelector(state => state.allProducts)
     const reviews = useSelector(state => state.reviews)
     const [ input, setInput ] = useState({
-        rating: "0",
-        comment: "",
+        rating: 2,
+        quality: 2,
         recommend: "Yes",
         title: "",
-        quality: "0"
+        comment: "",
     });
+    const [errors, setErrors] = useState({});
     const { user, isAuthenticated } = useAuth0();
+
+
+
+    let validateInput = (input) => {
+      const errors = {};
+      if (!input.title.length) errors.title = "Please write a title"
+      if (!input.comment.length) errors.comment = "Please write a review";
+      return errors
+    }
+
+    useEffect(() => {
+      setErrors(validateInput(input));
+    }, [input])
+
 
     const handleChange = (e) => {
         e.preventDefault(e);
@@ -43,13 +63,16 @@ const ReviewForm = ({idProduct}) => {
     const handleSubmit = (e) => {
       e.preventDefault(e);
       dispatch(addReviewToProduct(idProduct, idUser, input))
+     if (!Object.keys(errors).length) {
       setInput({
+        name: "",
+        description: "",
+        releaseDate: "",
         rating: "",
-        comment: "",
-        recommend: "Yes",
-        title: "",
-        quality: ""
+        genres: "",
+        platforms: ""
       });
+    }
 
       const reviewPosted = () => (alert("Thanks for your feedback!"));
       reviewPosted();
@@ -58,6 +81,30 @@ const ReviewForm = ({idProduct}) => {
       window.location.reload()
     };
 
+    //Stars Material UI
+    const labels = {
+      0.5: 'Useless',
+      1: 'Useless+',
+      1.5: 'Poor',
+      2: 'Poor+',
+      2.5: 'Ok',
+      3: 'Ok+',
+      3.5: 'Good',
+      4: 'Good+',
+      4.5: 'Excellent',
+      5: 'Excellent+',
+    };
+
+    function getLabelTextRating(value) {
+      return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+    }
+    function getLabelTextQuality(value) {
+      return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+    }
+
+    const [hoverRating, setHoverRating] = React.useState(-1);
+    const [hoverQuality, setHoverQuality] = React.useState(-1);
+    
     
     return (
         
@@ -83,25 +130,87 @@ const ReviewForm = ({idProduct}) => {
 
             <Form>
               <Form.Group  controlId="exampleForm.ControlInput1">
-                <Form.Label>Overall Rating</Form.Label>
+                <Form.Label>Overall Rating</Form.Label><br/>
 
-                <Form.Control
-                  type="range" name="rating" value={input.rating} onChange={handleChange} className={styles.rating} min="0" max="5" step="0.1"
-                />
+
+                 <Box
+                  sx={{
+                    width: 200,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Rating
+                    size="large"
+                    name="rating"
+                    value={input.rating}
+                    precision={0.5}
+                    getLabelText={getLabelTextRating}
+                    onChange={(event, newValue) => {
+                      setInput({
+                        ...input,
+                        [event.target.name]: event.target.value
+                      });
+                    }}
+                    onChangeActive={(event, newHover) => {
+                      setHoverRating(newHover);
+                    }}
+                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                  />
+                  {input.rating !== null && (
+                    <Box sx={{ ml: 2 }}>{labels[hoverRating !== -1 ? hoverRating : input.rating]}</Box>
+                  )}
+                </Box>
               </Form.Group>
+              <br/>
+
+              <Form.Group  controlId="exampleForm.ControlInput1">
+                <Form.Label>How do you rate the quality?</Form.Label><br/>
+
+              <Box
+                sx={{
+                    width: 200,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Rating
+                    size="large"
+                    name="quality"
+                    value={input.quality}
+                    precision={0.5}
+                    getLabelText={getLabelTextQuality}
+                    onChange={(event, newValue) => {
+                      setInput({
+                        ...input,
+                        [event.target.name]: event.target.value
+                      });
+                    }}
+                    onChangeActive={(event, newHover) => {
+                      setHoverQuality(newHover);
+                    }}
+                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                  />
+                  {input.quality !== null && (
+                    <Box sx={{ ml: 2 }}>{labels[hoverQuality !== -1 ? hoverQuality : input.quality]}</Box>
+                  )}
+                </Box>
+              </Form.Group>
+              <br/>
 
               <Form.Group  controlId="exampleForm.ControlInput1">
                 <div>Would you recommend this product?</div>
                 <Form.Label>
-                  Yes
+                  Yes 
                   <input
                     type="radio" 
                     checked={input.recommend === 'Yes'}
                     name="recommend" value={'Yes'} onChange={handleChange} placeholder="Yes"
                   />
-                </Form.Label>
+                </Form.Label> 
+                <br/>
                 <Form.Label>
-                  No
+                  No 
                   <input
                     checked={input.recommend === 'No'}
                     type="radio" 
@@ -112,13 +221,18 @@ const ReviewForm = ({idProduct}) => {
                 
               </Form.Group>
 
+              <br/>
+
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
               >
-                <Form.Label>Write a short description of this product/ eg. Great fit pants</Form.Label>
+                <Form.Label>Write a short title for this product. (e.g. Great fit pants)</Form.Label>
                 <Form.Control as="textarea" rows={1} name="title" value={input.title} onChange={ handleChange} className={styles.sentence} placeholder={"Write a short title"} />
+                <p className={styles.errors}>{errors.title && errors.title}</p>
               </Form.Group>
+
+              <br/>
 
               <Form.Group
                 className="mb-3"
@@ -126,14 +240,11 @@ const ReviewForm = ({idProduct}) => {
               >
                 <Form.Label>How was your experience?</Form.Label>
                 <Form.Control as="textarea" rows={4} name="comment" value={input.comment} onChange={ handleChange} className={styles.comment} placeholder={"Write your description"} />
+                <p className={styles.errors}>{errors.comment && errors.comment}</p>
               </Form.Group>
 
-               <Form.Group  controlId="exampleForm.ControlInput1">
-                <Form.Label>How do you rate the quality?</Form.Label>
-                <Form.Control
-                  type="range" name="quality" value={input.quality} onChange={handleChange} className={styles.quality} min="0" max="5" step="0.1"
-                />
-              </Form.Group>
+              <br/>
+
             </Form>
 
           </Modal.Body>
