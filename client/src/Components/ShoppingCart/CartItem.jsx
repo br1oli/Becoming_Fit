@@ -27,7 +27,7 @@ export default function CartItem({
   let dispatch = useDispatch();
   let { token, cartDB } = useSelector((state) => state);
 
-  //handle que se le pasa a los botones del carrito, si hay un toquen se comunica con la base de datos 
+  //handle que se le pasa a los botones del carrito, si hay un toquen se comunica con la base de datos
   //sino, store
   const handleChange = async (e) => {
     e.preventDefault();
@@ -72,11 +72,13 @@ export default function CartItem({
       //si no hay token trabaja con el store
     } else {
       if (e.target.value === "+") {
-        dispatch(addToCart({ id: id, color: color, size: size }));
+        dispatch(addToCart({ id: id, color: color, size: size, amount: 1 }));
       }
 
       if (e.target.value === "-") {
-        dispatch(deleteFromCart({ id: id, color: color, size: size }));
+        dispatch(
+          deleteFromCart({ id: id, color: color, size: size, amount: -1 })
+        );
       }
 
       if (e.target.value === "all") {
