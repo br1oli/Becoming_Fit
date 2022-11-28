@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
@@ -22,33 +22,40 @@ import FormComplete from "./Components/Form/Form";
 
 function App() {
   const dispatch = useDispatch();
-  const { getAccessTokenSilently, user } = useAuth0();
+  const { getAccessTokenSilently, user, isAuthenticated, logout } = useAuth0();
   const favorites = useSelector((state) => state.favorites);
   //AUTH0
   const [token, setToken] = useState([]);
+  const history = useHistory();
+  console.log("app history 2", history);
 
   useEffect(() => {
-    const generarToken = async () => {
+    dispatch(getProducts());
+  }, []);
+
+  useEffect(() => {
+    const authenticateUserLocally = async () => {
       try {
-        const tokenApi = await getAccessTokenSilently();
-        setToken(tokenApi);
+        const auth0Token = await getAccessTokenSilently();
+
+        if (auth0Token.length && user !== undefined) {
+          setToken(auth0Token);
+          dispatch(setTokenInStore(auth0Token));
+
+          dispatch(createUser(user.email, history, logout));
+        }
       } catch (error) {
         console.log(error);
       }
     };
-    generarToken();
-  }, []);
 
-  useEffect(() => {
-    dispatch(getProducts());
-    if (token.length && user !== undefined) {
-      dispatch(setTokenInStore(token));
-      dispatch(createUser(user.email));
+    if (isAuthenticated) {
+      authenticateUserLocally();
     }
-  }, [token]);
+  }, [isAuthenticated]);
 
   return (
-    <BrowserRouter>
+    <>
       <Route exact path="/admin" component={AdminDashboardUI} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/complete" component={FormComplete} />
@@ -67,8 +74,12 @@ function App() {
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}
       </Route>
-    </BrowserRouter>
+    </>
   );
 }
 
-export default App;
+export default () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);

@@ -53,6 +53,7 @@ import {
   GET_ALL_USERS,
   DELETE_USER,
   SET_TOKEN,
+  ERROR_BANNED,
 
   //UserProfile
   GET_ALL_USER_PROFILES,
@@ -422,6 +423,11 @@ function rootReducer(state = initialState, action) {
         token: action.payload,
       };
     case CREATE_USER:
+      return {
+        ...state,
+        userStore: action.payload,
+      };
+    case ERROR_BANNED:
       return {
         ...state,
         userStore: action.payload,

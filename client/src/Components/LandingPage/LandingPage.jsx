@@ -10,23 +10,8 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 const LandingPage = () => {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
-  const history = useHistory();
-
-  useEffect(() => {
-    const redireccionar = async () => {
-      try {
-        if (isAuthenticated) {
-          history.push("/home");
-        } else {
-          console.log("NO ESTA AUTENTICADO");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    redireccionar();
-  });
+  const { loginWithRedirect } = useAuth0();
+  // TODO: user isAuthenticated redirect fue movido a App.js
 
   return (
     <div className={Style.landingContainer}>

@@ -37,6 +37,7 @@ import {
   GET_ALL_USERS,
   DELETE_USER,
   SET_TOKEN,
+  ERROR_BANNED,
 
   //User profile actions
   GET_ALL_USER_PROFILES,
@@ -357,14 +358,28 @@ export function paymentOrder(userEmail) {
 
 // User actions
 
-export const createUser = (email) => {
+export const createUser = (email, history, logout) => {
   return async function (dispatch) {
     try {
       let user = await axios.post(`/user?email=${email}`);
-      return dispatch({
-        type: CREATE_USER,
-        payload: user.data,
-      });
+
+      if (user.data.isBanned) {
+        dispatch({
+          type: ERROR_BANNED,
+          payload: "You are banned",
+        });
+
+        logout({
+          returnTo: window.location.origin,
+        });
+      } else {
+        dispatch({
+          type: CREATE_USER,
+          payload: user.data,
+        });
+
+        history.push("/home");
+      }
     } catch (error) {
       return dispatch({
         type: ERROR,

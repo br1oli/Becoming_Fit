@@ -48,6 +48,7 @@ export const CREATE_USER = "CREATE_USER";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const UPDATE_USER = "UPDATE_USER";
 export const DELETE_USER = "DELETE_USER";
+export const ERROR_BANNED = "ERROR_BANNED";
 
 //User profile actions
 export const URL_USER_PROFILE = "/userProfile";
@@ -69,4 +70,3 @@ export const ADD_REVIEW_TO_PRODUCT = "ADD_REVIEW_TO_PRODUCT";
 export const GET_REVIEWS = "GET_REVIEWS";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const REMOVE_ONE_REVIEW = "REMOVE_ONE_REVIEW";
-
