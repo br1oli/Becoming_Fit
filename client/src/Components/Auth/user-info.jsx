@@ -160,15 +160,14 @@ useEffect(() => {
     isAuthenticated ? <div>
       <form onSubmit={e => handleSubmit(e)}>
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-        <img src={user.picture} alt={user.name} />
+        <div>
+          <img src={user.picture} alt={user.name} />
+        </div>
         <br />
         <div>
           <label>Email:</label>
           <label>{usuarios && Object.values(usuarios)?.length && usuarios.email}:</label>
           <br/>
-            type = "text"
-            name = "email"
-            disabled = "disabled"/> */}
         </div>
         <div>
           <label>Name:</label>
