@@ -8,7 +8,9 @@ import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
-//Admin
+import PaymentSuccess from "./Components/Payments/Succes/PaymentSuccess.jsx";
+import PaymentFailure from "./Components/Payments/Failure/PaymentFailure.jsx";
+
 import AdminDashboardUI from "./Components/Admin/AminUI/AdminDashboardUI";
 import ProductsList from "./Components/Admin/ProductsDashboard/ProductsList";
 //AUTH0
@@ -66,6 +68,8 @@ function App() {
       />
       <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
+      <Route exact path="/paymentsucces" component={PaymentSuccess} />
+      <Route exact path="/paymentfailure" component={PaymentFailure} />
       <Route exact path="/favorites">
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}

@@ -17,6 +17,11 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: false,
       },
+      isBanned: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
     },
     {
       timestamps: false,

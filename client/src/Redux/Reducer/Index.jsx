@@ -59,6 +59,7 @@ import {
   CREATE_USER_PROFILE,
   UPDATE_USER_PROFILE,
   DELETE_USER_PROFILE,
+  UPDATE_USER,
   DELETE_PRODUCT,
 } from "../Actions/Const";
 
@@ -423,6 +424,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         userStore: action.payload,
         usersStore: [...state.usersStore, action.payload]
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        usersStore: [...state.usersStore, action.payload],
       };
     case GET_ALL_USERS:
       return {

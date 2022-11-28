@@ -6,7 +6,7 @@ class PaymentService {
       prod: {},
       test: {
         access_token:
-          "TEST-8470830077004229-111616-f81bbd7f83d000610e08856a0bf6617b-229244888",
+          "TEST-5646242346792495-112812-79d85dc71fbc57a0885b5c00f5063816-1250004669",
         // el access_token de MP
       },
     };
@@ -39,7 +39,7 @@ class PaymentService {
         //(al igual que hicimos con el precio del item)
         name: "Lalo",
         surname: "Landa",
-        email: "test_user_20859242@testuser.com",
+        email: "test_user_20393265@testuser.com",
         // si estan en sandbox, aca tienen que poner el email de SU usuario de prueba
         phone: {
           area_code: "11",
