@@ -68,11 +68,11 @@ class PaymentService {
       },
       back_urls: {
         // declaramos las urls de redireccionamiento
-        success: "https://www.success.com",
+        success: "/paymentsuccess",
         // url que va a redireccionar si sale todo bien
-        pending: "https://www.pending.com",
+        pending: "/paymentpending",
         // url a la que va a redireccionar si decide pagar en efectivo por ejemplo
-        failure: "https://www.failure.com",
+        failure: "/paymentfailure",
         // url a la que va a redireccionar si falla el pago
       },
       notification_url: "https://mercadopago-checkout.herokuapp.com/webhook",
