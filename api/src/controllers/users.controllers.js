@@ -53,6 +53,25 @@ const deleteUser = async (req = request, res = response) => {
   }
 };
 
+const updateUserPermissions = async (req = request, res = response) => {
+  const { email } = req.params;
+  const { isBanned, adminPermissions } = req.body;
+  try {
+    const userToUpdate = await User.findOne({ where: { email: email } });
+
+    await userToUpdate.update({
+      email: userToUpdate.email,
+      isBanned: isBanned,
+      adminPermissions: adminPermissions,
+    });
+    await userToUpdate.save();
+
+    res.status(200).send(userToUpdate);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 // User Profile
 
 const createUserProfile = async (req = request, res = response) => {
@@ -60,8 +79,8 @@ const createUserProfile = async (req = request, res = response) => {
 
   try {
     const userExists = await UserProfile.findOne({
-       where: {email : email}
-    })
+      where: { email: email },
+    });
 
     if (userExists !== null) {
       return res.status(200).send(userExists);
@@ -75,8 +94,7 @@ const createUserProfile = async (req = request, res = response) => {
         city,
         zipCode,
       });
-      return res.status(201).send(newUser)
-  
+      return res.status(201).send(newUser);
     }
   } catch (error) {
     res.status(500).json(error.message);
@@ -111,7 +129,6 @@ const getAllUserProfiles = async (req = request, res = response) => {
 };
 
 const getUserProfileByEmail = async (req = request, res = response) => {
-  
   const { email } = req.query;
   try {
     let usersFromDb = await UserProfile.findOne({ where: { email: email } });
@@ -126,8 +143,8 @@ const getUserProfileByEmail = async (req = request, res = response) => {
 };
 
 const updateUserProfile = async (req = request, res = response) => {
-  let {email} = req.params;
-  let  {name, country, city, zipCode, phone, adress}  = req.body;
+  let { email } = req.params;
+  let { name, country, city, zipCode, phone, adress } = req.body;
 
   const targetUserProfile = await UserProfile.findByPk(email);
 
@@ -138,22 +155,21 @@ const updateUserProfile = async (req = request, res = response) => {
       city: city,
       zipCode: zipCode,
       phone: phone,
-      adress: adress
+      adress: adress,
     });
-  
+
     await updateUserProfile.save();
-    res.status(200).send('Se actualizo la informacion con exito')
+    res.status(200).send("Se actualizo la informacion con exito");
   } catch (error) {
-    res.status(404).send('No se pudo actualizar la informacion')
+    res.status(404).send("No se pudo actualizar la informacion");
   }
 };
-
-
 
 module.exports = {
   getUsers,
   createUser,
   deleteUser,
+  updateUserPermissions,
   createUserProfile,
   deleteUserProfile,
   getAllUserProfiles,

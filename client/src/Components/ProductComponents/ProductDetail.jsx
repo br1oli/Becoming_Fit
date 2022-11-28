@@ -34,25 +34,6 @@ const ProductDetail = (props) => {
   let [selectedColor, setSelectedColor] = useState("");
   let [amount, setAmount] = useState(0);
 
-  //Finding equal product un store cart
-  const productInCart = cartItems.find(
-    (e) =>
-      e.id === detailId &&
-      selectedColor &&
-      selectedSize &&
-      e.color === selectedColor &&
-      e.size === selectedSize
-  );
-
-  //finding equal product in cartDB store
-  const productInCartDB = cartDB?.cartProducts?.find(
-    (e) =>
-      e.product.id === detailId &&
-      selectedColor &&
-      selectedSize &&
-      e.color === selectedColor &&
-      e.size === selectedSize
-  );
   useEffect(() => {
     dispatch(getProductDetail(detailId));
     return () => {
