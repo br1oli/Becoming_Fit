@@ -10,7 +10,7 @@ import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 //Admin
 import AdminDashboardUI from "./Components/Admin/AminUI/AdminDashboardUI";
-import ProductList from "./Components/Admin/ProductsDashboard/ProductsList";
+import ProductsList from "./Components/Admin/ProductsDashboard/ProductsList";
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
@@ -52,7 +52,7 @@ function App() {
   return (
     <BrowserRouter>
       <Route exact path="/admin" component={AdminDashboardUI} />
-      <Route exact path="/admin/productList" component={ProductList} />
+      <Route exact path="/admin/productsList" component={ProductsList} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/complete" component={FormComplete} />
       <Route exact path="/profile" component={Profile} />
@@ -70,7 +70,7 @@ function App() {
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}
       </Route>
-      <Route path="*" component={NotFound} />
+      {/* <Route path="*" component={NotFound} /> */}
     </BrowserRouter>
   );
 }

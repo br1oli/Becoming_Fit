@@ -19,7 +19,6 @@ export const GET_DETAILS = "GET_DETAILS";
 export const CLEAR_DETAILS = "CLEAR_DETAILS";
 
 //Handlers
-export const ERROR = "ERROR";
 export const CLEAR_RESPONSE = "CLEAR_RESPONSE";
 
 // const from pagination:

@@ -8,21 +8,24 @@ import ProductsListCard from "./ProductsListCard";
 const ProductsList = () => {
     const dispatch = useDispatch();
 
-    const productList = useSelector((state) => state.allProducts)
+    const productsList = useSelector((state) => state.allProducts)
 
     useEffect(() => {
         dispatch(getProducts())
     }, [dispatch])
-    
+
+    //HACER FUNCTION QUE HAGA EL FILTRADO POR CATEGORIAS 
+      
     return (
         <section>
             <div>
                 <h2>Products</h2>
-                <di>
-                    <Link>
+                <div>
+                    {/* ACÁ TIENE QUE IR EL LINK AL PRODUCTFORM */}
+                    <Link> 
                         Create new
                     </Link>
-                </di>
+                </div>
             </div>
 
         <div>
@@ -46,7 +49,7 @@ const ProductsList = () => {
             <div>
                 <div>
                     {/* Acá hay que hacer el map y renderizar las cards */}
-                    {productList.map((p) => (
+                    {productsList.map((p) => (
                         <ProductsListCard 
                         key={p.id}
                         name={p.name}

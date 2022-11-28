@@ -25,6 +25,7 @@ import {
   GET_PRODUCTS,
   GET_NAME_PRODUCTS,  
   POST_PRODUCT,
+  EDIT_PRODUCT,
   GET_DETAILS,
   CLEAR_DETAILS,
 
@@ -58,6 +59,7 @@ import {
   CREATE_USER_PROFILE,
   UPDATE_USER_PROFILE,
   DELETE_USER_PROFILE,
+  DELETE_PRODUCT,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -117,6 +119,16 @@ function rootReducer(state = initialState, action) {
         currentProducts: [...action.payload].slice(0, 6),
       };
     case POST_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
+    case EDIT_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
+    case DELETE_PRODUCT:
       return {
         ...state,
         backResponse: action.payload
@@ -265,18 +277,6 @@ function rootReducer(state = initialState, action) {
         currentPage: 1,
         indexFirsProduct: 0,
         currentProducts: [...categoryFiltered].slice(0, 6),
-      };
-
-    /////// Managing responses from back
-    case SUCCESS:
-      return {
-        ...state,
-        success: action.payload,
-      };
-    case CLEAR_SUCCESS:
-      return {
-        ...state,
-        success: "",
       };
 
     // Shopping cart reducer functions

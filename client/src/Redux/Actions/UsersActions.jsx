@@ -20,7 +20,6 @@ import {
   GET_DETAILS,
   CLEAR_DETAILS,
   SET_CURRENT_PAGE_PRODUCTS,
-  ERROR,
   CLEAR_RESPONSE,
 
   //Shopping Cart actions
@@ -126,6 +125,40 @@ export function postProduct(payload) {
     } catch (error) {  
       return dispatch({
         type: POST_PRODUCT,
+        payload: error.response.data
+      })
+    }
+  };
+}
+
+export function editProduct(payload) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(URL_PRODUCTS, payload);
+      return dispatch({
+        type: EDIT_PRODUCT,
+        payload: response.data,
+      });
+    } catch (error) {  
+      return dispatch({
+        type: EDIT_PRODUCT,
+        payload: error.response.data
+      })
+    }
+  };
+}
+
+export function deleteProduct(id, payload) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`/product/${id}`, payload);
+      return dispatch({
+        type: DELETE_PRODUCT,
+        payload: response.data,
+      });
+    } catch (error) {  
+      return dispatch({
+        type: DELETE_PRODUCT,
         payload: error.response.data
       })
     }

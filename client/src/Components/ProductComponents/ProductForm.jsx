@@ -138,7 +138,7 @@ export default function ProductForm() {
       categoryName: "",
       rating: "",
     });
-    dispatch(clearReponse())
+    dispatch(clearResponse())
     window.location.reload()
   }
 

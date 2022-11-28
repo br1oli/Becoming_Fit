@@ -1,5 +1,6 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getProducts, deleteProduct } from "../../../Redux/Actions/UsersActions";
 import Card from "react-bootstrap/Card";
 import './ProductsListCard.css';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,10 +10,14 @@ const ProductsListCard = (props) => {
 
     const handleEditProduct = (e) => {
         console.log(e.target.value)
+        //history.push(/FORMULARIO) o capaz se puede resolver con un modal
     }
 
-    const handleDeleteProduct = (e) => {
-        console.log(e.target.value)
+    const handleDeleteProduct = async (e) => {
+        if (window.confirm("Are you sure you want to delete this product?")) {
+          dispatch(deleteProduct(e.target.value));
+          window.location.reload()
+        }
     }
 
     return (
@@ -39,7 +44,7 @@ const ProductsListCard = (props) => {
                     onClick={handleDeleteProduct}
                     className="like"
                   >
-                    PRODUCT
+                    DELETE
                   </button>
                 </div>
                 </Card.Body>
