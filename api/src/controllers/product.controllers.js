@@ -104,6 +104,7 @@ const updateProduct = async (req = request, res = response) => {
       description,
       image,
     } = req.body;
+    console.log(id)
     if (id.length < 20) {
       return res.status(404).send("Invalid ID");
     }

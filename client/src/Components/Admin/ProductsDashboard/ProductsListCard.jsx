@@ -1,16 +1,21 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { getProducts, deleteProduct } from "../../../Redux/Actions/UsersActions";
+import { useHistory } from "react-router-dom";
+import { getProductDetail, deleteProduct } from "../../../Redux/Actions/UsersActions";
 import Card from "react-bootstrap/Card";
 import './ProductsListCard.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProductsListCard = (props) => {
     let dispatch = useDispatch();
+    let history = useHistory();
 
     const handleEditProduct = (e) => {
-        console.log(e.target.value)
-        //history.push(/FORMULARIO) o capaz se puede resolver con un modal
+        dispatch(getProductDetail(e.target.value))
+        setTimeout(() => {
+          history.push("/admin/products/edit") 
+        }, 1000)
+        
     }
 
     const handleDeleteProduct = async (e) => {

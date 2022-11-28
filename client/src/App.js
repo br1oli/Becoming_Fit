@@ -13,6 +13,7 @@ import PaymentFailure from "./Components/Payments/Failure/PaymentFailure.jsx";
 
 import AdminDashboardUI from "./Components/Admin/AminUI/AdminDashboardUI";
 import ProductsList from "./Components/Admin/ProductsDashboard/ProductsList";
+import EditProductForm from "./Components/Admin/ProductsDashboard/EditProductForm";
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
@@ -54,7 +55,9 @@ function App() {
   return (
     <BrowserRouter>
       <Route exact path="/admin" component={AdminDashboardUI} />
-      <Route exact path="/admin/productsList" component={ProductsList} />
+      <Route exact path="/admin/products/list" component={ProductsList} />
+      <Route exact path="/admin/products/create" component={ProductForm} />
+      <Route exact path="/admin/products/edit" component={EditProductForm} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/complete" component={FormComplete} />
       <Route exact path="/profile" component={Profile} />
@@ -66,7 +69,6 @@ function App() {
         path="/home/:id"
         render={(props) => <ProductDetail props={props} />}
       />
-      <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
       <Route exact path="/paymentsucces" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />

@@ -21,8 +21,7 @@ const ProductsList = () => {
             <div>
                 <h2>Products</h2>
                 <div>
-                    {/* ACÁ TIENE QUE IR EL LINK AL PRODUCTFORM */}
-                    <Link> 
+                    <Link to ="/admin/products/create"> 
                         Create new
                     </Link>
                 </div>

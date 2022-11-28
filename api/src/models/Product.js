@@ -40,12 +40,17 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING(2000),
+        type: DataTypes.STRING(5000),
       },
       image: {
-        type: DataTypes.STRING(2000),
+        type: DataTypes.STRING(5000),
         allowNull: false,
       },
+      outOfStock: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      }
     },
     {
       timestamps: false,

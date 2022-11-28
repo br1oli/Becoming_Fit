@@ -76,12 +76,12 @@ export default function ProductForm() {
 
   const [input, setInput] = useState({
     name: "",
-    type: "",
+    type: [],
     gender: "",
     price: "",
     image: "",
     brandName: "",
-    color: "",
+    color: [],
     description: "",
     size: [],
     categoryName: "",
@@ -113,6 +113,16 @@ export default function ProductForm() {
       setInput((prev) => ({
         ...prev,
         size: [...prev.size, e.target.value].join(", "),
+      }));
+    } else if (e.target.name === "color") {
+      setInput((prev) => ({
+        ...prev,
+        color: [...prev.color, e.target.value].join(", "),
+      }));
+    } else if (e.target.name === "type") {
+      setInput((prev) => ({
+        ...prev,
+        type: [...prev.color, e.target.value].join(", "),
       }));
     } else {
       setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
