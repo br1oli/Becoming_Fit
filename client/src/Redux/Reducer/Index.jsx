@@ -60,6 +60,7 @@ import {
   CREATE_USER_PROFILE,
   UPDATE_USER_PROFILE,
   DELETE_USER_PROFILE,
+  UPDATE_USER,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -424,6 +425,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userStore: action.payload,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        usersStore: [...state.usersStore, action.payload],
       };
     case GET_ALL_USERS:
       return {

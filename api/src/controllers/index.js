@@ -2,14 +2,26 @@ const {
   getUsers,
   createUser,
   deleteUser,
+  updateUserPermissions,
   createUserProfile,
   deleteUserProfile,
   getAllUserProfiles,
   getUserProfileByEmail,
-  updateUserProfile
+  updateUserProfile,
 } = require("./users.controllers");
-const { getCart,postProductToCart , deleteCart, deleteCartProduct}= require('./cart.controllers')
-const { getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites } = require("./favorites.controllers");
+const {
+  getCart,
+  postProductToCart,
+  deleteCart,
+  deleteCartProduct,
+} = require("./cart.controllers");
+const {
+  getFavorites,
+  postFavorites,
+  deleteOneFavorites,
+  putFavorites,
+  deleteAllFavorites,
+} = require("./favorites.controllers");
 const { getOrders } = require("./order.controllers");
 const {
   getProducts,
@@ -17,19 +29,26 @@ const {
   updateProduct,
   deleteProductFromDb,
 } = require("./product.controllers");
-const {getDetail}= require('./detail.controller')
+const { getDetail } = require("./detail.controller");
 const {
   getCategories,
   createCategory,
   deleteCategory,
 } = require("./categories.controllers");
 
-const { getReviews, postReview, deleteOneReview, putReview, deleteAllReviews } = require("./reviews.controllers");
+const {
+  getReviews,
+  postReview,
+  deleteOneReview,
+  putReview,
+  deleteAllReviews,
+} = require("./reviews.controllers");
 
 module.exports = {
   getUsers,
   createUser,
   deleteUser,
+  updateUserPermissions,
   getOrders,
   getProducts,
   createProduct,
@@ -39,12 +58,23 @@ module.exports = {
   getCategories,
   createCategory,
   deleteCategory,
-  getCart,postProductToCart , deleteCart, deleteCartProduct,
-  getFavorites, postFavorites, deleteOneFavorites, putFavorites, deleteAllFavorites,
-  getReviews, postReview, deleteOneReview, putReview, deleteAllReviews,
+  getCart,
+  postProductToCart,
+  deleteCart,
+  deleteCartProduct,
+  getFavorites,
+  postFavorites,
+  deleteOneFavorites,
+  putFavorites,
+  deleteAllFavorites,
+  getReviews,
+  postReview,
+  deleteOneReview,
+  putReview,
+  deleteAllReviews,
   createUserProfile,
   deleteUserProfile,
   getAllUserProfiles,
   getUserProfileByEmail,
-  updateUserProfile
+  updateUserProfile,
 };
