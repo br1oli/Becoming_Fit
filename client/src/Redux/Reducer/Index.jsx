@@ -85,12 +85,11 @@ const initialState = {
   allBrands: [],
   details: [],
   //user:
-  userStore: [],
-  usersStore: [],
+  userStore: [], //usuario específico
+  usersStore: [], //todos los usuarios
   token: "",
-  userProfiles: [],
-  userProfile: [],
-  usuarios: [],
+  userProfiles: [], //el perfil de un usuario específico
+  userProfile: [], //todos los usuarios
 };
 
 function rootReducer(state = initialState, action) {
