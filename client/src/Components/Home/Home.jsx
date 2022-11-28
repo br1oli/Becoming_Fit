@@ -9,6 +9,7 @@ import Slider from "../Carousel/Slider";
 import ImgSide from "../../Utils/ImagenSide.png";
 import { getCartFromDB, postCartToDB } from "../../Redux/Actions/UsersActions";
 import Filters from "../Filters/Filters.jsx";
+import WhatsAppButton from "../WhatsAppButton/WhatsAppButton.jsx";
 
 const Home = () => {
   const { currentProducts, allProducts, token, shoppingCart, userStore } =
@@ -74,6 +75,9 @@ const Home = () => {
             <img src={Loading} alt="not found" />
           </div>
         )}
+      </div>
+      <div className={Styles.whatsAppButton}>
+        <WhatsAppButton />
       </div>
       <div className={Styles.footer}>
         <Footer />

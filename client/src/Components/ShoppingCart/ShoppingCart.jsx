@@ -21,8 +21,9 @@ import { useHistory } from "react-router-dom";
 export default function ShoppingCart({ toggleShow }) {
   let { user } = useAuth0();
   let reduxCart = useSelector((state) => state);
-  let userId = useSelector((state) => state.userStore.email);
   let dispatch = useDispatch();
+  let userId = useSelector((state) => state.userStore.email);
+  let userProfile = useSelector((state) => state.userProfile);
   let history = useHistory();
   let paymentLink = useSelector((state) => state.paymentLink);
 
@@ -61,14 +62,15 @@ export default function ShoppingCart({ toggleShow }) {
     e.preventDefault();
     if (reduxCart.token.length) {
       try {
-        /*  if (!user.address || user.phone) {
+        if (!userProfile.adress || !userProfile.phone) {
           e.preventDefault();
           history.push("/complete");
-        } else { */
-        dispatch(paymentOrder(reduxCart.cartDB.userEmail));
-        deleteStorage("shoppCart");
-        dispatch(clearCart());
-        /*  } */
+        } else {
+          dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+          deleteStorage("shoppCart");
+          dispatch(clearCart());
+          dispatch(clearCartInDb(reduxCart.cartDB.id));
+        }
       } catch (error) {
         console.log(error);
       }
