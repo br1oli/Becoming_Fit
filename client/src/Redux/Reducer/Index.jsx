@@ -5,6 +5,7 @@ import {
 } from "../../localStorage/localStorageFunctions";
 
 import {
+  GET_PRODUCTS,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -14,6 +15,7 @@ import {
   ORDER_BY_PRICE,
   GET_DETAILS,
   CLEAR_DETAILS,
+  GET_NAME_PRODUCTS,
   SUCCESS,
   ERROR,
   CLEAR_ERROR,
