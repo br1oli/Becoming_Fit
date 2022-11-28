@@ -9,6 +9,8 @@ import {
   postCartToDB,
   addProductToFavorites,
   getCartFromDB,
+  deleteFromCart,
+  clearCartInDb,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
@@ -61,7 +63,7 @@ const ProductDetail = (props) => {
   //handle que se le pasa a los radiobuttons de color y size
   const handleColor = (e) => {
     e.preventDefault();
-    setSelectedColor(e.target.attributes.value.value);
+    setSelectedColor(e.target.value);
   };
   const handleSize = (e) => {
     e.preventDefault();
@@ -183,16 +185,7 @@ const ProductDetail = (props) => {
             >
               -
             </button>
-            <p className={styles.cantidad2}>
-              {/* si hay un token se fija en los datos de la base de datos, sino en los datos del shoppingCart si el producto tiene amount entonces renderiza el amount del producto, sino renderiza el estado local de amount */}
-              {token.length
-                ? productInCartDB && productInCartDB.amount
-                  ? productInCartDB.amount + amount
-                  : amount
-                : productInCart && productInCart.amount
-                ? productInCart.amount + amount
-                : amount}
-            </p>
+            <p className={styles.cantidad2}>{amount}</p>
             <button
               onClick={handleAmount}
               value="+"
