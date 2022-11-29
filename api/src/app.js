@@ -11,6 +11,7 @@ const favoritesRoutes = require("./routes/favorites.routes");
 const reviewsRoutes = require("./routes/reviews.routes");
 const mailRoutes = require("./routes/mail.routes");
 const mailDeliverRoutes = require("./routes/deliver.routes");
+const ordersRoutes = require("./routes/orders.routes");
 
 const PaymentController = require("./mercadoPago/Controllers/paymentController");
 const PaymentService = require("./mercadoPago/Services/paymentServices");
@@ -48,6 +49,7 @@ server.use(favoritesRoutes);
 server.use(reviewsRoutes);
 server.use(mailRoutes);
 server.use(mailDeliverRoutes);
+server.use(ordersRoutes);
 
 server.post("/payment/new", (req, res) =>
   PaymentInstance.getMercadoPagoLink(req, res)

@@ -94,6 +94,7 @@ export function UserCard({ email, isBanned, adminPermissions, resetPassword }) {
   );
 }
 
+
 export const Customers = () => {
   let users = useSelector((state) => state.usersStore);
 

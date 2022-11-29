@@ -9,40 +9,31 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { clearResponse, postProduct } from "../../Redux/Actions/UsersActions";
-import Style from "./ProductForm.module.css";
-import Success from "../Success/Success";
+import { useHistory } from "react-router-dom";
+import { clearResponse, editProduct } from "../../../Redux/Actions/UsersActions";
+import Style from "./EditProductForm.module.css";
+import Success from "../../Success/Success";
 
 function validador(input) {
   let errors = {};
   if (!input.name) {
     errors.name = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.name)) {
-    errors.name = "First letter must be uppercase";
-  }
+  } 
   if (!input.type) {
     errors.type = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.type)) {
-    errors.type = "First letter must be uppercase";
-  }
+  } 
   if (!input.color) {
     errors.color = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.color)) {
-    errors.color = "First letter must be uppercase";
-  }
+  } 
   if (!input.description) {
     errors.description = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,500}$/.test(input.description)) {
-    errors.description = "First letter must be uppercase";
-  }
+  } 
   if (!input.gender) {
     errors.gender = "Required";
   }
   if (!input.size) {
     errors.size = "Required";
-  } else if (!input.size.length) {
-    errors.size = "Select at least one size from the list";
-  }
+  } 
   if (!input.rating) {
     errors.rating = "Required";
   }
@@ -71,21 +62,32 @@ function validador(input) {
   return errors;
 }
 
-export default function ProductForm() {
+export default function EditProductForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const allProducts = useSelector((state) => state.allProducts);
+  const productDetails = useSelector((state) => state.details);
+  const brands = [...new Set(allProducts.map((e) => e.brand.name))];
+  const categories = [...new Set(allProducts.map((e) => e.category.name))];
+  const gender = [...new Set(allProducts.map((e) => e.gender))];
+  const response = useSelector((state) => state.backResponse);
+
+  const productId = productDetails.id;
 
   const [input, setInput] = useState({
-    name: "",
-    type: "",
-    gender: "",
-    price: "",
-    image: "",
-    brandName: "",
-    color: "",
-    description: "",
-    size: [],
-    categoryName: "",
-    rating: "",
+    name: productDetails.name,
+    type: productDetails.type,
+    gender: productDetails.gender,
+    price: productDetails.price,
+    image: productDetails.image,
+    brandName: productDetails.brandName,
+    color: productDetails.color,
+    description: productDetails.description,
+    size: productDetails.size.split(', '),
+    categoryName: productDetails.categoryName,
+    rating: productDetails.rating,
+    outOfStock: productDetails.outOfStock
   });
 
   const [errors, setErrors] = useState({
@@ -100,47 +102,67 @@ export default function ProductForm() {
     size: "",
     categoryName: "",
     rating: "",
-  });
-
-  const allProducts = useSelector((state) => state.allProducts);
-  const brandss = [...new Set(allProducts.map((e) => e.brand.name))];
-  const categories = [...new Set(allProducts.map((e) => e.category.name))];
-  const gender = [...new Set(allProducts.map((e) => e.gender))];
-  const response = useSelector((state) => state.backResponse);
+  });  
 
   const handleInputChange = (e) => {
-    if (e.target.name === "size") {
-      setInput((prev) => ({
-        ...prev,
-        size: [...prev.size, e.target.value].join(", "),
-      }));
-    } else {
-      setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    }
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     let errorObj = validador({ ...input, [e.target.name]: e.target.value });
     setErrors(errorObj);
   };
 
+  function handleSizeSelect(e) {
+    if (input.size.includes(e.target.value)) {
+        e.target.value = 'default';
+        return alert("You've already selected that size")
+    } else {
+      setInput({
+          ...input,
+          size:[...input.size, e.target.value]
+      })
+      setErrors(validador({
+          ...input,
+          [e.target.name]: e.target.value
+      }))        
+    }
+    e.target.value = 'default';
+  }
+
+  function handleSizeDelete(e){
+    setInput({
+        ...input,
+        size: input.size.filter(s => s !== e)
+    })
+  }
+
+  function handleSizeMap () {
+    try {
+      return (
+      input.size.map(s =>
+        <div>
+            <p>{s}         
+            <button onClick = {() => handleSizeDelete(s)}>X</button>
+            </p>
+            <br></br>
+        </div>
+    ))
+    } catch (e) {
+      return null
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     setErrors({});
-    dispatch(postProduct(input));
-    setInput({
-      name: "",
-      type: "",
-      gender: "",
-      price: "",
-      image: "",
-      brandName: "",
-      color: "",
-      description: "",
-      size: [],
-      categoryName: "",
-      rating: "",
-    });
-    dispatch(clearResponse())
-    window.location.reload()
-  }
+    input.id = productId
+    if (window.confirm("Are you sure you want to edit this product?")) {
+    input.size = input.size.join(', ')
+    dispatch(editProduct(input));
+    setTimeout(() => {
+        dispatch(clearResponse())
+        history.push('/admin/products/list')
+    }, 1500)    
+    }
+  }  
 
   let disabled = Object.entries(errors).length ? true : false;
 
@@ -207,7 +229,6 @@ export default function ProductForm() {
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Género">
                     <Form.Select name="gender" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
                       {gender?.map((e) => {
                         return (
                           <option key={e} value={e} name="gender">
@@ -229,8 +250,10 @@ export default function ProductForm() {
                     controlId="floatingimage"
                     label="Size"
                   >
-                    <Form.Select name="size" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
+                    <Form.Select name="size" onChange={handleSizeSelect}>
+                      <option key={"default"} value={"default"}>
+                        Choose a size
+                      </option>
                       <option key={"XS"} value={"XS"}>
                         XS
                       </option>
@@ -254,6 +277,7 @@ export default function ProductForm() {
                   {errors?.size ? (
                     <div className={Style.danger}>{errors.size}</div>
                   ) : null}
+                  {handleSizeMap()}
                 </Col>
                 <Col>
                   <FloatingLabel
@@ -307,8 +331,7 @@ export default function ProductForm() {
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Marca">
                     <Form.Select name="brandName" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
-                      {brandss?.map((e) => {
+                      {brands?.map((e) => {
                         return (
                           <option key={e} value={e} name="brandName">
                             {e}
@@ -346,7 +369,6 @@ export default function ProductForm() {
                       onChange={handleInputChange}
                       name="categoryName"
                     >
-                      <option value={"NULL"}>Choose</option>
                       {categories?.map((e) => {
                         return (
                           <option key={e} value={e} name="categoryName">
@@ -387,7 +409,7 @@ export default function ProductForm() {
                 Submit
               </Button>
 
-              {response.length ? (
+              {response? (
                 <Success success={response} />
               ) : (
                 null
