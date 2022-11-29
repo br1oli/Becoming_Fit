@@ -66,10 +66,11 @@ function App() {
         path="/home/:id"
         render={(props) => <ProductDetail props={props} />}
       />
-      <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
+      <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/paymentsuccess" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />
+
       <Route exact path="/favorites">
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}
