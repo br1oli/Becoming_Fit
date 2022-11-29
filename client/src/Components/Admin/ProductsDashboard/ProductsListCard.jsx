@@ -18,23 +18,29 @@ const ProductsListCard = (props) => {
     }
 
     const handleDeleteProduct = async (e) => {
-        if (window.confirm("Are you sure you want to delete this product?")) {
+      if (props.isDeleted === false) {
+        if (window.confirm("Are you sure you want to delete this product from the customers list?")) {
           dispatch(deleteProduct({id: e.target.value, changeDeleteState: true}));          
           window.location.reload()
         }
+      } else if (props.isDeleted === true) {
+        if (window.confirm("Are you sure you want to add this product from the customers list?")) {
+          dispatch(deleteProduct({id: e.target.value, changeDeleteState: false}));          
+          window.location.reload()
+        }
+      }        
     }
 
     const handleChangeStock = (e) => {
-      console.log("soy el changer", e.target.value, props)
-      // if (props.outOfStock === false) {
-      //   dispatch(changeProductStock({id: e.target.value, changeStock: true}))
-      //   window.location.reload()
-      // } else {
-      // if (props.outOfStock === true) {
-      //   dispatch(changeProductStock({id: e.target.value, changeStock: false}))
-      //   window.location.reload()
-      //   }
-      // }
+      if (props.outOfStock === false) {
+        dispatch(changeProductStock({id: e.target.value, changeStock: true}))
+        window.location.reload()
+      } else {
+      if (props.outOfStock === true) {
+        dispatch(changeProductStock({id: e.target.value, changeStock: false}))
+        window.location.reload()
+        }
+      }
     }
 
     return (
@@ -46,6 +52,7 @@ const ProductsListCard = (props) => {
                 <Card.Body className="CardBody">
                   <Card.Title className="Title">{props.name}</Card.Title>   
                   <Card.Text className="Price">US {props.price}</Card.Text>
+                  {props.outOfStock === false ? <p>Available Stock</p> : <p>Out of Stock</p>}
                 <div className="buttons">
               <button
                   value={props.id}
@@ -65,13 +72,23 @@ const ProductsListCard = (props) => {
                   </button>
                 </div>
                 <div className="buttons">
-                  <button
+                  {
+                    props.isDeleted === true ? 
+                    <button
                     value={props.id}
                     onClick={handleDeleteProduct}
                     className="like"
                   >
-                    DELETE
-                  </button>
+                  ADD
+                  </button> :
+                  <button
+                  value={props.id}
+                  onClick={handleDeleteProduct}
+                  className="like"
+                >
+                  DELETE
+                </button>
+                }                  
                 </div>
                 </Card.Body>
               </Card>

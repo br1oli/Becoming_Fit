@@ -50,7 +50,8 @@ const ProductsList = () => {
                         id={p.id}
                         image={p.image}
                         price={p.price}
-                        outOfStock={p.outOfStock} 
+                        outOfStock={p.outOfStock}
+                        isDeleted={p.isDeleted} 
                         />
                     ))}
                 </div>
