@@ -55,18 +55,22 @@ const deleteUser = async (req = request, res = response) => {
 
 const updateUserPermissions = async (req = request, res = response) => {
   const { email } = req.params;
-  const { isBanned, adminPermissions } = req.body;
+  const { isBanned, adminPermissions, resetPassword } = req.body;
   try {
     const userToUpdate = await User.findOne({ where: { email: email } });
 
     await userToUpdate.update({
       email: userToUpdate.email,
-      isBanned: isBanned,
-      adminPermissions: adminPermissions,
+      isBanned: isBanned === true ? true : false,
+      adminPermissions: adminPermissions === true ? true : false,
+      resetPassword: resetPassword === true ? true : false,
     });
     await userToUpdate.save();
 
-    res.status(200).send(userToUpdate);
+    //retorno todos los usuarios para no volverme loca en el reducer del front
+    const allUsers = await User.findAll();
+
+    res.status(200).send(allUsers);
   } catch (error) {
     res.status(500).send(error.message);
   }

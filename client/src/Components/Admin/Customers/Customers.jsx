@@ -1,68 +1,119 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllUserProfiles, getAllUsers, getUserProfileByEmail, deleteUser, deleteUserProfile, updateUserProfile } from '../../../Redux/Actions/UsersActions'
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import swal from 'sweetalert';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserPermissions } from "../../../Redux/Actions/AdminActions";
 
-export const UserList= () => {
+export function UserCard({ email, isBanned, adminPermissions, resetPassword }) {
+  let dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-    const users = useSelector((state)=> state.usersStore);
+  const handleClick = (e) => {
+    if (e.target.value === "banned") {
+      if (isBanned) {
+        dispatch(
+          updateUserPermissions({
+            email: email,
+            isBanned: false,
+            adminPermissions: false,
+          })
+        );
+        return;
+      }
+      dispatch(
+        updateUserPermissions({
+          email: email,
+          isBanned: true,
+          adminPermissions: false,
+        })
+      );
+    }
+    if (e.target.value === "roll") {
+      if (adminPermissions) {
+        dispatch(
+          updateUserPermissions({
+            email: email,
+            adminPermissions: false,
+            isBanned: false,
+          })
+        );
+        return;
+      }
+      dispatch(
+        updateUserPermissions({
+          email: email,
+          adminPermissions: true,
+          isBanned: false,
+        })
+      );
+    }
+    if (e.target.value === "reset") {
+      if (resetPassword) {
+        dispatch(
+          updateUserPermissions({
+            email: email,
+            adminPermissions: false,
+            isBanned: false,
+            resetPassword: false,
+          })
+        );
+        return;
+      }
+      dispatch(
+        updateUserPermissions({
+          email: email,
+          adminPermissions: false,
+          isBanned: false,
+          resetPassword: true,
+        })
+      );
+    }
+  };
 
-    useEffect(()=>{
-        dispatch(getAllUsers())
-    }, [dispatch])    
-
-    // handleDelete (Para borrar usuarios)
-    // handleBanned (Para bannear o desbannear usuarios)
-    // handleAdminPermissions (Para otorgar permisos de admin o quitarlos)
-    // handlePassword Reset (Para forzarle al usuario a reescribir su password)
-    
-   return (
-    <div>
-          <div > 
-          <h2> Usuarios Activos</h2>
-            <table className={style.table}>
-            <thead className={style.tableHead}>
-             <tr>      
-              <th> Nº </th>
-              <th> Nombre </th>
-              <th className={style.email}> Email </th>
-              <th> Rol </th>
-              <th>  </th>
-              <th> Privilegios </th>
-              </tr>      
-            </thead>
-               { users.result?.map(((e,index)=>
-              <tbody key={e.uid} className={style.tableBody}>
-                <tr >
-                <td style={{width:'50px'}}>{index + 1}</td>
-                <td>{e.name}</td>
-                <td className={style.email}>{e.email}</td>
-                <td>{e.role}</td>
-                <td style={{width:'50px'}}>
-                  <Button style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px',color:'#ff0000'}} onClick={()=>handleDelete(e.uid)}> <DeleteIcon/>  </Button>
-                  </td>
-                <td> 
-
-               
-                <select onChange={(e)=> handleSelect(e)}>
-                  <option hidden> Privilegios </option>
-                  <option value='ADMIN_ROLE'>Admin</option>
-                  <option value='SALES_ROLE'>Ventas</option>
-                  <option value='USER_ROLE'>Usuario</option> 
-                         
-                </select>
-                <Button onClick={()=>handleSubmit(e.uid)} style={{maxWidth: '100px', maxHeight: '20px', minWidth: '35px', minHeight: '20px'}} variant="contained" className={style.button} type="submit" > Actualizar </Button>
-                </td>
-                </tr>
-
-              </tbody>
-              ))
-            } 
-              </table>
-       </div>      
-    </div>
-  )
+  return (
+    <>
+      <div>
+        <h4>{email}</h4>
+        <p>{adminPermissions ? "Roll: Admin" : "Roll: User"}</p>
+        <p>{isBanned ? "Status: Banned" : "Status: Active"}</p>
+        <p>
+          {resetPassword
+            ? "Status: Reset password required"
+            : "Status: No reset password required"}
+        </p>
+      </div>
+      <div>
+        <button value="banned" onClick={handleClick}>
+          Bann User
+        </button>
+        <button value="roll" onClick={handleClick}>
+          Change Roll
+        </button>
+        <button value="reset" onClick={handleClick}>
+          Reset Password
+        </button>
+      </div>
+    </>
+  );
 }
+
+
+export const Customers = () => {
+  let users = useSelector((state) => state.usersStore);
+
+  return (
+    <>
+      {users.length
+        ? users
+            //este sort los va a renderizar siempre ordenados alfabeticamente
+            .sort((a, b) => a.email.localeCompare(b.email))
+            .map((user, index) => (
+              <UserCard
+                key={index}
+                email={user.email}
+                isBanned={user.isBanned}
+                adminPermissions={user.adminPermissions}
+                resetPassword={user.resetPassword}
+              />
+            ))
+        : null}
+    </>
+  );
+};

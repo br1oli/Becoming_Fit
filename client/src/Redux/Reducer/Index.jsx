@@ -444,9 +444,10 @@ function rootReducer(state = initialState, action) {
       };
     case UPDATE_USER:
       return {
-        ...state,
-        usersStore: [...state.usersStore, action.payload],
-      };
+        ...state, 
+        usersStore: action.payload
+      }
+
     case GET_ALL_USERS:
       return {
         ...state,
