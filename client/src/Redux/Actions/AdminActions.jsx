@@ -1,4 +1,4 @@
-import { ERROR, UPDATE_USER } from "./Const";
+import { UPDATE_USER } from "./Const";
 import axios from "axios";
 
 export function updateUserPermissions(values) {
@@ -13,10 +13,10 @@ export function updateUserPermissions(values) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: UPDATE_USER,
+        payload: error.response.data,
+      });
     }
   };
 }
