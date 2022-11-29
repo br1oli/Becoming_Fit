@@ -5,19 +5,14 @@ import {
 } from "../../localStorage/localStorageFunctions";
 
 import {
+  CLEAR_RESPONSE,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
   FILTER_BRAND,
   FILTER_SIZE,
   ORDER_BY_NAME,
-  ORDER_BY_PRICE,
-  GET_DETAILS,
-  CLEAR_DETAILS,
-  SUCCESS,
-  ERROR,
-  CLEAR_ERROR,
-  CLEAR_SUCCESS,
+  ORDER_BY_PRICE,  
   SET_CURRENT_PAGE_PRODUCTS,
 
   //Favorites
@@ -28,7 +23,13 @@ import {
 
   //Products
   GET_PRODUCTS,
-  GET_NAME_PRODUCTS,
+  GET_NAME_PRODUCTS,  
+  POST_PRODUCT,
+  EDIT_PRODUCT,  
+  DELETE_PRODUCT,
+  CHANGE_PRODUCT_STOCK,
+  GET_DETAILS,
+  CLEAR_DETAILS,  
 
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
@@ -69,8 +70,9 @@ import {
 const dataStorage = getStorage("shoppCart");
 
 const initialState = {
-  error: "",
-  success: "",
+  // error: {},
+  // success: {}, 
+  backResponse: "",
   //cart:
   cartDB: [],
   cartDbResponse: "",
@@ -85,25 +87,37 @@ const initialState = {
   //product:
   products: [],
   allProducts: [],
+  allProductsForAdmin: [],
+  currentProductsForAdmin: [],
   allBrands: [],
   details: [],
   //user:
-  userStore: [],
-  usersStore: [],
+  userStore: [], //usuario específico
+  usersStore: [], //todos los usuarios
   token: "",
-  userProfiles: [],
-  userProfile: [],
-  usuarios: [],
+  userProfiles: [], //el perfil de un usuario específico
+  userProfile: [], //todos los usuarios
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_PRODUCTS:
+    case CLEAR_RESPONSE: 
       return {
         ...state,
-        products: action.payload,
-        allProducts: action.payload,
-        currentProducts: [...action.payload].slice(
+        backResponse: ""
+      }
+    case GET_PRODUCTS:
+      const filteredByDeleted = action.payload.filter((p) => p.isDeleted !== true)      
+      return {
+        ...state,
+        products: filteredByDeleted,
+        allProducts: filteredByDeleted,
+        allProductsForAdmin: action.payload,
+        currentProducts: [...filteredByDeleted].slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+        currentProductsForAdmin: [...action.payload].slice(
           state.indexFirsProduct,
           state.indexLastProduct
         ),
@@ -116,6 +130,26 @@ function rootReducer(state = initialState, action) {
         indexFirsProduct: 0,
         currentProducts: [...action.payload].slice(0, 6),
       };
+    case POST_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
+    case EDIT_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
+    case CHANGE_PRODUCT_STOCK:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
       state.indexLastProduct = state.currentPage * state.productsPerPage;
@@ -262,28 +296,6 @@ function rootReducer(state = initialState, action) {
         currentProducts: [...categoryFiltered].slice(0, 6),
       };
 
-    /////// Managing responses from back
-    case SUCCESS:
-      return {
-        ...state,
-        success: action.payload,
-      };
-    case CLEAR_SUCCESS:
-      return {
-        ...state,
-        success: "",
-      };
-    case ERROR:
-      return {
-        ...state,
-        error: action.payload,
-      };
-    case CLEAR_ERROR:
-      return {
-        ...state,
-        error: "",
-      };
-
     // Shopping cart reducer functions
     case ADD_PRODUCT_TO_CART:
       let newItem = state.allProducts.find(
@@ -428,6 +440,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userStore: action.payload,
+        usersStore: [...state.usersStore, action.payload]
       };
     case UPDATE_USER:
       return {
@@ -459,6 +472,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userProfile: action.payload,
+        userProfiles: [...state.userProfiles, action.payload]
       };
     case UPDATE_USER_PROFILE:
       return {

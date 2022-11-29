@@ -1,81 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, getUsers, userUpdateRole} from '../../redux/actions/actions';
-// Acá cambiarle por las acciones adecuadas (getUsers, deleteUser, userUpdateRole)
-import style from "./DeleteProduct.module.css";
+import { getAllUserProfiles, getAllUsers, getUserProfileByEmail, deleteUser, deleteUserProfile, updateUserProfile } from '../../../Redux/Actions/UsersActions'
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import swal from 'sweetalert';
 
-
-export const UserAdmin= () => {
-
+export const UserList= () => {
 
     const dispatch = useDispatch();
-    const users = useSelector((state)=> state.users);
-    const [input, setInput ] = useState({role: ''})
+    const users = useSelector((state)=> state.usersStore);
 
     useEffect(()=>{
-        dispatch(getUsers())
-    }, [dispatch])
-    
-    
-    const handleDelete = (id)=>{
-        swal({
-          title: "¿Esta seguro que desea eliminar el usuario?",
-          icon: "warning",
-          buttons: ["Cancelar","Eliminar"]
-        })
-        .then((willDelete)=>{
-          if(willDelete){
-            dispatch(deleteUser(id))
-            swal({
-              title: "Usuario Eliminado",
-              text: 'Se elimino correctamente el usuario',
-              icon: "success",
-              button: "Aceptar",
-            })
-            .then(()=>{
-              window.location.reload()
-            })
-          }
-        })
-    }
+        dispatch(getAllUsers())
+    }, [dispatch])    
 
-    function handleSubmit(id){
-      swal({
-        title: "¿Esta seguro que desea cambiar privilegios del usuario?",
-        icon: "warning",
-        buttons: ["Cancelar","Actualizar"]
-      })
-      .then((willUpdate)=>{
-        if(willUpdate){
-          dispatch(userUpdateRole(id, input))
-          swal({
-            title: "Usuario Actualizado",
-            text: 'Se actualizo el rol correctamente',
-            icon: "success",
-            button: "Aceptar",
-          })
-          .then(()=>{
-            window.location.reload()
-          })
-        }
-      })
-    }
-
+    // handleDelete (Para borrar usuarios)
+    // handleBanned (Para bannear o desbannear usuarios)
+    // handleAdminPermissions (Para otorgar permisos de admin o quitarlos)
+    // handlePassword Reset (Para forzarle al usuario a reescribir su password)
     
-    function handleSelect(e){
-      setInput({
-        ...input,
-        role: e.target.value
-      });
-    }
-    
-
-  return (
+   return (
     <div>
-          <div className={style.container}> 
+          <div > 
           <h2> Usuarios Activos</h2>
             <table className={style.table}>
             <thead className={style.tableHead}>

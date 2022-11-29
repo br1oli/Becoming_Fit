@@ -33,6 +33,8 @@ const {
   createProduct,
   updateProduct,
   deleteProductFromDb,
+  changeProductStock,
+  logicalDeleteForProduct
 } = require("./product.controllers");
 const { getDetail } = require("./detail.controller");
 const {
@@ -66,6 +68,8 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProductFromDb,
+  changeProductStock,
+  logicalDeleteForProduct,
   getDetail,
   getCategories,
   createCategory,
