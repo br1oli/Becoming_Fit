@@ -22,7 +22,12 @@ const {
   putFavorites,
   deleteAllFavorites,
 } = require("./favorites.controllers");
-const { getOrders } = require("./order.controllers");
+const {
+  getAllOrders,
+  saveOrderInDB,
+  changeOrderStatus,
+  getOrderDetail,
+} = require("./order.controllers");
 const {
   getProducts,
   createProduct,
@@ -44,20 +49,19 @@ const {
   deleteAllReviews,
 } = require("./reviews.controllers");
 
-const { 
-  postMail
-} = require("./mailing.controllers");
+const { postMail } = require("./mailing.controllers");
 
-const { 
-  postMailDeliver 
-} = require("./deliver.controllers");
+const { postMailDeliver } = require("./deliver.controllers");
 
 module.exports = {
   getUsers,
   createUser,
   deleteUser,
   updateUserPermissions,
-  getOrders,
+  getAllOrders,
+  changeOrderStatus,
+  saveOrderInDB,
+  getOrderDetail,
   getProducts,
   createProduct,
   updateProduct,
@@ -86,5 +90,5 @@ module.exports = {
   getUserProfileByEmail,
   updateUserProfile,
   postMail,
-  postMailDeliver
+  postMailDeliver,
 };
