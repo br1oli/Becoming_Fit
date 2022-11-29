@@ -44,6 +44,14 @@ const {
   deleteAllReviews,
 } = require("./reviews.controllers");
 
+const { 
+  postMail
+} = require("./mailing.controllers");
+
+const { 
+  postMailDeliver 
+} = require("./deliver.controllers");
+
 module.exports = {
   getUsers,
   createUser,
@@ -77,4 +85,6 @@ module.exports = {
   getAllUserProfiles,
   getUserProfileByEmail,
   updateUserProfile,
+  postMail,
+  postMailDeliver
 };
