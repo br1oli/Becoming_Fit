@@ -61,6 +61,9 @@ import {
   UPDATE_USER_PROFILE,
   DELETE_USER_PROFILE,
   UPDATE_USER,
+
+  //Mailing
+  POST_MAIL
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -522,6 +525,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         reviews: removeOneReview,
+      };
+
+    case POST_MAIL:
+      return {
+        ...state
       };
 
     default:

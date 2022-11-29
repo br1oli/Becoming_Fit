@@ -4,6 +4,12 @@ import styles from "./ProductReviews.module.css"
 import ReviewForm from "./ReviewForm";
 import { editReviews, removeOneReview } from "../../Redux/Actions/UsersActions"
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
+//Material UI
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const ProductReviews = ({ idProduct, infoProduct }) => {
     const dispatch = useDispatch();
@@ -27,6 +33,23 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
         window.location.reload()
     };
 
+     //Material UI Options
+     const options = [
+        'None',
+        'Atria',
+        'Callisto',
+        'Dione'
+      ];
+      
+      const ITEM_HEIGHT = 48;
+        const [anchorEl, setAnchorEl] = React.useState(null);
+        const open = Boolean(anchorEl);
+        const handleClick = (event) => {
+            setAnchorEl(event.currentTarget);
+        };
+        const handleClose = () => {
+            setAnchorEl(null);
+        };
 
     const averageFunction = () => {
         let total = 0 
@@ -74,11 +97,39 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
                                             <div className={styles.heading}>
                                                 <h5><strong>{review.title}</strong></h5>
                                                 <div>
+
+                                                <IconButton
+                                                    aria-label="more"
+                                                    id="long-button"
+                                                    aria-controls={open ? 'long-menu' : undefined}
+                                                    aria-expanded={open ? 'true' : undefined}
+                                                    aria-haspopup="true"
+                                                    onClick={handleClick}
+                                                >
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                                
+                                                <Menu
+                                                    id="long-menu"
+                                                    MenuListProps={{
+                                                    'aria-labelledby': 'long-button',
+                                                    }}
+                                                    anchorEl={anchorEl}
+                                                    open={open}
+                                                    onClose={handleClose}
+                                                    PaperProps={{
+                                                    style: {
+                                                        maxHeight: ITEM_HEIGHT * 4.5,
+                                                        width: '20ch',
+                                                    },
+                                                }}
+                                                >
                                                     <button style={{magin: "none"}} className={styles.edit} onClick={handleEdit}>Edit</button>
                                                     <button className={styles.delete} value={review.id} onClick={handleDelete}>x</button><br/>
+                                                </Menu>                                           
                                                 </div>
                                             </div>
-                                            <p>Reviewed by </p>
+                                            <p>Reviewed by {user?.given_name}</p>
 
                                             <p><strong>Rating</strong></p>
                                             <p> ★ ★ ★ ★ ★ {review.rating}</p>
@@ -96,13 +147,17 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
 
                     </div>
                 <ReviewForm  idProduct={idProduct}/>
+                <Link to={"/mail"}>Mailing</Link>
+                <Link to={"/myOrders"}>My Orders</Link>
                 </div>
             ) : 
             (
                 <div className={styles.emptyReview}>
-                        <p>There is not reviews for this product yet</p><br/>
+                    <p>There is not reviews for this product yet</p><br/>
 
-                        <ReviewForm  idProduct={idProduct}/>
+                    <ReviewForm  idProduct={idProduct}/>
+                    <Link to={"/mail"}>Mailing</Link>
+                    <Link to={"/myOrders"}>My Orders</Link>
                 </div>
             )
         }

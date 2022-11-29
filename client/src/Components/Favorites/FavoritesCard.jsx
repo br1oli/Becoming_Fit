@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "./FavoriteCard.module.css";
-import { removeOneProductFromFavorites, addToCart } from "../../Redux/Actions/UsersActions"
+import { removeOneProductFromFavorites } from "../../Redux/Actions/UsersActions"
 
 
 const FavoriteCard = ( {data, favoriteId} ) => {
@@ -11,11 +11,6 @@ const FavoriteCard = ( {data, favoriteId} ) => {
     const removeItem = (e) => {
         e.preventDefault()
             dispatch(removeOneProductFromFavorites(favoriteId));
-    }
-
-    const addItemToCart = (e) => {
-        e.preventDefault()
-        dispatch(addToCart(data?.id))
     }
 
     return (
@@ -28,9 +23,6 @@ const FavoriteCard = ( {data, favoriteId} ) => {
                 <p className={styles.name}>{data?.name}</p>
             </NavLink>
             <p className={styles.price}>US {data?.price}</p>
-            <button value="add" className={styles.add} onClick={addItemToCart}>
-                ADD TO CART
-            </button>
         </div>
     )
 }
