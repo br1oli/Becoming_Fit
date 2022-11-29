@@ -84,6 +84,7 @@ export function getProductDetail(detailId) {
   return async function (dispatch) {
     try {
       var json = await axios.get(`/products/${detailId}`);
+      json.data.id = detailId;
       return dispatch({
         type: GET_DETAILS,
         payload: json.data,
@@ -134,7 +135,8 @@ export function postProduct(payload) {
 export function editProduct(payload) {
   return async (dispatch) => {
     try {
-      const response = await axios.put(URL_PRODUCTS, payload);
+      const response = await axios.put(URL_PRODUCTS, payload)
+      console.log(response)
       return dispatch({
         type: EDIT_PRODUCT,
         payload: response.data,

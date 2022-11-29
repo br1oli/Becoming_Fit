@@ -73,6 +73,8 @@ export default function EditProductForm() {
   const gender = [...new Set(allProducts.map((e) => e.gender))];
   const response = useSelector((state) => state.backResponse);
 
+  const productId = productDetails.id;
+
   const [input, setInput] = useState({
     name: productDetails.name,
     type: productDetails.type,
@@ -128,15 +130,13 @@ export default function EditProductForm() {
   function handleSubmit(e) {
     e.preventDefault();
     setErrors({});
-    console.log(input)
+    input.id = productId
     if (window.confirm("Are you sure you want to edit this product?")) {
     dispatch(editProduct(input));
-    // PONER ACÁ UN LOADING
-    // setTimeout(() => {
-    //     alert(response)
-    //     // dispatch(clearResponse())
-    //     history.push('/admin/products/list')
-    // }, 5000)    
+    setTimeout(() => {
+        dispatch(clearResponse())
+        history.push('/admin/products/list')
+    }, 1500)    
     }
   }
 

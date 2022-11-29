@@ -91,20 +91,20 @@ const createProduct = async (req = request, res = response) => {
 };
 
 const updateProduct = async (req = request, res = response) => {
-  try {
-    let {
-      id,
-      name,
-      type,
-      color,
-      gender,
-      size,
-      rating,
-      price,
-      description,
-      image,
-    } = req.body;
-    console.log(id)
+  let {
+    id,
+    name,
+    type,
+    color,
+    gender,
+    size,
+    rating,
+    price,
+    description,
+    image,
+  } = req.body;
+  
+  try {    
     if (id.length < 20) {
       return res.status(404).send("Invalid ID");
     }
