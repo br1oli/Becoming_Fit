@@ -84,7 +84,7 @@ export default function EditProductForm() {
     brandName: productDetails.brandName,
     color: productDetails.color,
     description: productDetails.description,
-    size: productDetails.size,
+    size: productDetails.size.split(', '),
     categoryName: productDetails.categoryName,
     rating: productDetails.rating,
     outOfStock: productDetails.outOfStock
@@ -105,40 +105,64 @@ export default function EditProductForm() {
   });  
 
   const handleInputChange = (e) => {
-    if (e.target.name === "size") {
-      setInput((prev) => ({
-        ...prev,
-        size: [...prev.size, e.target.value].join(", "),
-      }));
-    } else if (e.target.name === "color") {
-      setInput((prev) => ({
-        ...prev,
-        color: [...prev.color, e.target.value].join(", "),
-      }));
-    } else if (e.target.name === "type") {
-      setInput((prev) => ({
-        ...prev,
-        type: [...prev.color, e.target.value].join(", "),
-      }));
-    } else {
-      setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    }
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     let errorObj = validador({ ...input, [e.target.name]: e.target.value });
     setErrors(errorObj);
   };
+
+  function handleSizeSelect(e) {
+    if (input.size.includes(e.target.value)) {
+        e.target.value = 'default';
+        return alert("You've already selected that size")
+    } else {
+      setInput({
+          ...input,
+          size:[...input.size, e.target.value]
+      })
+      setErrors(validador({
+          ...input,
+          [e.target.name]: e.target.value
+      }))        
+    }
+    e.target.value = 'default';
+  }
+
+  function handleSizeDelete(e){
+    setInput({
+        ...input,
+        size: input.size.filter(s => s !== e)
+    })
+  }
+
+  function handleSizeMap () {
+    try {
+      return (
+      input.size.map(s =>
+        <div>
+            <p>{s}         
+            <button onClick = {() => handleSizeDelete(s)}>X</button>
+            </p>
+            <br></br>
+        </div>
+    ))
+    } catch (e) {
+      return null
+    }
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     setErrors({});
     input.id = productId
     if (window.confirm("Are you sure you want to edit this product?")) {
+    input.size = input.size.join(', ')
     dispatch(editProduct(input));
     setTimeout(() => {
         dispatch(clearResponse())
         history.push('/admin/products/list')
     }, 1500)    
     }
-  }
+  }  
 
   let disabled = Object.entries(errors).length ? true : false;
 
@@ -226,7 +250,10 @@ export default function EditProductForm() {
                     controlId="floatingimage"
                     label="Size"
                   >
-                    <Form.Select name="size" onChange={handleInputChange}>
+                    <Form.Select name="size" onChange={handleSizeSelect}>
+                      <option key={"default"} value={"default"}>
+                        Choose a size
+                      </option>
                       <option key={"XS"} value={"XS"}>
                         XS
                       </option>
@@ -250,6 +277,7 @@ export default function EditProductForm() {
                   {errors?.size ? (
                     <div className={Style.danger}>{errors.size}</div>
                   ) : null}
+                  {handleSizeMap()}
                 </Col>
                 <Col>
                   <FloatingLabel

@@ -145,9 +145,50 @@ const deleteProductFromDb = async (req = request, res = response) => {
   }
 };
 
+const changeProductStock = async (req = request, res = response) => {
+  const { id, changeStock } = req.body;
+    try {
+      let product = await Product.findByPk(id);
+
+      if (product === null) {
+        throw new Error("The product you trying to update does not exists");
+      }
+
+      await product.update({
+        outOfStock: changeStock
+      })
+
+      await product.save();
+      res.status(200).send('The product was updated successfully');
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+}
+
+const logicalDeleteForProduct = async (req = request, res = response) => {
+  const { id, changeDeleteState } = req.body;
+  try {
+    let product = await Product.findByPk(id);
+    if (product === null) {
+      throw new Error("The product you trying to delete does not exists");
+    }
+
+    await product.update({
+      isDeleted: changeDeleteState
+    })
+    
+    await product.save();
+    res.status(200).send('The product was updated successfully');
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+}
+
 module.exports = {
   getProducts,
   createProduct,
   updateProduct,
   deleteProductFromDb,
+  changeProductStock,
+  logicalDeleteForProduct
 };

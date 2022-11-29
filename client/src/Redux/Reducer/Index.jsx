@@ -25,9 +25,11 @@ import {
   GET_PRODUCTS,
   GET_NAME_PRODUCTS,  
   POST_PRODUCT,
-  EDIT_PRODUCT,
+  EDIT_PRODUCT,  
+  DELETE_PRODUCT,
+  CHANGE_PRODUCT_STOCK,
   GET_DETAILS,
-  CLEAR_DETAILS,
+  CLEAR_DETAILS,  
 
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
@@ -60,7 +62,9 @@ import {
   UPDATE_USER_PROFILE,
   DELETE_USER_PROFILE,
   UPDATE_USER,
-  DELETE_PRODUCT,
+
+  //Mailing
+  POST_MAIL
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -83,6 +87,8 @@ const initialState = {
   //product:
   products: [],
   allProducts: [],
+  allProductsForAdmin: [],
+  currentProductsForAdmin: [],
   allBrands: [],
   details: [],
   //user:
@@ -101,11 +107,17 @@ function rootReducer(state = initialState, action) {
         backResponse: ""
       }
     case GET_PRODUCTS:
+      const filteredByDeleted = action.payload.filter((p) => p.isDeleted !== true)      
       return {
         ...state,
-        products: action.payload,
-        allProducts: action.payload,
-        currentProducts: [...action.payload].slice(
+        products: filteredByDeleted,
+        allProducts: filteredByDeleted,
+        allProductsForAdmin: action.payload,
+        currentProducts: [...filteredByDeleted].slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+        currentProductsForAdmin: [...action.payload].slice(
           state.indexFirsProduct,
           state.indexLastProduct
         ),
@@ -129,6 +141,11 @@ function rootReducer(state = initialState, action) {
         backResponse: action.payload
       }
     case DELETE_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload
+      }
+    case CHANGE_PRODUCT_STOCK:
       return {
         ...state,
         backResponse: action.payload
@@ -522,6 +539,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         reviews: removeOneReview,
+      };
+
+    case POST_MAIL:
+      return {
+        ...state
       };
 
     default:

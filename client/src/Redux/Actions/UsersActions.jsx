@@ -8,6 +8,7 @@ import {
   POST_PRODUCT,
   DELETE_PRODUCT,
   EDIT_PRODUCT,
+  CHANGE_PRODUCT_STOCK,
 
   //Filters & Sorts
   FILTER_PRICES,
@@ -59,6 +60,9 @@ import {
   GET_REVIEWS,
   EDIT_REVIEW,
   REMOVE_ONE_REVIEW,
+
+   //Mailing
+   POST_MAIL
 } from "./Const";
 
 // ----- PRODUCTS
@@ -84,7 +88,7 @@ export function getProductDetail(detailId) {
   return async function (dispatch) {
     try {
       var json = await axios.get(`/products/${detailId}`);
-      json.data.id = detailId;
+      // json.data.id = detailId;
       return dispatch({
         type: GET_DETAILS,
         payload: json.data,
@@ -136,7 +140,6 @@ export function editProduct(payload) {
   return async (dispatch) => {
     try {
       const response = await axios.put(URL_PRODUCTS, payload)
-      console.log(response)
       return dispatch({
         type: EDIT_PRODUCT,
         payload: response.data,
@@ -150,10 +153,10 @@ export function editProduct(payload) {
   };
 }
 
-export function deleteProduct(id, payload) {
+export function deleteProduct(payload) {
   return async (dispatch) => {
     try {
-      const response = await axios.delete(`/product/${id}`, payload);
+      const response = await axios.put(`/productDelete`, payload);
       return dispatch({
         type: DELETE_PRODUCT,
         payload: response.data,
@@ -167,14 +170,22 @@ export function deleteProduct(id, payload) {
   };
 }
 
-// export const updateProduct = (id, data)=>{
-//   return async function(dispatch){
-//     return axios.put(`http://localhost:8000/products/${id}`, data,{ headers: authHeader() })
-//       .then(response =>{
-//           dispatch({type: UPDATE_PRODUCT, payload: response.data})
-//       }).catch(err=> console.log(err))
-//   }
-// }
+export function changeProductStock(payload) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`/productStock`, payload);
+      return dispatch({
+        type: CHANGE_PRODUCT_STOCK,
+        payload: response.data,
+      });
+    } catch (error) {  
+      return dispatch({
+        type: CHANGE_PRODUCT_STOCK,
+        payload: error.response.data
+      })
+    }
+  };
+}
 
 // --- FILTERS
 
@@ -606,6 +617,26 @@ export function removeAllProductsFromFavorites() {
         type: REMOVE_ALL_FROM_FAVORITES,
         payload: error.response.data,
       });
+    }
+  };
+}
+
+//Mailing actions
+export function postMail(mail) {
+  return async function (dispatch) {
+    console.log("INFO MAIL",mail);
+    try {
+      const response = await axios.post(`/mail`, mail
+      );
+      return dispatch({
+        type: POST_MAIL,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error,
+      };
     }
   };
 }

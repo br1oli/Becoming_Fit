@@ -1,18 +1,13 @@
 import React from "react";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProducts } from "../../../Redux/Actions/UsersActions";
 import ProductsListCard from "./ProductsListCard";
 
 const ProductsList = () => {
     const dispatch = useDispatch();
 
-    const productsList = useSelector((state) => state.allProducts)
-
-    useEffect(() => {
-        dispatch(getProducts())
-    }, [dispatch])
+    const productsList = useSelector((state) => state.allProductsForAdmin);
+    const list = productsList.slice(0,4);
 
     //HACER FUNCTION QUE HAGA EL FILTRADO POR CATEGORIAS 
       
@@ -48,13 +43,15 @@ const ProductsList = () => {
             <div>
                 <div>
                     {/* Acá hay que hacer el map y renderizar las cards */}
-                    {productsList.map((p) => (
+                    {list.map((p) => (
                         <ProductsListCard 
                         key={p.id}
                         name={p.name}
                         id={p.id}
                         image={p.image}
-                        price={p.price} />
+                        price={p.price}
+                        outOfStock={p.outOfStock} 
+                        />
                     ))}
                 </div>
             </div>

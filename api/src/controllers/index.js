@@ -28,6 +28,8 @@ const {
   createProduct,
   updateProduct,
   deleteProductFromDb,
+  changeProductStock,
+  logicalDeleteForProduct
 } = require("./product.controllers");
 const { getDetail } = require("./detail.controller");
 const {
@@ -44,6 +46,14 @@ const {
   deleteAllReviews,
 } = require("./reviews.controllers");
 
+const { 
+  postMail
+} = require("./mailing.controllers");
+
+const { 
+  postMailDeliver 
+} = require("./deliver.controllers");
+
 module.exports = {
   getUsers,
   createUser,
@@ -54,6 +64,8 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProductFromDb,
+  changeProductStock,
+  logicalDeleteForProduct,
   getDetail,
   getCategories,
   createCategory,
@@ -77,4 +89,6 @@ module.exports = {
   getAllUserProfiles,
   getUserProfileByEmail,
   updateUserProfile,
+  postMail,
+  postMailDeliver
 };

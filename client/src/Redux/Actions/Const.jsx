@@ -6,6 +6,7 @@ export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
 export const POST_PRODUCT = "POST_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const EDIT_PRODUCT = "EDIT PRODUCT";
+export const CHANGE_PRODUCT_STOCK = "CHANGE_PRODUCT_STOCK"
 
 //Filters & Sorts
 export const FILTER_PRICES = "FILTER_PRICES";
@@ -66,4 +67,5 @@ export const GET_REVIEWS = "GET_REVIEWS";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const REMOVE_ONE_REVIEW = "REMOVE_ONE_REVIEW";
 
-
+//Mailing
+export const POST_MAIL = "POST_MAIL"
