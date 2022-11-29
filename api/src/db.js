@@ -76,6 +76,7 @@ const {
   UserProfile,
   User,
   Review,
+  ProductCategory
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -96,6 +97,11 @@ Review.belongsTo(Product);
 //Asociacion Producto:Categoria
 Category.hasMany(Product /* {foreignKey: 'categoryId'} */);
 Product.belongsTo(Category);
+
+//Asociacion Producto:Type
+ProductCategory.hasMany(Product /* {foreignKey: 'categoryId'} */);
+Product.belongsTo(ProductCategory);
+
 //Asociacion Producto:ProductoInventario
 Product.hasOne(ProductInventory /* { through: "Product_ProductInventory" } */);
 ProductInventory.belongsTo(
