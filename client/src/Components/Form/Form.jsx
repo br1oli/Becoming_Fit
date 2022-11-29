@@ -237,9 +237,7 @@ const FormComplete = () => {
         </div>
         <button onClick={volver}>Back </button>
         {paymentLink ? (
-          <a href={paymentLink} target="_blank">
-            Go to Pay!
-          </a>
+          <a href={paymentLink}>Go to Pay!</a>
         ) : (
           <button type="submit" className="submit1" disabled={!buttonEnabled}>
             Update info

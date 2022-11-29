@@ -70,3 +70,5 @@ export const GET_REVIEWS = "GET_REVIEWS";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const REMOVE_ONE_REVIEW = "REMOVE_ONE_REVIEW";
 
+//Mailing
+export const POST_MAIL = "POST_MAIL"
