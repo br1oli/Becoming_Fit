@@ -76,7 +76,6 @@ function App() {
         render={(props) => <ProductDetail props={props} />}
       />
       <Route exact path="/contact" component={About} />
-      <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/paymentsuccess" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />
 
