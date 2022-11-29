@@ -22,7 +22,7 @@ import {
 } from "./Redux/Actions/UsersActions";
 import FormComplete from "./Components/Form/Form";
 import Mailing from "./Components/Mailing/ConfirmationMail";
-import myOrders from "./Components/MyOrders/MyOrders";
+import MyOrders from "./Components/MyOrders/MyOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +53,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    
       <Route exact path="/admin" component={AdminDashboardUI} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/complete" component={FormComplete} />
@@ -72,9 +73,10 @@ function App() {
       <Route exact path="/favorites">
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}
-        <Route exact path="/mail" component={Mailing} />
-        <Route exact path="/myOrders" component={myOrders} />
       </Route>
+      <Route exact path="/myOrders" component={MyOrders} />
+      <Route exact path="/mail" component={Mailing} />
+      
     </BrowserRouter>
   );
 }

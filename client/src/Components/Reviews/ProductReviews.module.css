@@ -51,7 +51,6 @@
     justify-content: center;
     position: fixed;
     pointer-events: none;
-    /* opacity: 0; */
     top: 0;
     left: 0;
     height: 100%;
@@ -202,8 +201,8 @@
   }
 
   .overallRating{
-    width: max-content;
-    height: max-content;
+    width: 14rem;
+    height: 6rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -212,7 +211,8 @@
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
     margin-bottom: 4rem;
-    background-color: rgb(231, 231, 231);
+    background-color: rgb(207, 207, 207);
+    border-radius: 3px;
     font-size: larger;
     color: black;
     }
