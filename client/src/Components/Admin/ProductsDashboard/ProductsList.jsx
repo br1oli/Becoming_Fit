@@ -21,12 +21,9 @@ const ProductsList = () => {
 
     function handleSearch (input) {
         productsList = productsList.filter(p => p.name.toLowerCase().includes(input.toLowerCase()))
-        console.log(productsList[0])
         setFilter(productsList)
     }
 
-    console.log(input, "soy el input")
-    console.log(filter, "soy el filter")
 
     //HACER FUNCTION QUE HAGA EL FILTRADO POR CATEGORIAS 
       
