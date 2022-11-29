@@ -624,7 +624,6 @@ export function removeAllProductsFromFavorites() {
 //Mailing actions
 export function postMail(mail) {
   return async function (dispatch) {
-    console.log("INFO MAIL",mail);
     try {
       const response = await axios.post(`/mail`, mail
       );
@@ -633,10 +632,10 @@ export function postMail(mail) {
         payload: response.data,
       });
     } catch (error) {
-      return {
-        type: ERROR,
-        payload: error,
-      };
+      return dispatch({
+        type: POST_MAIL,
+        payload: error.response.data,
+      });
     }
   };
 }
