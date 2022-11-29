@@ -440,7 +440,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userStore: action.payload,
-        usersStore: [...state.usersStore, action.payload],
       };
     case UPDATE_USER:
       return {
