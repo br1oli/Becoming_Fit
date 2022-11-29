@@ -113,6 +113,7 @@ export default function ProductForm() {
   const gender = [...new Set(allProducts.map((e) => e.gender))];
   const response = useSelector((state) => state);
 
+  
   const handleInputChange = (e) => {
     if (response.error) {
       dispatch(clearError());

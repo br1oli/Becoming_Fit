@@ -10,6 +10,7 @@ import {
   createUserProfile,
   clearCart,
   paymentOrder,
+  getUserProfileByEmail,
 } from "../../Redux/Actions/UsersActions";
 import { deleteStorage } from "../../localStorage/localStorageFunctions";
 
@@ -22,6 +23,7 @@ const FormComplete = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [buttonEnabled, setButtonEnabled] = useState(false);
   let paymentLink = useSelector((state) => state.paymentLink);
+  console.log("🚀 ~ file: Form.jsx ~ line 26 ~ FormComplete ~ paymentLink", paymentLink)
 
   const [input, setInput] = useState({
     name: "",
@@ -37,6 +39,7 @@ const FormComplete = () => {
     const relleno = async () => {
       try {
         if (isAuthenticated) {
+          dispatch(getUserProfileByEmail(user.email))
           console.log("AHORA SI ESTOY AUTENTICADO");
           setInput({
             ...input,
@@ -57,6 +60,17 @@ const FormComplete = () => {
     };
     relleno();
   }, [user]);
+  
+
+  if(usuarios.adress && usuarios.phone){
+    console.log("usuarios adress ",usuarios.adress);
+    console.log("usuarios phone ", usuarios.phone);
+    // history.push(paymentLink)
+    console.log("soyy payment", paymentLink)
+    history.push(Object)
+    // window.location.href={...paymentLink}
+  
+  }
 
   function validate(input) {
     let errors = {};
@@ -96,6 +110,10 @@ const FormComplete = () => {
       /*  history.push("/paymentDetails"); */
     }, 3000);
   };
+
+  setTimeout(() => {
+    setIsLoading(false)
+  }, 3000)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,17 +159,12 @@ const FormComplete = () => {
   }
 
   return (
-    // isLoading ? <div>
-    //                 <img src={Loading} alt="not found" />
-    //                 {
-    //                 isLoading === true?
-    //                         setTimeout(() => {
-    //                         console.log("Delayed for 1 second.");
-    //                         setIsLoading(false)
-    //                     }, 3000)
-    //                 }: null
-    //             </div>
-    //  : (
+    isLoading === true ? <div>
+                            <div>
+                              <img src={Loading} alt="not found" />
+                            </div>
+                          </div> 
+    :
     isAuthenticated && (
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>

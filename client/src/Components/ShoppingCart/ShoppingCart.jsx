@@ -62,9 +62,9 @@ export default function ShoppingCart({ toggleShow }) {
     e.preventDefault();
     if (reduxCart.token.length) {
       try {
-        if (!userProfile.adress || !userProfile.phone) {
+        if (!userProfile.adress || !userProfile.phone ) {
           e.preventDefault();
-          history.push("/complete");
+          history.push("/formpayment");
         } else {
           dispatch(paymentOrder(reduxCart.cartDB.userEmail));
           deleteStorage("shoppCart");

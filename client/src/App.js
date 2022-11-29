@@ -20,6 +20,7 @@ import {
   createUser,
   setTokenInStore,
 } from "./Redux/Actions/UsersActions";
+import FormPayment from "./Components/Form/FormPayment";
 import FormComplete from "./Components/Form/Form";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
     <BrowserRouter>
       <Route exact path="/admin" component={AdminDashboardUI} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
+      <Route exact path="/formpayment" component={FormPayment}/>
       <Route exact path="/complete" component={FormComplete} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/home" component={NavBar} />
