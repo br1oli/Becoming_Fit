@@ -1,13 +1,32 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductsListCard from "./ProductsListCard";
 
 const ProductsList = () => {
-    const dispatch = useDispatch();
 
-    const productsList = useSelector((state) => state.allProductsForAdmin);
-    const list = productsList.slice(0,4);
+    let productsList = useSelector((state) => state.allProductsForAdmin);    
+    
+    let [input, setInput] = useState("");
+    let [filter, setFilter] = useState(productsList)
+
+    let list = productsList.slice(0, 10) // Reemplazar ambos por paginado 
+    let filterList = filter.slice(0, 10) // y adicionar al return indicado
+
+    function handleInputChange(e){
+        e.preventDefault();
+        setInput(e.target.value)
+        handleSearch(input)
+    }  
+
+    function handleSearch (input) {
+        productsList = productsList.filter(p => p.name.toLowerCase().includes(input.toLowerCase()))
+        console.log(productsList[0])
+        setFilter(productsList)
+    }
+
+    console.log(input, "soy el input")
+    console.log(filter, "soy el filter")
 
     //HACER FUNCTION QUE HAGA EL FILTRADO POR CATEGORIAS 
       
@@ -26,10 +45,12 @@ const ProductsList = () => {
             <header>
                 <div>
                     <div>
-                        <input
-                            type="search"
-                            placeholder="Search a product ..." 
-                        />
+                        <input  
+                            type = "text" 
+                            placeholder = "Search products by name" 
+                            value = {input}
+                            onChange = {e => handleInputChange(e)}
+                        ></input>
                     </div>
                 <div>
                     <select> 
@@ -43,7 +64,19 @@ const ProductsList = () => {
             <div>
                 <div>
                     {/* Acá hay que hacer el map y renderizar las cards */}
-                    {list.map((p) => (
+                    {filterList.length > 0 ? // reemplazar por filter cuando tenga paginado
+                    filterList.map((p) => (
+                        <ProductsListCard 
+                        key={p.id}
+                        name={p.name}
+                        id={p.id}
+                        image={p.image}
+                        price={p.price}
+                        outOfStock={p.outOfStock}
+                        isDeleted={p.isDeleted} 
+                        />
+                    )) :
+                    list.map((p) => ( // reemplazar por productsList cuando tenga el paginado
                         <ProductsListCard 
                         key={p.id}
                         name={p.name}
