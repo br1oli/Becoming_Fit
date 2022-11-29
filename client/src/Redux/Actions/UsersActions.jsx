@@ -56,6 +56,9 @@ import {
   GET_REVIEWS,
   EDIT_REVIEW,
   REMOVE_ONE_REVIEW,
+
+   //Mailing
+   POST_MAIL
 } from "./Const";
 
 // ----- PRODUCTS
@@ -563,6 +566,26 @@ export function removeAllProductsFromFavorites() {
       const response = await axios.delete("/favoritesAll");
       return dispatch({
         type: REMOVE_ALL_FROM_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      return {
+        type: ERROR,
+        payload: error,
+      };
+    }
+  };
+}
+
+//Mailing actions
+export function postMail(mail) {
+  return async function (dispatch) {
+    console.log("INFO MAIL",mail);
+    try {
+      const response = await axios.post(`/mail`, mail
+      );
+      return dispatch({
+        type: POST_MAIL,
         payload: response.data,
       });
     } catch (error) {

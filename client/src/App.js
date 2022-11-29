@@ -22,6 +22,8 @@ import {
 } from "./Redux/Actions/UsersActions";
 import FormPayment from "./Components/Form/FormPayment";
 import FormComplete from "./Components/Form/Form";
+import Mailing from "./Components/Mailing/ConfirmationMail";
+import MyOrders from "./Components/MyOrders/MyOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +54,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    
       <Route exact path="/admin" component={AdminDashboardUI} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/formpayment" component={FormPayment}/>
@@ -65,14 +68,18 @@ function App() {
         path="/home/:id"
         render={(props) => <ProductDetail props={props} />}
       />
-      <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/contact" component={About} />
-      <Route exact path="/paymentsucces" component={PaymentSuccess} />
+      <Route exact path="/productForm" component={ProductForm} />
+      <Route exact path="/paymentsuccess" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />
+
       <Route exact path="/favorites">
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}
       </Route>
+      <Route exact path="/myOrders" component={MyOrders} />
+      <Route exact path="/mail" component={Mailing} />
+      
     </BrowserRouter>
   );
 }
