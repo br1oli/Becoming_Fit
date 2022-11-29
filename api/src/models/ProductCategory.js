@@ -3,8 +3,9 @@ module.exports = (sequelize) => {
     sequelize.define('productCategory', {
         name: {
             type: DataTypes.STRING,
-            allownull: false,
-        },
+            primaryKey: true,
+            allowNull: false,
+          },
     },
         {
             timestamps: false
