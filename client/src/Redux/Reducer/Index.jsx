@@ -12,7 +12,7 @@ import {
   FILTER_BRAND,
   FILTER_SIZE,
   ORDER_BY_NAME,
-  ORDER_BY_PRICE,  
+  ORDER_BY_PRICE,
   SET_CURRENT_PAGE_PRODUCTS,
 
   //Favorites
@@ -23,13 +23,13 @@ import {
 
   //Products
   GET_PRODUCTS,
-  GET_NAME_PRODUCTS,  
+  GET_NAME_PRODUCTS,
   POST_PRODUCT,
-  EDIT_PRODUCT,  
+  EDIT_PRODUCT,
   DELETE_PRODUCT,
   CHANGE_PRODUCT_STOCK,
   GET_DETAILS,
-  CLEAR_DETAILS,  
+  CLEAR_DETAILS,
 
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
@@ -64,14 +64,12 @@ import {
   UPDATE_USER,
 
   //Mailing
-  POST_MAIL
+  POST_MAIL,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
 
 const initialState = {
-  // error: {},
-  // success: {}, 
   backResponse: "",
   //cart:
   cartDB: [],
@@ -101,13 +99,15 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case CLEAR_RESPONSE: 
+    case CLEAR_RESPONSE:
       return {
         ...state,
-        backResponse: ""
-      }
+        backResponse: "",
+      };
     case GET_PRODUCTS:
-      const filteredByDeleted = action.payload.filter((p) => p.isDeleted !== true)      
+      const filteredByDeleted = action.payload.filter(
+        (p) => p.isDeleted !== true
+      );
       return {
         ...state,
         products: filteredByDeleted,
@@ -133,23 +133,23 @@ function rootReducer(state = initialState, action) {
     case POST_PRODUCT:
       return {
         ...state,
-        backResponse: action.payload
-      }
+        backResponse: action.payload,
+      };
     case EDIT_PRODUCT:
       return {
         ...state,
-        backResponse: action.payload
-      }
+        backResponse: action.payload,
+      };
     case DELETE_PRODUCT:
       return {
         ...state,
-        backResponse: action.payload
-      }
+        backResponse: action.payload,
+      };
     case CHANGE_PRODUCT_STOCK:
       return {
         ...state,
-        backResponse: action.payload
-      }
+        backResponse: action.payload,
+      };
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
       state.indexLastProduct = state.currentPage * state.productsPerPage;
@@ -440,13 +440,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userStore: action.payload,
-        usersStore: [...state.usersStore, action.payload]
+        usersStore: [...state.usersStore, action.payload],
       };
     case UPDATE_USER:
       return {
-        ...state, 
-        usersStore: action.payload
-      }
+        ...state,
+        usersStore: action.payload,
+      };
 
     case GET_ALL_USERS:
       return {
@@ -473,7 +473,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userProfile: action.payload,
-        userProfiles: [...state.userProfiles, action.payload]
+        userProfiles: [...state.userProfiles, action.payload],
       };
     case UPDATE_USER_PROFILE:
       return {
@@ -544,7 +544,7 @@ function rootReducer(state = initialState, action) {
 
     case POST_MAIL:
       return {
-        ...state
+        ...state,
       };
 
     default:
