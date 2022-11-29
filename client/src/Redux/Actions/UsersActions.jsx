@@ -632,10 +632,10 @@ export function postMail(mail) {
         payload: response.data,
       });
     } catch (error) {
-      return dispatch({
-        type: POST_MAIL,
-        payload: error.response.data,
-      });
-    }
-  };
-}
+        return dispatch({
+          type: POST_MAIL,
+          payload: error.response.data
+        });
+    };
+  }
+};
