@@ -83,25 +83,4 @@
     cursor: pointer;
 }
 
-.signUp{
-    font-size: 4rem;
-    color: white;
-    font-family: 'Slasher';
-}
-
-.signUp:hover{
-    color: rgb(154, 150, 150);
-}
-
-.separatorContainer{
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.separator{
-    font-size: 4.5rem;
-    font-weight: lighter;
-    
-    /* border: 1px solid black; */
-}
 
