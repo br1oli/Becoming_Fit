@@ -2,12 +2,17 @@ import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Navbar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
+import './PrivacyPolicy.css'
 
 
 const PrivacyPolicy = () => {
     return(
         <>
+        <div className='navbarContainer'>
         <Navbar />
+        </div>
+          
+          <div className='bootstrapContainer'>
             <h1>Privacy & Policy</h1>
             <Accordion >
                 <Accordion.Item eventKey="0">
@@ -46,8 +51,11 @@ const PrivacyPolicy = () => {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
+        </div>
 
+            <div className='footer-privacy' >
             <Footer />
+            </div>
         </>
     )
 }

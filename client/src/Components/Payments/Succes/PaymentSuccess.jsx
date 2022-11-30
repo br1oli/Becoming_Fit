@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Styles from "./payments.module.css";
 import Footer from "../../Footer/Footer";
-import image from "../../../Utils/Title.png";
+import image from "../../../Utils/TitleGris.png";
 import logo from "../../../Utils/LogoFondoBlanco.png";
 import UserSideBar from "../../NavBar/UserMenu/UserMenu";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,7 @@ function PaymentSuccess() {
 
   return (
     <div className={Styles.bodyContainer}>
+      
       <div className={Styles.navContainer}>
         <div>
           <img
