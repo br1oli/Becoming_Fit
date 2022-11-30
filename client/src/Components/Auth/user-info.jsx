@@ -1,6 +1,5 @@
 import React from "react";
 import { useAuth0, User } from "@auth0/auth0-react";
-import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -15,6 +14,7 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Logo from "../../Utils/Title.png";
 import Footer from "../Footer/Footer";
+import UserMenu from "../NavBar/UserMenu/UserMenu";
 import Loading from "../../Utils/Loading.gif";
 import Style from "./user-info.module.css";
 
@@ -229,125 +229,138 @@ const Profile = () => {
     </div>
   ) : isAuthenticated ? (
     <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-        <div>
-          <img src={user.picture} alt={user.name} />
+      <div className={Style.navContainer}>
+        <img src={Logo} alt="not found" width={200} height={60} />
+        <UserMenu />
+      </div>
+      <form className={Style.formContainer} onSubmit={(e) => handleSubmit(e)}>
+        <div className={Style.profileImage}>
+          <img src={user.picture} alt={user.name} width={150} height={150} />
         </div>
-        <br />
-        <div>
-          <label>Email: </label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.email}:
-          </label>
-          <br />
-        </div>
-        <div>
-          <label>Name: </label>
-          <label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.name}
-          </label>
-          <br />
-          <div>
-            <input
-              value={input.name}
-              type="text"
-              name="name"
-              placeholder="Change your name..."
-              onChange={handleChange}
-            />
-            {errors?.name ? (
-              <div className={Style.danger}>{errors.name}</div>
-            ) : null}
-          </div>
-        </div>
-        <div>
-          <label>Country:</label>
-          <label>{usuarios.country}</label>
-          <br />
-          <input
-            value={input.country}
-            type="text"
-            name="country"
-            placeholder="Change your country..."
-            onChange={handleChange}
-          />
-          {errors?.country ? (
-            <div className={Style.danger}>{errors.country}</div>
-          ) : null}
-        </div>
-        <div>
-          <label>City:</label>
-          <label>{usuarios.city}</label>
-          <br />
-          <input
-            value={input.city}
-            type="text"
-            name="city"
-            placeholder="Change your city..."
-            onChange={handleChange}
-          />
-          {errors?.city ? (
-            <div className={Style.danger}>{errors.city}</div>
-          ) : null}
-        </div>
-        <div>
-          <label>Zip Code:</label>
-          <label>{usuarios.zipCode}</label>
-          <br />
-          <input
-            value={input.zipCode}
-            type="number"
-            name="zipCode"
-            placeholder="Change your zip code..."
-            onChange={handleChange}
-          />
-          {errors?.zipCode ? (
-            <div className={Style.danger}>{errors.zipCode}</div>
-          ) : null}
-        </div>
-        <div>
-          <label>Phone:</label>
-          <label>{usuarios.phone}</label>
-          <br />
-          <input
-            value={input.phone}
-            type="number"
-            name="phone"
-            placeholder="Change your phone..."
-            onChange={handleChange}
-          />
-          {errors?.phone ? (
-            <div className={Style.danger}>{errors.phone}</div>
-          ) : null}
-        </div>
-        <div>
-          <label>Adress:</label>
-          <label>{usuarios.adress}</label>
-          <br />
-          <input
-            value={input.adress}
-            type="text"
-            name="adress"
-            placeholder="Change your adress..."
-            onChange={handleChange}
-          />
-          {errors?.adress ? (
-            <div className={Style.danger}>{errors.adress}</div>
-          ) : null}
-        </div>
-        <br />
         <br />
 
-        <button onClick={back}>Volver</button>
-        <button className="submit1" type="submit">
-          Save
-        </button>
-        <br />
-        <label>Info</label>
-        <label>Token</label>
-        <JSONPretty data={user} />
-        <JSONPretty data={token} />
+        <div className={Style.inputsForm}>
+          <div className={Style.lblInput}>
+            <label>Email: </label>
+            {usuarios && Object.values(usuarios)?.length && usuarios.email}:
+          </div>
+
+          <div className={Style.lblInput}>
+            <label>Name: </label>
+
+            {usuarios && Object.values(usuarios)?.length && usuarios.name}
+
+            <div>
+              <input
+                value={input.name}
+                type="text"
+                name="name"
+                placeholder="Change your name..."
+                onChange={handleChange}
+              />
+              {errors?.name ? (
+                <div className={Style.danger}>{errors.name}</div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className={Style.lblInput}>
+            <label>Country:</label>
+            {usuarios.country}
+            <div>
+              <input
+                value={input.country}
+                type="text"
+                name="country"
+                placeholder="Change your country..."
+                onChange={handleChange}
+              />
+              {errors?.country ? (
+                <div className={Style.danger}>{errors.country}</div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className={Style.lblInput}>
+            <label>City:</label>
+            {usuarios.city}
+            <div>
+              <input
+                value={input.city}
+                type="text"
+                name="city"
+                placeholder="Change your city..."
+                onChange={handleChange}
+              />
+              {errors?.city ? (
+                <div className={Style.danger}>{errors.city}</div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className={Style.lblInput}>
+            <label>Zip Code:</label>
+            {usuarios.zipCode}
+            <div>
+              <input
+                value={input.zipCode}
+                type="number"
+                name="zipCode"
+                placeholder="Change your zip code..."
+                onChange={handleChange}
+              />
+              {errors?.zipCode ? (
+                <div className={Style.danger}>{errors.zipCode}</div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className={Style.lblInput}>
+            <label>Phone:</label>
+            {usuarios.phone}
+            <div>
+              <input
+                value={input.phone}
+                type="number"
+                name="phone"
+                placeholder="Change your phone..."
+                onChange={handleChange}
+              />
+              {errors?.phone ? (
+                <div className={Style.danger}>{errors.phone}</div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className={Style.lblInput}>
+            <label>Adress:</label>
+            {usuarios.adress}
+            <div>
+              <input
+                value={input.adress}
+                type="text"
+                name="adress"
+                placeholder="Change your adress..."
+                onChange={handleChange}
+              />
+              {errors?.adress ? (
+                <div className={Style.danger}>{errors.adress}</div>
+              ) : null}
+            </div>
+          </div>
+
+          <br />
+
+          <div className={Style.buttons}>
+            <button className={Style.submit} onClick={back}>
+              Volver
+            </button>
+            <button className={Style.submit} type="submit">
+              Save
+            </button>
+            <br />
+          </div>
+        </div>
       </form>
     </div>
   ) : (
