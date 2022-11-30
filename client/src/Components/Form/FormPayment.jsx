@@ -11,6 +11,7 @@ import {
     clearCart,
     paymentOrder,
     getUserProfileByEmail,
+    updateUserProfile,
 } from "../../Redux/Actions/UsersActions";
 import { deleteStorage } from "../../localStorage/localStorageFunctions";
 
@@ -19,34 +20,30 @@ const FormPayment = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const { user, isAuthenticated } = useAuth0();
-    const [errors, setErrors] = useState({});
+    const [errors, setErrorspayment] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [buttonEnabled, setButtonEnabled] = useState(false);
     let paymentLink = useSelector((state) => state.paymentLink);
     console.log("🚀 ~ file: Form.jsx ~ line 26 ~ FormComplete ~ paymentLink", paymentLink)
-
-    const [input, setInput] = useState({
-        city: "",
-        phone: "",
-        adress: "",
-    });
-
+    
+    
     useEffect(() => {
         const relleno = async () => {
             try {
                 if (isAuthenticated) {
                     dispatch(getUserProfileByEmail(user.email))
+                    dispatch(paymentOrder(user.email));
                     console.log("AHORA SI ESTOY AUTENTICADO");
-                    setInput({
-                        ...input,
-                        name: user.name,
-                        email: user.email,
-                        // zipCode: usuarios.zipCode? usuarios.zipCode: "",
-                        // country: usuarios.country? usuarios.country: "",
-                        // city: usuarios.city? usuarios.city: "",
-                        // phone: usuarios.phone? usuarios.phone: "",
-                        // adress: usuarios.adress? usuarios.adress: [],
-                    });
+                    // setInputpayment({
+                    //     ...input,
+                    //     name: user.name,
+                    //     email: user.email,
+                    //     // zipCode: usuarios.zipCode? usuarios.zipCode: "",
+                    //     // country: usuarios.country? usuarios.country: "",
+                    //     // city: usuarios.city? usuarios.city: "",
+                    //     // phone: usuarios.phone? usuarios.phone: "",
+                    //     // adress: usuarios.adress? usuarios.adress: [],
+                    // });
                 } else {
                     console.log("NO ESTA AUTENTICADO");
                 }
@@ -56,15 +53,21 @@ const FormPayment = () => {
         };
         relleno();
     }, [user]);
-
-
+    
+    const [inputpayment, setInputpayment] = useState({
+        city: "",
+        phone: "",
+        adress: "",
+    });
+    console.log(inputpayment)
+    
     if (usuarios.adress && usuarios.phone) {
         console.log("usuarios adress ", usuarios.adress);
         console.log("usuarios phone ", usuarios.phone);
         // history.push(paymentLink)
         console.log("soyy payment", paymentLink)
         // window.location.href={...paymentLink}
-
+        
     }
 
     function validate(input) {
@@ -73,8 +76,6 @@ const FormPayment = () => {
             errors.name = "Enter a name";
         } else if (!input.city) {
             errors.platforms = "Enter a valid city";
-        } else if (!input.zipCode) {
-            errors.platforms = "Enter your zip code ";
         } else if (!input.adress) {
             errors.platforms = "Enter a valid adress";
         } else if (!input.phone) {
@@ -87,13 +88,9 @@ const FormPayment = () => {
     const Cargando = async () => {
         setTimeout(() => {
             setIsLoading(false);
-            setInput({
-                
-                
-                
+            setInputpayment({
                 adress: "",
                 city: "",
-                
                 phone: "",
             });
             /*  history.push("/paymentDetails"); */
@@ -107,19 +104,31 @@ const FormPayment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (
-            input.adress.length < 1 ||
-            !input.city ||
-            !input.phone 
+            !inputpayment.adress ||
+            !inputpayment.city ||
+            !inputpayment.phone 
             ) {
+                // setButtonEnabled(false);
+                // return alert("Incompletes fields.");
+            }else{
                 setButtonEnabled(true);
-                return alert("Incompletes fields.");
+                dispatch(createUserProfile(inputpayment));
+     await dispatch(updateUserProfile(usuarios.email, inputpayment))
+      await Cargando()
+    setInputpayment({
+      name: "",
+      zipCode: "",
+      adress: "",
+      city: "",
+      country: "",
+      phone: "",
+    });
+
+    
+    // alert('Informacion actualizada con exito!')
+    // history.push('/profile')
+    window.location.reload()
             }
-            dispatch(paymentOrder(user.email));
-            setButtonEnabled(false);
-            dispatch(createUserProfile(input));
-            
-            alert("Your data has been sent...");
-            await Cargando();
 
         // useEffect(()=> {
         // })
@@ -131,16 +140,13 @@ const FormPayment = () => {
     };
 
     function handleChange(e) {
-        setInput({
-            ...input,
+        setInputpayment({
+            ...inputpayment,
             [e.target.name]: e.target.value,
         });
-        setErrors(
-            validate({
-                ...input,
-                [e.target.name]: e.target.value,
-            })
-        );
+        
+        let errorObj = validate({ ...inputpayment, [e.target.name]: e.target.value });
+            setErrorspayment(errorObj);
     }
 
     return (
@@ -156,7 +162,7 @@ const FormPayment = () => {
                     Enter the required data
                     </h3>
 
-                    <form onSubmit={(e) => handleSubmit(e)}>
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <div>
                                 <label>{usuarios.phone}</label>
@@ -164,7 +170,7 @@ const FormPayment = () => {
                             <div>
                                 <input
                                     type="number"
-                                    value={input.phone}
+                                    value={inputpayment.phone}
                                     name="phone"
                                     autoComplete="off"
                                     onChange={(e) => handleChange(e)}
@@ -180,7 +186,7 @@ const FormPayment = () => {
                             <div>
                                 <input
                                     type="text"
-                                    value={input.city}
+                                    value={inputpayment.city}
                                     name="city"
                                     autoComplete="off"
                                     onChange={(e) => handleChange(e)}
@@ -197,7 +203,7 @@ const FormPayment = () => {
                             <div>
                                 <input
                                     type="text"
-                                    value={input.adress}
+                                    value={inputpayment.adress}
                                     name="adress"
                                     autoComplete="off"
                                     onChange={(e) => handleChange(e)}
@@ -207,15 +213,15 @@ const FormPayment = () => {
                             </div>
                         </div>
                         <button onClick={volver}>Back </button>
-                        {paymentLink ? 
                         
-                            <button type="submit" className="submit1" >
-                                <a href={paymentLink} target="_blank">
-                                    Go to Pay!
-                                </a>
-                            </button>
-                            : null
-                        }
+                        <button type="submit" className="submit1" >
+                            Update info
+                        </button>
+                        
+                        <Button type="submit" disabled={buttonEnabled}>
+                            <a href={paymentLink}>Go to Pay!</a>
+                        </Button>
+                        
                     </form>
                 </div>
             )

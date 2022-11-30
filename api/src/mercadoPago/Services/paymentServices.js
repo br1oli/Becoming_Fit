@@ -20,7 +20,7 @@ class PaymentService {
     // recibimos las props que le mandamos desde el PaymentController
     const url = `${this.mercadoPagoUrl}/preferences?access_token=${this.tokensMercadoPago.test.access_token}`;
     // url a la que vamos a hacer los requests
-
+    console.log("Soy product List", productList)
     const items = productList[0].cartProducts.map((e) => ({
       id: e.product.id,
       title: e.product.name,
