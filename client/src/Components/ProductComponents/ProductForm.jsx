@@ -110,6 +110,7 @@ export default function ProductForm() {
   const gender = [...new Set(allProducts.map((e) => e.gender))];
   const response = useSelector((state) => state.backResponse);
 
+  
   const handleInputChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     let errorObj = validador({ ...input, [e.target.name]: e.target.value });

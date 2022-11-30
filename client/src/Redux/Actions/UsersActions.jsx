@@ -396,6 +396,7 @@ export function paymentOrder(userEmail) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/payment/new?userEmail=${userEmail}`);
+      console.log("🚀 ~ file: UsersActions.jsx ~ line 348 ~ paymentOrder ~ paymentOrder", response.data)
       return dispatch({ type: PAYMENT_ORDER, payload: response.data.url });
     } catch (error) {
       return dispatch({ type: ERROR_PAYMENT, payload: error.response.data });

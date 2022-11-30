@@ -28,7 +28,7 @@ class PaymentController {
         productList
       );
 
-      //return res.redirect(checkout.init_point);
+      // return res.redirect(checkout.init_point);
       //si es exitoso los llevamos a la url de Mercado Pago
 
       return res.json({ url: checkout.init_point });
