@@ -1,18 +1,22 @@
-import React from 'react'
-import { useAuth0, User } from '@auth0/auth0-react'
-import JSONPretty from 'react-json-pretty'
-import 'react-json-pretty/themes/monikai.css'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { updateUserProfile, getUserProfileByEmail } from '../../Redux/Actions/UsersActions'
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom';
-import LoginButton from './LoginButton'
-import LogoutButton from './LogoutButton'
+import React from "react";
+import { useAuth0, User } from "@auth0/auth0-react";
+import JSONPretty from "react-json-pretty";
+import "react-json-pretty/themes/monikai.css";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import {
+  updateUserProfile,
+  getUserProfileByEmail,
+} from "../../Redux/Actions/UsersActions";
+import { useDispatch } from "react-redux";
+import { useHistory, Link } from "react-router-dom";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import Logo from "../../Utils/Title.png";
+import Footer from "../Footer/Footer";
 import Loading from "../../Utils/Loading.gif";
-import Style from "./user-info.module.css"
-
+import Style from "./user-info.module.css";
 
 function validador(input) {
   let errors = {};
@@ -40,12 +44,12 @@ function validador(input) {
     errors.phone = "Required";
   } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.phone)) {
     errors.phone = "First letter must be uppercase";
-  } 
+  }
   if (!input.adress) {
     errors.adress = "Required";
   } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,500}$/.test(input.adress)) {
     errors.adress = "First letter must be uppercase";
-    }
+  }
   return errors;
 }
 
@@ -56,27 +60,40 @@ function validador(input) {
 //     phone: "",
 //     adress: "",
 
-
 const Profile = () => {
-  const usuarios = useSelector((state) => state.userProfile);
- 
+  const { loginWithRedirect, isAuth } = useAuth0();
+  const hist = useHistory();
 
   useEffect(() => {
-    const data = async () => {
+    const redireccionar = async () => {
       try {
-        if(user){
-          await dispatch(getUserProfileByEmail(usuarios.email))
+        if (isAuth) {
+          hist.push("/home");
+        } else {
+          console.log("NO ESTA AUTENTICADO");
         }
       } catch (error) {
         console.log(error);
       }
-    }
-    data()
-    setTimeout(() => {
-    }, 3000)
-  }, [])
+    };
+    redireccionar();
+  });
 
+  const usuarios = useSelector((state) => state.userProfile);
 
+  useEffect(() => {
+    const data = async () => {
+      try {
+        if (user) {
+          await dispatch(getUserProfileByEmail(usuarios.email));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    data();
+    setTimeout(() => {}, 3000);
+  }, []);
 
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState([]);
@@ -86,8 +103,8 @@ const Profile = () => {
     const generarToken = async () => {
       try {
         if (isAuthenticated === true) {
-          user.roles = user ? 'admin' : null
-          await dispatch(getUserProfileByEmail(user.email))
+          user.roles = user ? "admin" : null;
+          await dispatch(getUserProfileByEmail(user.email));
         } else {
           console.log("no");
         }
@@ -96,11 +113,10 @@ const Profile = () => {
       } catch (error) {
         console.log(error);
       }
-      
-    }
-    generarToken()
-  }, [user])
-  
+    };
+    generarToken();
+  }, [user]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [input, setInput] = useState({
@@ -130,24 +146,20 @@ const Profile = () => {
     setErrors(errorObj);
   }
 
-  
-
-  const Cargando = async ()=>{
+  const Cargando = async () => {
     setTimeout(() => {
-        setIsLoading(false)
-        alert('Informacion cargada con exito!')
-        setInput({
-            name: "",
-            zipCode: "",
-            adress: "",
-            city: "",
-            country: "",
-            phone: "",
-        })
-        
-    }, 3500)
-  }
-
+      setIsLoading(false);
+      alert("Informacion cargada con exito!");
+      setInput({
+        name: "",
+        zipCode: "",
+        adress: "",
+        city: "",
+        country: "",
+        phone: "",
+      });
+    }, 3500);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -161,9 +173,9 @@ const Profile = () => {
     ) {
       return alert("Incompletes fields.");
     }
-    await dispatch(getUserProfileByEmail(user.email))
-     await dispatch(updateUserProfile(usuarios.email, input))
-      await Cargando()
+    await dispatch(getUserProfileByEmail(user.email));
+    await dispatch(updateUserProfile(usuarios.email, input));
+    await Cargando();
     setInput({
       name: "",
       zipCode: "",
@@ -173,26 +185,24 @@ const Profile = () => {
       phone: "",
     });
 
-    
     // alert('Informacion actualizada con exito!')
     // history.push('/profile')
-    window.location.reload()
-}
+    window.location.reload();
+  };
 
-useEffect(() => {
-  const data = async () => {
-    try {
-      if(user){
-        await dispatch(getUserProfileByEmail(usuarios.email))
+  useEffect(() => {
+    const data = async () => {
+      try {
+        if (user) {
+          await dispatch(getUserProfileByEmail(usuarios.email));
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  data()
-  setTimeout(() => {
-  }, 3000)
-}, [])
+    };
+    data();
+    setTimeout(() => {}, 3000);
+  }, []);
 
   const back = () => {
     // if(input.name.length ||
@@ -204,36 +214,36 @@ useEffect(() => {
     //   alert("Are you sure you want to come back?, the data you have entered will be lost.")
     // }else{
     // }
-    history.push('/complete')
-  }
+    history.push("/complete");
+  };
 
-  
   setTimeout(() => {
-    setIsLoading(false)
-  }, 3000)
+    setIsLoading(false);
+  }, 3000);
 
-
-  return (
-    isLoading === true ? <div>
-                            <div>
-                              <img src={Loading} alt="not found" />
-                            </div>
-                          </div> 
-    :
-    isAuthenticated ? <div>
-      <form onSubmit={e => handleSubmit(e)}>
+  return isLoading === true ? (
+    <div>
+      <div className={Style.loading}>
+        <img src={Loading} alt="not found" />
+      </div>
+    </div>
+  ) : isAuthenticated ? (
+    <div>
+      <form onSubmit={(e) => handleSubmit(e)}>
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
         <div>
           <img src={user.picture} alt={user.name} />
         </div>
         <br />
         <div>
-          <label>Email:   </label>
-          <label>{usuarios && Object.values(usuarios)?.length && usuarios.email}:</label>
-          <br/>
+          <label>Email: </label>
+          <label>
+            {usuarios && Object.values(usuarios)?.length && usuarios.email}:
+          </label>
+          <br />
         </div>
         <div>
-          <label>Name:    </label>
+          <label>Name: </label>
           <label>
             {usuarios && Object.values(usuarios)?.length && usuarios.name}
           </label>
@@ -246,71 +256,75 @@ useEffect(() => {
               placeholder="Change your name..."
               onChange={handleChange}
             />
-        {errors?.name ? (
-                    <div className={Style.danger}>{errors.name}</div>
-                  ) : null}
+            {errors?.name ? (
+              <div className={Style.danger}>{errors.name}</div>
+            ) : null}
           </div>
         </div>
         <div>
           <label>Country:</label>
           <label>{usuarios.country}</label>
-          <br/>
-          <input value={input.country}
+          <br />
+          <input
+            value={input.country}
             type="text"
             name="country"
             placeholder="Change your country..."
             onChange={handleChange}
           />
           {errors?.country ? (
-                    <div className={Style.danger}>{errors.country}</div>
-                  ) : null}
+            <div className={Style.danger}>{errors.country}</div>
+          ) : null}
         </div>
         <div>
           <label>City:</label>
           <label>{usuarios.city}</label>
-          <br/>
-          <input value={input.city}
+          <br />
+          <input
+            value={input.city}
             type="text"
             name="city"
             placeholder="Change your city..."
             onChange={handleChange}
           />
           {errors?.city ? (
-                    <div className={Style.danger}>{errors.city}</div>
-                  ) : null}
+            <div className={Style.danger}>{errors.city}</div>
+          ) : null}
         </div>
         <div>
           <label>Zip Code:</label>
           <label>{usuarios.zipCode}</label>
-          <br/>
-          <input value={input.zipCode}
+          <br />
+          <input
+            value={input.zipCode}
             type="number"
             name="zipCode"
             placeholder="Change your zip code..."
             onChange={handleChange}
           />
           {errors?.zipCode ? (
-                    <div className={Style.danger}>{errors.zipCode}</div>
-                  ) : null}
+            <div className={Style.danger}>{errors.zipCode}</div>
+          ) : null}
         </div>
         <div>
           <label>Phone:</label>
           <label>{usuarios.phone}</label>
-          <br/>
-          <input value={input.phone}
+          <br />
+          <input
+            value={input.phone}
             type="number"
             name="phone"
             placeholder="Change your phone..."
             onChange={handleChange}
           />
           {errors?.phone ? (
-                    <div className={Style.danger}>{errors.phone}</div>
-                  ) : null}
+            <div className={Style.danger}>{errors.phone}</div>
+          ) : null}
         </div>
         <div>
           <label>Adress:</label>
           <label>{usuarios.adress}</label>
-          <br/>
+          <br />
           <input
             value={input.adress}
             type="text"
@@ -319,8 +333,8 @@ useEffect(() => {
             onChange={handleChange}
           />
           {errors?.adress ? (
-                    <div className={Style.danger}>{errors.adress}</div>
-                  ) : null}
+            <div className={Style.danger}>{errors.adress}</div>
+          ) : null}
         </div>
         <br />
         <br />
@@ -336,8 +350,28 @@ useEffect(() => {
         <JSONPretty data={token} />
       </form>
     </div>
-    :  <h1>Necesitas estar autenticado para ingresar aqui</h1>
-  )
+  ) : (
+    <div className={Style.noAuth}>
+      <img src={Logo} alt="not found" width={240} height={80} />
+      <div className={Style.noAuthBody}>
+        <h1>You need to be authenticated to enter here</h1>
+        <div className={Style.noAuthButtons}>
+          <div
+            onClick={() =>
+              loginWithRedirect({ appState: { returnTo: "/home" } })
+            }
+            className={Style.noAuthLinks}
+          >
+            Login
+          </div>
+          <Link>
+            <h5 className={Style.noAuthLinks}>Go Home</h5>
+          </Link>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Profile;
