@@ -55,7 +55,10 @@ function FAQs(){
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
+
+            <div className={Styles.footerPosition}>
             <Footer />
+            </div>
         </>
     )
 }

@@ -11,6 +11,11 @@ import About from "./Components/About/About.jsx";
 import PaymentSuccess from "./Components/Payments/Succes/PaymentSuccess.jsx";
 import PaymentFailure from "./Components/Payments/Failure/PaymentFailure.jsx";
 
+//infotmation
+import FAQs from './Components/FAQs/FAQs'
+import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy'
+import Terms from './Components/Terms&Conditions/TermsConditions'
+
 import AdminDashboardUI from "./Components/Admin/AminUI/AdminDashboardUI";
 import ProductsList from "./Components/Admin/ProductsDashboard/ProductsList";
 import EditProductForm from "./Components/Admin/ProductsDashboard/EditProductForm";
@@ -82,13 +87,21 @@ function App() {
       <Route exact path="/paymentsuccess" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />
 
+      {/* INFORMATION */}
+      <Route exact path="/FAQs" component={FAQs} />
+      <Route exact path="/termns&conditions" component={Terms} />
+      <Route exact path="/Privacypolicy" component={PrivacyPolicy} />
+
+
       <Route exact path="/favorites">
         {" "}
         <FavoritesProducts favorites={favorites} />{" "}
       </Route>
       <Route exact path="/myOrders" component={MyOrders} />
       <Route exact path="/emailUs" component={Mailing} />
-      <Route path="*" component={Error} />
+
+      {/* <Route component={Error} /> */}
+  
     </BrowserRouter>
   );
 }

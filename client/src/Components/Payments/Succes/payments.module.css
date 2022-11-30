@@ -75,3 +75,28 @@
 #failure {
     color: green;
 }
+
+@media screen and (max-width: 740px){
+    .succesCard{
+        width: 87%;
+    }
+
+    .slogan{
+        font-size: 10px;
+    }
+
+    .text{
+        font-size: 15px;
+    }
+
+    .navContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+    }
+
+    .userMenu{
+        display: none;
+    }
+}

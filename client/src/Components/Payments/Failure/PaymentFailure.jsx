@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Styles from "./paymentFailure.module.css";
 import Footer from "../../Footer/Footer";
 import UserSideBar from "../../NavBar/UserMenu/UserMenu";
-import image from "../../../Utils/Title.png";
+import image from "../../../Utils/TitleGris.png";
 import logo from "../../../Utils/LogoFondoBlanco.png";
 
 function PaymentFailure() {
