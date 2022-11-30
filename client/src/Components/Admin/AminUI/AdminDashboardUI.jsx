@@ -5,6 +5,7 @@ import AdminSideBar from "../AdminSideBar.jsx/AdminSideBar";
 import { Customers } from "../Customers/Customers";
 import { useDispatch } from "react-redux";
 import { getAllUsers } from "../../../Redux/Actions/UsersActions";
+import TypeComponent from "../Types/Types";
 
 /* import img1 from '../../../Utils/ */
 
@@ -25,7 +26,7 @@ const AdminDashboardUI = () => {
 
         <div className={Styles.rightBody}>
           <div className={Styles.rowOne}>
-            <div className={Styles.dashboardOne}> </div>
+            <div className={Styles.dashboardOne}><TypeComponent/> </div>
             <div className={Styles.dashboardOne}>Grafico ventas</div>
             <div className={Styles.dashboardOne}>Grafico neto</div>
           </div>

@@ -27,6 +27,7 @@ import FormPayment from "./Components/Form/FormPayment";
 import FormComplete from "./Components/Form/Form";
 import Mailing from "./Components/Mailing/ConfirmationMail";
 import MyOrders from "./Components/MyOrders/MyOrders";
+import Error from "./Components/Error/Error";
 
 function App() {
   const dispatch = useDispatch();
@@ -77,7 +78,7 @@ function App() {
         path="/home/:id"
         render={(props) => <ProductDetail props={props} />}
       />
-      <Route exact path="/contact" component={About} />
+      <Route exact path="/aboutUs" component={About} />
       <Route exact path="/paymentsuccess" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />
 
@@ -86,8 +87,8 @@ function App() {
         <FavoritesProducts favorites={favorites} />{" "}
       </Route>
       <Route exact path="/myOrders" component={MyOrders} />
-      <Route exact path="/mail" component={Mailing} />
-      
+      <Route exact path="/emailUs" component={Mailing} />
+      <Route path="*" component={Error} />
     </BrowserRouter>
   );
 }
