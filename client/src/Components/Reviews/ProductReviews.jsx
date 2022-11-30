@@ -139,8 +139,6 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
 
                         </div>
                         <ReviewForm idProduct={idProduct} />
-                        <Link to={"/mail"}>Mailing</Link>
-                        <Link to={"/myOrders"}>My Orders</Link>
                     </div>
                 ) :
                     (
@@ -148,9 +146,6 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
                             <p>There is not reviews for this product yet</p><br />
 
                             <ReviewForm idProduct={idProduct} />
-                            <Link to={"/mail"}>Mailing</Link>
-                            <Link to={"/myOrders"}>My Orders</Link>
-                            <TypeComponent/>
                         </div>
                     )
             }
