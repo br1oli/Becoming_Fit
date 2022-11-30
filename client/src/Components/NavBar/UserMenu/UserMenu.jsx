@@ -15,6 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import TuneIcon from "@mui/icons-material/Tune";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { HiUserCircle } from "react-icons/hi";
 import Styles from "./UserMenu.module.css";
 
@@ -26,7 +27,6 @@ export default function UserSideBar() {
   const dispatch = useDispatch();
   const { /* isLoading */ isAuthenticated } = useAuth0();
   /*  const favorites = useSelector((state) => state.favorites); */
-
 
   const [state, setState] = React.useState({
     top: false,
@@ -54,12 +54,14 @@ export default function UserSideBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItemButton>
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText>MY ACCOUNT</ListItemText>
-        </ListItemButton>
+        <Link to="/profile">
+          <ListItemButton>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>MY ACCOUNT</ListItemText>
+          </ListItemButton>
+        </Link>
 
         <Link to="/favorites">
           <ListItemButton>
@@ -67,6 +69,15 @@ export default function UserSideBar() {
               <FavoriteIcon />
             </ListItemIcon>
             <ListItemText>FAVORITES</ListItemText>
+          </ListItemButton>
+        </Link>
+
+        <Link to="/myOrders">
+          <ListItemButton>
+            <ListItemIcon>
+              <LocalMallIcon />
+            </ListItemIcon>
+            <ListItemText>MY ORDERS</ListItemText>
           </ListItemButton>
         </Link>
 
