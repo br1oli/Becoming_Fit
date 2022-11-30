@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
+import NotFound from "./Components/NotFound/NotFound";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "./Components/ProductComponents/ProductForm";
@@ -11,6 +12,8 @@ import PaymentSuccess from "./Components/Payments/Succes/PaymentSuccess.jsx";
 import PaymentFailure from "./Components/Payments/Failure/PaymentFailure.jsx";
 
 import AdminDashboardUI from "./Components/Admin/AminUI/AdminDashboardUI";
+import ProductsList from "./Components/Admin/ProductsDashboard/ProductsList";
+import EditProductForm from "./Components/Admin/ProductsDashboard/EditProductForm";
 //AUTH0
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Components/Auth/user-info";
@@ -33,6 +36,10 @@ function App() {
   const [token, setToken] = useState([]);
 
   useEffect(() => {
+    dispatch(getProducts());
+  }, [])
+
+  useEffect(() => {
     const generarToken = async () => {
       try {
         const tokenApi = await getAccessTokenSilently();
@@ -42,20 +49,22 @@ function App() {
       }
     };
     generarToken();
-  }, []);
+  }, []); 
 
   useEffect(() => {
-    dispatch(getProducts());
     if (token.length && user !== undefined) {
       dispatch(setTokenInStore(token));
       dispatch(createUser(user.email));
     }
-  }, [token]);
+  }, [token]);  
 
   return (
     <BrowserRouter>
     
       <Route exact path="/admin" component={AdminDashboardUI} />
+      <Route exact path="/admin/products/list" component={ProductsList} />
+      <Route exact path="/admin/products/create" component={ProductForm} />
+      <Route exact path="/admin/products/edit" component={EditProductForm} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/formpayment" component={FormPayment}/>
       <Route exact path="/complete" component={FormComplete} />
@@ -69,7 +78,6 @@ function App() {
         render={(props) => <ProductDetail props={props} />}
       />
       <Route exact path="/contact" component={About} />
-      <Route exact path="/productForm" component={ProductForm} />
       <Route exact path="/paymentsuccess" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />
 

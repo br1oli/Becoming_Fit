@@ -73,9 +73,8 @@ const saveOrderInDB = async (req = request, res = response) => {
       shippingDate: date_created,
     });
 
-    await res.status(201).send("Order successfully created");
+     res.status(201).send("Order successfully created");
   } catch (error) {
-    console.log(error);
     res.status(500).json(error.message);
   }
 };
