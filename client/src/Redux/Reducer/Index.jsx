@@ -24,6 +24,7 @@ import {
   //Products
   GET_PRODUCTS,
   GET_NAME_PRODUCTS,
+  GET_NAME_PRODUCTS_ERROR,
   POST_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,
@@ -139,6 +140,14 @@ function rootReducer(state = initialState, action) {
         currentPage: 1,
         indexFirsProduct: 0,
         currentProducts: [...action.payload].slice(0, 6),
+      };
+    case GET_NAME_PRODUCTS_ERROR:
+      return {
+        ...state,
+        products: state.allProducts,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...state.allProducts].slice(0, 6),
       };
     case POST_PRODUCT:
       return {

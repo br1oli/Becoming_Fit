@@ -5,6 +5,7 @@ import {
   URL_PRODUCTS_QUERY,
   GET_PRODUCTS,
   GET_NAME_PRODUCTS,
+  GET_NAME_PRODUCTS_ERROR,
   POST_PRODUCT,
   DELETE_PRODUCT,
   EDIT_PRODUCT,
@@ -118,8 +119,7 @@ export function getNameProducts(name) {
       });
     } catch (error) {
       return dispatch({
-        type: GET_NAME_PRODUCTS,
-        payload: error.response.data,
+        type: GET_NAME_PRODUCTS_ERROR
       });
     }
   };

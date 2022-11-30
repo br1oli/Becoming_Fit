@@ -3,6 +3,7 @@ export const URL_PRODUCTS = "/products";
 export const URL_PRODUCTS_QUERY = "/products?name=";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME_PRODUCTS = "GET_NAME_PRODUCTS";
+export const GET_NAME_PRODUCTS_ERROR = "GET_NAME_PRODUCTS_ERROR"
 export const POST_PRODUCT = "POST_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const EDIT_PRODUCT = "EDIT PRODUCT";
