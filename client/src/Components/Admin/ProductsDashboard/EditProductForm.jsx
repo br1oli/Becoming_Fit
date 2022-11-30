@@ -75,6 +75,16 @@ export default function EditProductForm() {
 
   const productId = productDetails.id;
 
+  const productSizeHandler = () => {
+    try {
+      return productDetails.size.split(', ')
+    } catch (e) {
+      return ""
+    }
+  }
+
+  const productSize = productSizeHandler();
+
   const [input, setInput] = useState({
     name: productDetails.name,
     type: productDetails.type,
@@ -84,7 +94,7 @@ export default function EditProductForm() {
     brandName: productDetails.brandName,
     color: productDetails.color,
     description: productDetails.description,
-    size: productDetails.size.split(', '),
+    size: productSize,
     categoryName: productDetails.categoryName,
     rating: productDetails.rating,
     outOfStock: productDetails.outOfStock
