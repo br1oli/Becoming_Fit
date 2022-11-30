@@ -62,7 +62,13 @@ import {
   REMOVE_ONE_REVIEW,
 
    //Mailing
-   POST_MAIL
+   POST_MAIL,
+   POST_MAIL_DELIVER,
+
+   //New Type product
+   POST_NEW_PRODUCT_CATEGORY,
+   GET_PRODUCT_CATEGORIES,
+   DELETE_PRODUCT_CATEGORY
 } from "./Const";
 
 // ----- PRODUCTS
@@ -626,17 +632,90 @@ export function removeAllProductsFromFavorites() {
 export function postMail(mail) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`/mail`, mail
+      const response = await axios.post(`/mail`, {email: mail}
       );
       return dispatch({
         type: POST_MAIL,
         payload: response.data,
       });
     } catch (error) {
-        return dispatch({
-          type: POST_MAIL,
-          payload: error.response.data
-        });
-    };
-  }
-};
+      return dispatch({
+        type: POST_MAIL,
+        payload: error.response.data,
+      });
+    }
+  };
+}
+
+export function postMailDeliver(mail) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`/mailDeliver`, mail
+      );
+      return dispatch({
+        type: POST_MAIL_DELIVER,
+        payload: response.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: POST_MAIL_DELIVER,
+        payload: error.response.data,
+      });
+    }
+  };
+}
+
+//Product category actions
+export function postCategory(input) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`/category?name=${input}`);
+      return dispatch({
+        type: POST_NEW_PRODUCT_CATEGORY,
+        payload: response.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: POST_NEW_PRODUCT_CATEGORY,
+        payload: error
+      });
+    }
+  };
+}
+
+export function getCategories() {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/category` 
+      );
+      return dispatch({
+        type: GET_PRODUCT_CATEGORIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: GET_PRODUCT_CATEGORIES,
+        payload: error
+      });
+    }
+  };
+}
+
+export function deleteCategory(input) {
+  return async function (dispatch) {
+    try {
+      console.log("Entroo");
+      const response = await axios.delete(`/category?id=${input}`
+      );
+      return dispatch({
+        type: DELETE_PRODUCT_CATEGORY,
+        payload: response.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: DELETE_PRODUCT_CATEGORY,
+        payload: error.response.data,
+      });
+    }
+  };
+}

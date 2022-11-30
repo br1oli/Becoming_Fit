@@ -1,13 +1,13 @@
-const typeExists = (types, name) => {
-    if (!types.length) return false;
+// const typeExists = (types, name) => {
+//     if (!types.length) return false;
   
-    const category = types.find(
-      (type) => type.toLowerCase() === name.toLowerCase()
-    );
+//     const category = types.find(
+//       (type) => type.toLowerCase() === name.toLowerCase()
+//     );
   
-    return category ? true : false;
-  };
+//     return category ? true : false;
+//   };
   
-  module.exports = { 
-    typeExists 
-};
+//   module.exports = { 
+//     typeExists 
+// };

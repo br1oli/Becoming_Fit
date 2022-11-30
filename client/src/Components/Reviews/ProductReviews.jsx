@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import TypeComponent from "../Admin/Types/Types";
 
 const ProductReviews = ({ idProduct, infoProduct }) => {
     const dispatch = useDispatch();
@@ -149,6 +150,7 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
                             <ReviewForm idProduct={idProduct} />
                             <Link to={"/mail"}>Mailing</Link>
                             <Link to={"/myOrders"}>My Orders</Link>
+                            <TypeComponent/>
                         </div>
                     )
             }
