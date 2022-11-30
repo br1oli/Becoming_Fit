@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import Loading from "../../Utils/Loading.gif";
+import Navbar from '../NavBar/NavBar'
+import Footer from '../Footer/Footer'
+import Styles from './Form.module.css'
 import {
   createUserProfile,
   clearCart,
@@ -150,8 +153,17 @@ const FormComplete = () => {
     </div>
   ) : (
     isAuthenticated && (
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <div className={Styles.totalConainer}>
         <div>
+          <Navbar />
+        </div>
+
+      <div className={Styles.formContainer}>
+      <form
+       onSubmit={(e) => handleSubmit(e)}
+       className={Styles.formStyled}
+       >
+        <div className={Styles.lblInput}>
           <label>Enter your name</label>
           <input
             type="text"
@@ -164,12 +176,12 @@ const FormComplete = () => {
           {errors.name && <p className="error">{errors.name}</p>}
         </div>
 
-        <div>
+        <div >
           <label>Email:</label>
           <label>{user.email}</label>
         </div>
         <div>{usuarios.phone}</div>
-        <div>
+        <div className={Styles.lblInput}>
           <label> Enter a phone number</label>
           <input
             type="text"
@@ -182,7 +194,7 @@ const FormComplete = () => {
           {errors.phone && <p className="error">{errors.phone}</p>}
         </div>
         <div>{usuarios.country}</div>
-        <div>
+        <div className={Styles.lblInput}>
           <label>Enter a country</label>
           <input
             type="text"
@@ -195,7 +207,7 @@ const FormComplete = () => {
           {errors.country && <p className="error">{errors.country}</p>}
         </div>
         <div>{usuarios.city}</div>
-        <div>
+        <div className={Styles.lblInput}>
           <label>Enter a city</label>
           <input
             type="text"
@@ -208,7 +220,7 @@ const FormComplete = () => {
           {errors.city && <p className="error">{errors.city}</p>}
         </div>
         <div>{usuarios.adress}</div>
-        <div>
+        <div className={Styles.lblInput}>
           <label>Enter your adress</label>
           <input
             type="text"
@@ -221,7 +233,7 @@ const FormComplete = () => {
           {errors.description && <p className="error">{errors.description}</p>}
         </div>
         <div>{usuarios.zipCode}</div>
-        <div>
+        <div className={Styles.lblInput}>
           <label>Enter your zip code </label>
           <input
             type="text"
@@ -233,17 +245,27 @@ const FormComplete = () => {
           />
           {errors.zipCode && <p className="error">{errors.zipCode}</p>}
         </div>
-        <button onClick={volver}>Back </button>
+        <div className={Styles.button}>
+          <div className={Styles.backButtonContainer}>
+            <button className={Styles.backButton} onClick={volver}>Back </button>
+          </div>
+
         {!usuarios.country && !usuarios.adress && !usuarios.zipCode ? (
-          <button className="submit1" type="submit">
+          <button className={Styles.backButton} type="submit">
             Save
           </button>
         ) : (
-          <button type="submit" className="submit1">
+          <button type="submit" className={Styles.backButton}>
             <a href={paymentLink}>Go to Pay!</a>
           </button>
         )}
+        </div>
       </form>
+      </div>
+      <div className={Styles.footer}>
+        <Footer />
+      </div>
+      </div>
     )
   );
 };
