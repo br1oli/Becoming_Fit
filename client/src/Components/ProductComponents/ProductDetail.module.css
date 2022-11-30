@@ -1,17 +1,42 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
 
-.primaryContainer{
-overflow: hidden;
-}
+/* .primaryContainer{
+  overflow: hidden;
+  width: 100vh;
+} */
 
-.secondaryContainer{
+/* .secondaryContainer{
 display: flex;
 justify-content: space-between;
 align-items: center;
 padding-bottom: 6rem;
  margin-left: 8%;
+} */
+
+
+.secondaryContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vh;
+  margin-left:  0;
 }
+
+.divLeft{
+  height: 100%;
+  width: 70%;
+}
+
+.divRight{
+  height: 100%;
+  width: 30%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
 
 .image{
 width: 40%;
@@ -20,25 +45,24 @@ margin: auto;
 justify-content: center;
 }
 
-.img{
+.image img{
   width: 30rem;
 }
+
+/* .img{
+  width: 30rem;
+} */
 
 .detail{
 border-left: 1px solid grey;
 padding-left: 3rem;
-width: 40%;
 display: inline-block;
-margin: auto;
 }
 
 .imgColor{
   width: 3rem;
 }
 
-.rating{
-  padding-bottom: 2rem;
-}
 
 .sizes{
     background: darken(light, 10%);
@@ -59,11 +83,6 @@ margin: auto;
   background: black;
   color: aliceblue;
   transition: all 0.5s ease-in-out;
-}
-
-.sizesDiv{
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 }
 
 .cantidad1{
@@ -102,11 +121,9 @@ margin: auto;
     color: white;
     cursor: pointer;
     margin: auto;
-    margin-bottom: 4rem;
 }
 
 .price{
-  margin-top: 5rem;
   font-weight: 400;
 }
 
@@ -209,15 +226,10 @@ width: fit-content;
 height: fit-content;
 }
 
-.buttons{
-    padding-top: 1rem;
-    padding-bottom: 3rem;
-}
-
 .add {
     background: darken(light, 10%);
     background-color: black;
-    width: 18rem;
+    width: 13rem;
     padding: 10px;
     display: inline-block;
     outline: 0;
@@ -289,3 +301,57 @@ height: fit-content;
     color: aliceblue;
     transition: all 0.5s ease-in-out;
   }
+
+
+  @media screen and (max-width: 820px) {
+    .secondaryContainer{
+        display:flex;
+        flex-direction: column;
+        /* overflow: hidden; */
+        grid-template-columns: 0 auto;
+        width: 100vw;
+        padding: 0;
+    }
+
+    .divLeft{
+      height: 100%;
+      width: 50%;
+      display:flex;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: 0;
+    }
+
+    .divRight{
+      height: 100%;
+      width: 50%;
+      display:flex;
+      flex-direction: column;
+    }
+
+    .image img{
+      width: 20rem;
+    }
+
+
+
+    /* .cardsContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .titleDiv{
+        display: grid;
+        justify-content: center;
+        padding: 0%;
+    }
+
+    .title {
+        display: grid;
+        justify-content: center;
+        font-size: 1.5rem;
+    } */
+    
+}
