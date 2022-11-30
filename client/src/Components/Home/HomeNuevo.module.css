@@ -2,10 +2,8 @@
     margin: 0;
     display: grid;
     grid-template: 
-    "navBar "
-    "filters"
-    "slider"
-    "body"
+    "navBar"
+    "cards"
     "footer" 
 }
 
@@ -26,41 +24,37 @@
     padding: 1rem;
 }
 
-.leftSide {
+/*.leftSide {
     grid-area: leftSide;
 }
 
-.bodyContainer {
+ .bodyContainer {
     grid-area: body;
     margin: 0;
     display: grid;
     grid-template:
     "leftSide rightSide" / 200px
-}
+} */
 
-.rightSide {
+/* .rightSide {
     grid-area: rightSide;
 }
 
 .leftSide {
     grid-area: leftSide;
     margin: 10px;
-}
+} */
 
 .paginationContainer {
-    grid-area: pagination;
+    display: none;
 }
 
 .sliderContainer {
-    grid-area: slider;
+    display:none;
 }
 
 .shopContainer {
     grid-area: shop;
-}
-
-.filtersContainer {
-    grid-area: filters;
 }
 
 .footer {
@@ -72,7 +66,7 @@
     grid-area: navBar;
 }
 
-.loadingContainer {
+/* .loadingContainer {
     position: relative;
     top: -20vh;
     left: 25vh;
@@ -84,33 +78,5 @@
     bottom: 20px;
     right: 15px;
     z-index: 1;
-  }
+  } */
 
-@media screen and (max-width: 740px) {
-    .sliderContainer {
-        display: none;
-    }
-
-    .leftSide {
-        display: none;
-    }
-    
-    .bodyContainer {
-        display: grid;
-        grid-template-columns: 0 auto;
-        width: 100vw;
-    }
-
-    .whatsAppButton {
-        display: none;
-    }
-
-    .cardsContainer{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-
-
-}

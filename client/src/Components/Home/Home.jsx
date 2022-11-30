@@ -40,16 +40,19 @@ const Home = () => {
 
   return (
     <div className={Styles.homeContainer}>
-      <div className={Styles.filtersContainer}>
+      {/*       <div className={Styles.filtersContainer}>
         <Filters />
-      </div>
+      </div> */}
+
       <div className={Styles.sliderContainer}>
         <Slider />
       </div>
+
       <div className={Styles.bodyContainer}>
         <div className={Styles.leftSide}>
           <img src={ImgSide} alt="not found" />
         </div>
+
         {allProducts.length > 0 ? (
           <div className={Styles.rightSide}>
             <div className={Styles.cardsContainer}>
@@ -66,6 +69,7 @@ const Home = () => {
                 );
               })}
             </div>
+
             <div className={Styles.paginationContainer}>
               <Pagination />
             </div>
@@ -76,9 +80,11 @@ const Home = () => {
           </div>
         )}
       </div>
+
       <div className={Styles.whatsAppButton}>
         <WhatsAppButton />
       </div>
+
       <div className={Styles.footer}>
         <Footer />
       </div>
