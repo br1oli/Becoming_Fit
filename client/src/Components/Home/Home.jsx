@@ -7,8 +7,7 @@ import { Pagination } from "./Pagination";
 import Loading from "../../Utils/Loading.gif";
 import Slider from "../Carousel/Slider";
 import ImgSide from "../../Utils/ImagenSide.png";
-import { getCartFromDB, postCartToDB } from "../../Redux/Actions/UsersActions";
-import Filters from "../Filters/Filters.jsx";
+import { getCartFromDB, postCartToDB, getProducts } from "../../Redux/Actions/UsersActions";
 import WhatsAppButton from "../WhatsAppButton/WhatsAppButton.jsx";
 
 const Home = () => {
@@ -40,9 +39,6 @@ const Home = () => {
 
   return (
     <div className={Styles.homeContainer}>
-      {/*       <div className={Styles.filtersContainer}>
-        <Filters />
-      </div> */}
 
       <div className={Styles.sliderContainer}>
         <Slider />

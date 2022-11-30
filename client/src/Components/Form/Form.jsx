@@ -23,7 +23,6 @@ const FormComplete = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [buttonEnabled, setButtonEnabled] = useState(false);
   let paymentLink = useSelector((state) => state.paymentLink);
-  console.log("🚀 ~ file: Form.jsx ~ line 26 ~ FormComplete ~ paymentLink", paymentLink)
 
   const [input, setInput] = useState({
     name: "",
@@ -35,39 +34,25 @@ const FormComplete = () => {
     adress: "",
   });
 
-
-
-    useEffect(() => {
-        const relleno = async () => {
-            try {
-                if (isAuthenticated) {
-                    console.log("AHORA SI ESTOY AUTENTICADO")
-                    setInput({
-                        ...input,
-                        name: user.name,
-                        email: user.email,
-                    })
-                } else {
-                    console.log('NO ESTA AUTENTICADO')
-                }
-            } catch (error) {
-                console.log(error)
-            }
+  useEffect(() => {
+    const relleno = async () => {
+      try {
+        if (isAuthenticated) {
+          setInput({
+            ...input,
+            name: user.name,
+            email: user.email,
+          });
+        } else {
+          console.log("NO ESTA AUTENTICADO");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
     relleno();
   }, [user]);
-  
 
-  if(usuarios.adress && usuarios.phone){
-    console.log("usuarios adress ",usuarios.adress);
-    console.log("usuarios phone ", usuarios.phone);
-    // history.push(paymentLink)
-    console.log("soyy payment", paymentLink)
-    history.push(Object)
-    // window.location.href={...paymentLink}
-    
-  }
-  
   function validate(input) {
     let errors = {};
     if (!input.name) {
@@ -83,15 +68,15 @@ const FormComplete = () => {
     } else if (!input.phone) {
       errors.platforms = "Enter a valid phone number";
     }
-    if (Object.entries(errors).length === 0){
+    if (Object.entries(errors).length === 0) {
       setButtonEnabled(true);
     } else {
       setButtonEnabled(false);
     }
-    
+
     return errors;
   }
-  
+
   const Cargando = async () => {
     setTimeout(() => {
       setIsLoading(false);
@@ -107,11 +92,11 @@ const FormComplete = () => {
       /*  history.push("/paymentDetails"); */
     }, 3000);
   };
-  
+
   setTimeout(() => {
-    setIsLoading(false)
-  }, 3000)
-  
+    setIsLoading(false);
+  }, 3000);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -123,51 +108,47 @@ const FormComplete = () => {
       !input.zipCode ||
       !input.phone ||
       !input.adress
-      ) {
-        return alert("Incompletes fields.");
-      }else{
-        
-        setButtonEnabled(true)
-        dispatch(createUserProfile(input));
-        console.log("🚀 ~ file: Form.jsx:143 ~ handleSubmit ~ input", input)
-        dispatch(getUserProfileByEmail(user.email))
-        dispatch(paymentOrder(user.email));
-        console.log("🚀 ~ file: Form.jsx:144 ~ handleSubmit ~ user.email", user.email)
-        alert("Your data has been sent...");
-        await Cargando();
-        history.push("/formpayment")
-      }
-      
-      // useEffect(()=> {
-        // })
-      };
-      const volver = (e) => {
-        e.preventDefault(e);
-        
-        history.push("/home");
-      };
-      
-      function handleChange(e) {
-        setInput({
-          ...input,
-          [e.target.name]: e.target.value,
+    ) {
+      return alert("Incompletes fields.");
+    } else {
+      setButtonEnabled(true);
+      dispatch(createUserProfile(input));
+      dispatch(getUserProfileByEmail(user.email));
+      dispatch(paymentOrder(user.email));
+      alert("Your data has been sent...");
+      await Cargando();
+      history.push("/formpayment");
+    }
+
+    // useEffect(()=> {
+    // })
+  };
+  const volver = (e) => {
+    e.preventDefault(e);
+
+    history.push("/home");
+  };
+
+  function handleChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
     });
     setErrors(
       validate({
         ...input,
         [e.target.name]: e.target.value,
       })
-      );
-    }
-    console.log("SOY USUARIOS FORM PAYMENT", usuarios)
-    
-    return (
-      isLoading === true ? <div>
-                            <div>
-                              <img src={Loading} alt="not found" />
-                            </div>
-                          </div> 
-    :
+    );
+  }
+
+  return isLoading === true ? (
+    <div>
+      <div>
+        <img src={Loading} alt="not found" />
+      </div>
+    </div>
+  ) : (
     isAuthenticated && (
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
@@ -187,9 +168,7 @@ const FormComplete = () => {
           <label>Email:</label>
           <label>{user.email}</label>
         </div>
-        <div>
-          {usuarios.phone}
-        </div>
+        <div>{usuarios.phone}</div>
         <div>
           <label> Enter a phone number</label>
           <input
@@ -202,9 +181,7 @@ const FormComplete = () => {
           />
           {errors.phone && <p className="error">{errors.phone}</p>}
         </div>
-        <div>
-          {usuarios.country}
-        </div>
+        <div>{usuarios.country}</div>
         <div>
           <label>Enter a country</label>
           <input
@@ -217,9 +194,7 @@ const FormComplete = () => {
           />
           {errors.country && <p className="error">{errors.country}</p>}
         </div>
-        <div>
-          {usuarios.city}
-        </div>
+        <div>{usuarios.city}</div>
         <div>
           <label>Enter a city</label>
           <input
@@ -232,9 +207,7 @@ const FormComplete = () => {
           />
           {errors.city && <p className="error">{errors.city}</p>}
         </div>
-        <div>
-          {usuarios.adress}
-        </div>
+        <div>{usuarios.adress}</div>
         <div>
           <label>Enter your adress</label>
           <input
@@ -247,9 +220,7 @@ const FormComplete = () => {
           />
           {errors.description && <p className="error">{errors.description}</p>}
         </div>
-        <div>
-          {usuarios.zipCode}
-        </div>
+        <div>{usuarios.zipCode}</div>
         <div>
           <label>Enter your zip code </label>
           <input
@@ -263,19 +234,15 @@ const FormComplete = () => {
           {errors.zipCode && <p className="error">{errors.zipCode}</p>}
         </div>
         <button onClick={volver}>Back </button>
-        {
-          !usuarios.country && !usuarios.adress && !usuarios.zipCode ? 
-            (
-              <button className="submit1" type="submit">
-              Save
-            </button>
-            )
-           : (
-              <button type="submit" className="submit1">
-                <a href={paymentLink}>Go to Pay!</a>
-              </button>
-          )
-        }
+        {!usuarios.country && !usuarios.adress && !usuarios.zipCode ? (
+          <button className="submit1" type="submit">
+            Save
+          </button>
+        ) : (
+          <button type="submit" className="submit1">
+            <a href={paymentLink}>Go to Pay!</a>
+          </button>
+        )}
       </form>
     )
   );

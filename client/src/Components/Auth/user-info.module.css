@@ -1,7 +1,65 @@
+@font-face {
+    font-family: 'Slasher';
+    src: url(../../Utils/slasherfilm.ttf);
+}
 .danger {
     margin: 0.5rem;
     padding: 0.5rem;
     border: 1px solid red;
     border-radius: 4px;
     color: red;
+}
+
+.loading {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noAuth {
+    background-color: #404040;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.noAuth h1 {
+    font-family: 'Slasher';
+    font-size: 50px;
+    letter-spacing: 4px;
+    color: #a0a0a0;
+}
+
+img {
+    margin-top: 20px;
+}
+
+.noAuthBody {
+    position: relative;
+    top: 15%;
+    flex-direction: column;
+}
+
+.noAuthLinks {
+    font-family: 'Slasher';
+    color: #a0a0a0;
+    letter-spacing: 4px;
+    font-size: 40px;
+}
+
+.noAuthLinks:hover {
+    color: antiquewhite;
+    cursor: pointer;
+}
+
+.noAuthButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 30px;
 }
