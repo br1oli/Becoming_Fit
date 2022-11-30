@@ -64,7 +64,13 @@ import {
   UPDATE_USER,
 
   //Mailing
-  POST_MAIL
+  POST_MAIL,
+  POST_MAIL_DELIVER,
+
+  //New types products
+  POST_NEW_PRODUCT_CATEGORY,
+  GET_PRODUCT_CATEGORIES,
+  DELETE_PRODUCT_CATEGORY
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -97,6 +103,9 @@ const initialState = {
   token: "",
   userProfiles: [], //el perfil de un usuario específico
   userProfile: [], //todos los usuarios
+
+  //type products
+  categories: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -541,9 +550,34 @@ function rootReducer(state = initialState, action) {
         reviews: removeOneReview,
       };
 
+  //Mailing functions
     case POST_MAIL:
       return {
         ...state
+      };
+    
+    case POST_MAIL_DELIVER: 
+    return {
+      ...state
+    }
+    //Product types functions
+    case POST_NEW_PRODUCT_CATEGORY:
+      return {
+        ...state,
+        categories: [...state.categories, action.payload],
+      };
+    case GET_PRODUCT_CATEGORIES:
+    return {
+      ...state,
+      categories:  action.payload,
+    };
+    case DELETE_PRODUCT_CATEGORY:
+      const deleteProductCategory = state.categories.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        categories: deleteProductCategory,
       };
 
     default:

@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Styles from "./payments.module.css";
 import Footer from "../../Footer/Footer";
 import image from "../../../Utils/Title.png";
 import logo from "../../../Utils/LogoFondoBlanco.png";
 import UserSideBar from "../../NavBar/UserMenu/UserMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { postMail } from "../../../Redux/Actions/UsersActions";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function PaymentSuccess() {
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useAuth0();
+  const userEmail = useSelector((state) => state.userStore)
+  
+  useEffect(() => {
+    if(userEmail) dispatch(postMail(userEmail?.email))
+  },[userEmail])
+
   return (
     <div className={Styles.bodyContainer}>
       <div className={Styles.navContainer}>

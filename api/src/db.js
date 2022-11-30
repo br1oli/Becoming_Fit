@@ -99,8 +99,8 @@ Category.hasMany(Product /* {foreignKey: 'categoryId'} */);
 Product.belongsTo(Category);
 
 //Asociacion Producto:Type
-ProductCategory.hasMany(Product /* {foreignKey: 'categoryId'} */);
-Product.belongsTo(ProductCategory);
+// ProductCategory.hasMany(Product  {foreignKey: 'categoryId'} );
+// ProductbelongsToMany(ProductCategory);
 
 //Asociacion Producto:ProductoInventario
 Product.hasOne(ProductInventory /* { through: "Product_ProductInventory" } */);
