@@ -81,3 +81,21 @@
     margin: none;
     font-weight: 200;
 }
+
+@media screen and (max-width: 740px) {
+    .mainContainer{
+        display: flex;
+        min-width: 75vw;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .image{
+        width: 60vw;
+        height: 17rem;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+}
