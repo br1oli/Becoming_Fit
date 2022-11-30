@@ -228,7 +228,10 @@ export default function EditProductForm() {
                 </Col>
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Género">
-                    <Form.Select name="gender" onChange={handleInputChange}>
+                   <Form.Select name="gender" onChange={handleInputChange}>
+                    <option key={"default"} value={"default"} disabled>
+                        Choose a gender
+                      </option>
                       {gender?.map((e) => {
                         return (
                           <option key={e} value={e} name="gender">
@@ -251,7 +254,7 @@ export default function EditProductForm() {
                     label="Size"
                   >
                     <Form.Select name="size" onChange={handleSizeSelect}>
-                      <option key={"default"} value={"default"}>
+                      <option key={"default"} value={"default"} disabled>
                         Choose a size
                       </option>
                       <option key={"XS"} value={"XS"}>
@@ -286,8 +289,7 @@ export default function EditProductForm() {
                     label="Rating"
                   >
                     <Form.Select name="rating" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
-
+                      <option value={"default"} disabled>Choose a rating</option>
                       <option key={1} value={1}>
                         ⭐
                       </option>
@@ -331,6 +333,7 @@ export default function EditProductForm() {
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Marca">
                     <Form.Select name="brandName" onChange={handleInputChange}>
+                    <option key="123" value="default" disabled name="brandName">Choose a brand</option>
                       {brands?.map((e) => {
                         return (
                           <option key={e} value={e} name="brandName">
@@ -369,6 +372,7 @@ export default function EditProductForm() {
                       onChange={handleInputChange}
                       name="categoryName"
                     >
+                      <option key="123" value="default" disabled name="categoryName">Choose a category</option>
                       {categories?.map((e) => {
                         return (
                           <option key={e} value={e} name="categoryName">

@@ -44,11 +44,6 @@ const FormComplete = () => {
                         ...input,
                         name: user.name,
                         email: user.email,
-                        // zipCode: usuarios.zipCode? usuarios.zipCode: "",
-                        // country: usuarios.country? usuarios.country: "",
-                        // city: usuarios.city? usuarios.city: "",
-                        // phone: usuarios.phone? usuarios.phone: "",
-                        // adress: usuarios.adress? usuarios.adress: [],
                     })
                 } else {
                     console.log('NO ESTA AUTENTICADO')
@@ -119,13 +114,10 @@ const FormComplete = () => {
     setButtonEnabled(false);
     alert("Your data has been sent...");
     await Cargando();
-
-    // useEffect(()=> {
-    // })
   };
+
   const volver = (e) => {
     e.preventDefault(e);
-
     history.push("/home");
   };
 
@@ -143,17 +135,6 @@ const FormComplete = () => {
   }
 
   return (
-    // isLoading ? <div>
-    //                 <img src={Loading} alt="not found" />
-    //                 {
-    //                 isLoading === true?
-    //                         setTimeout(() => {
-    //                         console.log("Delayed for 1 second.");
-    //                         setIsLoading(false)
-    //                     }, 3000)
-    //                 }: null
-    //             </div>
-    //  : (
     isAuthenticated && (
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
@@ -177,7 +158,7 @@ const FormComplete = () => {
         <div>
           <label> Enter a phone number</label>
           <input
-            type="number"
+            type="text"
             value={input.phone}
             name="phone"
             autoComplete="off"
