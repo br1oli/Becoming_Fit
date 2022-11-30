@@ -44,24 +44,30 @@ const NavBar = () => {
         </div>
       </div>
 
-      <div className="hamburguer" onClick={handleClick}>
-        {click ? (
+      <div className="filter-icon" onClick={filtersClick}>
+        {clickFilters ? (
           <FaTimes size={20} style={{ color: "#fff" }} />
         ) : (
           <FaBars size={20} style={{ color: "#fff" }} />
         )}
       </div>
 
-      <div className="filter-icon" onClick={filtersClick}>
-        {clickFilters ? (
-          <FaTimes size={20} style={{ color: "#fff" }} />
-        ) : (
-          <HiAdjustments size={20} style={{ color: "#fff" }} />
-        )}
-      </div>
-
       <div className="filters-container">
         <ul className={clickFilters ? "filters active" : "filters"}>
+          <div className="iconsResponsive">
+            <li>
+              <SearchInput />
+            </li>
+            <div className="user-cartResponsive">
+              <li>
+                <ShopSideBar />
+              </li>
+              <li>
+                <UserSideBar />
+              </li>
+            </div>
+          </div>
+
           <li>
             <Filters />
           </li>
