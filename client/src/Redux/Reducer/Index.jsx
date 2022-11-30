@@ -104,6 +104,7 @@ const initialState = {
 
   //type products
   categories: [],
+  favorites: []
 };
 
 function rootReducer(state = initialState, action) {
