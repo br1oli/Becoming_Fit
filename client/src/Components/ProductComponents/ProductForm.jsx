@@ -9,9 +9,10 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { clearResponse, postProduct } from "../../Redux/Actions/UsersActions";
 import Style from "./ProductForm.module.css";
-import Success from "../Success/Success";
+import Success from "../../Components/Success/Success";
 
 function validador(input) {
   let errors = {};
@@ -73,6 +74,7 @@ function validador(input) {
 
 export default function ProductForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [input, setInput] = useState({
     name: "",
@@ -82,7 +84,7 @@ export default function ProductForm() {
     image: "",
     brandName: "",
     color: "",
-    description: "",
+    description: "",    
     size: [],
     categoryName: "",
     rating: "",
@@ -103,45 +105,70 @@ export default function ProductForm() {
   });
 
   const allProducts = useSelector((state) => state.allProducts);
-  const brandss = [...new Set(allProducts.map((e) => e.brand.name))];
+  const brands = [...new Set(allProducts.map((e) => e.brand.name))];
   const categories = [...new Set(allProducts.map((e) => e.category.name))];
   const gender = [...new Set(allProducts.map((e) => e.gender))];
   const response = useSelector((state) => state.backResponse);
 
   
   const handleInputChange = (e) => {
-    if (e.target.name === "size") {
-      setInput((prev) => ({
-        ...prev,
-        size: [...prev.size, e.target.value].join(", "),
-      }));
-    } else {
-      setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    }
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     let errorObj = validador({ ...input, [e.target.name]: e.target.value });
     setErrors(errorObj);
   };
 
+  function handleSizeSelect(e) {
+    if (input.size.includes(e.target.value)) {
+        e.target.value = 'default';
+        return alert("You've already selected that size")
+    } else {
+      setInput({
+          ...input,
+          size:[...input.size, e.target.value]
+      })
+      setErrors(validador({
+          ...input,
+          [e.target.name]: e.target.value
+      }))        
+    }
+    e.target.value = 'default';
+  }
+
+  function handleSizeDelete(e){
+    setInput({
+        ...input,
+        size: input.size.filter(s => s !== e)
+    })
+  }
+
+  function handleSizeMap () {
+    try {
+      return (
+      input.size.map(s =>
+        <div>
+            <p>{s}         
+            <button onClick = {() => handleSizeDelete(s)}>X</button>
+            </p>
+            <br></br>
+        </div>
+    ))
+    } catch (e) {
+      return null
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     setErrors({});
+    if (window.confirm("Are you sure you want to create this product?")) {
+    input.size = input.size.join(', ')
     dispatch(postProduct(input));
-    setInput({
-      name: "",
-      type: "",
-      gender: "",
-      price: "",
-      image: "",
-      brandName: "",
-      color: "",
-      description: "",
-      size: [],
-      categoryName: "",
-      rating: "",
-    });
-    dispatch(clearResponse())
-    window.location.reload()
-  }
+    setTimeout(() => {
+        dispatch(clearResponse())
+        history.push('/admin/products/list')
+    }, 1500)    
+    }
+  }  
 
   let disabled = Object.entries(errors).length ? true : false;
 
@@ -207,8 +234,10 @@ export default function ProductForm() {
                 </Col>
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Género">
-                    <Form.Select name="gender" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
+                    <Form.Select name="gender" defaultValue={'default'} onChange={handleInputChange}>
+                    <option key={"default"} value={"default"} disabled>
+                        Choose a gender
+                      </option>
                       {gender?.map((e) => {
                         return (
                           <option key={e} value={e} name="gender">
@@ -230,8 +259,10 @@ export default function ProductForm() {
                     controlId="floatingimage"
                     label="Size"
                   >
-                    <Form.Select name="size" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
+                    <Form.Select name="size" defaultValue={'default'} onChange={handleSizeSelect}>
+                      <option key={"default"} value={"default"} disabled>
+                        Choose a size
+                      </option>
                       <option key={"XS"} value={"XS"}>
                         XS
                       </option>
@@ -255,6 +286,7 @@ export default function ProductForm() {
                   {errors?.size ? (
                     <div className={Style.danger}>{errors.size}</div>
                   ) : null}
+                  {handleSizeMap()}
                 </Col>
                 <Col>
                   <FloatingLabel
@@ -262,9 +294,8 @@ export default function ProductForm() {
                     controlId="floatingimage"
                     label="Rating"
                   >
-                    <Form.Select name="rating" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
-
+                    <Form.Select name="rating" defaultValue={'default'} onChange={handleInputChange}>
+                      <option value={"default"} disabled>Choose a rating</option>
                       <option key={1} value={1}>
                         ⭐
                       </option>
@@ -307,9 +338,9 @@ export default function ProductForm() {
                 </Col>
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Marca">
-                    <Form.Select name="brandName" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
-                      {brandss?.map((e) => {
+                    <Form.Select defaultValue={'default'} name="brandName" onChange={handleInputChange}>
+                    <option key="123" value="default" disabled name="brandName">Choose a brand</option>
+                      {brands?.map((e) => {
                         return (
                           <option key={e} value={e} name="brandName">
                             {e}
@@ -344,10 +375,11 @@ export default function ProductForm() {
                 <Col>
                   <FloatingLabel controlId="floatingCategoies" label="Category">
                     <Form.Select
+                      defaultValue={'default'}
                       onChange={handleInputChange}
                       name="categoryName"
                     >
-                      <option value={"NULL"}>Choose</option>
+                      <option key="123" value="default" disabled name="categoryName">Choose a category</option>
                       {categories?.map((e) => {
                         return (
                           <option key={e} value={e} name="categoryName">
@@ -388,7 +420,7 @@ export default function ProductForm() {
                 Submit
               </Button>
 
-              {response.length ? (
+              {response? (
                 <Success success={response} />
               ) : (
                 null

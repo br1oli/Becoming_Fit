@@ -46,11 +46,6 @@ const FormComplete = () => {
                         ...input,
                         name: user.name,
                         email: user.email,
-                        // zipCode: usuarios.zipCode? usuarios.zipCode: "",
-                        // country: usuarios.country? usuarios.country: "",
-                        // city: usuarios.city? usuarios.city: "",
-                        // phone: usuarios.phone? usuarios.phone: "",
-                        // adress: usuarios.adress? usuarios.adress: [],
                     })
                 } else {
                     console.log('NO ESTA AUTENTICADO')
@@ -198,7 +193,7 @@ const FormComplete = () => {
         <div>
           <label> Enter a phone number</label>
           <input
-            type="number"
+            type="text"
             value={input.phone}
             name="phone"
             autoComplete="off"
