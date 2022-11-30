@@ -182,16 +182,18 @@ const ProductDetail = (props) => {
           </p>
 
           <h5 className={styles.price}> $ US {product.price}</h5>
-
-          <div className={styles.buttons}>
+            
+            {product.outOfStock === false ? 
+              <div className={styles.buttons}>
             <button className={styles.add} onClick={handleChange} value="add">
-              ADD TO CART
-            </button>
-            <button onClick={handleFavorite} className={styles.like}>
-              ♥
-            </button>
-          </div>
-
+            ADD TO CART
+          </button>
+          <button onClick={handleFavorite} className={styles.like}>
+            ♥
+          </button>
+          </div> :
+          <p>Out of Stock</p>} 
+          
           <p>Free shipping & special prices for members only</p>
         </div>
       </div>
