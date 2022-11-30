@@ -8,7 +8,6 @@ class PaymentController {
   async getMercadoPagoLink(req, res) {
     const { userEmail } = req.query;
     try {
-      console.log(userEmail);
       let productList = await Cart.findAll({
         where: {
           userEmail: userEmail,

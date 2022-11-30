@@ -27,6 +27,7 @@ const {
   saveOrderInDB,
   changeOrderStatus,
   getOrderDetail,
+  getOrdersForUser,
 } = require("./order.controllers");
 const {
   getProducts,
@@ -34,7 +35,7 @@ const {
   updateProduct,
   deleteProductFromDb,
   changeProductStock,
-  logicalDeleteForProduct
+  logicalDeleteForProduct,
 } = require("./product.controllers");
 const { getDetail } = require("./detail.controller");
 const {
@@ -64,6 +65,7 @@ module.exports = {
   changeOrderStatus,
   saveOrderInDB,
   getOrderDetail,
+  getOrdersForUser,
   getProducts,
   createProduct,
   updateProduct,

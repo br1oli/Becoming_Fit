@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { UserProfile } = require("../../db");
 
 class PaymentService {
   constructor() {
@@ -20,12 +21,23 @@ class PaymentService {
     // recibimos las props que le mandamos desde el PaymentController
     const url = `${this.mercadoPagoUrl}/preferences?access_token=${this.tokensMercadoPago.test.access_token}`;
     // url a la que vamos a hacer los requests
-    console.log("Soy product List", productList)
+
+    let userData = await UserProfile.findOne({
+      where: { email: productList[0].email },
+    });
+
     const items = productList[0].cartProducts.map((e) => ({
+      email: productList[0].userEmail,
+      total: productList[0].total,
       id: e.product.id,
       title: e.product.name,
       unit_price: parseInt(e.product.price),
       quantity: e.amount,
+      userAdress: [
+        userData?.dataValues?.adress,
+        userData?.dataValues?.zipCode,
+        userData?.dataValues?.city,
+      ],
     }));
 
     const preferences = {
@@ -89,11 +101,8 @@ class PaymentService {
           "Content-Type": "application/json",
         },
       });
-      /* const response = await axios.post(purchaseProduct) {
-            ENVIAMOS EL REQUEST.DATA A UNA RUTA NUEVA
-      } */
+      /*      const response = await axios.post("/order"); */
 
-      console.log("soy el request de WEBHOOK", request.data);
       return request.data;
       // devolvemos la data que devuelve el POST
     } catch (e) {

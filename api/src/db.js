@@ -59,24 +59,18 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const {
-  Favorites,
   FavoritesProduct,
   Brand,
   CartProduct,
   Cart,
-  PaymentDetail,
-  PaymentMethod,
   Category,
   ProductInventory,
   Product,
-  PurchaseDetail,
   PurchasedProduct,
-  UserAdress,
-  UserPhone,
   UserProfile,
   User,
+  Order,
   Review,
-  ProductCategory
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -99,8 +93,8 @@ Category.hasMany(Product /* {foreignKey: 'categoryId'} */);
 Product.belongsTo(Category);
 
 //Asociacion Producto:Type
-// ProductCategory.hasMany(Product  {foreignKey: 'categoryId'} );
-// ProductbelongsToMany(ProductCategory);
+// ProductCategory.hasMany(Product /* {foreignKey: 'categoryId'} */);
+// Product.belongsTo(ProductCategory);
 
 //Asociacion Producto:ProductoInventario
 Product.hasOne(ProductInventory /* { through: "Product_ProductInventory" } */);
@@ -132,32 +126,36 @@ CartProduct.belongsTo(Product /* { through: "Product_CartProduct" } */);
 
 //---------------------------------------------Relacion usuario-Payment--------------------
 
-User.hasMany(UserAdress /* { foreignKey: "userIdAdress" } */);
-UserAdress.belongsTo(User);
+// User.hasMany(PaymentMethod /* { foreignKey: "userIdPayment" } */);
+// PaymentMethod.belongsTo(User);
 
-User.hasMany(PaymentMethod /* { foreignKey: "userIdPayment" } */);
-PaymentMethod.belongsTo(User);
-
-User.hasMany(PaymentDetail /*  { through: "User_PaymentDetail" } */);
-PaymentDetail.belongsTo(User /* { through: "User_PaymentDetail" } */);
+// User.hasMany(PaymentDetail /*  { through: "User_PaymentDetail" } */);
+// PaymentDetail.belongsTo(User /* { through: "User_PaymentDetail" } */);
 
 Product.hasMany(PurchasedProduct /* { through: "Product_PurchasedProduct" } */);
 PurchasedProduct.belongsTo(
   Product /* { through: "Product_PurchasedProduct" } */
 );
-
-PaymentDetail.hasOne(
-  PurchaseDetail /* {through: "PaymentDetail_PurchaseDetail"} */
-);
-PurchaseDetail.belongsTo(
-  PaymentDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+Order.hasMany(PurchasedProduct /* { through: "Product_PurchasedProduct" } */);
+PurchasedProduct.belongsTo(
+  Product /* { through: "Product_PurchasedProduct" } */
 );
 
-PurchaseDetail.hasMany(PurchasedProduct);
-PurchasedProduct.belongsTo(PurchaseDetail);
+User.hasMany(Order);
+Order.belongsTo(User);
 
-User.hasMany(PurchaseDetail);
-PurchaseDetail.belongsTo(User);
+// PaymentDetail.hasOne(
+//   PurchaseDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+// );
+// PurchaseDetail.belongsTo(
+//   PaymentDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+// );
+
+// PurchaseDetail.hasMany(PurchasedProduct);
+// PurchasedProduct.belongsTo(PurchaseDetail);
+
+User.hasMany(PurchasedProduct);
+PurchasedProduct.belongsTo(User);
 
 // relation user-profile user-phone
 User.hasOne(UserProfile);

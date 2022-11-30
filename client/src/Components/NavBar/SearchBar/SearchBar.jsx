@@ -27,6 +27,7 @@ const SearchInput = (props) => {
           type={"text"}
           name="products"
           value={input}
+          autoComplete="off"
           onChange={(e) => handleChange(e)}
           className={Styles.inputSearch}
         />

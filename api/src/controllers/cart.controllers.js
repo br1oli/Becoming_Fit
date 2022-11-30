@@ -82,8 +82,8 @@ const postProductToCart = async (req = request, res = response) => {
         createdCart &&
         createdCartProduct
       ) {
-        await product.addCartProduct(cartProduct);
         await cart.createCartProduct(cartProduct);
+        await product.addCartProduct(cartProduct);
       }
     }
 
