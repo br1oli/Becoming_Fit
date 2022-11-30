@@ -63,7 +63,7 @@ const Footer = () => {
                 <Link
                   id="Link"
                   className="text-secondary text-decoration-none"
-                  to="/contact"
+                  to="/emailUs"
                 >
                   Contact
                 </Link>
@@ -72,7 +72,7 @@ const Footer = () => {
                 <Link
                   id="Link"
                   className="text-secondary text-decoration-none"
-                  to="/contact"
+                  to="/aboutUs"
                 >
                   About Us
                 </Link>
