@@ -89,7 +89,9 @@ const createUserProfile = async (req = request, res = response) => {
     if (userExists !== null) {
       return res.status(200).send(userExists);
     } else {
-      const newUser = await UserProfile.create({
+      const userRelated = await User.findByPk(email);
+
+      const newUserProfile = await UserProfile.create({
         name,
         email,
         phone,
@@ -98,7 +100,12 @@ const createUserProfile = async (req = request, res = response) => {
         city,
         zipCode,
       });
-      return res.status(201).send(newUser);
+
+      if (userRelated) {
+        await userRelated.setUserProfile(newUserProfile);
+      }
+
+      return res.status(201).send(newUserProfile);
     }
   } catch (error) {
     res.status(500).json(error.message);
@@ -141,7 +148,6 @@ const getUserProfileByEmail = async (req = request, res = response) => {
     }
     res.status(200).send(usersFromDb.dataValues);
   } catch (error) {
-    console.log(error);
     res.status(500).json(error.message);
   }
 };

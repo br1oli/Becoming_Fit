@@ -60,7 +60,7 @@ export default function ShoppingCart({ toggleShow }) {
     e.preventDefault();
     if (reduxCart.token.length) {
       try {
-        if (      
+        if (
           !userProfile.name &&
           !userProfile.email &&
           !userProfile.adress &&
@@ -68,23 +68,24 @@ export default function ShoppingCart({ toggleShow }) {
           !userProfile.city &&
           !userProfile.zipCode &&
           !userProfile.phone &&
-          !userProfile.adress ) {
+          !userProfile.adress
+        ) {
           e.preventDefault();
           dispatch(paymentOrder(reduxCart.cartDB.userEmail));
           history.push("/complete");
-        } else if (      
+        } else if (
           userProfile.adress &&
           userProfile.country &&
           userProfile.city &&
           userProfile.zipCode &&
           userProfile.phone &&
-          userProfile.adress) {
-            dispatch(paymentOrder(reduxCart.cartDB.userEmail)); 
-          history.push("/formpayment")
-          
+          userProfile.adress
+        ) {
+          dispatch(paymentOrder(reduxCart.cartDB.userEmail));
           deleteStorage("shoppCart");
           dispatch(clearCart());
           dispatch(clearCartInDb(reduxCart.cartDB.id));
+          history.push("/formpayment");
         }
       } catch (error) {
         console.log(error);

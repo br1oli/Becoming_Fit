@@ -5,13 +5,12 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
-        allowNull: false,
         primaryKey: true,
-        defaultValues: UUIDV4,
+        defaultValue: DataTypes.UUIDV4,
       },
       name: { type: DataTypes.STRING, allowNull: false },
       quantity: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
