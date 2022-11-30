@@ -1,5 +1,4 @@
 const axios = require("axios");
-const { UserProfile } = require("../../db");
 
 class PaymentService {
   constructor() {
@@ -22,22 +21,13 @@ class PaymentService {
     const url = `${this.mercadoPagoUrl}/preferences?access_token=${this.tokensMercadoPago.test.access_token}`;
     // url a la que vamos a hacer los requests
 
-    let userData = await UserProfile.findOne({
-      where: { email: productList[0].email },
-    });
-
-    const items = productList[0].cartProducts.map((e) => ({
-      email: productList[0].userEmail,
-      total: productList[0].total,
+    const items = productList["0"].cartProducts.map((e) => ({
       id: e.product.id,
       title: e.product.name,
       unit_price: parseInt(e.product.price),
       quantity: e.amount,
-      userAdress: [
-        userData?.dataValues?.adress,
-        userData?.dataValues?.zipCode,
-        userData?.dataValues?.city,
-      ],
+      description: e.color,
+      category_id: e.size,
     }));
 
     const preferences = {
@@ -55,12 +45,12 @@ class PaymentService {
         // si estan en sandbox, aca tienen que poner el email de SU usuario de prueba
         phone: {
           area_code: "11",
-          number: "22223333",
+          number: productList.phone,
         },
         address: {
-          zip_code: "1111",
-          street_name: "False",
-          street_number: "123",
+          zip_code: productList.userAdress[1],
+          street_name: productList.userAdress[0],
+          street_number: productList.userAdress[0],
         },
       },
       payment_methods: {
@@ -101,7 +91,6 @@ class PaymentService {
           "Content-Type": "application/json",
         },
       });
-      /*      const response = await axios.post("/order"); */
 
       return request.data;
       // devolvemos la data que devuelve el POST

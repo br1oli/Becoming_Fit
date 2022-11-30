@@ -64,24 +64,30 @@ const changeOrderStatus = async (req = request, res = response) => {
 
 const saveOrderInDB = async (req = request, res = response) => {
   try {
-    let { date_created, items } = req.body;
+    let { email } = req.query;
+    let { date_created, items, payer } = req.body;
 
     let user = await User.findOne({
-      where: { email: items[0].email },
+      where: { email: email },
       include: {
         model: UserProfile,
       },
     });
 
-    let totalItems =
-      items?.length > 1
-        ? items.map((i) => i.quantity).reduce((acc, elem) => (acc += elem))
-        : items[0].quantity;
+    let totalItems = items?.length
+      ? items.map((i) => i.quantity).reduce((acc, elem) => (acc += elem))
+      : items.quantity;
+    let totalToPay = items?.length
+      ? items
+          .map((i) => i.quantity * i.unit_price)
+          .reduce((acc, elem) => (acc += elem))
+      : items.unit_price;
 
     let orderToSave = await Order.create({
       totalQuantity: totalItems,
-      totalToPay: items[0].total,
-      address: items[0].userAdress.join(", "),
+      totalToPay: totalToPay,
+      address: [payer.address.zip_code, payer.address.street_name].join(", "),
+      phone: payer.phone.number,
       shippingDate: date_created,
     });
 
@@ -91,8 +97,10 @@ const saveOrderInDB = async (req = request, res = response) => {
       let purchasedProduct = await PurchasedProduct.create({
         name: element.title,
         quantity: element.quantity,
+        color: element.description,
+        size: element.category_id,
         productId: element.id,
-        userEmail: items[0].email,
+        userEmail: email,
       });
 
       if (matchProduct) {

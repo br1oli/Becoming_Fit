@@ -6,17 +6,42 @@ import image from "../../../Utils/Title.png";
 import logo from "../../../Utils/LogoFondoBlanco.png";
 import UserSideBar from "../../NavBar/UserMenu/UserMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { postMail } from "../../../Redux/Actions/UsersActions";
+import {
+  clearCart,
+  clearCartInDb,
+  getOrder,
+  postMail,
+  saveOrder,
+} from "../../../Redux/Actions/UsersActions";
 import { useAuth0 } from "@auth0/auth0-react";
+import {
+  deleteStorage,
+  getStorage,
+} from "../../../localStorage/localStorageFunctions";
 
 function PaymentSuccess() {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
-  const userEmail = useSelector((state) => state.userStore)
-  
+  const userEmail = useSelector((state) => state.userStore);
+  const cartId = getStorage("cartId");
+  let orderData = getStorage("userOrder");
+
   useEffect(() => {
-    if(userEmail) dispatch(postMail(userEmail?.email))
-  },[userEmail])
+    const orderCreator = async () => {
+      if (userEmail.email) {
+        await dispatch(saveOrder(userEmail.email, orderData));
+        await dispatch(getOrder(userEmail.email));
+        dispatch(postMail(userEmail?.email));
+      }
+    };
+    orderCreator();
+    return () => {
+      dispatch(clearCartInDb(cartId));
+      dispatch(clearCart());
+      deleteStorage("cartId");
+      deleteStorage("userOrder");
+    };
+  }, [userEmail]);
 
   return (
     <div className={Styles.bodyContainer}>

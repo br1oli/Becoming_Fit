@@ -56,7 +56,7 @@ export default function ShoppingCart({ toggleShow }) {
     dispatch(clearCart());
   };
 
-  const handleBuyOrder = (e) => {
+  const handleBuyOrder = async (e) => {
     e.preventDefault();
     if (reduxCart.token.length) {
       try {
@@ -71,7 +71,7 @@ export default function ShoppingCart({ toggleShow }) {
           !userProfile.adress
         ) {
           e.preventDefault();
-          dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+          //dispatch(paymentOrder(reduxCart.cartDB.userEmail));
           history.push("/complete");
         } else if (
           userProfile.adress &&
@@ -82,9 +82,6 @@ export default function ShoppingCart({ toggleShow }) {
           userProfile.adress
         ) {
           dispatch(paymentOrder(reduxCart.cartDB.userEmail));
-          deleteStorage("shoppCart");
-          dispatch(clearCart());
-          dispatch(clearCartInDb(reduxCart.cartDB.id));
           history.push("/formpayment");
         }
       } catch (error) {
