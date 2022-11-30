@@ -60,11 +60,28 @@ export default function ShoppingCart({ toggleShow }) {
     e.preventDefault();
     if (reduxCart.token.length) {
       try {
-        if (!userProfile.adress || !userProfile.phone) {
+        if (      
+          !userProfile.name &&
+          !userProfile.email &&
+          !userProfile.adress &&
+          !userProfile.country &&
+          !userProfile.city &&
+          !userProfile.zipCode &&
+          !userProfile.phone &&
+          !userProfile.adress ) {
           e.preventDefault();
-          history.push("/complete");
-        } else {
           dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+          history.push("/complete");
+        } else if (      
+          userProfile.adress &&
+          userProfile.country &&
+          userProfile.city &&
+          userProfile.zipCode &&
+          userProfile.phone &&
+          userProfile.adress) {
+            dispatch(paymentOrder(reduxCart.cartDB.userEmail)); 
+          history.push("/formpayment")
+          
           deleteStorage("shoppCart");
           dispatch(clearCart());
           dispatch(clearCartInDb(reduxCart.cartDB.id));
