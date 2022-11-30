@@ -67,3 +67,9 @@
 .current {
     color: rgb(31, 93, 185);
 }
+
+@media screen and (max-width: 1040px) {
+    .numberLi {
+        display: none;
+    }
+}

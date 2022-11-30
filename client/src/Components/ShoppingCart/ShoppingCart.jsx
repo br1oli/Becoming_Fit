@@ -13,8 +13,6 @@ import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { deleteStorage } from "../../localStorage/localStorageFunctions";
 import { useEffect } from "react";
-import Success from "../Success/Success";
-import Error from "../Error/Error";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 
@@ -62,11 +60,28 @@ export default function ShoppingCart({ toggleShow }) {
     e.preventDefault();
     if (reduxCart.token.length) {
       try {
-        if (!userProfile.adress || !userProfile.phone) {
+        if (      
+          !userProfile.name &&
+          !userProfile.email &&
+          !userProfile.adress &&
+          !userProfile.country &&
+          !userProfile.city &&
+          !userProfile.zipCode &&
+          !userProfile.phone &&
+          !userProfile.adress ) {
           e.preventDefault();
-          history.push("/complete");
-        } else {
           dispatch(paymentOrder(reduxCart.cartDB.userEmail));
+          history.push("/complete");
+        } else if (      
+          userProfile.adress &&
+          userProfile.country &&
+          userProfile.city &&
+          userProfile.zipCode &&
+          userProfile.phone &&
+          userProfile.adress) {
+            dispatch(paymentOrder(reduxCart.cartDB.userEmail)); 
+          history.push("/formpayment")
+          
           deleteStorage("shoppCart");
           dispatch(clearCart());
           dispatch(clearCartInDb(reduxCart.cartDB.id));
@@ -158,9 +173,6 @@ export default function ShoppingCart({ toggleShow }) {
             <AddShoppingCartIcon fontSize="large" />
           </div>
           <p className={styles.emptyCart}>You haven't selected products yet</p>
-          {reduxCart.success.length ? (
-            <Success success={reduxCart.success} />
-          ) : null}
           <Link to={"/home"}>
             <button className={styles.btnHome} onClick={toggleShow}>
               Start shopping!
@@ -205,9 +217,6 @@ export default function ShoppingCart({ toggleShow }) {
             <p className={styles.emptyCart}>
               You haven't selected products yet
             </p>
-            {reduxCart.success.length ? (
-              <Success success={reduxCart.success} />
-            ) : null}
             <Link to={"/home"}>
               <button className={styles.btnHome} onClick={toggleShow}>
                 Start shopping!

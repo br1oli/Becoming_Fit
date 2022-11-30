@@ -402,6 +402,7 @@ export function paymentOrder(userEmail) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/payment/new?userEmail=${userEmail}`);
+      console.log("🚀 ~ file: UsersActions.jsx ~ line 348 ~ paymentOrder ~ paymentOrder", response.data)
       return dispatch({ type: PAYMENT_ORDER, payload: response.data.url });
     } catch (error) {
       return dispatch({ type: ERROR_PAYMENT, payload: error.response.data });
@@ -638,13 +639,13 @@ export function postMail(mail) {
         payload: response.data,
       });
     } catch (error) {
-      return dispatch({
-        type: POST_MAIL,
-        payload: error.response.data,
-      });
-    }
-  };
-}
+        return dispatch({
+          type: POST_MAIL,
+          payload: error.response.data
+        });
+    };
+  }
+};
 
 export function postMailDeliver(mail) {
   return async function (dispatch) {
@@ -657,62 +658,7 @@ export function postMailDeliver(mail) {
       });
     } catch (error) {
       return dispatch({
-        type: POST_MAIL_DELIVER,
-        payload: error.response.data,
-      });
-    }
-  };
-}
-
-//Product category actions
-export function postCategory(input) {
-  return async function (dispatch) {
-    try {
-      const response = await axios.post(`/category?name=${input}`);
-      return dispatch({
-        type: POST_NEW_PRODUCT_CATEGORY,
-        payload: response.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: POST_NEW_PRODUCT_CATEGORY,
-        payload: error
-      });
-    }
-  };
-}
-
-export function getCategories() {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(`/category` 
-      );
-      return dispatch({
-        type: GET_PRODUCT_CATEGORIES,
-        payload: response.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: GET_PRODUCT_CATEGORIES,
-        payload: error
-      });
-    }
-  };
-}
-
-export function deleteCategory(input) {
-  return async function (dispatch) {
-    try {
-      console.log("Entroo");
-      const response = await axios.delete(`/category?id=${input}`
-      );
-      return dispatch({
-        type: DELETE_PRODUCT_CATEGORY,
-        payload: response.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: DELETE_PRODUCT_CATEGORY,
+        type: POST_MAIL,
         payload: error.response.data,
       });
     }

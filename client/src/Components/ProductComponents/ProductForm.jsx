@@ -108,6 +108,7 @@ export default function ProductForm() {
   const gender = [...new Set(allProducts.map((e) => e.gender))];
   const response = useSelector((state) => state.backResponse);
 
+  
   const handleInputChange = (e) => {
     if (e.target.name === "size") {
       setInput((prev) => ({
