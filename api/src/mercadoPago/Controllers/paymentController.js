@@ -1,4 +1,5 @@
-const { Cart, CartProduct, Product, Brand } = require("../../db");
+const axios = require("axios");
+const { Cart, CartProduct, Product, Brand, UserProfile } = require("../../db");
 
 class PaymentController {
   constructor(paymentService) {
@@ -8,6 +9,10 @@ class PaymentController {
   async getMercadoPagoLink(req, res) {
     const { userEmail } = req.query;
     try {
+      let userData = await UserProfile.findOne({
+        where: { email: userEmail },
+      });
+
       let productList = await Cart.findAll({
         where: {
           userEmail: userEmail,
@@ -23,14 +28,23 @@ class PaymentController {
         },
       });
 
+      productList = {
+        ...productList,
+        phone: userData.phone,
+        userAdress: [
+          userData?.dataValues?.adress,
+          userData?.dataValues?.zipCode,
+          userData?.dataValues?.city,
+        ],
+      };
+
       const checkout = await this.paymentService.createPaymentMercadoPago(
         productList
       );
 
       // return res.redirect(checkout.init_point);
       //si es exitoso los llevamos a la url de Mercado Pago
-
-      return res.json({ url: checkout.init_point });
+      return res.json({ url: checkout.init_point, data: checkout });
       // o si queres devolver la url al front
     } catch (err) {
       // si falla devolvemos un status 500
@@ -48,7 +62,6 @@ class PaymentController {
         body += chunk.toString();
       });
       req.on("end", () => {
-        console.log(body, "webhook response");
         res.end("ok");
       });
     }

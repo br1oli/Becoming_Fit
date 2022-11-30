@@ -49,6 +49,8 @@ import {
   CREATE_USER_PROFILE,
   UPDATE_USER_PROFILE,
   DELETE_USER_PROFILE,
+  CREATE_USER_ORDER,
+  GET_USER_ORDER,
 
   //Favorites actions
   ADD_PRODUCT_TO_FAVORITES,
@@ -62,14 +64,14 @@ import {
   EDIT_REVIEW,
   REMOVE_ONE_REVIEW,
 
-   //Mailing
-   POST_MAIL,
-   POST_MAIL_DELIVER,
+  //Mailing
+  POST_MAIL,
+  POST_MAIL_DELIVER,
 
-   //New Type product
-   POST_NEW_PRODUCT_CATEGORY,
-   GET_PRODUCT_CATEGORIES,
-   DELETE_PRODUCT_CATEGORY
+  //New Type product
+  POST_NEW_PRODUCT_CATEGORY,
+  GET_PRODUCT_CATEGORIES,
+  DELETE_PRODUCT_CATEGORY,
 } from "./Const";
 
 // ----- PRODUCTS
@@ -133,11 +135,11 @@ export function postProduct(payload) {
         type: POST_PRODUCT,
         payload: response.data,
       });
-    } catch (error) {  
+    } catch (error) {
       return dispatch({
         type: POST_PRODUCT,
-        payload: error.response.data
-      })
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -145,16 +147,16 @@ export function postProduct(payload) {
 export function editProduct(payload) {
   return async (dispatch) => {
     try {
-      const response = await axios.put(URL_PRODUCTS, payload)
+      const response = await axios.put(URL_PRODUCTS, payload);
       return dispatch({
         type: EDIT_PRODUCT,
         payload: response.data,
       });
-    } catch (error) {  
+    } catch (error) {
       return dispatch({
         type: EDIT_PRODUCT,
-        payload: error.response.data
-      })
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -167,11 +169,11 @@ export function deleteProduct(payload) {
         type: DELETE_PRODUCT,
         payload: response.data,
       });
-    } catch (error) {  
+    } catch (error) {
       return dispatch({
         type: DELETE_PRODUCT,
-        payload: error.response.data
-      })
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -184,11 +186,11 @@ export function changeProductStock(payload) {
         type: CHANGE_PRODUCT_STOCK,
         payload: response.data,
       });
-    } catch (error) {  
+    } catch (error) {
       return dispatch({
         type: CHANGE_PRODUCT_STOCK,
-        payload: error.response.data
-      })
+        payload: error.response.data,
+      });
     }
   };
 }
@@ -402,13 +404,47 @@ export function paymentOrder(userEmail) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/payment/new?userEmail=${userEmail}`);
-      console.log("🚀 ~ file: UsersActions.jsx ~ line 348 ~ paymentOrder ~ paymentOrder", response.data)
-      return dispatch({ type: PAYMENT_ORDER, payload: response.data.url });
+
+      return dispatch({ type: PAYMENT_ORDER, payload: response.data });
     } catch (error) {
       return dispatch({ type: ERROR_PAYMENT, payload: error.response.data });
     }
   };
 }
+
+//Create user order
+export const saveOrder = (email, values) => {
+  return async function (dispatch) {
+    try {
+      let orderResponse = await axios.post(`/order?email=${email}`, values);
+      return dispatch({
+        type: CREATE_USER_ORDER,
+        payload: orderResponse.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: CREATE_USER_ORDER,
+        payload: error.response.data,
+      });
+    }
+  };
+};
+export const getOrder = (email) => {
+  return async function (dispatch) {
+    try {
+      let orderResponse = await axios.get(`/order?email=${email}`);
+      return dispatch({
+        type: GET_USER_ORDER,
+        payload: orderResponse.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: GET_USER_ORDER,
+        payload: error.response.data,
+      });
+    }
+  };
+};
 
 // User actions
 
@@ -632,8 +668,7 @@ export function removeAllProductsFromFavorites() {
 export function postMail(mail) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`/mail`, {email: mail}
-      );
+      const response = await axios.post(`/mail`, { email: mail });
       return dispatch({
         type: POST_MAIL,
         payload: response.data,
@@ -650,8 +685,7 @@ export function postMail(mail) {
 export function postMailDeliver(mail) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`/mailDeliver`, mail
-      );
+      const response = await axios.post(`/mailDeliver`, mail);
       return dispatch({
         type: POST_MAIL_DELIVER,
         payload: response.data,
@@ -677,7 +711,7 @@ export function postCategory(input) {
     } catch (error) {
       return dispatch({
         type: POST_NEW_PRODUCT_CATEGORY,
-        payload: error
+        payload: error,
       });
     }
   };
@@ -686,8 +720,7 @@ export function postCategory(input) {
 export function getCategories() {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`/category` 
-      );
+      const response = await axios.get(`/category`);
       return dispatch({
         type: GET_PRODUCT_CATEGORIES,
         payload: response.data,
@@ -695,7 +728,7 @@ export function getCategories() {
     } catch (error) {
       return dispatch({
         type: GET_PRODUCT_CATEGORIES,
-        payload: error
+        payload: error,
       });
     }
   };
@@ -704,9 +737,7 @@ export function getCategories() {
 export function deleteCategory(input) {
   return async function (dispatch) {
     try {
-      console.log("Entroo");
-      const response = await axios.delete(`/category?id=${input}`
-      );
+      const response = await axios.delete(`/category?id=${input}`);
       return dispatch({
         type: DELETE_PRODUCT_CATEGORY,
         payload: response.data,

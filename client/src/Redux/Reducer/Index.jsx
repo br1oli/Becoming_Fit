@@ -63,6 +63,8 @@ import {
   UPDATE_USER_PROFILE,
   DELETE_USER_PROFILE,
   UPDATE_USER,
+  CREATE_USER_ORDER,
+  GET_USER_ORDER,
 
   //Mailing
   POST_MAIL,
@@ -71,7 +73,7 @@ import {
   //New types products
   POST_NEW_PRODUCT_CATEGORY,
   GET_PRODUCT_CATEGORIES,
-  DELETE_PRODUCT_CATEGORY
+  DELETE_PRODUCT_CATEGORY,
 } from "../Actions/Const";
 
 const dataStorage = getStorage("shoppCart");
@@ -83,6 +85,7 @@ const initialState = {
   cartDbResponse: "",
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
   paymentLink: "",
+  userOrders: [],
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -105,7 +108,7 @@ const initialState = {
 
   //type products
   categories: [],
-  favorites: []
+  favorites: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -421,6 +424,7 @@ function rootReducer(state = initialState, action) {
     case POST_TO_CART_DB:
       return { ...state, cartDbResponse: action.payload };
     case GET_CART_DB:
+      saveStorage("cartId", action.payload.id);
       return {
         ...state,
         cartDB: action.payload,
@@ -445,10 +449,17 @@ function rootReducer(state = initialState, action) {
       };
 
     case PAYMENT_ORDER:
+      saveStorage("userOrder", action.payload.data);
       return {
         ...state,
-        paymentLink: action.payload,
+        paymentLink: action.payload.url,
       };
+
+    case CREATE_USER_ORDER:
+      return { ...state, backResponse: action.payload };
+    case GET_USER_ORDER:
+      return { ...state, userOrders: action.payload };
+
     //Users
     case SET_TOKEN:
       return {
@@ -560,16 +571,16 @@ function rootReducer(state = initialState, action) {
         reviews: removeOneReview,
       };
 
-  //Mailing functions
+    //Mailing functions
     case POST_MAIL:
       return {
         ...state,
       };
-    
-    case POST_MAIL_DELIVER: 
-    return {
-      ...state
-    }
+
+    case POST_MAIL_DELIVER:
+      return {
+        ...state,
+      };
     //Product types functions
     case POST_NEW_PRODUCT_CATEGORY:
       return {
@@ -577,10 +588,10 @@ function rootReducer(state = initialState, action) {
         categories: [...state.categories, action.payload],
       };
     case GET_PRODUCT_CATEGORIES:
-    return {
-      ...state,
-      categories:  action.payload,
-    };
+      return {
+        ...state,
+        categories: action.payload,
+      };
     case DELETE_PRODUCT_CATEGORY:
       const deleteProductCategory = state.categories.filter(
         (item) => item.id !== action.payload.id
@@ -589,8 +600,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         categories: deleteProductCategory,
       };
-    
-   
 
     default:
       return state;
