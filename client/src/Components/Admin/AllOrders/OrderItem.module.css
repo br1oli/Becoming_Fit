@@ -1,20 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
 .mainContainer{
-    width: 30rem;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    /* margin: auto; */
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 0 10px 0px rgb(202, 202, 202);
-    padding:  0rem;
-    border-radius: 3px;
-    margin-bottom: 2rem;
+    border: 1px solid rgb(117, 116, 116);
 }
 .mainContainer:hover{
-    border: 1px solid rgb(117, 116, 116);
+    border: 1px solid rgb(0, 0, 0);
 }
 
 .image{
@@ -24,7 +14,7 @@
 
 .itemContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     border: 1px solid gray;
 }
 
@@ -35,6 +25,8 @@
 .orderInfo{
     display: flex;
     flex-direction: row;
+    color: green;
+    font-size: large
 }
 
 @media screen and (max-width: 740px) {

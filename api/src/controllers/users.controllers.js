@@ -160,12 +160,12 @@ const updateUserProfile = async (req = request, res = response) => {
 
   try {
     const updateUserProfile = await targetUserProfile.update({
-      name: name,
-      country: country,
-      city: city,
-      zipCode: zipCode,
-      phone: phone,
-      adress: adress,
+      name: name? name : targetUserProfile.name,
+      country: country? country: targetUserProfile.country,
+      city: city? city : targetUserProfile.city,
+      zipCode: zipCode? zipCode : targetUserProfile.zipCode,
+      phone: phone? phone : targetUserProfile.zipCode,
+      adress: adress? adress : targetUserProfile.adress,
     });
 
     await updateUserProfile.save();

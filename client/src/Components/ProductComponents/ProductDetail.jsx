@@ -83,7 +83,7 @@ const ProductDetail = (props) => {
         }
       } else {
         //cambiar alert por pop up
-        return alert("Choose color and size, please.");
+        return alert("Choose amount, color and size.");
       }
 
       //si no hay un token, aca maneja el store y guarda los productos en el local storage
@@ -101,7 +101,7 @@ const ProductDetail = (props) => {
         setAmount(0);
       }
     } else {
-      return alert("Choose color and size, please.");
+      return alert("Choose amount, color and size.");
     }
   };
 
@@ -321,4 +321,4 @@ const ProductDetail = (props) => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetail;
