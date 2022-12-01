@@ -30,3 +30,23 @@
     margin-bottom: 5rem;
 
 }
+
+@media screen and (max-width: 740px) {
+    .mainContainer{
+        display: wrap;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+    }
+
+    .image{
+        width: 60vw;
+        height: 17rem;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+}

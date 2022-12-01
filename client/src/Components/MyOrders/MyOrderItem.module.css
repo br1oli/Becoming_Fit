@@ -24,8 +24,17 @@
 
 .itemContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     border: 1px solid gray;
+}
+
+.itemContainer div{
+    width: 5rem;
+    height: 15rem;
+    border: 1px solid gray;
+    margin: 0.5rem;
 }
 
 .itemContainer img{
@@ -34,16 +43,20 @@
 
 .orderInfo{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 @media screen and (max-width: 740px) {
     .mainContainer{
-        display: flex;
+        width: 25rem;
+        display: wrap;
+        flex-wrap: wrap;
         min-width: 75vw;
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        padding: 0;
+        margin: 1rem;
     }
 
     .image{

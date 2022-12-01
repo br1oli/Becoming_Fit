@@ -21,13 +21,13 @@ const MyOrders = ( ) => {
     },[userEmail])
 
     const userOrders = useSelector((state) => state.userOrders)
-    console.log(userOrders);
 
     return(
         <div>
             <NavBar/>
 
             <div className={styles.mainContainer}>
+                
                 {
                     userOrders?.length  ? (
 
