@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+.btn {
+    background: darken(light, 10%);
+    background-color: rgb(187, 186, 186);
+    width: 14rem;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: white;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
+
+.itemContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid gray;
+}
+
+.itemContainer img{
+    width: 10rem;
+}
+
+.orderContainer p{
+     border: 1px solid gray;
+     padding: 0;
+}
