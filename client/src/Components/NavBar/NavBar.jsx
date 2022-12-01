@@ -44,7 +44,7 @@ const NavBar = () => {
             {userStore && userStore.adminPermissions ? (
               <li>
                 <Link to="/admin">
-                  <FaUserTie />
+                  <FaUserTie size={20} color={'white'}  />
                 </Link>
               </li>
             ) : null}

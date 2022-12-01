@@ -53,6 +53,28 @@
   align-items: center;
   justify-content: center;
   font-size: 10px;
+  
+}
+
+.add {
+  background: darken(light, 10%);
+  background-color: black;
+  width: 13rem;
+  padding: 10px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  margin: 3px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  cursor: pointer;
+}
+.add:hover {
+  background: #404040;
+  color: aliceblue;
+  transition: all 0.2s ease-in-out;
 }
 
 

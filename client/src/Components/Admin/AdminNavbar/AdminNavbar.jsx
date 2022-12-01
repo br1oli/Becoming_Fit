@@ -5,6 +5,7 @@ import AdminSideBar from '../AdminSideBar.jsx/AdminSideBar'
 import { FaTimes, FaBars } from 'react-icons/fa'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { HiShoppingBag } from 'react-icons/hi'
+import { AiOutlineBars } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
  
 
@@ -27,19 +28,25 @@ const AdminNavbar = ({handleClick}) => {
 
        <div className='AdminSideBar'>
           <li>
-            <button className={Styles.buttonsAdmin} onClick={handleClick} value="users">
+            <button className='buttonsAdmin' onClick={handleClick} value="users">
               <BsFillPersonFill /> Users
             </button>
           </li>
           <br />
           <li>
-            <button className={Styles.buttonsAdmin} onClick={handleClick} value="products">
+            <button className='buttonsAdmin' onClick={handleClick} value="products">
               <HiShoppingBag /> Products
+            </button>
+          </li>
+
+          <li>
+            <button className='buttonsAdmin' onClick={handleClick} value="orders">
+              <AiOutlineBars /> Orders
             </button>
           </li>
           <li>
             <br />
-            <button className={Styles.buttonsAdmin}>
+            <button className='buttonsAdmin'>
               <Link to='/home'>
                 Back to home
               </Link>
@@ -69,6 +76,12 @@ const AdminNavbar = ({handleClick}) => {
           <li>
             <button className='buttonsAdmin' onClick={handleClick} value="products">
               <HiShoppingBag /> Products
+            </button>
+          </li>
+          <br />
+          <li>
+            <button className='buttonsAdmin' onClick={handleClick} value="orders">
+              <AiOutlineBars /> Orders
             </button>
           </li>
           <li>
