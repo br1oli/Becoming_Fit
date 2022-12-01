@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserPermissions } from "../../../Redux/Actions/AdminActions";
 
-export function UserCard({ email, isBanned, adminPermissions, resetPassword }) {
+export function UserListCard({ email, isBanned, adminPermissions, resetPassword }) {
   let dispatch = useDispatch();
 
   const handleClick = (e) => {
@@ -81,7 +81,7 @@ export function UserCard({ email, isBanned, adminPermissions, resetPassword }) {
       </div>
       <div>
         <button value="banned" onClick={handleClick}>
-          Bann User
+          Ban User
         </button>
         <button value="roll" onClick={handleClick}>
           Change Roll
@@ -95,7 +95,7 @@ export function UserCard({ email, isBanned, adminPermissions, resetPassword }) {
 }
 
 
-export const Customers = () => {
+export const UserList = () => {
   let users = useSelector((state) => state.usersStore);
 
   return (
@@ -105,7 +105,7 @@ export const Customers = () => {
             //este sort los va a renderizar siempre ordenados alfabeticamente
             .sort((a, b) => a.email.localeCompare(b.email))
             .map((user, index) => (
-              <UserCard
+              <UserListCard
                 key={index}
                 email={user.email}
                 isBanned={user.isBanned}

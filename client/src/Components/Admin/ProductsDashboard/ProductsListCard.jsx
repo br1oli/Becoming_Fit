@@ -13,7 +13,7 @@ const ProductsListCard = (props) => {
     const handleEditProduct = (e) => {
         dispatch(getProductDetail(e.target.value))
         setTimeout(() => {
-          history.push("/admin/products/edit") 
+          history.push("/admin") 
         }, 1000)        
     }
 

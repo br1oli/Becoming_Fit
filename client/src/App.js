@@ -68,9 +68,6 @@ function App() {
     <BrowserRouter>
     
       <Route exact path="/admin" component={AdminDashboardUI} />
-      <Route exact path="/admin/products/list" component={ProductsList} />
-      <Route exact path="/admin/products/create" component={ProductForm} />
-      <Route exact path="/admin/products/edit" component={EditProductForm} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/formpayment" component={FormPayment}/>
       <Route exact path="/complete" component={FormComplete} />
