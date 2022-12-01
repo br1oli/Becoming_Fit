@@ -174,7 +174,7 @@ const Profile = () => {
     //   return alert("Incompletes fields.");
     // }
     await dispatch(getUserProfileByEmail(user.email));
-    await dispatch(updateUserProfile(usuarios.email, input));
+    await dispatch(updateUserProfile(user.email, input));
     await Cargando();
     setInput({
       name: "",

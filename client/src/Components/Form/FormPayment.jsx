@@ -135,7 +135,7 @@ const FormPayment = () => {
   ) : (
     isAuthenticated && (
       <div>
-        <h3>Enter the required data</h3>
+        <h3>Would you like to update your data for this purchase?</h3>
 
         <form onSubmit={handleSubmit}>
           <div>
