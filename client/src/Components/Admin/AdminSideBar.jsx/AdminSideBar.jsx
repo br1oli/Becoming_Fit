@@ -19,16 +19,17 @@ const AdminSideBar = ({handleClick}) => {
       </div>
 
       <div className={Styles.contentContainer}>
-        <ul>
+        <ul className={Styles.contentContainer}>
           <br />
+          <div>
           <li>
-            <button onClick={handleClick} value="users">
+            <button className={Styles.buttonsAdmin} onClick={handleClick} value="users">
               <BsFillPersonFill /> Users
             </button>
           </li>
           <br />
           <li>
-            <button onClick={handleClick} value="products">
+            <button className={Styles.buttonsAdmin} onClick={handleClick} value="products">
               <HiShoppingBag /> Products
             </button>
           </li>
@@ -41,12 +42,13 @@ const AdminSideBar = ({handleClick}) => {
           <br />
           <li>
             <br />
-            <button>
+            <button className={Styles.buttonsAdmin}>
               <Link to='/home'>
                 Back to home
               </Link>
             </button>
           </li>
+          </div>
         </ul>
       </div>
     </div>

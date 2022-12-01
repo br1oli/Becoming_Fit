@@ -25,7 +25,7 @@ const AdminDashboardUI = () => {
   
   return (
     <div className={Styles.dashboardContainer}>
-      <Navbar />
+      <Navbar handleClick={handleClick} />
       <div className={Styles.dashboardBody}>
         <div className={Styles.sideContainer}>
           <AdminSideBar handleClick={handleClick}/>
