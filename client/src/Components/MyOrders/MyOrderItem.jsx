@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "./MyOrderItem.module.css";
-
+import MyOrderDetail from "./MyOrderDetail";
 
 const MyOrderItem = ({data}) => {
 
@@ -16,8 +16,6 @@ const MyOrderItem = ({data}) => {
                             <div key={index}>
                                 <img src={products.product.image}/>
                                 <p>{products.product.name}</p>
-                                <p>{products.size}</p>
-                                <p>{products.color}</p>
                             </div>
                         ))
                     }
@@ -30,13 +28,9 @@ const MyOrderItem = ({data}) => {
                     <p>{data?.address}</p>
                     <p>{data?.totalQuantity}</p>
                     <p className={styles.price}>US {data?.totalToPay}</p>
+                    <br/>
 
-                    <NavLink to={`/order/${data?.id}`}>
-                        <button value="add" className={styles.add}>
-                            GO TO DETAIL
-                        </button>
-                    </NavLink>
-
+                    <MyOrderDetail data={data}/>
                 </div>
 
             </div>

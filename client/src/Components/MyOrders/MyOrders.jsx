@@ -21,6 +21,7 @@ const MyOrders = ( ) => {
     },[userEmail])
 
     const userOrders = useSelector((state) => state.userOrders)
+    console.log(userOrders);
 
     return(
         <div>
@@ -28,8 +29,7 @@ const MyOrders = ( ) => {
 
             <div className={styles.mainContainer}>
                 {
-                    
-                    userOrders?.length ? (
+                    userOrders?.length  ? (
 
                      <div>
                         <Link to={`/home`}>Go back /Home</Link>
@@ -39,7 +39,7 @@ const MyOrders = ( ) => {
 
                         <div className={styles.cardsContainer}>
                             { 
-                                userOrders?.map((order, index) => (
+                                userOrders.length && userOrders?.map((order, index) => (
                                     <MyOrderItem key={index} data={order} />
                                 ))
                             }
