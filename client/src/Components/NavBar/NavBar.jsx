@@ -8,7 +8,7 @@ import UserSideBar from "./UserMenu/UserMenu.jsx";
 import Filters from "../Filters/Filters.jsx";
 
 import { FaBars, FaTimes, FaUserTie } from "react-icons/fa";
-import { useSelector } from "react-redux"; 2
+import { useSelector } from "react-redux"; 
 
 const NavBar = () => {
   const [click, setClick] = useState(false);
