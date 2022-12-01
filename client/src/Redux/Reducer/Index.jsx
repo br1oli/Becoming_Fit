@@ -137,12 +137,15 @@ function rootReducer(state = initialState, action) {
         ),
       };
     case GET_NAME_PRODUCTS:
+      const filteredByDeletedInNameCase = action.payload.filter(
+        (p) => p.isDeleted !== true
+      );
       return {
         ...state,
-        products: action.payload,
+        products: filteredByDeletedInNameCase,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...action.payload].slice(0, 6),
+        currentProducts: [...filteredByDeletedInNameCase].slice(0, 6),
       };
     case GET_NAME_PRODUCTS_ERROR:
       return {

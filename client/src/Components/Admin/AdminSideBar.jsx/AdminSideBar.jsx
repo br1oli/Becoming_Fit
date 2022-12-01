@@ -8,7 +8,8 @@ import { HiShoppingBag } from "react-icons/hi";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { IoAddCircleSharp } from "react-icons/io5";
 
-const AdminSideBar = () => {
+const AdminSideBar = ({handleClick}) => {
+
   return (
     <div className={Styles.sideBarContainer}>
       <div className={Styles.adminPicContainer}>
@@ -19,26 +20,25 @@ const AdminSideBar = () => {
 
       <div className={Styles.contentContainer}>
         <ul>
-          <li>
-            <MdDashboard /> Dashboard
-          </li>
-          <br />
-          <Link to={"/admin"}>
-            <li>
-              <BsFillPersonFill /> Customers
-            </li>
-          </Link>
           <br />
           <li>
-            <HiShoppingBag /> Products
+            <button onClick={handleClick} value="users">
+              <BsFillPersonFill /> Users
+            </button>
           </li>
           <br />
           <li>
-            <RiAccountCircleFill /> Account
+            <button onClick={handleClick} value="products">
+              <HiShoppingBag /> Products
+            </button>
           </li>
-          <br />
           <li>
-            <IoAddCircleSharp /> Register Admins
+            <br />
+            <button>
+              <Link to='/home'>
+                Back to home
+              </Link>
+            </button>
           </li>
         </ul>
       </div>
