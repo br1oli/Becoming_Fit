@@ -69,9 +69,9 @@ class PaymentService {
         // la cantidad de cuotas que van a aparecer por defecto
       },
         back_urls: {
-          success: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/purchasesuccess` : "http://localhost:3000/paymentsuccess",
-          failure: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/purchasesailiure` :"http://localhost:3000/purchasefailiure",
-          pending: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/purchasesending` :"http://localhost:3000/paymentfailure",
+          success: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/paymentsuccess` : "http://localhost:3000/paymentsuccess",
+          pending: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/paymentpending` :"http://localhost:3000/paymentpending",
+          failure: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/paymentfailure` :"http://localhost:3000/paymentfailure",
       },
       //   success:    process.env.APP_PAYMENTURL + "/paymentsucces" || "http://localhost:3000/paymentsucces",
       //   // url que va a redireccionar si sale todo bien
