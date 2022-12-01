@@ -31,21 +31,19 @@ function PaymentSuccess() {
       if (userEmail.email) {
         await dispatch(saveOrder(userEmail.email, orderData));
         await dispatch(getOrder(userEmail.email));
-        dispatch(postMail(userEmail?.email));
+        await dispatch(postMail(userEmail?.email));
+        deleteStorage("userOrder");
       }
     };
     orderCreator();
     return () => {
       dispatch(clearCartInDb(cartId));
       dispatch(clearCart());
-      deleteStorage("cartId");
-      deleteStorage("userOrder");
     };
   }, [userEmail]);
 
   return (
     <div className={Styles.bodyContainer}>
-      
       <div className={Styles.navContainer}>
         <div>
           <img

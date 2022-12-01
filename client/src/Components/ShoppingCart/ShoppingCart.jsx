@@ -67,8 +67,7 @@ export default function ShoppingCart({ toggleShow }) {
           !userProfile.country &&
           !userProfile.city &&
           !userProfile.zipCode &&
-          !userProfile.phone &&
-          !userProfile.adress
+          !userProfile.phone
         ) {
           e.preventDefault();
           //dispatch(paymentOrder(reduxCart.cartDB.userEmail));

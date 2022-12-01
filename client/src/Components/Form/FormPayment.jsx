@@ -13,7 +13,6 @@ import {
   getUserProfileByEmail,
   updateUserProfile,
 } from "../../Redux/Actions/UsersActions";
-import { deleteStorage } from "../../localStorage/localStorageFunctions";
 
 const FormPayment = () => {
   const usuarios = useSelector((state) => state.userProfile);
@@ -47,19 +46,19 @@ const FormPayment = () => {
     adress: "",
   });
 
-  function validate(input) {
-    let errors = {};
-    if (!input.name) {
-      errors.name = "Enter a name";
-    } else if (!input.city) {
-      errors.platforms = "Enter a valid city";
-    } else if (!input.adress) {
-      errors.platforms = "Enter a valid adress";
-    } else if (!input.phone) {
-      errors.platforms = "Enter a valid phone number";
-    }
-    return errors;
-  }
+  // function validate(input) {
+  //   let errors = {};
+  //   if (!input.name) {
+  //     errors.name = "Enter a name";
+  //   } else if (!input.city) {
+  //     errors.platforms = "Enter a valid city";
+  //   } else if (!input.adress) {
+  //     errors.platforms = "Enter a valid adress";
+  //   } else if (!input.phone) {
+  //     errors.platforms = "Enter a valid phone number";
+  //   }
+  //   return errors;
+  // }
 
   const Cargando = async () => {
     setTimeout(() => {
@@ -119,11 +118,11 @@ const FormPayment = () => {
       [e.target.name]: e.target.value,
     });
 
-    let errorObj = validate({
-      ...inputpayment,
-      [e.target.name]: e.target.value,
-    });
-    setErrorspayment(errorObj);
+    // let errorObj = validate({
+    //   ...inputpayment,
+    //   [e.target.name]: e.target.value,
+    // });
+    // setErrorspayment(errorObj);
   }
 
   return isLoading === true ? (
@@ -135,7 +134,7 @@ const FormPayment = () => {
   ) : (
     isAuthenticated && (
       <div>
-        <h3>Enter the required data</h3>
+        <h3>Would you like to update your data for this purchase?</h3>
 
         <form onSubmit={handleSubmit}>
           <div>
