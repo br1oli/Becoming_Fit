@@ -6,7 +6,6 @@ import NavBar from "./Components/NavBar/NavBar";
 import NotFound from "./Components/NotFound/NotFound";
 import ProductDetail from "./Components/ProductComponents/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
-import ProductForm from "./Components/ProductComponents/ProductForm";
 import About from "./Components/About/About.jsx";
 import PaymentSuccess from "./Components/Payments/Succes/PaymentSuccess.jsx";
 import PaymentFailure from "./Components/Payments/Failure/PaymentFailure.jsx";
@@ -33,6 +32,7 @@ import FormComplete from "./Components/Form/Form";
 import Mailing from "./Components/Mailing/ConfirmationMail";
 import MyOrders from "./Components/MyOrders/MyOrders";
 import Error from "./Components/Error/Error";
+import ProductForm from "./Components/ProductComponents/ProductForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +68,8 @@ function App() {
     <BrowserRouter>
     
       <Route exact path="/admin" component={AdminDashboardUI} />
+      <Route exact path="/admin/products/create" component={ProductForm} />
+      <Route exact path="/admin/products/edit" component={EditProductForm} />
       {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
       <Route exact path="/formpayment" component={FormPayment}/>
       <Route exact path="/complete" component={FormComplete} />
@@ -83,6 +85,8 @@ function App() {
       <Route exact path="/aboutUs" component={About} />
       <Route exact path="/paymentsuccess" component={PaymentSuccess} />
       <Route exact path="/paymentfailure" component={PaymentFailure} />
+
+      {/* /admin/products/create ProductForm*/}
 
       {/* INFORMATION */}
       <Route exact path="/FAQs" component={FAQs} />

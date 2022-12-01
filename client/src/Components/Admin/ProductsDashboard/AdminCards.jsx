@@ -2,18 +2,16 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getProductDetail, deleteProduct, changeProductStock } from "../../../Redux/Actions/UsersActions";
-import Card from "react-bootstrap/Card";
-import './ProductsListCard.css';
-import "bootstrap/dist/css/bootstrap.min.css";
+import Styles from './AdminCards.module.css'
 
-const ProductsListCard = (props) => {
+const AdminCards = (props) => {
     let dispatch = useDispatch();
     let history = useHistory();
 
     const handleEditProduct = (e) => {
         dispatch(getProductDetail(e.target.value))
         setTimeout(() => {
-          history.push("/admin") 
+          history.push("/admin/products/edit") 
         }, 1000)        
     }
 
@@ -43,59 +41,75 @@ const ProductsListCard = (props) => {
       }
     }
 
-    return (
-        <div className="row" style={{ width: "15rem" }}>
-          <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3">
-            <div className="Contenedor">
-              <Card className="Card" style={{ width: "15rem" }}>                
-                <Card.Img className="Image" variant="top" src={props.image} />                
-                <Card.Body className="CardBody">
-                  <Card.Title className="Title">{props.name}</Card.Title>   
-                  <Card.Text className="Price">US {props.price}</Card.Text>
-                  {props.outOfStock === false ? <p>Available Stock</p> : <p>Out of Stock</p>}
-                <div className="buttons">
+
+  return (
+    <div className={Styles.fullContainer}>
+      <div className={Styles.cardContainer}>
+        <div className={Styles.imgContainer}>
+            <img
+              src={props.image}
+              alt="img not found"
+              className={Styles.imageCard}
+            />
+        </div>
+
+        <div className={Styles.cardContent}>
+          <div className={Styles.nameContainer}>
+            <h6 className={Styles.name}>{props.name}</h6>
+          </div>
+
+          <div className={Styles.priceContainer}>
+            <span className={Styles.price}>U${props.price} </span>
+            {props.outOfStock === false ? <p>Available Stock</p> : <p>Out of Stock</p>}
+          </div>
+        </div>
+
+        <div className={Styles.buttonsContainer}>
+
+        <div className={Styles.buttonBox}>
               <button
                   value={props.id}
                   onClick={handleChangeStock}
-                  className="like"
+                  className={Styles.button}
               >
-                  Change "Out of Stock" status
+                  STOCK
               </button>
           </div>
-                <div className="buttons">
+
+          
+          <div className={Styles.buttonBox}>
                   <button
                     value={props.id}
                     onClick={handleEditProduct}
-                    className="like"
+                    className={Styles.button}
                   >
                     EDIT
                   </button>
                 </div>
-                <div className="buttons">
+                <div className={Styles.buttonBox}>
                   {
                     props.isDeleted === true ? 
                     <button
                     value={props.id}
                     onClick={handleDeleteProduct}
-                    className="like"
+                    className={Styles.button}
                   >
                   ADD
                   </button> :
                   <button
                   value={props.id}
                   onClick={handleDeleteProduct}
-                  className="like"
+                  className={Styles.button}
                 >
                   DELETE
                 </button>
                 }                  
                 </div>
-                </Card.Body>
-              </Card>
-            </div>
-          </div>
         </div>
-      );
-    };
 
-export default ProductsListCard
+      </div>
+    </div>
+  );
+};
+
+export default AdminCards;

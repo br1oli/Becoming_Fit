@@ -65,6 +65,7 @@ import {
   UPDATE_USER,
   CREATE_USER_ORDER,
   GET_USER_ORDER,
+  GET_ALL_ORDERS_ADMIN,
 
   //Mailing
   POST_MAIL,
@@ -86,6 +87,7 @@ const initialState = {
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
   paymentLink: "",
   userOrders: [],
+  adminOrders: [],
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -427,11 +429,20 @@ function rootReducer(state = initialState, action) {
     case POST_TO_CART_DB:
       return { ...state, cartDbResponse: action.payload };
     case GET_CART_DB:
-      saveStorage("cartId", action.payload.id);
-      return {
-        ...state,
-        cartDB: action.payload,
-      };
+      if (action.payload.id) {
+        saveStorage("cartId", action.payload.id);
+      }
+      let conditionalCartDBState =
+        action.payload === "No products found in cart"
+          ? {
+              ...state,
+              backResponse: action.payload,
+            }
+          : {
+              ...state,
+              cartDB: action.payload,
+            };
+      return conditionalCartDBState;
 
     case DELETE_CART:
       return { ...state, cartDB: [], cartDbResponse: action.payload };
@@ -461,13 +472,26 @@ function rootReducer(state = initialState, action) {
     case CREATE_USER_ORDER:
       return { ...state, backResponse: action.payload };
     case GET_USER_ORDER:
-      let conditionalOrderState = action.payload === "No orders yet..." ? {
+      let conditionalOrderState =
+        action.payload === "No orders yet..."
+          ? {
+              ...state,
+              backResponse: action.payload,
+            }
+          : {
+              ...state,
+              userOrders: action.payload,
+            };
+      return conditionalOrderState;
+
+    case GET_ALL_ORDERS_ADMIN:
+      let conditionalAllOrdersState = action.payload === "No orders yet..." ? {
         ...state, 
         backResponse: action.payload
       } : {
-        ...state, userOrders: action.payload
+        ...state, adminOrders: action.payload
       }
-      return conditionalOrderState
+      return conditionalAllOrdersState
 
     //Users
     case SET_TOKEN:
@@ -532,10 +556,13 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCT_FROM_FAVORITES:
-      return {
-        ...state,
-        favorites: action.payload,
-      };
+      let conditionalFavoriteState = action.payload === "No products added yet" ? {
+        ...state, 
+        backResponse: action.payload
+      } : {
+        ...state, favorites: action.payload
+      }
+      return conditionalFavoriteState
 
     case REMOVE_ALL_FROM_FAVORITES:
       return {

@@ -5,7 +5,7 @@ import adminImg from "../../../Utils/Tomas.png";
 import { MdDashboard } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
 import { HiShoppingBag } from "react-icons/hi";
-import { RiAccountCircleFill } from "react-icons/ri";
+import { AiOutlineBars } from "react-icons/ai";
 import { IoAddCircleSharp } from "react-icons/io5";
 
 const AdminSideBar = ({handleClick}) => {
@@ -19,27 +19,36 @@ const AdminSideBar = ({handleClick}) => {
       </div>
 
       <div className={Styles.contentContainer}>
-        <ul>
+        <ul className={Styles.contentContainer}>
           <br />
+          <div>
           <li>
-            <button onClick={handleClick} value="users">
+            <button className={Styles.buttonsAdmin} onClick={handleClick} value="users">
               <BsFillPersonFill /> Users
             </button>
           </li>
           <br />
           <li>
-            <button onClick={handleClick} value="products">
+            <button className={Styles.buttonsAdmin} onClick={handleClick} value="products">
               <HiShoppingBag /> Products
             </button>
           </li>
+          <br />
+          <li>
+            <button onClick={handleClick} value="orders">
+              <AiOutlineBars /> Orders
+            </button>
+          </li>
+          <br />
           <li>
             <br />
-            <button>
+            <button className={Styles.buttonsAdmin}>
               <Link to='/home'>
                 Back to home
               </Link>
             </button>
           </li>
+          </div>
         </ul>
       </div>
     </div>

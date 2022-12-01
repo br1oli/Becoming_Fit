@@ -40,3 +40,9 @@
 .rowTwo{
     border: 1px solid red;
 }
+
+@media screen and (max-width: 1040px){
+    .sideContainer{
+        display: none;
+    }
+}

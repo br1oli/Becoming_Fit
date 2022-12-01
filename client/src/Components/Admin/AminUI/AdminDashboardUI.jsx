@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { getAllUsers } from "../../../Redux/Actions/UsersActions";
 import TypeComponent from "../Types/Types";
 import ProductList from "../ProductsDashboard/ProductsList";
+import AllOrders from "../AllOrders/AllOrders";
 
 const AdminDashboardUI = () => {
   let dispatch = useDispatch();
@@ -24,7 +25,7 @@ const AdminDashboardUI = () => {
   
   return (
     <div className={Styles.dashboardContainer}>
-      <Navbar />
+      <Navbar handleClick={handleClick} />
       <div className={Styles.dashboardBody}>
         <div className={Styles.sideContainer}>
           <AdminSideBar handleClick={handleClick}/>
@@ -50,6 +51,9 @@ const AdminDashboardUI = () => {
       </div> : position === 'products' ?
       <div>
         <ProductList />
+      </div> : position === 'orders' ?
+      <div>
+        <AllOrders />
       </div> :
       null
         }

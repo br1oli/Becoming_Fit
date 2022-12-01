@@ -67,8 +67,7 @@ export default function ShoppingCart({ toggleShow }) {
           !userProfile.country &&
           !userProfile.city &&
           !userProfile.zipCode &&
-          !userProfile.phone &&
-          !userProfile.adress
+          !userProfile.phone
         ) {
           e.preventDefault();
           //dispatch(paymentOrder(reduxCart.cartDB.userEmail));
@@ -111,6 +110,10 @@ export default function ShoppingCart({ toggleShow }) {
       console.log(error);
     }
   };
+
+  const handleAlert = () => {
+    alert ('You must be logged if you want to make a purchase')
+  }
 
   return (
     <>
@@ -203,7 +206,7 @@ export default function ShoppingCart({ toggleShow }) {
                 userId={userId}
               />
             ))}
-            <button className={styles.btnPay}>Buy it all!</button>
+            <button className={styles.btnPay} onClick={handleAlert}>Buy it all!</button>
           </div>
         </>
       ) : !reduxCart.token.length && !reduxCart.shoppingCart.length ? (

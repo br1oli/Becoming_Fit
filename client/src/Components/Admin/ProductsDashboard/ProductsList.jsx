@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import ProductsListCard from "./ProductsListCard";
+import AdminCards from "./AdminCards";
 import ProductListPagination from "./ProductListPagination"
+import './ProductsList.css'
+import { IoAddCircleOutline } from 'react-icons/io5'
+
 
 const ProductsList = () => {
 
@@ -48,53 +51,71 @@ const ProductsList = () => {
     }
 
     return (
-        <section>
-            <div>
-                <h2>Products</h2>
-                <div>
-                    <Link to ="/admin/products/create"> 
-                        Create new
-                    </Link>
+        <div className="products-container">
+            <div className="top-row">
+                <div className="title-container">
+                    <h2>Products</h2>
+                </div> 
+
+                <div className="input-container">
+                    <input  
+                        type = "text" 
+                        placeholder = "Search products by name" 
+                        value = {input}
+                        onChange = {e => handleInputChange(e)}
+                    ></input>
                 </div>
+
+                <div className="create-container">
+                    <div className="create-title">
+                    Create new: 
+                    </div>
+
+                    <div>
+                    <Link to ="/admin/products/create"> 
+                         <IoAddCircleOutline size={40} />
+                    </Link>
+                    </div>
+
+                </div>
+                   
+
+
+                <div className="select-container">
+                   <select className="select-box"> 
+                       <option>Choose a type</option>
+     {/* Acá habria que renderizar las categorias y hacerlas elegibles */}
+                   </select>
+                </div>
+                
+            
             </div>
 
-        <div>
-            <header>
-                <div>
-                    <div>
-                        <input  
-                            type = "text" 
-                            placeholder = "Search products by name" 
-                            value = {input}
-                            onChange = {e => handleInputChange(e)}
-                        ></input>
-                    </div>
-                <div>
-                    <select> 
-                        <option>Choose a type</option>
-                        {/* Acá habria que renderizar las categorias y hacerlas elegibles */}
-                    </select>
-                </div>
-                </div>
-            </header>
 
-            <div>
-                <div>
+
+        <div className="bot-row">
+
+            <div className="products-list">
+                <div className="cards-box">
+                    
                     {/* Acá hay que hacer el map y renderizar las cards */}
                     {filter.length > 0 ? 
                     currentFilterProducts.map((p) => (
-                        <ProductsListCard 
-                        key={p.id}
-                        name={p.name}
-                        id={p.id}
-                        image={p.image}
-                        price={p.price}
-                        outOfStock={p.outOfStock}
-                        isDeleted={p.isDeleted} 
-                        />
+                        
+
+                            <AdminCards 
+                            key={p.id}
+                            name={p.name}
+                            id={p.id}
+                            image={p.image}
+                            price={p.price}
+                            outOfStock={p.outOfStock}
+                            isDeleted={p.isDeleted} 
+                            />
+                        
                     )) :
                     currentProducts.map((p) => ( 
-                        <ProductsListCard 
+                        <AdminCards 
                         key={p.id}
                         name={p.name}
                         id={p.id}
@@ -107,6 +128,7 @@ const ProductsList = () => {
                 </div>
             </div>
         <br />
+        <div className="pagination-container">
             <ProductListPagination 
              totalPages={totalPages}
              paginate={paginate}
@@ -114,7 +136,8 @@ const ProductsList = () => {
              setCurrentPage={setCurrentPage}
             />
         </div>
-        </section>        
+        </div>
+        </div>        
     )
 } 
 export default ProductsList
