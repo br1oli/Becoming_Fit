@@ -111,6 +111,10 @@ export default function ShoppingCart({ toggleShow }) {
     }
   };
 
+  const handleAlert = () => {
+    alert ('You must be logged if you want to make a purchase')
+  }
+
   return (
     <>
       {reduxCart.token.length && reduxCart.cartDB.cartProducts?.length ? (
@@ -202,7 +206,7 @@ export default function ShoppingCart({ toggleShow }) {
                 userId={userId}
               />
             ))}
-            <button className={styles.btnPay}>Buy it all!</button>
+            <button className={styles.btnPay} onClick={handleAlert}>Buy it all!</button>
           </div>
         </>
       ) : !reduxCart.token.length && !reduxCart.shoppingCart.length ? (

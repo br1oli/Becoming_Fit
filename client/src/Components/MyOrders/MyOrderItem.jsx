@@ -3,12 +3,11 @@ import styles from "./MyOrderItem.module.css";
 import MyOrderDetail from "./MyOrderDetail";
 
 const MyOrderItem = ({data}) => {
-
     return (
         <div>
             <div className={styles.mainContainer}>
-
-                <div className={styles.itemContainer}>  
+                <h5>Products</h5>
+                <div className={styles.itemContainer}> 
                     { 
                         data?.purchasedProducts.map((products, index) => (
                             <div key={index}>
@@ -21,11 +20,10 @@ const MyOrderItem = ({data}) => {
 
 
                 <div className={styles.orderInfo}>
-                    <p>{data?.status}</p>
-                    <p className={styles.name}>{data?.name}</p>
-                    <p>{data?.address}</p>
-                    <p>{data?.totalQuantity}</p>
-                    <p className={styles.price}>US {data?.totalToPay}</p>
+                    <p style={{color: "green", fontSize: "1.3rem"}}><strong>Status: </strong>{data?.status}</p>
+                    <p><strong>Address: </strong>{data?.address}</p>
+                    <p><strong>Quantity: </strong>{data?.totalQuantity}</p>
+                    <p>US {data?.totalToPay}</p>
                     <br/>
 
                     <MyOrderDetail data={data}/>
