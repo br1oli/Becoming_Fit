@@ -532,10 +532,13 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCT_FROM_FAVORITES:
-      return {
-        ...state,
-        favorites: action.payload,
-      };
+      let conditionalFavoriteState = action.payload === "No products added yet" ? {
+        ...state, 
+        backResponse: action.payload
+      } : {
+        ...state, favorites: action.payload
+      }
+      return conditionalFavoriteState
 
     case REMOVE_ALL_FROM_FAVORITES:
       return {

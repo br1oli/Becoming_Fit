@@ -245,7 +245,8 @@ const Profile = () => {
         <div className={Style.inputsForm}>
           <div className={Style.lblInput}>
             <label>Email: </label>
-            {usuarios && Object.values(usuarios)?.length && usuarios.email}:
+            {/* {usuarios && Object.values(usuarios)?.length && usuarios.email}: */}
+            {user.email}
           </div>
 
           <div className={Style.lblInput}>
