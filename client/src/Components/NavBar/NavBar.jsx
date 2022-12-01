@@ -6,12 +6,14 @@ import title from "../../Utils/Title.png";
 import ShopSideBar from "./ShopCart/ShopSideBar.jsx";
 import UserSideBar from "./UserMenu/UserMenu.jsx";
 import Filters from "../Filters/Filters.jsx";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserTie } from "react-icons/fa";
 import { HiAdjustments } from "react-icons/hi";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const [click, setClick] = useState(false);
   const [clickFilters, setFiltersClick] = useState(false);
+  let userStore = useSelector((state) => state.userStore);
 
   function handleClick() {
     setClick(!click);
@@ -40,6 +42,13 @@ const NavBar = () => {
             <li>
               <UserSideBar />
             </li>
+            {userStore && userStore.adminPermissions ? (
+              <li>
+                <Link to="/admin">
+                  <FaUserTie />
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>
