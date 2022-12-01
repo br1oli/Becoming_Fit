@@ -13,7 +13,6 @@ import {
   getUserProfileByEmail,
   updateUserProfile,
 } from "../../Redux/Actions/UsersActions";
-import { deleteStorage } from "../../localStorage/localStorageFunctions";
 
 const FormPayment = () => {
   const usuarios = useSelector((state) => state.userProfile);
