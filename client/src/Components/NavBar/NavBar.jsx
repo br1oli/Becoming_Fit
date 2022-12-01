@@ -11,7 +11,6 @@ import { FaBars, FaTimes, FaUserTie } from "react-icons/fa";
 import { HiAdjustments } from "react-icons/hi";
 import { useSelector } from "react-redux";
 
-
 const NavBar = () => {
   const [click, setClick] = useState(false);
   const [clickFilters, setFiltersClick] = useState(false);
@@ -78,7 +77,13 @@ const NavBar = () => {
               </li>
             </div>
           </div>
-
+          {userStore && userStore.adminPermissions ? (
+            <li>
+              <Link to="/admin">
+                <FaUserTie />
+              </Link>
+            </li>
+          ) : null}
           <li>
             <Filters />
           </li>
