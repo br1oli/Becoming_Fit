@@ -381,7 +381,7 @@ const Profile = () => {
           >
             Login
           </div>
-          <Link>
+          <Link to='/home'>
             <h5 className={Style.noAuthLinks}>Go Home</h5>
           </Link>
         </div>
