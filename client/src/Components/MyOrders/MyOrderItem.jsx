@@ -5,7 +5,6 @@ import styles from "./MyOrderItem.module.css";
 
 
 const MyOrderItem = ({data}) => {
-    console.log(data);
 
     return (
         <div>
