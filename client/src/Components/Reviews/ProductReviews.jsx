@@ -113,13 +113,14 @@ const ProductReviews = ({ idProduct, infoProduct }) => {
                           }}
                         >
                           <button
-                            style={{ magin: "none" }}
+                            style={{ marginLeft: "30px" }}
                             className={styles.edit}
                             onClick={handleEdit}
                           >
                             Edit
                           </button>
                           <button
+                            style={{ marginLeft: "30px" }}
                             className={styles.delete}
                             value={review.id}
                             onClick={handleDelete}
