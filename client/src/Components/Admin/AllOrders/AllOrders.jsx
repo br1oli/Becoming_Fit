@@ -9,8 +9,6 @@ const AllOrders = ( ) => {
     const dispatch = useDispatch();
     const adminOrders = useSelector((state) => state.adminOrders);
 
-    console.log(adminOrders);
-
     useEffect(() => {
         const getOrders = async () => {
             await dispatch(getAllOrdersAdmin());
