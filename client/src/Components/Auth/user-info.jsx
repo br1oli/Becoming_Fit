@@ -18,40 +18,40 @@ import UserMenu from "../NavBar/UserMenu/UserMenu";
 import Loading from "../../Utils/Loading.gif";
 import Style from "./user-info.module.css";
 
-function validador(input) {
-  let errors = {};
-  if (!input.name) {
-    errors.name = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.name)) {
-    errors.name = "First letter must be uppercase";
-  }
-  if (!input.zipCode) {
-    errors.zipCode = "Required";
-  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.zipCode)) {
-    errors.zipCode = "First letter must be uppercase";
-  }
-  if (!input.country) {
-    errors.country = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.country)) {
-    errors.country = "First letter must be uppercase";
-  }
-  if (!input.city) {
-    errors.city = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.city)) {
-    errors.city = "First letter must be uppercase";
-  }
-  if (!input.phone) {
-    errors.phone = "Required";
-  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.phone)) {
-    errors.phone = "First letter must be uppercase";
-  }
-  if (!input.adress) {
-    errors.adress = "Required";
-  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,500}$/.test(input.adress)) {
-    errors.adress = "First letter must be uppercase";
-  }
-  return errors;
-}
+// function validador(input) {
+//   let errors = {};
+//   if (!input.name) {
+//     errors.name = "Required";
+//   } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.name)) {
+//     errors.name = "First letter must be uppercase";
+//   }
+//   if (!input.zipCode) {
+//     errors.zipCode = "Required";
+//   } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.zipCode)) {
+//     errors.zipCode = "First letter must be uppercase";
+//   }
+//   if (!input.country) {
+//     errors.country = "Required";
+//   } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.country)) {
+//     errors.country = "First letter must be uppercase";
+//   }
+//   if (!input.city) {
+//     errors.city = "Required";
+//   } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.city)) {
+//     errors.city = "First letter must be uppercase";
+//   }
+//   if (!input.phone) {
+//     errors.phone = "Required";
+//   } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.phone)) {
+//     errors.phone = "First letter must be uppercase";
+//   }
+//   if (!input.adress) {
+//     errors.adress = "Required";
+//   } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,500}$/.test(input.adress)) {
+//     errors.adress = "First letter must be uppercase";
+//   }
+//   return errors;
+// }
 
 // name: "",
 //     zipCode: "",
@@ -85,7 +85,7 @@ const Profile = () => {
     const data = async () => {
       try {
         if (user) {
-          await dispatch(getUserProfileByEmail(usuarios.email));
+          await dispatch(getUserProfileByEmail(user.email));
         }
       } catch (error) {
         console.log(error);
@@ -142,8 +142,8 @@ const Profile = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
-    let errorObj = validador({ ...input, [e.target.name]: e.target.value });
-    setErrors(errorObj);
+    // let errorObj = validador({ ...input, [e.target.name]: e.target.value });
+    // setErrors(errorObj);
   }
 
   const Cargando = async () => {
@@ -163,16 +163,16 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !input.name ||
-      !input.adress ||
-      !input.country ||
-      !input.city ||
-      !input.zipCode ||
-      !input.phone
-    ) {
-      return alert("Incompletes fields.");
-    }
+    // if (
+    //   !input.name ||
+    //   !input.adress ||
+    //   !input.country ||
+    //   !input.city ||
+    //   !input.zipCode ||
+    //   !input.phone
+    // ) {
+    //   return alert("Incompletes fields.");
+    // }
     await dispatch(getUserProfileByEmail(user.email));
     await dispatch(updateUserProfile(usuarios.email, input));
     await Cargando();
@@ -204,6 +204,9 @@ const Profile = () => {
     setTimeout(() => {}, 3000);
   }, []);
 
+
+  console.log("🚀 ~ file: user-info.jsx:199 ~ data ~ usuarios", usuarios)
+  
   const back = () => {
     // if(input.name.length ||
     // input.zipCode.length ||
@@ -214,7 +217,7 @@ const Profile = () => {
     //   alert("Are you sure you want to come back?, the data you have entered will be lost.")
     // }else{
     // }
-    history.push("/complete");
+    history.push("/home");
   };
 
   setTimeout(() => {

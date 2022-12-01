@@ -38,8 +38,10 @@ const FormComplete = () => {
   });
 
   useEffect(() => {
+
     const relleno = async () => {
       try {
+        dispatch(getUserProfileByEmail(user.email));
         if (isAuthenticated) {
           setInput({
             ...input,
@@ -100,6 +102,7 @@ const FormComplete = () => {
     setIsLoading(false);
   }, 3000);
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -128,10 +131,10 @@ const FormComplete = () => {
   };
   const volver = (e) => {
     e.preventDefault(e);
-
+    
     history.push("/home");
   };
-
+  
   function handleChange(e) {
     setInput({
       ...input,
@@ -142,11 +145,22 @@ const FormComplete = () => {
         ...input,
         [e.target.name]: e.target.value,
       })
-    );
-  }
+      );
+    }
+    
+    if(usuarios.name &&
+      usuarios.country &&
+      usuarios.city &&
+      usuarios.zipCode &&
+      usuarios.adress &&
+      usuarios.phone &&
+      usuarios.email 
+      ){
+      history.push("/formpayment")
+    }
 
-  return isLoading === true ? (
-    <div>
+    return isLoading === true ? (
+      <div>
       <div>
         <img src={Loading} alt="not found" />
       </div>
