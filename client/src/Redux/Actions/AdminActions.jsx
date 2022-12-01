@@ -1,4 +1,4 @@
-import { UPDATE_USER } from "./Const";
+import { UPDATE_USER, GET_ALL_ORDERS_ADMIN } from "./Const";
 import axios from "axios";
 
 export function updateUserPermissions(values) {
@@ -20,3 +20,20 @@ export function updateUserPermissions(values) {
     }
   };
 }
+
+export const getAllOrdersAdmin = () => {
+  return async function (dispatch) {
+    try {
+      let orderResponse = await axios.get(`/order`);
+      return dispatch({
+        type: GET_ALL_ORDERS_ADMIN,
+        payload: orderResponse.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: GET_ALL_ORDERS_ADMIN,
+        payload: error.response.data,
+      });
+    }
+  };
+};
