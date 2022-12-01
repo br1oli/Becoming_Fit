@@ -22,7 +22,7 @@ import Styles from "./UserMenu.module.css";
 export default function UserSideBar() {
   //en este sideBar solo se deberian renderizar las opciones si hay un token en el store
   //si no hay un token que solo se muestre el boton de login
-
+  let token = useSelector((state) => state.token);
   ////////// AUTH0///////////////////
   const dispatch = useDispatch();
   const { /* isLoading */ isAuthenticated } = useAuth0();
@@ -54,46 +54,50 @@ export default function UserSideBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <Link to="/profile">
-          <ListItemButton>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText>MY ACCOUNT</ListItemText>
-          </ListItemButton>
-        </Link>
+        {token.length ? (
+          <>
+            <Link to="/profile">
+              <ListItemButton>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText>MY ACCOUNT</ListItemText>
+              </ListItemButton>
+            </Link>
 
-        <Link to="/favorites">
-          <ListItemButton>
-            <ListItemIcon>
-              <FavoriteIcon />
-            </ListItemIcon>
-            <ListItemText>FAVORITES</ListItemText>
-          </ListItemButton>
-        </Link>
+            <Link to="/favorites">
+              <ListItemButton>
+                <ListItemIcon>
+                  <FavoriteIcon />
+                </ListItemIcon>
+                <ListItemText>FAVORITES</ListItemText>
+              </ListItemButton>
+            </Link>
 
-        <Link to="/myOrders">
-          <ListItemButton>
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText>MY ORDERS</ListItemText>
-          </ListItemButton>
-        </Link>
+            <Link to="/myOrders">
+              <ListItemButton>
+                <ListItemIcon>
+                  <LocalMallIcon />
+                </ListItemIcon>
+                <ListItemText>MY ORDERS</ListItemText>
+              </ListItemButton>
+            </Link>
 
-        <ListItemButton>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText>SETTINGS</ListItemText>
-        </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText>SETTINGS</ListItemText>
+            </ListItemButton>
 
-        <ListItemButton>
-          <ListItemIcon>
-            <TuneIcon />
-          </ListItemIcon>
-          <ListItemText>OPTIONS</ListItemText>
-        </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <TuneIcon />
+              </ListItemIcon>
+              <ListItemText>OPTIONS</ListItemText>
+            </ListItemButton>
+          </>
+        ) : null}
 
         <div className={Styles.loginButton}>
           {isAuthenticated ? <LogoutButton /> : <LoginButton />}
