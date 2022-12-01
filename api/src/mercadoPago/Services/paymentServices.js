@@ -68,15 +68,17 @@ class PaymentService {
         default_installments: 6,
         // la cantidad de cuotas que van a aparecer por defecto
       },
-      back_urls: {
-        // declaramos las urls de redireccionamiento
-        success: "http://localhost:3000/paymentsuccess",
-        // url que va a redireccionar si sale todo bien
-        pending: "https://www.pending.com",
-        // url a la que va a redireccionar si decide pagar en efectivo por ejemplo
-        failure: "http://localhost:3000/paymentfailure",
-        // url a la que va a redireccionar si falla el pago
+        back_urls: {
+          success: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/purchasesuccess` : "http://localhost:3000/paymentsuccess",
+          failure: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/purchasesailiure` :"http://localhost:3000/purchasefailiure",
+          pending: process.env.SERVICES_URL? `${process.env.SERVICES_URL}/purchasesending` :"http://localhost:3000/paymentfailure",
       },
+      //   success:    process.env.APP_PAYMENTURL + "/paymentsucces" || "http://localhost:3000/paymentsucces",
+      //   // url que va a redireccionar si sale todo bien
+      //   pending: "https://www.pending.com",
+      //   // url a la que va a redireccionar si decide pagar en efectivo por ejemplo
+      //   failure: process.env.APP_PAYMENTURL + "/paymentfailure" || "http://localhost:3000/paymentfailure",
+      // },
       notification_url: "https://mercadopago-checkout.herokuapp.com/webhook",
       // declaramos nuestra url donde recibiremos las notificaciones
       auto_return: "approved",
