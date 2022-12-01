@@ -14,6 +14,9 @@ import { clearResponse, editProduct } from "../../../Redux/Actions/UsersActions"
 import Style from "./EditProductForm.module.css";
 import Success from "../../Success/Success";
 
+import Navbar from '../AdminNavbar/AdminNavbar'
+import Sidebar from '../AdminSideBar.jsx/AdminSideBar'
+
 function validador(input) {
   let errors = {};
   if (!input.name) {
@@ -177,8 +180,11 @@ export default function EditProductForm() {
   let disabled = Object.entries(errors).length ? true : false;
 
   return (
-    <div style={{ margin: 15 }}>
-      <Container>
+    
+
+    <div className={Style.principalContainer}>
+      <Navbar />
+      <Container className={Style.caja1}>
         <Card>
           <form className="submitForm">
             <div>
@@ -434,5 +440,6 @@ export default function EditProductForm() {
         </Card>
       </Container>
     </div>
+   
   );
 }

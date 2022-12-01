@@ -36,7 +36,7 @@ const ProductCard = (props) => {
         </div>
 
         <div className={Styles.favButton}>
-          <button value={props.id} onClick={handleFavorite} className="like">
+          <button className={Styles.add} value={props.id} onClick={handleFavorite}>
             ADD FAVORITE
           </button>
         </div>

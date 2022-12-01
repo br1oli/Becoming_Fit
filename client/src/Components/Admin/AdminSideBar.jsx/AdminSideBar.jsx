@@ -14,8 +14,6 @@ const AdminSideBar = ({handleClick}) => {
     <div className={Styles.sideBarContainer}>
       <div className={Styles.adminPicContainer}>
         <img src={adminImg} alt="img not found" width={100} height={100} />
-        <br />
-        <h1 className={Styles.adminName}>Tomás Bartoldi</h1>
       </div>
 
       <div className={Styles.contentContainer}>
@@ -35,7 +33,7 @@ const AdminSideBar = ({handleClick}) => {
           </li>
           <br />
           <li>
-            <button onClick={handleClick} value="orders">
+            <button className={Styles.buttonsAdmin} onClick={handleClick} value="orders">
               <AiOutlineBars /> Orders
             </button>
           </li>

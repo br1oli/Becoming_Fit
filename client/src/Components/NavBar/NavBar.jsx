@@ -8,9 +8,7 @@ import UserSideBar from "./UserMenu/UserMenu.jsx";
 import Filters from "../Filters/Filters.jsx";
 
 import { FaBars, FaTimes, FaUserTie } from "react-icons/fa";
-import { HiAdjustments } from "react-icons/hi";
-import { useSelector } from "react-redux";
-
+import { useSelector } from "react-redux"; 
 
 const NavBar = () => {
   const [click, setClick] = useState(false);
@@ -47,7 +45,7 @@ const NavBar = () => {
             {userStore && userStore.adminPermissions ? (
               <li>
                 <Link to="/admin">
-                  <FaUserTie />
+                  <FaUserTie size={20} color={'white'}  />
                 </Link>
               </li>
             ) : null}
