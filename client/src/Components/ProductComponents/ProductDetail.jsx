@@ -19,11 +19,18 @@ import ProductReviews from "../Reviews/ProductReviews";
 import Footer from "../Footer/Footer";
 import { RadioButtonsColorGroup } from "../ShoppingCart/Size&ColorRButtons.jsx";
 import { RadioButtonsSizeGroup } from "../ShoppingCart/Size&ColorRButtons.jsx";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
   const dispatch = useDispatch();
   const product = useSelector((state) => state.details);
+  const cartItems = useSelector((state) => state.shoppingCart);
+  const cartDB = useSelector((state) => state.cartDB);
   let token = useSelector((state) => state.token);
   let userId = useSelector((state) => state.userStore.email);
 
@@ -81,7 +88,7 @@ const ProductDetail = (props) => {
         }
       } else {
         //cambiar alert por pop up
-        return alert("Choose amount, color and size.");
+        return alert("Choose color and size, please.");
       }
 
       //si no hay un token, aca maneja el store y guarda los productos en el local storage
@@ -99,7 +106,7 @@ const ProductDetail = (props) => {
         setAmount(0);
       }
     } else {
-      return alert("Choose amount, color and size.");
+      return alert("Choose color and size, please.");
     }
   };
 
@@ -109,11 +116,9 @@ const ProductDetail = (props) => {
 
   return (
     <div className={styles.primaryContainer}>
-      <NavBar />
-
-      <Link to={`/home`} className={styles.linkHome}>
-        Go back /Home
-      </Link>
+      <div className={styles.navContainer}>
+        <NavBar />
+      </div>
 
       <div className={styles.secondaryContainer}>
         <div className={styles.divLeft}>
@@ -239,9 +244,50 @@ const ProductDetail = (props) => {
         </div>
       </div>
 
+      <div className={styles.accordionsResponsive}>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>Description</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>{product.description}</Typography>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>How to know your size</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              <p>
+                Follow these easy steps to get the right size. For the best fit,
+                measure your feet at the end of the day.
+              </p>
+              <p>
+                <strong>1.</strong> Step on a piece of paper with your heel
+                slightly touching a wall behind. <br />
+                <strong>2.</strong> Mark the end of your longest toe on the
+                paper and measure from the wall to the marking. <br />
+                <strong>3.</strong> Do the same for the other foot and compare
+                measurements with our size chart to get the right size. <br />
+              </p>
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      </div>
+
       <Footer />
     </div>
   );
 };
 
-export default ProductDetail;
+export default ProductDetail;
