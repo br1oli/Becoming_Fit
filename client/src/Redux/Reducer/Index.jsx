@@ -461,7 +461,13 @@ function rootReducer(state = initialState, action) {
     case CREATE_USER_ORDER:
       return { ...state, backResponse: action.payload };
     case GET_USER_ORDER:
-      return { ...state, userOrders: action.payload };
+      let conditionalOrderState = action.payload === "No orders yet..." ? {
+        ...state, 
+        backResponse: action.payload
+      } : {
+        ...state, userOrders: action.payload
+      }
+      return conditionalOrderState
 
     //Users
     case SET_TOKEN:

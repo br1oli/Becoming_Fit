@@ -5,22 +5,15 @@ const { BECOMINGFIT_MAIL_PASSWORD } = process.env;
 
 const postMail = async (req = request, res = response) => {
     try {
-        const { name, color, size, email, message, image } = req.body;
+        const { email } = req.body;
 
        const output = `
             <div>
             <h3>Purchase Confirmation Email</h3>
 
-            <h4>We have recieved an order from you, and we are happy to serve you! </4><br/>
-
-            <h5>Order summery</h5>
-            <li>${name}</li>
-            <li>${color}</li>
-            <li>${size}</li>
-            <li>${message}</li><br/>
-
-        
-            <img src=${image} alt="BecomingFitLogo">
+            <h4>We have recieved an order from you, and we are happy to serve you! </4>
+            <br/>
+            <p>We are processing your order, wait for it!</p>
             </div>
         `
 
