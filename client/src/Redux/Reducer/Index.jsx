@@ -65,6 +65,7 @@ import {
   UPDATE_USER,
   CREATE_USER_ORDER,
   GET_USER_ORDER,
+  GET_ALL_ORDERS_ADMIN,
 
   //Mailing
   POST_MAIL,
@@ -86,6 +87,7 @@ const initialState = {
   shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
   paymentLink: "",
   userOrders: [],
+  adminOrders: [],
   //pagination:
   currentProducts: [],
   currentPage: 1,
@@ -468,6 +470,15 @@ function rootReducer(state = initialState, action) {
         ...state, userOrders: action.payload
       }
       return conditionalOrderState
+
+    case GET_ALL_ORDERS_ADMIN:
+      let conditionalAllOrdersState = action.payload === "No orders yet..." ? {
+        ...state, 
+        backResponse: action.payload
+      } : {
+        ...state, adminOrders: action.payload
+      }
+      return conditionalAllOrdersState
 
     //Users
     case SET_TOKEN:
