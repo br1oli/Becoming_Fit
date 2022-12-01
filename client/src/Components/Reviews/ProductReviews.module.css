@@ -8,16 +8,13 @@
     display: flex;
     flex-direction: row;
   }
-  
+
   
   .emptyReview{
     box-sizing: border-box;
   }
   
   .emptyReview{
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
     flex-direction: column;
     min-height: 100%;
     margin: 0;
@@ -242,4 +239,12 @@
       font-size: smaller;
       margin: 1px solid brown;
       color: brown;
+  }
+
+  @media screen and (max-width: 1040px) {
+    .filledReview{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
