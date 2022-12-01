@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./MyOrders.module.css"
 import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 import MyOrderItem from "./MyOrderItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrder } from "../../Redux/Actions/UsersActions";
 
 const MyOrders = ( ) => {
-    const favorites = [1,2]
+    const dispatch = useDispatch()
+    const userEmail = useSelector((state) => state.userStore.email);
+
+    useEffect(() => {
+        const getOrders = async () => {
+            if (userEmail) {
+              await dispatch(getOrder(userEmail));
+            }
+        }
+        getOrders();
+    },[userEmail])
+
+    const userOrders = useSelector((state) => state.userOrders)
+
     return(
         <div>
             <NavBar/>
@@ -14,19 +29,18 @@ const MyOrders = ( ) => {
             <div className={styles.mainContainer}>
                 {
                     
-                    favorites?.length ? (
+                    userOrders?.length ? (
 
                      <div>
                         <Link to={`/home`}>Go back /Home</Link>
                         <div className={styles.titleDiv}>
                             <p className={styles.title}>MY ORDERS</p>
                      </div>
-                            <MyOrderItem/>
 
                         <div className={styles.cardsContainer}>
                             { 
-                                favorites?.map((e, index) => (
-                                    <MyOrderItem key={index} favoriteId={e.id} data={e.product} />
+                                userOrders?.map((order, index) => (
+                                    <MyOrderItem key={index} data={order} />
                                 ))
                             }
                         </div>
