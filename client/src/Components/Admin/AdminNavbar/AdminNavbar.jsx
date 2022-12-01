@@ -11,17 +11,12 @@ import { Link } from 'react-router-dom'
 const AdminNavbar = ({handleClick}) => {
 
   const [click, setClick] = useState(false);
-  const [position, setPosition] = useState('');
 
   function handleClick2() {
     setClick(!click);
   }
 
-
- /*  const handleClick = (e) => {
-    e.preventDefault();
-    setPosition(e.target.value)
-  } */
+  
 
   return (
     <div className='NavContainer'>

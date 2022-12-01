@@ -52,7 +52,7 @@
 
 
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 1040px){
      .hamburgerResponsive{
         display: initial;
         margin: 0 0 20px 150px;
