@@ -24,8 +24,6 @@ const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
   const dispatch = useDispatch();
   const product = useSelector((state) => state.details);
-  const cartItems = useSelector((state) => state.shoppingCart);
-  const cartDB = useSelector((state) => state.cartDB);
   let token = useSelector((state) => state.token);
   let userId = useSelector((state) => state.userStore.email);
 
