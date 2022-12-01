@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
 .mainContainer{
-    width: 36rem;
-    height: 12.1rem;
+    width: 30rem;
+    height: fit-content;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     /* margin: auto; */
     justify-content: space-around;
     align-items: center;
@@ -20,4 +20,37 @@
 .image{
     width: 12rem;
     height: 11.9rem
+}
+
+.itemContainer {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid gray;
+}
+
+.itemContainer img{
+    width: 3rem;
+}
+
+.orderInfo{
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 740px) {
+    .mainContainer{
+        display: flex;
+        min-width: 75vw;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .image{
+        width: 60vw;
+        height: 17rem;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
 }
