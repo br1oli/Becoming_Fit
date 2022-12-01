@@ -29,13 +29,14 @@ export const Pagination = () => {
   return (
     <nav className={Styles.paginadoContainer}>
       <ul className={Styles.paginado}>
-        <a
-          href="#"
-          className={Styles.numberArrow}
-          onClick={() => handlePagination(currentPage - 1)}
-        >
-          Previous
-        </a>
+
+        {currentPage > 1 && (
+        <li className={Styles.paginado}>
+          <a href="#" onClick={() => handlePagination(currentPage - 1)}>
+            Prev
+          </a>
+        </li>
+      )}
 
         {pagesNumbers.map((number) => (
           <li className={Styles.numberLi} key={number}>
@@ -52,13 +53,13 @@ export const Pagination = () => {
           </li>
         ))}
 
-        <a
-          className={Styles.numberArrow}
-          href="#"
-          onClick={() => handlePagination(currentPage + 1)}
-        >
-          Next
-        </a>
+        {currentPage !== pagesNumbers.length && (
+        <li className={Styles.numberArrow}>
+          <a href="#" onClick={() => handlePagination(currentPage + 1)}>
+            Next
+          </a>
+        </li>
+      )}
       </ul>
     </nav>
   );
