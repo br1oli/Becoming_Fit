@@ -3,15 +3,7 @@ const { Sequelize, Op } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT } = process.env;
-// const { DB_USER, DB_PASSWORD, DB_HOST } = require('../.env');
 
-/* const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/becomingfit`,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  }
-); */
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
@@ -67,20 +59,17 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const {
-  Favorites,
   FavoritesProduct,
   Brand,
   CartProduct,
   Cart,
-  PaymentDetail,
-  PaymentMethod,
   Category,
   ProductInventory,
   Product,
-  PurchaseDetail,
   PurchasedProduct,
-  UserAdress,
+  UserProfile,
   User,
+  Order,
   Review,
 } = sequelize.models;
 
@@ -102,6 +91,11 @@ Review.belongsTo(Product);
 //Asociacion Producto:Categoria
 Category.hasMany(Product /* {foreignKey: 'categoryId'} */);
 Product.belongsTo(Category);
+
+//Asociacion Producto:Type
+// ProductCategory.hasMany(Product /* {foreignKey: 'categoryId'} */);
+// Product.belongsTo(ProductCategory);
+
 //Asociacion Producto:ProductoInventario
 Product.hasOne(ProductInventory /* { through: "Product_ProductInventory" } */);
 ProductInventory.belongsTo(
@@ -110,11 +104,11 @@ ProductInventory.belongsTo(
 
 //---------------------------------------------Relaciones Favorites-------------------------------------
 
-User.hasOne(Favorites);
-Favorites.belongsTo(User);
+User.hasMany(FavoritesProduct);
+FavoritesProduct.belongsTo(User);
 
-Favorites.hasMany(FavoritesProduct);
-FavoritesProduct.belongsTo(Favorites);
+// Favorites.hasMany(FavoritesProduct);
+// FavoritesProduct.belongsTo(Favorites);
 
 Product.hasOne(FavoritesProduct);
 FavoritesProduct.belongsTo(Product);
@@ -132,38 +126,40 @@ CartProduct.belongsTo(Product /* { through: "Product_CartProduct" } */);
 
 //---------------------------------------------Relacion usuario-Payment--------------------
 
-User.hasMany(UserAdress /* { foreignKey: "userIdAdress" } */);
-UserAdress.belongsTo(User);
+// User.hasMany(PaymentMethod /* { foreignKey: "userIdPayment" } */);
+// PaymentMethod.belongsTo(User);
 
-User.hasMany(PaymentMethod /* { foreignKey: "userIdPayment" } */);
-PaymentMethod.belongsTo(User);
-
-//User.hasMany(CartProduct /* { through: "User_CartProduct" } */);
-//CartProduct.belongsTo(User /* { through: "User_CartProduct" } */);
-
-User.hasMany(PaymentDetail /*  { through: "User_PaymentDetail" } */);
-PaymentDetail.belongsTo(User /* { through: "User_PaymentDetail" } */);
+// User.hasMany(PaymentDetail /*  { through: "User_PaymentDetail" } */);
+// PaymentDetail.belongsTo(User /* { through: "User_PaymentDetail" } */);
 
 Product.hasMany(PurchasedProduct /* { through: "Product_PurchasedProduct" } */);
 PurchasedProduct.belongsTo(
   Product /* { through: "Product_PurchasedProduct" } */
 );
-
-//Product_category.hasMany(Product, { through: "ProductCategory_Product" });
-//Product.belongsTo(Product_category, { through: "ProductCategory_Product" });A
-
-PaymentDetail.hasOne(
-  PurchaseDetail /* {through: "PaymentDetail_PurchaseDetail"} */
-);
-PurchaseDetail.belongsTo(
-  PaymentDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+Order.hasMany(PurchasedProduct /* { through: "Product_PurchasedProduct" } */);
+PurchasedProduct.belongsTo(
+  Product /* { through: "Product_PurchasedProduct" } */
 );
 
-PurchaseDetail.hasMany(PurchasedProduct);
-PurchasedProduct.belongsTo(PurchaseDetail);
+User.hasMany(Order);
+Order.belongsTo(User);
 
-User.hasMany(PurchaseDetail);
-PurchaseDetail.belongsTo(User);
+// PaymentDetail.hasOne(
+//   PurchaseDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+// );
+// PurchaseDetail.belongsTo(
+//   PaymentDetail /* {through: "PaymentDetail_PurchaseDetail"} */
+// );
+
+// PurchaseDetail.hasMany(PurchasedProduct);
+// PurchasedProduct.belongsTo(PurchaseDetail);
+
+User.hasMany(PurchasedProduct);
+PurchasedProduct.belongsTo(User);
+
+// relation user-profile user-phone
+User.hasOne(UserProfile);
+UserProfile.belongsTo(User);
 
 //-------------------------------------Relacion usuario-Reviews---------------------------------
 

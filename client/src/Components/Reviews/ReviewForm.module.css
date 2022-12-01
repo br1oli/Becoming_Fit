@@ -1,0 +1,152 @@
+.title{
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+  
+  
+  
+  .emptyReview{
+    box-sizing: border-box;
+  }
+  
+  .emptyReview{
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    flex-direction: column;
+    min-height: 100%;
+    margin: 0;
+  }
+  
+  .popUp {
+    background: darken(light, 10%);
+    background-color: rgb(187, 186, 186);
+    width: 14rem;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+  }
+  .popUp:hover {
+    background: white;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .modalContainer{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.3);
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .modal{
+    background-color: white;
+    width: fit-content;
+    max-width: 100%;
+    border-radius: 5px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+    text-align: center;
+    margin: auto;
+    padding: 0.5rem;
+  }
+  
+  .closeButton {
+    background: darken(light, 10%);
+    background-color: rgb(216, 214, 214);
+    width: 2rem;
+    padding: 5px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin-left: 90%;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+  }
+  .closeButton:hover {
+    background: gray;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .submit {
+    background: darken(light, 10%);
+    background-color: black;
+    width: 18rem;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+  }
+  .submit:hover {
+    background: black;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  /* divs  */
+  .overall{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .qualityDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .popUp {
+    background: darken(light, 10%);
+    background-color: rgb(143, 143, 143);
+    width: 14rem;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+  }
+  .popUp:hover {
+    background: black;
+    color: aliceblue;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .errors{
+    display: flex;
+    justify-content: flex-start;
+    font-size: smaller;
+    margin: 1px solid brown;
+    margin-left: 4rem;
+    color: brown;
+}

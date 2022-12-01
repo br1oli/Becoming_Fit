@@ -1,7 +1,11 @@
 import {
-  URL_PRODUCTS,
-  URL_PRODUCTS_QUERY,
-  GET_PRODUCTS,
+  getStorage,
+  saveStorage,
+  deleteStorage,
+} from "../../localStorage/localStorageFunctions";
+
+import {
+  CLEAR_RESPONSE,
   FILTER_PRICES,
   FILTER_CATEGORIES,
   FILTER_GENDER,
@@ -9,85 +13,169 @@ import {
   FILTER_SIZE,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
+  SET_CURRENT_PAGE_PRODUCTS,
+
+  //Favorites
+  ADD_PRODUCT_TO_FAVORITES,
+  GET_PRODUCT_FROM_FAVORITES,
+  REMOVE_ALL_FROM_FAVORITES,
+  REMOVE_ONE_FROM_FAVORITES,
+
+  //Products
+  GET_PRODUCTS,
+  GET_NAME_PRODUCTS,
+  GET_NAME_PRODUCTS_ERROR,
+  POST_PRODUCT,
+  EDIT_PRODUCT,
+  DELETE_PRODUCT,
+  CHANGE_PRODUCT_STOCK,
   GET_DETAILS,
   CLEAR_DETAILS,
-  POST_REVIEW,
-  DELETE_OWN_REVIEW,
-  EDIT_OWN_REVIEW,
-  GET_NAME_PRODUCTS,
-  SUCCESS,
-  ERROR,
-  CLEAR_ERROR,
-  CLEAR_SUCCESS,
-  SET_CURRENT_PAGE_PRODUCTS,
 
   //Shopping cart actions
   ADD_PRODUCT_TO_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   CLEAR_CART,
+  POST_TO_CART_DB,
+  GET_CART_DB,
+  DELETE_CART,
+  DELETE_PRODUCT_CART,
+  ERROR_CART,
+  PAYMENT_ORDER,
+
+  //Review
+  ADD_REVIEW_TO_PRODUCT,
+  GET_REVIEWS,
+  EDIT_REVIEW,
+  REMOVE_ONE_REVIEW,
+
+  //User
+  CREATE_USER,
+  GET_ALL_USERS,
+  DELETE_USER,
+  SET_TOKEN,
+
+  //UserProfile
+  GET_ALL_USER_PROFILES,
+  GET_USER_PROFILE_BY_EMAIL,
+  CREATE_USER_PROFILE,
+  UPDATE_USER_PROFILE,
+  DELETE_USER_PROFILE,
+  UPDATE_USER,
+  CREATE_USER_ORDER,
+  GET_USER_ORDER,
+  GET_ALL_ORDERS_ADMIN,
+
+  //Mailing
+  POST_MAIL,
+  POST_MAIL_DELIVER,
+
+  //New types products
+  POST_NEW_PRODUCT_CATEGORY,
+  GET_PRODUCT_CATEGORIES,
+  DELETE_PRODUCT_CATEGORY,
 } from "../Actions/Const";
 
+const dataStorage = getStorage("shoppCart");
+
 const initialState = {
-  products: [],
-  allProducts: [],
-  allBrands: [],
-  details: [],
-  error: "",
-  success: "",
+  backResponse: "",
+  //cart:
+  cartDB: [],
+  cartDbResponse: "",
+  shoppingCart: dataStorage !== null ? Object.values(dataStorage) : [],
+  paymentLink: "",
+  userOrders: [],
+  adminOrders: [],
   //pagination:
   currentProducts: [],
   currentPage: 1,
-  productsPerPage: 6,
-  indexLastProduct: 6,
+  productsPerPage: 9,
+  indexLastProduct: 9,
   indexFirsProduct: 0,
-  //
-  shoppingCart: [],
-  totalItemsInCart: 0,
-  totalToPay: 0,
+  //product:
+  products: [],
+  allProducts: [],
+  allProductsForAdmin: [],
+  currentProductsForAdmin: [],
+  allBrands: [],
+  details: [],
+  //user:
+  userStore: [], //usuario específico
+  usersStore: [], //todos los usuarios
+  token: "",
+  userProfiles: [], //el perfil de un usuario específico
+  userProfile: [], //todos los usuarios
+
+  //type products
+  categories: [],
+  favorites: [],
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_PRODUCTS:
+    case CLEAR_RESPONSE:
       return {
         ...state,
-        products: action.payload,
-        allProducts: action.payload,
-        currentProducts: [...action.payload].slice(
+        backResponse: "",
+      };
+    case GET_PRODUCTS:
+      const filteredByDeleted = action.payload.filter(
+        (p) => p.isDeleted !== true
+      );
+      return {
+        ...state,
+        products: filteredByDeleted,
+        allProducts: filteredByDeleted,
+        allProductsForAdmin: action.payload,
+        currentProducts: [...filteredByDeleted].slice(
+          state.indexFirsProduct,
+          state.indexLastProduct
+        ),
+        currentProductsForAdmin: [...action.payload].slice(
           state.indexFirsProduct,
           state.indexLastProduct
         ),
       };
     case GET_NAME_PRODUCTS:
+      const filteredByDeletedInNameCase = action.payload.filter(
+        (p) => p.isDeleted !== true
+      );
       return {
         ...state,
-        products: action.payload,
+        products: filteredByDeletedInNameCase,
         currentPage: 1,
         indexFirsProduct: 0,
-        currentProducts: [...action.payload].slice(0, 6),
+        currentProducts: [...filteredByDeletedInNameCase].slice(0, 6),
       };
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+    case GET_NAME_PRODUCTS_ERROR:
       return {
         ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
+        products: state.allProducts,
+        currentPage: 1,
+        indexFirsProduct: 0,
+        currentProducts: [...state.allProducts].slice(0, 6),
       };
-    case SET_CURRENT_PAGE_PRODUCTS:
-      state.currentPage = action.payload;
-      state.indexLastProduct = state.currentPage * state.productsPerPage;
-      state.indexFirsProduct = state.indexLastProduct - state.productsPerPage;
+    case POST_PRODUCT:
       return {
         ...state,
-        currentProducts: state.products.slice(
-          state.indexFirsProduct,
-          state.indexLastProduct
-        ),
+        backResponse: action.payload,
+      };
+    case EDIT_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload,
+      };
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        backResponse: action.payload,
+      };
+    case CHANGE_PRODUCT_STOCK:
+      return {
+        ...state,
+        backResponse: action.payload,
       };
     case SET_CURRENT_PAGE_PRODUCTS:
       state.currentPage = action.payload;
@@ -235,111 +323,320 @@ function rootReducer(state = initialState, action) {
         currentProducts: [...categoryFiltered].slice(0, 6),
       };
 
-    /////// Managing responses from back
-    case SUCCESS:
-      return {
-        ...state,
-        success: action.payload,
-      };
-    case CLEAR_SUCCESS:
-      return {
-        ...state,
-        success: "",
-      };
-    case ERROR:
-      return {
-        ...state,
-        error: action.payload,
-      };
-    case CLEAR_ERROR:
-      return {
-        ...state,
-        error: "",
-      };
-
     // Shopping cart reducer functions
     case ADD_PRODUCT_TO_CART:
       let newItem = state.allProducts.find(
-        (item) => item.id === action.payload
+        (item) => item.id === action.payload.id
       );
-
       let itemInCart = state.shoppingCart.find(
-        (item) => item.id === newItem.id
+        (item) =>
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
       );
-      let totalItemsAdded = state.shoppingCart
-        .map((item) => item.amount)
-        .reduce((acc, item) => (acc += item), 1);
 
-      let conditionalAddState = itemInCart
-        ? {
-            ...state,
-            shoppingCart: state.shoppingCart.map((item) =>
-              item.id === newItem.id
-                ? { ...item, amount: item.amount + 1 }
-                : item
-            ),
-            totalItemsInCart: totalItemsAdded,
-          }
-        : {
-            ...state,
-            shoppingCart: [...state.shoppingCart, { ...newItem, amount: 1 }],
-            totalItemsInCart: totalItemsAdded,
-          };
+      let productToAdd = {
+        id: newItem.id,
+        name: newItem.name,
+        type: newItem.type,
+        color: action.payload.color,
+        gender: newItem.gender,
+        size: action.payload.size,
+        rating: newItem.rating,
+        price: newItem.price,
+        description: newItem.description,
+        image: newItem.image,
+        brandName: newItem.brandName,
+        categoryName: newItem.categoryName,
+      };
 
+      let conditionalAddState =
+        itemInCart && itemInCart.amount
+          ? {
+              ...state,
+              shoppingCart: state.shoppingCart.map((item) =>
+                item === itemInCart
+                  ? { ...item, amount: item.amount + action.payload.amount }
+                  : item
+              ),
+            }
+          : {
+              ...state,
+              shoppingCart: [
+                ...state.shoppingCart,
+                { ...productToAdd, amount: action.payload.amount },
+              ],
+            };
+      saveStorage("shoppCart", {
+        ...conditionalAddState.shoppingCart,
+      });
       return conditionalAddState;
     case REMOVE_ALL_FROM_CART:
-      let deletedItem = state.shoppingCart.find(
-        (item) => item.id === action.payload
+      let itemToRemove = state.shoppingCart.find(
+        (item) =>
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
       );
-
       let remainedProducts = state.shoppingCart.filter(
-        (item) => item.id !== action.payload
+        (item) => item !== itemToRemove
       );
 
-      let totalItemsRemainedInCart =
-        state.shoppingCart
-          .map((item) => item.amount)
-          .reduce((acc, item) => (acc += item), 0) - deletedItem.amount;
+      if (remainedProducts.length === 0) {
+        deleteStorage("shoppCart");
+      }
+
+      saveStorage("shoppCart", {
+        ...remainedProducts,
+      });
 
       return {
         ...state,
         shoppingCart: remainedProducts,
-        totalItemsInCart: totalItemsRemainedInCart,
       };
     case REMOVE_ONE_FROM_CART:
       let itemToDelete = state.shoppingCart.find(
-        (item) => item.id === action.payload
+        (item) =>
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
       );
-      let totalItemsRemained = state.shoppingCart
-        .map((item) => item.amount - 1)
-        .reduce((acc, item) => (acc += item), 0);
 
       let conditionalRemoveState =
-        itemToDelete.amount > 1
+        itemToDelete?.amount > 1
           ? {
               ...state,
               shoppingCart: state.shoppingCart.map((item) =>
-                item.id === action.payload
+                item === itemToDelete
                   ? { ...item, amount: item.amount - 1 }
                   : item
               ),
-              totalItemsInCart: totalItemsRemained,
             }
           : {
               ...state,
               shoppingCart: state.shoppingCart.filter(
-                (item) => item.id !== action.payload
+                (item) => item !== itemToDelete
               ),
-              totalItemsInCart: totalItemsRemained,
             };
+
+      saveStorage("shoppCart", {
+        ...conditionalRemoveState.shoppingCart,
+      });
+
       return conditionalRemoveState;
-    case CLEAR_CART:
-      return { ...state, shoppingCart: [] };
-    case CLEAR_DETAILS:
-      return{
-        ...state,
-        details: []
+
+    //Cart from DB manage
+    case POST_TO_CART_DB:
+      return { ...state, cartDbResponse: action.payload };
+    case GET_CART_DB:
+      if (action.payload.id) {
+        saveStorage("cartId", action.payload.id);
       }
+      let conditionalCartDBState =
+        action.payload === "No products found in cart"
+          ? {
+              ...state,
+              backResponse: action.payload,
+            }
+          : {
+              ...state,
+              cartDB: action.payload,
+            };
+      return conditionalCartDBState;
+
+    case DELETE_CART:
+      return { ...state, cartDB: [], cartDbResponse: action.payload };
+
+    case DELETE_PRODUCT_CART:
+      return { ...state, cartDbResponse: action.payload };
+
+    case CLEAR_CART:
+      return { ...state, shoppingCart: [], cartDbResponse: "" };
+
+    case ERROR_CART:
+      return { ...state, errorCart: action.payload };
+
+    case CLEAR_DETAILS:
+      return {
+        ...state,
+        details: [],
+      };
+
+    case PAYMENT_ORDER:
+      saveStorage("userOrder", action.payload.data);
+      return {
+        ...state,
+        paymentLink: action.payload.url,
+      };
+
+    case CREATE_USER_ORDER:
+      return { ...state, backResponse: action.payload };
+    case GET_USER_ORDER:
+      let conditionalOrderState =
+        action.payload === "No orders yet..."
+          ? {
+              ...state,
+              backResponse: action.payload,
+            }
+          : {
+              ...state,
+              userOrders: action.payload,
+            };
+      return conditionalOrderState;
+
+    case GET_ALL_ORDERS_ADMIN:
+      let conditionalAllOrdersState = action.payload === "No orders yet..." ? {
+        ...state, 
+        backResponse: action.payload
+      } : {
+        ...state, adminOrders: action.payload
+      }
+      return conditionalAllOrdersState
+
+    //Users
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+      };
+    case CREATE_USER:
+      return {
+        ...state,
+        userStore: action.payload,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        usersStore: action.payload,
+      };
+
+    case GET_ALL_USERS:
+      return {
+        ...state,
+        usersStore: action.payload,
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        usersStore: state.usersStore.filter((u) => u !== action.payload),
+      };
+    //User Profile
+    case GET_ALL_USER_PROFILES:
+      return {
+        ...state,
+        userProfiles: action.payload,
+      };
+    case GET_USER_PROFILE_BY_EMAIL:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    case CREATE_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
+        userProfiles: [...state.userProfiles, action.payload],
+      };
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    case DELETE_USER_PROFILE:
+      return {
+        ...state,
+        userProfiles: state.userProfiles.filter((u) => u !== action.payload),
+      };
+
+    // Favorites Products reducer functions
+    case ADD_PRODUCT_TO_FAVORITES:
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
+      };
+
+    case GET_PRODUCT_FROM_FAVORITES:
+      let conditionalFavoriteState = action.payload === "No products added yet" ? {
+        ...state, 
+        backResponse: action.payload
+      } : {
+        ...state, favorites: action.payload
+      }
+      return conditionalFavoriteState
+
+    case REMOVE_ALL_FROM_FAVORITES:
+      return {
+        ...state,
+        favorites: initialState.favorites,
+      };
+
+    case REMOVE_ONE_FROM_FAVORITES:
+      const removeOneProduct = state.favorites.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        favorites: removeOneProduct,
+      };
+
+    // Reviews Products reducer functions
+    case ADD_REVIEW_TO_PRODUCT:
+      return {
+        ...state,
+        reviews: [...state.reviews, action.payload],
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case EDIT_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case REMOVE_ONE_REVIEW:
+      const removeOneReview = state.reviews.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        reviews: removeOneReview,
+      };
+
+    //Mailing functions
+    case POST_MAIL:
+      return {
+        ...state,
+      };
+
+    case POST_MAIL_DELIVER:
+      return {
+        ...state,
+      };
+    //Product types functions
+    case POST_NEW_PRODUCT_CATEGORY:
+      return {
+        ...state,
+        categories: [...state.categories, action.payload],
+      };
+    case GET_PRODUCT_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload,
+      };
+    case DELETE_PRODUCT_CATEGORY:
+      const deleteProductCategory = state.categories.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        categories: deleteProductCategory,
+      };
+
     default:
       return state;
   }

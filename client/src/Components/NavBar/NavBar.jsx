@@ -1,57 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import SearchInput from "./SearchBar.jsx";
-import styles from "./NavBar.module.css";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import HomeIcon from "@material-ui/icons/Home";
-import ShoppingCart from "../ShoppCart/ShoppingCart";
-import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import { useState } from "react";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import SearchInput from "./SearchBar/SearchBar.jsx";
+import "./NavBar.css";
+import title from "../../Utils/Title.png";
+import ShopSideBar from "./ShopCart/ShopSideBar.jsx";
+import UserSideBar from "./UserMenu/UserMenu.jsx";
+import Filters from "../Filters/Filters.jsx";
 
-function OffCanvas({ name, ...props }) {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const toggleShow = () => setShow((s) => !s);
-
-  return (
-    <>
-      <Button onClick={toggleShow}>
-        <ShoppingCartIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
-      </Button>
-      <Offcanvas show={show} onHide={handleClose} {...props}>
-        <Offcanvas.Header closeButton>YOUR CART</Offcanvas.Header>
-        <Offcanvas.Body>
-          <ShoppingCart toggleShow={toggleShow} />
-        </Offcanvas.Body>
-      </Offcanvas>
-    </>
-  );
-}
-
-function SideBar(props) {
-  return (
-    <>
-      <OffCanvas placement="end" {...props} />
-    </>
-  );
-}
+import { FaBars, FaTimes, FaUserTie } from "react-icons/fa";
+import { useSelector } from "react-redux"; 
 
 const NavBar = () => {
+  const [click, setClick] = useState(false);
+  const [clickFilters, setFiltersClick] = useState(false);
+  let userStore = useSelector((state) => state.userStore);
+
+  function handleClick() {
+    setClick(!click);
+  }
+
+  function filtersClick() {
+    setFiltersClick(!clickFilters);
+  }
+
   return (
-    <nav className={styles.navContainer}>
-      <Link to={"/home"}>
-        <HomeIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
-      </Link>
-      <Link to={"/productForm"}>
-        <AddCircleIcon style={{ fontSize: 35, color: "#f5f5f5" }} />
-      </Link>
-      <h1 className={styles.title}>Becoming Fit</h1>
-      <SearchInput />
-      <SideBar />
+    <nav className="navContainer">
+      <div className="topRow">
+        <div className="img-container">
+          <Link to="/home">
+            <img src={title} alt="not found" width={200} height={60} />
+          </Link>
+        </div>
+        <div className="icons-container">
+          <ul className={click ? "navMenu active" : "navMenu"}>
+            <li>
+              <SearchInput />
+            </li>
+            <li>
+              <ShopSideBar />
+            </li>
+            <li>
+              <UserSideBar />
+            </li>
+            {userStore && userStore.adminPermissions ? (
+              <li>
+                <Link to="/admin">
+                  <FaUserTie size={20} color={'white'}  />
+                </Link>
+              </li>
+            ) : null}
+          </ul>
+        </div>
+      </div>
+
+      <div className="filter-icon" onClick={filtersClick}>
+        {clickFilters ? (
+          <FaTimes size={20} style={{ color: "#fff" }} />
+        ) : (
+          <FaBars size={20} style={{ color: "#fff" }} />
+        )}
+      </div>
+
+      <div className="filters-container">
+        <ul className={clickFilters ? "filters active" : "filters"}>
+          <div className="iconsResponsive">
+            <li>
+              <SearchInput />
+            </li>
+            <div className="user-cartResponsive">
+              <li>
+                <ShopSideBar />
+              </li>
+              <li>
+                <UserSideBar />
+              </li>
+            </div>
+          </div>
+
+          <li>
+            <Filters />
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 };

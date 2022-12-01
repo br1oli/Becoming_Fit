@@ -1,0 +1,88 @@
+.NavContainer{
+    background-color: #404040;
+    width: 100vw;
+    height: 10vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.notificationContainer{
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;   
+     
+}
+.imgContainer{
+    margin-left: 10px;
+}
+
+.hamburgerResponsive{
+    display: none;
+}
+
+.AdminSideBar{
+    display: none;
+}
+
+.side-container{
+    display: none;
+}
+
+.sidebar {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    left: -100%;
+    z-index: 1;
+    transition: 0.3s;
+}
+
+.navMenu {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+
+
+@media screen and (max-width: 1040px){
+     .hamburgerResponsive{
+        display: initial;
+        margin: 0 0 20px 150px;
+     }
+
+     .side-container{
+        display: initial;
+     }
+
+     .navMenu.active {
+        left: 0;
+    }
+     .navMenu {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 60%;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        left: -100%;
+        z-index: 1;
+        transition: 0.3s;
+    }
+
+    .buttonsAdmin{
+        border: none;
+        background-color: transparent;
+        color: white;
+    }
+}
+

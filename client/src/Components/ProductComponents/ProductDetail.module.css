@@ -1,44 +1,88 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
 
-.primaryContainer{
-overflow: hidden;
+.accordionsResponsive {
+  display: none;
 }
 
 .secondaryContainer{
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding-bottom: 6rem;
- margin-left: 8%;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  justify-content: center;
+  align-items: center;
+}
+
+.divLeft{
+  height: 100%;
+  width: 70%;
+}
+
+.reviewContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.reviewTitle {
+  background: darken(light, 10%);
+  background-color: black;
+  width: 80%;
+  padding: 10px;
+  display: inline-block;
+  margin: 30px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.decriptionSize {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 100px;
+  width: 150%;
+}
+
+.description {
+  margin: 25px;
+  width: 350px;
+}
+.size {
+  margin: 25px;
+  width: 350px;
 }
 
 .image{
-width: 40%;
-display: inline-block;
-margin: auto;
-justify-content: center;
+display: flex;
+justify-content: flex-end;
 }
 
-.img{
-  width: 30rem;
+.image img{
+  width: 25rem;
+}
+
+.linkHome {
+  margin: 20px;
 }
 
 .detail{
 border-left: 1px solid grey;
 padding-left: 3rem;
-width: 40%;
 display: inline-block;
-margin: auto;
+position: -webkit-sticky;
+position: sticky;
+top: 0;
+margin-right: 20px;
 }
 
 .imgColor{
   width: 3rem;
 }
 
-.rating{
-  padding-bottom: 2rem;
-}
 
 .sizes{
     background: darken(light, 10%);
@@ -60,10 +104,13 @@ margin: auto;
   color: aliceblue;
   transition: all 0.5s ease-in-out;
 }
+.cantidad {
+  margin: 10px;
+}
 
-.sizesDiv{
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+.shippinhFree {
+  text-align: center;
+  margin-right: 60px;
 }
 
 .cantidad1{
@@ -102,11 +149,9 @@ margin: auto;
     color: white;
     cursor: pointer;
     margin: auto;
-    margin-bottom: 4rem;
 }
 
 .price{
-  margin-top: 5rem;
   font-weight: 400;
 }
 
@@ -120,15 +165,11 @@ margin: auto;
   margin-right: 10rem;
 }
 
-.thirdContainer{
-  margin-bottom: 10rem;
-}
-
-.accordion{
-margin-right: 20rem;
-margin-bottom: 4rem;
-margin-left: 5rem;
-margin-right: 20rem;
+.title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .review{
@@ -197,25 +238,20 @@ margin-right: 5rem;
 
 .oportunity{
 border: 1px solid gray;
-padding: 1rem;
-width: fit-content;
-height: fit-content;
-}
-
-.buttons{
-    padding-top: 1rem;
-    padding-bottom: 3rem;
+padding: 15px 10px;
+text-align: center;
+width: 200px;
 }
 
 .add {
     background: darken(light, 10%);
     background-color: black;
-    width: 18rem;
+    width: 13rem;
     padding: 10px;
     display: inline-block;
     outline: 0;
     border: 0;
-    margin: -1px;
+    margin: 3px;
     border-radius: 2px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -223,30 +259,10 @@ height: fit-content;
     cursor: pointer;
   }
   .add:hover {
-    background: white;
+    background: #404040;
     color: aliceblue;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
-  
-  .like {
-    padding: 10px;
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    margin: -1px;
-    border-radius: 2px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: black;
-    cursor: pointer;
-  }
-  .like:hover {
-    background: black;
-    color: aliceblue;
-    transition: all 0.5s ease-in-out;
-  }
-
-
 
   .dealsDiv{
     background-color:yellow;
@@ -281,4 +297,55 @@ height: fit-content;
     background: black;
     color: aliceblue;
     transition: all 0.5s ease-in-out;
+  }
+
+
+  @media screen and (max-width: 1040px) {
+    .secondaryContainer{
+        display:flex;
+        flex-direction: column;
+        /* overflow: hidden; */
+        grid-template-columns: 0 auto;
+        width: 100vw;
+        padding: 0;
+    }
+
+    .accordionsResponsive{
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 50px;
+    }
+
+    .decriptionSize {
+      display: none;
+    }
+
+    .description {
+      margin: 15px;
+      width: 150px;
+    }
+    .size {
+      margin: 15px;
+      width: 150px;
+    }
+
+    .detail{
+      display: wrap;
+      flex-wrap: wrap;
+    }
+
+    .divRight{
+        height: 100vh;
+        width: 50vw;
+        display:flex;
+        flex-direction: column;
+    }
+
+    .image img{
+      width: 20rem;
+    }
+    
+    .primaryContainer{
+      overflow: hidden;
+    }
   }

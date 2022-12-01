@@ -9,40 +9,40 @@ import {
 } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { postProduct } from "../../Redux/Actions/UsersActions";
+import { useHistory } from "react-router-dom";
+import { clearResponse, postProduct } from "../../Redux/Actions/UsersActions";
 import Style from "./ProductForm.module.css";
+import Success from "../../Components/Success/Success";
 
 function validador(input) {
   let errors = {};
-
   if (!input.name) {
     errors.name = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.name)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.name)) {
     errors.name = "First letter must be uppercase";
   }
   if (!input.type) {
     errors.type = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.type)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.type)) {
     errors.type = "First letter must be uppercase";
   }
   if (!input.color) {
     errors.color = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.color)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,40}$/.test(input.color)) {
     errors.color = "First letter must be uppercase";
   }
   if (!input.description) {
     errors.description = "Required";
-  } else if (!/^[A-Z][a-zA-Z0-9]{1,19}$/.test(input.description)) {
+  } else if (!/^[A-Z][a-zA-ZÀ-ÿ\s]{1,500}$/.test(input.description)) {
     errors.description = "First letter must be uppercase";
   }
-
   if (!input.gender) {
     errors.gender = "Required";
   }
   if (!input.size) {
     errors.size = "Required";
-  } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.size)) {
-    errors.size = "Size must be a number";
+  } else if (!input.size.length) {
+    errors.size = "Select at least one size from the list";
   }
   if (!input.rating) {
     errors.rating = "Required";
@@ -52,11 +52,11 @@ function validador(input) {
   } else if (!/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(input.price)) {
     errors.price = "Price must be a number";
   }
-  if (!input.brand) {
-    errors.brand = "Required";
+  if (!input.brandName) {
+    errors.brandName = "Required";
   }
-  if (!input.category) {
-    errors.category = "Required";
+  if (!input.categoryName) {
+    errors.categoryName = "Required";
   } else if (input.price < 0 || input.price > 1000000) {
     errors.price = "Exceeds reasonable limits";
   }
@@ -74,6 +74,7 @@ function validador(input) {
 
 export default function ProductForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [input, setInput] = useState({
     name: "",
@@ -81,11 +82,11 @@ export default function ProductForm() {
     gender: "",
     price: "",
     image: "",
-    brand: "",
+    brandName: "",
     color: "",
-    description: "",
-    size: "",
-    category: "",
+    description: "",    
+    size: [],
+    categoryName: "",
     rating: "",
   });
 
@@ -95,59 +96,81 @@ export default function ProductForm() {
     gender: "",
     price: "",
     image: "",
-    brand: "",
+    brandName: "",
     color: "",
     description: "",
     size: "",
-    category: "",
+    categoryName: "",
     rating: "",
   });
 
   const allProducts = useSelector((state) => state.allProducts);
-  const brandss = [...new Set(allProducts.map((e) => e.brand.name))];
+  const brands = [...new Set(allProducts.map((e) => e.brand.name))];
   const categories = [...new Set(allProducts.map((e) => e.category.name))];
   const gender = [...new Set(allProducts.map((e) => e.gender))];
+  const response = useSelector((state) => state.backResponse);
 
+  
   const handleInputChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     let errorObj = validador({ ...input, [e.target.name]: e.target.value });
     setErrors(errorObj);
   };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (
-      !input.name ||
-      !input.type ||
-      !input.color ||
-      !input.gender ||
-      !input.size ||
-      !input.rating ||
-      !input.price ||
-      !input.brand ||
-      !input.image ||
-      !input.category ||
-      !input.description
-    ) {
-      alert("Incomplete form");
+  function handleSizeSelect(e) {
+    if (input.size.includes(e.target.value)) {
+        e.target.value = 'default';
+        return alert("You've already selected that size")
     } else {
-      dispatch(postProduct(input));
       setInput({
-        name: "",
-        type: "",
-        gender: "",
-        price: "",
-        image: "",
-        brand: "",
-        color: "",
-        description: "",
-        size: "",
-        category: "",
-        rating: "",
-      });
-      alert("Activity created!!");
+          ...input,
+          size:[...input.size, e.target.value]
+      })
+      setErrors(validador({
+          ...input,
+          [e.target.name]: e.target.value
+      }))        
+    }
+    e.target.value = 'default';
+  }
+
+  function handleSizeDelete(e){
+    setInput({
+        ...input,
+        size: input.size.filter(s => s !== e)
+    })
+  }
+
+  function handleSizeMap () {
+    try {
+      return (
+      input.size.map(s =>
+        <div>
+            <p>{s}         
+            <button onClick = {() => handleSizeDelete(s)}>X</button>
+            </p>
+            <br></br>
+        </div>
+    ))
+    } catch (e) {
+      return null
     }
   }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setErrors({});
+    if (window.confirm("Are you sure you want to create this product?")) {
+    input.size = input.size.join(', ')
+    dispatch(postProduct(input));
+    setTimeout(() => {
+        dispatch(clearResponse())
+        history.push('/admin/products/list')
+    }, 1500)    
+    }
+  }  
+
+  let disabled = Object.entries(errors).length ? true : false;
 
   return (
     <div style={{ margin: 15 }}>
@@ -211,8 +234,10 @@ export default function ProductForm() {
                 </Col>
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Género">
-                    <Form.Select name="gender" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
+                    <Form.Select name="gender" defaultValue={'default'} onChange={handleInputChange}>
+                    <option key={"default"} value={"default"} disabled>
+                        Choose a gender
+                      </option>
                       {gender?.map((e) => {
                         return (
                           <option key={e} value={e} name="gender">
@@ -232,18 +257,36 @@ export default function ProductForm() {
                   <FloatingLabel
                     className="mb-3"
                     controlId="floatingimage"
-                    label="Size(cm)"
+                    label="Size"
                   >
-                    <Form.Control
-                      type={"text"}
-                      value={input.size}
-                      name="size"
-                      onChange={handleInputChange}
-                    />
+                    <Form.Select name="size" defaultValue={'default'} onChange={handleSizeSelect}>
+                      <option key={"default"} value={"default"} disabled>
+                        Choose a size
+                      </option>
+                      <option key={"XS"} value={"XS"}>
+                        XS
+                      </option>
+                      <option key={"S"} value={"S"}>
+                        S
+                      </option>
+                      <option key={"M"} value={"M"}>
+                        M
+                      </option>
+                      <option key={"L"} value={"L"}>
+                        L
+                      </option>
+                      <option key={"XL"} value={"XL"}>
+                        XL
+                      </option>
+                      <option key={"XXL"} value={"XXL"}>
+                        XXL
+                      </option>
+                    </Form.Select>
                   </FloatingLabel>
                   {errors?.size ? (
                     <div className={Style.danger}>{errors.size}</div>
                   ) : null}
+                  {handleSizeMap()}
                 </Col>
                 <Col>
                   <FloatingLabel
@@ -251,9 +294,8 @@ export default function ProductForm() {
                     controlId="floatingimage"
                     label="Rating"
                   >
-                    <Form.Select name="rating" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
-
+                    <Form.Select name="rating" defaultValue={'default'} onChange={handleInputChange}>
+                      <option value={"default"} disabled>Choose a rating</option>
                       <option key={1} value={1}>
                         ⭐
                       </option>
@@ -296,19 +338,19 @@ export default function ProductForm() {
                 </Col>
                 <Col>
                   <FloatingLabel controlId="floatingBrands" label="Marca">
-                    <Form.Select name="brand" onChange={handleInputChange}>
-                      <option value={"NULL"}>Choose</option>
-                      {brandss?.map((e) => {
+                    <Form.Select defaultValue={'default'} name="brandName" onChange={handleInputChange}>
+                    <option key="123" value="default" disabled name="brandName">Choose a brand</option>
+                      {brands?.map((e) => {
                         return (
-                          <option key={e} value={e} name="brand">
+                          <option key={e} value={e} name="brandName">
                             {e}
                           </option>
                         );
                       })}
                     </Form.Select>
                   </FloatingLabel>
-                  {errors?.brand ? (
-                    <div className={Style.danger}>{errors.brand}</div>
+                  {errors?.brandName ? (
+                    <div className={Style.danger}>{errors.brandName}</div>
                   ) : null}
                 </Col>
               </Row>
@@ -332,19 +374,23 @@ export default function ProductForm() {
               <Row>
                 <Col>
                   <FloatingLabel controlId="floatingCategoies" label="Category">
-                    <Form.Select onChange={handleInputChange} name="category">
-                      <option value={"NULL"}>Choose</option>
+                    <Form.Select
+                      defaultValue={'default'}
+                      onChange={handleInputChange}
+                      name="categoryName"
+                    >
+                      <option key="123" value="default" disabled name="categoryName">Choose a category</option>
                       {categories?.map((e) => {
                         return (
-                          <option key={e} value={e} name="category">
+                          <option key={e} value={e} name="categoryName">
                             {e}
                           </option>
                         );
                       })}
                     </Form.Select>
                   </FloatingLabel>
-                  {errors?.category ? (
-                    <div className={Style.danger}>{errors.category}</div>
+                  {errors?.categoryName ? (
+                    <div className={Style.danger}>{errors.categoryName}</div>
                   ) : null}
                 </Col>
               </Row>
@@ -369,9 +415,17 @@ export default function ProductForm() {
                 style={{ float: "right" }}
                 type="submit"
                 onClick={handleSubmit}
+                disabled={disabled}
               >
                 Submit
               </Button>
+
+              {response? (
+                <Success success={response} />
+              ) : (
+                null
+              )
+              }
             </div>
           </form>
         </Card>

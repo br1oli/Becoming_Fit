@@ -1,42 +1,44 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Card from "react-bootstrap/Card";
-import "./ProductCard.css";
-import { addToCart } from "../../Redux/Actions/UsersActions";
-import { useDispatch } from "react-redux";
+import Styles from "./ProductCard.module.css";
+import { addProductToFavorites } from "../../Redux/Actions/UsersActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductCard = (props) => {
   let dispatch = useDispatch();
+  let userId = useSelector((state) => state.userStore.email);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-
-    dispatch(addToCart(e.target.value));
+  const handleFavorite = async (e) => {
+    await dispatch(addProductToFavorites(e.target.value, userId));
   };
-  return (
-    <div className="row" style={{ width: "15rem" }}>
-      <div className="col-sm-12 col-md-3 col-xl-3 col-xl-3">
-        <div className="Contenedor">
-          <Card className="Card" style={{ width: "15rem" }}>
-            <NavLink to={`/home/${props.id}`}>
-              <Card.Img className="Image" variant="top" src={props.image} />
-            </NavLink>
-            <Card.Body className="CardBody">
-              <Card.Title className="Title">{props.name}</Card.Title>
-              <Card.Text className="Description">{props.brandName}</Card.Text>
 
-              <Card.Text className="Price">US {props.price}</Card.Text>
-              <div className="buttons">
-                <button value={props.id} className="add" onClick={handleChange}>
-                  Add to Cart
-                </button>
-                <button className="like">
-                  <span>♥</span>
-                </button>
-              </div>
-            </Card.Body>
-          </Card>
+  return (
+    <div className={Styles.fullContainer}>
+      <div className={Styles.cardContainer}>
+        <div className={Styles.imgContainer}>
+          <NavLink to={`/home/${props.id}`}>
+            <img
+              src={props.image}
+              alt="img not found"
+              className={Styles.imageCard}
+            />
+          </NavLink>
+        </div>
+
+        <div className={Styles.cardContent}>
+          <div className={Styles.nameContainer}>
+            <h6 className={Styles.name}>{props.name}</h6>
+          </div>
+
+          <div className={Styles.priceContainer}>
+            <span className={Styles.price}>U${props.price} </span>
+          </div>
+        </div>
+
+        <div className={Styles.favButton}>
+          <button className={Styles.add} value={props.id} onClick={handleFavorite}>
+            ADD FAVORITE
+          </button>
         </div>
       </div>
     </div>

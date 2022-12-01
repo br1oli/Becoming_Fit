@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+.mainContainer{
+    width: 30rem;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    /* margin: auto; */
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 10px 0px rgb(202, 202, 202);
+    padding:  0rem;
+    border-radius: 3px;
+    margin-bottom: 2rem;
+}
+.mainContainer:hover{
+    border: 1px solid rgb(117, 116, 116);
+}
+
+.image{
+    width: 12rem;
+    height: 11.9rem
+}
+
+.itemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+}
+
+.itemContainer div{
+    width: 5rem;
+    height: 15rem;
+    border: 1px solid gray;
+    margin: 0.5rem;
+}
+
+.itemContainer img{
+    width: 3rem;
+}
+
+.orderInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 740px) {
+    .mainContainer{
+        width: 25rem;
+        display: wrap;
+        flex-wrap: wrap;
+        min-width: 75vw;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+        margin: 1rem;
+    }
+
+    .image{
+        width: 60vw;
+        height: 17rem;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+}

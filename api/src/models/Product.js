@@ -20,10 +20,6 @@ module.exports = (sequelize) => {
       type: {
         type: DataTypes.STRING,
       },
-      /*  category: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      }, */
       color: {
         type: DataTypes.STRING,
       },
@@ -35,10 +31,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      /*  brand: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      }, */
       rating: {
         type: DataTypes.FLOAT,
         allowNull: false,
@@ -47,14 +39,23 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      /* agregue cantidad permitida de caracteres para que no se rompa la db con las descripciones largas, para no tener que tocar el json */
       description: {
-        type: DataTypes.STRING(2000),
+        type: DataTypes.STRING(5000),
       },
       image: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(5000),
         allowNull: false,
       },
+      outOfStock: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      }
     },
     {
       timestamps: false,

@@ -1,0 +1,52 @@
+.containerPagination {
+    text-align: center;
+    user-select: none;
+    border-radius: 1rem;
+  }
+  
+  .containerPagination,
+  .liContainer,
+  .previous,
+  .next {
+    display: inline-block;
+    margin: 5px;
+    box-shadow: 0 5px 10px rgb(1 1 1 / 10%);
+  }
+  .containerPagination,
+  li,
+  a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.2rem;
+    line-height: 40px;
+    list-style: none;
+  }
+  
+  .previous,
+  .next {
+    background-color: var(--background-active);
+    width: 80px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  .previous:hover {
+    transform: translateX(-5px);
+  }
+  .next:hover {
+    transform: translateX(5px);
+  }
+  .liContainer {
+    border-radius: 45%;
+    width: 2rem;
+    cursor: pointer;
+  }
+  .active {
+    background-color: var(--background-active);
+    border-radius: 45%;
+    width: 2rem;
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    box-shadow: 0 5px 8px rgb(1 1 1 / 10%);
+  }

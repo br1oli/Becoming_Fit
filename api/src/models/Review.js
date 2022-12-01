@@ -9,11 +9,23 @@ module.exports = (sequelize) => {
       unique: true,
       defaultValue: DataTypes.UUIDV4,
     },
-    description: {
-      type: DataTypes.STRING,
-    },
     rating: {
       type: DataTypes.FLOAT,
     },
+    comment: {
+      type: DataTypes.STRING,
+    },
+    title: {
+      type: DataTypes.STRING,
+    },
+    recommend: {
+      type: DataTypes.STRING,
+    },
+    quality: {
+      type: DataTypes.FLOAT,
+    },
+  },
+  {
+      timestamps: false,
   });
 };

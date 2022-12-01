@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ProductDetail.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,37 +6,154 @@ import {
   addToCart,
   getProductDetail,
   clearDetails,
+  postCartToDB,
+  addProductToFavorites,
+  getCartFromDB,
+  deleteFromCart,
+  clearCartInDb,
 } from "../../Redux/Actions/UsersActions";
 import { Link, NavLink } from "react-router-dom";
 import ProductCardIndex from "./ProductCard";
+import NavBar from "../NavBar/NavBar";
+import ProductReviews from "../Reviews/ProductReviews";
+import Footer from "../Footer/Footer";
+import { RadioButtonsColorGroup } from "../ShoppingCart/Size&ColorRButtons.jsx";
+import { RadioButtonsSizeGroup } from "../ShoppingCart/Size&ColorRButtons.jsx";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ProductDetail = (props) => {
   const detailId = props.props.match.params.id;
   const dispatch = useDispatch();
   const product = useSelector((state) => state.details);
+  const cartItems = useSelector((state) => state.shoppingCart);
+  const cartDB = useSelector((state) => state.cartDB);
+  let token = useSelector((state) => state.token);
+  let userId = useSelector((state) => state.userStore.email);
+
+  //Local states for amount, color and size
+  let [selectedSize, setSelectedSize] = useState("");
+  let [selectedColor, setSelectedColor] = useState("");
+  let [amount, setAmount] = useState(0);
+
   useEffect(() => {
     dispatch(getProductDetail(detailId));
-
     return () => {
       dispatch(clearDetails());
     };
-  }, []);
+  }, [dispatch, detailId]);
 
-  const handleChange = (e) => {
+  //handle que se le pasa a los radiobuttons de color y size
+  const handleColor = (e) => {
     e.preventDefault();
-    dispatch(addToCart(detailId));
+    setSelectedColor(e.target.value);
   };
+  const handleSize = (e) => {
+    e.preventDefault();
+    setSelectedSize(e.target.value);
+  };
+  //handleAmount dependiendo del value
+  const handleAmount = (e) => {
+    e.preventDefault();
+    if (e.target.value === "+") {
+      setAmount(amount + 1);
+    }
+    if (e.target.value === "-") {
+      setAmount(amount - 1);
+    }
+  };
+
+  //handle de los botones del detail
+  const handleChange = async (e) => {
+    e.preventDefault();
+    //si existe un token usa las actions que llaman a la db
+    if (token.length) {
+      //solo se despachan si hay un amount, color y un size
+      if (selectedColor && selectedSize && amount) {
+        if (e.target.value === "add") {
+          await dispatch(
+            postCartToDB({
+              userId: userId,
+              productId: detailId,
+              amount: amount,
+              color: selectedColor,
+              size: selectedSize,
+            })
+          );
+          dispatch(getCartFromDB(userId));
+          setAmount(0);
+        }
+      } else {
+        //cambiar alert por pop up
+        return alert("Choose color and size, please.");
+      }
+
+      //si no hay un token, aca maneja el store y guarda los productos en el local storage
+      //solo si hay un amount, color y un talle
+    } else if (!token.length && selectedColor && selectedSize && amount) {
+      if (e.target.value === "add") {
+        dispatch(
+          addToCart({
+            id: detailId,
+            size: selectedSize,
+            color: selectedColor,
+            amount: amount,
+          })
+        );
+        setAmount(0);
+      }
+    } else {
+      return alert("Choose color and size, please.");
+    }
+  };
+
+  const handleFavorite = () => {
+    dispatch(addProductToFavorites(detailId, userId));
+  };
+
   return (
     <div className={styles.primaryContainer}>
-      <br />
-      <br />
-      <br />
-
-      <Link to={`/home`}>Go back /Home</Link>
+      <div className={styles.navContainer}>
+        <NavBar />
+      </div>
 
       <div className={styles.secondaryContainer}>
-        <div className={styles.image}>
-          <img className={styles.img} alt={product.name} src={product.image} />
+        <div className={styles.divLeft}>
+          <div className={styles.image}>
+            <img
+              className={styles.img}
+              alt={product.name}
+              src={product.image}
+            />
+          </div>
+
+          <div className={styles.decriptionSize}>
+            <div className={styles.description}>
+              <h4>Description</h4>
+              <hr />
+              {product.description}
+            </div>
+
+            <div className={styles.size}>
+              <h4>How to know your size</h4>
+              <hr />
+              <p>
+                Follow these easy steps to get the right size. For the best fit,
+                measure your feet at the end of the day.
+              </p>
+              <p>
+                <strong>1.</strong> Step on a piece of paper with your heel
+                slightly touching a wall behind. <br />
+                <strong>2.</strong> Mark the end of your longest toe on the
+                paper and measure from the wall to the marking. <br />
+                <strong>3.</strong> Do the same for the other foot and compare
+                measurements with our size chart to get the right size. <br />
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className={styles.detail}>
@@ -46,39 +163,50 @@ const ProductDetail = (props) => {
 
           <h2>{product.name}</h2>
 
-          <p className={styles.rating}> ★ ★ ★ ★ ★ {product.rating}</p>
-
-          <p>Choose a color</p>
-          <p>
-            <strong>{product.color}</strong>
-          </p>
-          <img
-            className={styles.imgColor}
-            alt={product.name}
-            src={product.image}
-          />
-
-          <p>
-            Yor favorite brand • <strong>{product.brand?.name}</strong>
-          </p>
+          <p> ★ ★ ★ ★ ★ {product.rating}</p>
 
           <div className={styles.sizesDiv}>
-            <select className={styles.sizes}>
-              <option value="all">Sizes</option>
-              <option value="XS">XS</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-            </select>
-            <p>Size Guide</p>
+            {product.color && product.color?.split(", ").length ? (
+              <RadioButtonsColorGroup
+                color={product.color}
+                handleColor={handleColor}
+              />
+            ) : null}
           </div>
+          <div className={styles.sizesDiv}>
+            {product.size && product.size?.split(", ").length ? (
+              <RadioButtonsSizeGroup
+                size={product.size}
+                handleSize={handleSize}
+              />
+            ) : null}
+          </div>
+
+          <p>
+            Your favorite brand • <strong>{product.brand?.name}</strong>
+          </p>
 
           <p>Cantidad</p>
           <div className={styles.cantidad}>
-            <p className={styles.cantidad1}>-</p>
-            <p className={styles.cantidad2}>1</p>
-            <p className={styles.cantidad1}>+</p>
+            <button
+              onClick={handleAmount}
+              value="-"
+              className={styles.cantidad1}
+              /* habilito el boton de menos solo si se selecciono un color un talle y cantidad mayor a 0*/
+              disabled={
+                selectedColor && selectedSize && amount > 0 ? false : true
+              }
+            >
+              -
+            </button>
+            <p className={styles.cantidad2}>{amount}</p>
+            <button
+              onClick={handleAmount}
+              value="+"
+              className={styles.cantidad1}
+            >
+              +
+            </button>
           </div>
 
           <p className={styles.oportunity}>
@@ -88,163 +216,76 @@ const ProductDetail = (props) => {
 
           <h5 className={styles.price}> $ US {product.price}</h5>
 
-          <div className={styles.buttons}>
-            <button className={styles.add} onClick={handleChange}>
-              ADD TO CART
-            </button>
-            <button className={styles.like}>♥</button>
-          </div>
+          {product.outOfStock === false ? (
+            <div className={styles.buttons}>
+              <button className={styles.add} onClick={handleChange} value="add">
+                ADD TO CART
+              </button>
+              <button onClick={handleFavorite} className={styles.add}>
+                ADD FAVORITE
+              </button>
+            </div>
+          ) : (
+            <p>Out of Stock</p>
+          )}
 
-          <p>Free shipping & special prices for members only</p>
+          <p className={styles.shippinhFree}>
+            Free shipping & special prices for members only
+          </p>
+        </div>
+
+        <div className={styles.reviewContainer}>
+          <div className={styles.reviewTitle}>
+            <span>REVIEWS</span>
+          </div>
+          <div className={styles.bodyReview}>
+            <ProductReviews infoProduct={product} idProduct={detailId} />
+          </div>
         </div>
       </div>
 
-      <h3 className={styles.detailsTitle}></h3>
-      <div className={styles.thirdContainer}>
-        <div className={styles.accordion}>
-          <div className="accordion" id="accordionPanelsStayOpenExample">
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="panelsStayOpen-headingOne">
-                <button
-                  className="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#panelsStayOpen-collapseOne"
-                  aria-expanded="true"
-                  aria-controls="panelsStayOpen-collapseOne"
-                >
-                  <strong>Description</strong>
-                </button>
-              </h2>
-              <div
-                id="panelsStayOpen-collapseOne"
-                className="accordion-collapse collapse show"
-                aria-labelledby="panelsStayOpen-headingOne"
-              >
-                <div className="accordion-body">
-                  <h4>Description</h4>
-                  {product.description}
-                </div>
-              </div>
-            </div>
+      <div className={styles.accordionsResponsive}>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>Description</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>{product.description}</Typography>
+          </AccordionDetails>
+        </Accordion>
 
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="panelsStayOpen-headingOne">
-                <button
-                  className="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#panelsStayOpen-collapseOne"
-                  aria-expanded="true"
-                  aria-controls="panelsStayOpen-collapseOne"
-                >
-                  <strong>Size Guide</strong>
-                </button>
-              </h2>
-              <div
-                id="panelsStayOpen-collapseOne"
-                className="accordion-collapse collapse show"
-                aria-labelledby="panelsStayOpen-headingOne"
-              >
-                <div className="accordion-body">
-                  <h4>How to know your size</h4>
-                  <p>
-                    Follow these easy steps to get the right size. For the best
-                    fit, measure your feet at the end of the day.
-                  </p>
-                  <p>
-                    <strong>1.</strong> Step on a piece of paper with your heel
-                    slightly touching a wall behind. <br />
-                    <strong>2.</strong> Mark the end of your longest toe on the
-                    paper and measure from the wall to the marking. <br />
-                    <strong>3.</strong> Do the same for the other foot and
-                    compare measurements with our size chart to get the right
-                    size. <br />
-                  </p>
-                  <img
-                    alt="Size Guide"
-                    src="https://esprit.vtexassets.com/assets/vtex/assets-builder/esprit.esprit-store/7.95.0/images/guia-talla-inferior___f8f868a086951dc90524ab22f8158ca1.png"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <h3 className={styles.title}>Review this product</h3>
-        <div className={styles.review}>
-          <div className={styles.rangeContainer}>
-            <label htmlFor="exampleFormControlInput1" className="form-label">
-              {" "}
-              <strong>Rate this product</strong>
-            </label>
-            <input
-              type="range"
-              className={styles.range}
-              min="0"
-              max="5"
-              step="any"
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlTextarea1" className="form-label">
-              Add a short description of the product base on your experience
-            </label>
-            <textarea
-              className="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              placeholder="Write your review here"
-            ></textarea>
-            <button type="submit" className={styles.buttonReview}>
-              Add Review
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.suggestions}>
-          <h3 className={styles.title}>You may also like</h3>
-          <div className={styles.divSuggestions}>
-            <ProductCardIndex
-              image={
-                "https://http2.mlstatic.com/D_NQ_NP_750910-MLU51264755911_082022-O.webp"
-              }
-              name={"Adidas Essentials Jacket"}
-              price={"74"}
-            />
-            <ProductCardIndex
-              image={
-                "https://http2.mlstatic.com/D_NQ_NP_750910-MLU51264755911_082022-O.webp"
-              }
-              name={"Adidas Essentials Jacket"}
-              price={"74"}
-            />
-            <ProductCardIndex
-              image={
-                "https://http2.mlstatic.com/D_NQ_NP_750910-MLU51264755911_082022-O.webp"
-              }
-              name={"Adidas Essentials Jacket"}
-              price={"74"}
-            />
-            <ProductCardIndex
-              image={
-                "https://http2.mlstatic.com/D_NQ_NP_750910-MLU51264755911_082022-O.webp"
-              }
-              name={"Adidas Essentials Jacket"}
-              price={"74"}
-            />
-          </div>
-        </div>
-
-        <div className={styles.dealsDiv}>
-          <h1 className={styles.deals}>
-            Join our merbers club & get 10% off on your first purchase
-          </h1>
-          <NavLink className={styles.link} to={"/home/newUser"}>
-            <button className={styles.join}>Join us!</button>
-          </NavLink>
-        </div>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>How to know your size</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              <p>
+                Follow these easy steps to get the right size. For the best fit,
+                measure your feet at the end of the day.
+              </p>
+              <p>
+                <strong>1.</strong> Step on a piece of paper with your heel
+                slightly touching a wall behind. <br />
+                <strong>2.</strong> Mark the end of your longest toe on the
+                paper and measure from the wall to the marking. <br />
+                <strong>3.</strong> Do the same for the other foot and compare
+                measurements with our size chart to get the right size. <br />
+              </p>
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
       </div>
+
+      <Footer />
     </div>
   );
 };

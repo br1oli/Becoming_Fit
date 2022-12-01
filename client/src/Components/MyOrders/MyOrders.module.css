@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+
+.mainContainer{
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 10rem 4rem 10rem;
+    box-shadow: 0px 0px 20px 0px rgb(232, 232, 232);
+}
+.title{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.titleDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+}
+
+@media screen and (max-width: 740px) {
+    .mainContainer{
+        display: wrap;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+    }
+
+    .image{
+        width: 60vw;
+        height: 17rem;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+}

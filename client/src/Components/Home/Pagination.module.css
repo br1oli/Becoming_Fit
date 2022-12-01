@@ -1,0 +1,75 @@
+.paginado {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 15px;
+}
+
+.paginadoContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.numberArrow {
+    position: relative;
+    cursor: pointer;
+    list-style: none;
+    height: 45px;
+    font-size: 1.2rem;
+    margin: 15px;
+    top: 6px;
+}
+
+.numberArrow:after {
+    content: "";
+    position: absolute;
+    background-color: rgb(31, 93, 185);
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: 3px;
+    transition: 0.3s;
+}
+
+.numberArrow:hover:after {
+    width: 100%;
+}
+
+.numberLi {
+    position: relative;
+    cursor: pointer;
+    list-style: none;
+    height: 45px;
+    font-size: 1.5rem;
+    margin: 15px;
+}
+
+.numberLi:hover {
+    color: #a0a0a0;
+}
+
+.numberLi:after {
+    content: "";
+    position: absolute;
+    background-color: rgb(31, 93, 185);
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: 3px;
+    transition: 0.3s;
+}
+
+.numberLi:hover:after {
+    width: 100%;
+}
+
+.current {
+    color: rgb(31, 93, 185);
+}
+
+@media screen and (max-width: 1040px) {
+    .numberLi {
+        display: none;
+    }
+}

@@ -26,7 +26,7 @@ const getProducts = async (req = request, res = response) => {
     }
     res.status(200).send(products);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(error.message); 
   }
 };
 
@@ -39,8 +39,8 @@ const createProduct = async (req = request, res = response) => {
       gender,
       size,
       rating,
-      brand,
-      category,
+      brandName,
+      categoryName,
       price,
       description,
       image,
@@ -56,8 +56,8 @@ const createProduct = async (req = request, res = response) => {
       !size ||
       !rating ||
       !price ||
-      !brand ||
-      !category ||
+      !brandName ||
+      !categoryName ||
       !description ||
       !image
     ) {
@@ -77,8 +77,8 @@ const createProduct = async (req = request, res = response) => {
       size,
       rating,
       price,
-      brand,
-      category,
+      brandName,
+      categoryName,
       description,
       image
     );
@@ -91,19 +91,20 @@ const createProduct = async (req = request, res = response) => {
 };
 
 const updateProduct = async (req = request, res = response) => {
-  try {
-    let {
-      id,
-      name,
-      type,
-      color,
-      gender,
-      size,
-      rating,
-      price,
-      description,
-      image,
-    } = req.body;
+  let {
+    id,
+    name,
+    type,
+    color,
+    gender,
+    size,
+    rating,
+    price,
+    description,
+    image,
+  } = req.body;
+  
+  try {    
     if (id.length < 20) {
       return res.status(404).send("Invalid ID");
     }
@@ -129,7 +130,7 @@ const updateProduct = async (req = request, res = response) => {
 
 const deleteProductFromDb = async (req = request, res = response) => {
   const { id } = req.params;
-  if(!id){
+  if (!id) {
     return res.status(404).send("¡ID is needed to remove product!");
   }
   try {
@@ -138,15 +139,56 @@ const deleteProductFromDb = async (req = request, res = response) => {
         id,
       },
     });
-    res.status(200).send(`Product with ID:${id} was successfully removed`)
+    res.status(200).send(`Product with ID:${id} was successfully removed`);
   } catch (error) {
     res.status(500).send(error.message);
   }
 };
+
+const changeProductStock = async (req = request, res = response) => {
+  const { id, changeStock } = req.body;
+    try {
+      let product = await Product.findByPk(id);
+
+      if (product === null) {
+        throw new Error("The product you trying to update does not exists");
+      }
+
+      await product.update({
+        outOfStock: changeStock
+      })
+
+      await product.save();
+      res.status(200).send('The product was updated successfully');
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+}
+
+const logicalDeleteForProduct = async (req = request, res = response) => {
+  const { id, changeDeleteState } = req.body;
+  try {
+    let product = await Product.findByPk(id);
+    if (product === null) {
+      throw new Error("The product you trying to delete does not exists");
+    }
+
+    await product.update({
+      isDeleted: changeDeleteState
+    })
+    
+    await product.save();
+    res.status(200).send('The product was updated successfully');
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+}
 
 module.exports = {
   getProducts,
   createProduct,
   updateProduct,
   deleteProductFromDb,
+  changeProductStock,
+  logicalDeleteForProduct
 };

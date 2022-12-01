@@ -1,0 +1,17 @@
+.wpButton {
+  background-color: rgb(12, 216, 12);
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  border-radius: 40px;
+}
+
+.button {
+  padding-left: 14px;
+  font-size: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

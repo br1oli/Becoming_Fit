@@ -1,0 +1,79 @@
+.danger {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid red;
+    border-radius: 4px;
+    color: red;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.formStyled{
+    border: 1px solid rgb(228, 228, 228);
+    width: 35vw;
+    height: 80vh;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    box-shadow: 6px 6px 5px 0px rgba(179,179,179,0.75);
+    -webkit-box-shadow: 6px 6px 5px 0px rgba(179,179,179,0.75);
+    -moz-box-shadow: 6px 6px 5px 0px rgba(179,179,179,0.75);
+}
+
+.lblInput{
+    margin-top: 25px;
+}
+
+.button{
+    display: flex;
+    justify-content: space-around;
+    margin-right: 50px;
+    margin-top: 20px;
+
+}
+
+.backButtonContainer{
+    margin-right: 40px;
+}
+
+.backButton{
+    width: 70px;
+    border-radius: 15px;
+    background-color: #404040;
+    color: white;
+}
+
+
+.footer{
+    margin-top: 100px;
+}
+
+@media screen and (max-width: 1040px) {
+    .formStyled {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 90%;
+        height: 750px;
+        
+    }
+
+    .lblInput {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 60px;
+    }
+    .backButton{
+        margin-bottom: 70px;
+    }
+    
+}

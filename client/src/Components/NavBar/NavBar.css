@@ -1,0 +1,136 @@
+.navContainer {
+  padding: 20px 30px 0;
+  display: grid;
+  grid-template: 
+  "topRow"
+  "filters";
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  background-color: #404040;
+  margin-bottom: 10px;
+}
+
+.topRow {
+  grid-area: topRow;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.filters-container {
+  grid-area: filters;
+  margin: 10px 0 0 0;
+}
+
+.icons-container {
+  margin: 5px 0 0 290px;
+}
+
+.iconsResponsive{
+  display: none;
+}
+
+.navMenu {
+  display: flex;
+  justify-content: space-evenly;
+}
+.navMenu li {
+  padding: 0 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hamburguer {
+  display: none;
+}
+
+.filter-icon {
+display: none;
+}
+
+@media screen and (max-width: 1040px) {
+  .navContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .icons-container {
+    display: none;
+  }
+  
+  .navMenu {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 60%;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      left: -100%;
+      z-index: 1;
+      transition: 0.3s;
+  }
+  .filters {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      left: -100%;
+      z-index: 1;
+      transition: 0.3s;
+  }
+
+  .user-cartResponsive {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .iconsResponsive{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navMenu.active {
+      left: 0;
+  }
+  .filters.active {
+      left: 0;
+  }
+
+  .navMenu li {
+      padding: 1rem;   
+  }
+
+  .filters li {
+      padding: 1rem;   
+  }
+
+  .hamburguer {
+      display: initial;
+  }
+
+  .filter-icon {
+    display: initial;
+    margin: 0 0 20px 80px;
+  }
+
+  .topRow {
+    margin-bottom: 20px;
+  }
+
+
+}

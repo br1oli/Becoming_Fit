@@ -1,5 +1,55 @@
 .filterContainer {
-  display: grid;
-  grid-gap: 20px;
-  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
+
+.select {
+  background-color: #404040;
+  width: 160px;
+  height: 30px;
+  font-size: 12px;
+  text-align: center;
+  color: #a0a0a0;
+  outline: none;
+  border: none;
+}
+
+.select:hover {
+  color: white;
+}
+
+.select option {
+  background-color: #404040;
+  border-radius: 10px;
+  color: white;
+}
+
+@media screen and (max-width: 1040px) {
+  .filterContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .select {
+    background-color: transparent;
+    width: 250px;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    color: #a0a0a0;
+    outline: none;
+    border: none;
+    margin-bottom: 30px;
+  }
+}
+
+
+
+
+
+
+

@@ -6,14 +6,20 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store/Index.js";
 import axios from "axios";
+import dotenv from "dotenv";
+import Auth0ProviderWithHistory from "./Components/Auth/auth0-provider-with-history";
+
+dotenv.config();
 
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <Auth0ProviderWithHistory>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Auth0ProviderWithHistory>
   </Provider>,
   document.getElementById("root")
 );

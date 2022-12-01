@@ -1,0 +1,27 @@
+.bodyContain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    color: white;
+    width: 30px;
+    height: 30px;
+}
+
+.icon:hover {
+    color: rgb(31, 93, 185);
+    cursor: pointer;
+}
+
+.userOptions {
+    text-decoration: none;
+}
+
+.loginButton {
+    display: flex;
+    justify-content: flex-start;
+    margin: 40px 0 0 10px;
+}

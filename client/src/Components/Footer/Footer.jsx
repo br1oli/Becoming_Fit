@@ -7,7 +7,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="page-footer font-small pt-4 text-light" id="footer">
+    <footer className="page-footer font-small pt-3 text-light" id="footer">
       <div className="container-fluid text-center text-md-left">
         <div className="row">
           <div className="col-md-5 mt-md-0 mt-2">
@@ -15,72 +15,7 @@ const Footer = () => {
             <h5 className="text-secondary text-decoration-none">
               henry.becomingfit@gmail.com
             </h5>
-          </div>
 
-          <hr className="clearfix w-100 d-md-none pb-0" />
-
-          <div className="col-md-2 mb-md-0 mb-2">
-            <h5 id="info" className="text-uppercase">
-              Company
-            </h5>
-            <ul className="list-unstyled">
-              <li>
-                <Link
-                  id="Link"
-                  className="text-secondary text-decoration-none"
-                  to="/contact"
-                >
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link
-                  id="Link"
-                  className="text-secondary text-decoration-none"
-                  to="/contact"
-                >
-                  About Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="col-md-2 mb-md-0 mb-2">
-            <h5 id="info" className="text-uppercase">
-              Information
-            </h5>
-            <ul className="list-unstyled text-secondary">
-              <li>
-                <Link
-                  id="Link"
-                  to="/faqs"
-                  className="text-secondary text-decoration-none"
-                >
-                  Terms & Conditions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  id="Link"
-                  to="privacypolicy"
-                  className="text-secondary text-decoration-none"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  id="Link"
-                  to="terms"
-                  className="text-secondary text-decoration-none"
-                >
-                  F.A.Qs
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="col-md-2 mb-md-0 mb-2">
             <ul className="list-unstyled text-secondary d-flex justify-content-center flex-row">
               <li>
                 <a
@@ -113,6 +48,69 @@ const Footer = () => {
                 >
                   <BsWhatsapp size={30} />
                 </a>
+              </li>
+            </ul>
+          </div>
+
+          <hr className="clearfix w-100 d-md-none pb-0" />
+
+          <div className="col-md-2 mb-md-0 mb-2">
+            <h5 id="info" className="text-uppercase">
+              COMPANY
+            </h5>
+            <ul className="list-unstyled">
+              <li>
+                <Link
+                  id="Link"
+                  className="text-secondary text-decoration-none"
+                  to="/emailUs"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  id="Link"
+                  className="text-secondary text-decoration-none"
+                  to="/aboutUs"
+                >
+                  About Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="col-md-5 mb-md-0 mb-2">
+            <h5 id="info" className="text-uppercase">
+              INFORMATION
+            </h5>
+            <ul className="list-unstyled text-secondary">
+              <li>
+                <Link
+                  id="Link"
+                  to="/termns&conditions"
+                  className="text-secondary text-decoration-none"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  id="Link"
+                  to="/privacypolicy"
+                  className="text-secondary text-decoration-none"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  id="Link"
+                  to='/FAQs'
+                  className="text-secondary text-decoration-none"
+                >
+                  F.A.Qs
+                </Link>
               </li>
             </ul>
           </div>
