@@ -4,9 +4,9 @@ const preChargeProducts = require("./src/helpers/preChargeProducts");
 const { PGPORT } = process.env;
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(async () => {
+conn.sync({ force: false }).then(async () => {
   await preChargeProducts();
-  server.listen(process.env.PGPORT, () => {
+  server.listen(PGPORT, () => {
     console.log(`%s listening at ${PGPORT}`); // eslint-disable-line no-console
   });
 });

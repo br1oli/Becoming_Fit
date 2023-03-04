@@ -6,31 +6,28 @@ const { PGUSER, PGPASSWORD, PGHOST, PGDATABASE } = process.env;
 
 let sequelize =
   process.env.NODE_ENV === "production"
-    ? new Sequelize(
-        `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
-        {
-          database: PGDATABASE,
-          dialect: "postgres",
-          host: PGHOST,
-          port: 7360,
-          username: PGUSER,
-          password: PGPASSWORD,
-          pool: {
-            max: 3,
-            min: 1,
-            idle: 10000,
+    ? new Sequelize({
+        database: PGDATABASE,
+        dialect: "postgres",
+        host: PGHOST,
+        port: 7360,
+        username: PGUSER,
+        password: PGPASSWORD,
+        pool: {
+          max: 3,
+          min: 1,
+          idle: 10000,
+        },
+        dialectOptions: {
+          ssl: {
+            require: true,
+            // Ref.: https://github.com/brianc/node-postgres/issues/2009
+            rejectUnauthorized: false,
           },
-          dialectOptions: {
-            ssl: {
-              require: true,
-              // Ref.: https://github.com/brianc/node-postgres/issues/2009
-              rejectUnauthorized: false,
-            },
-            keepAlive: true,
-          },
-          ssl: true,
-        }
-      )
+          keepAlive: true,
+        },
+        ssl: true,
+      })
     : new Sequelize(
         `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/becomingfit`,
         { logging: false, native: false }
